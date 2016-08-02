@@ -10,6 +10,8 @@ import com.trainingdataprocessor.database.TrainingDataAccessor;
 import com.trainingdataprocessor.tags.Tags;
 import mocks.TrainingDataAccessorMock;
 import org.junit.Test;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +20,8 @@ import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertEquals;
 
 public class BigramDataListGeneratorTest {
+
+    ApplicationContext context = new ClassPathXmlApplicationContext("beans.xml");
 
     ConstantTagsCache constantTagsCache = new ConstantTagsCache();
     TrainingDataAccessor trainingDataAccessor = new TrainingDataAccessorMock();
