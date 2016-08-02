@@ -16,6 +16,8 @@ public class BigramData {
 
     private boolean isTag2Constant;
 
+    private boolean existsInDatabase = false;
+
     public BigramData(String tag1, String tag2, boolean isTag1Constant, boolean isTag2Constant) {
         this.tag1 = tag1;
         this.tag2 = tag2;
@@ -51,6 +53,10 @@ public class BigramData {
         return isTag2Constant;
     }
 
+    public boolean isExistsInDatabase() {
+        return existsInDatabase;
+    }
+
     public void setTag1Frequency(int tag1Frequency) {
         this.tag1Frequency = tag1Frequency;
     }
@@ -61,5 +67,9 @@ public class BigramData {
 
     public void setBigramProbability(double bigramProbability) {
         this.bigramProbability = bigramProbability;
+    }
+
+    public void setExistsInDatabase(boolean existsInDatabase) {
+        this.existsInDatabase = existsInDatabase;
     }
 }

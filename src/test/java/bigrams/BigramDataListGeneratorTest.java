@@ -14,6 +14,7 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.List;
 
+import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertEquals;
 
 public class BigramDataListGeneratorTest {
@@ -39,18 +40,22 @@ public class BigramDataListGeneratorTest {
         assertEquals(275, bigramDataList.get(0).getBigramFrequency());
         assertEquals(Double.valueOf(61.111111111111114), Double.valueOf(bigramDataList.get(0).getBigramProbability()));
         assertEquals(450, bigramDataList.get(0).getTag1Frequency());
+        assertTrue(bigramDataList.get(0).isExistsInDatabase());
+
 
         assertEquals(Tags.ADJECTIVE, bigramDataList.get(1).getTag1());
         assertEquals(Tags.NOUN, bigramDataList.get(1).getTag2());
         assertEquals(275, bigramDataList.get(1).getBigramFrequency());
         assertEquals(Double.valueOf(61.111111111111114), Double.valueOf(bigramDataList.get(1).getBigramProbability()));
         assertEquals(450, bigramDataList.get(1).getTag1Frequency());
+        assertTrue(bigramDataList.get(1).isExistsInDatabase());
 
         assertEquals(Tags.NOUN, bigramDataList.get(2).getTag1());
         assertEquals(Tags.VERB, bigramDataList.get(2).getTag2());
         assertEquals(275, bigramDataList.get(2).getBigramFrequency());
         assertEquals(Double.valueOf(61.111111111111114), Double.valueOf(bigramDataList.get(2).getBigramProbability()));
         assertEquals(450, bigramDataList.get(2).getTag1Frequency());
+        assertTrue(bigramDataList.get(2).isExistsInDatabase());
     }
 
 }

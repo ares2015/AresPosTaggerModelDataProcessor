@@ -10,6 +10,7 @@ public class TrainingDataAccessorMock implements TrainingDataAccessor {
 
     public void populateBigramFrequencyData(BigramData bigramData) {
         bigramData.setBigramFrequency(275);
+        bigramData.setExistsInDatabase(true);
     }
 
     public void populateBigramTag1FrequencyData(BigramData bigramData) {
