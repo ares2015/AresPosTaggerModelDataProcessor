@@ -1,6 +1,5 @@
 package com.trainingdataprocessor.reader;
 
-import com.trainingdataprocessor.data.TestDataRow;
 import com.trainingdataprocessor.validator.TestDataValidator;
 
 import java.io.BufferedReader;
@@ -8,13 +7,15 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
+import java.util.logging.Logger;
 
 /**
  * Created by Oliver on 8/5/2016.
  */
 public class TestDataFileReaderImpl implements TestDataReader {
+
+    private final static Logger LOGGER = Logger.getLogger(TestDataFileReaderImpl.class.getName());
 
     private TestDataValidator testDataValidator;
 
@@ -23,8 +24,10 @@ public class TestDataFileReaderImpl implements TestDataReader {
     }
 
     @Override
-    public List<TestDataRow> read() {
-        List<TestDataRow> testDataRowList = new ArrayList<>();
+    public List<String> read() {
+        LOGGER.info("ENTERING read method of TestDataFileReaderImpl... ");
+        LOGGER.info("*********************************************************************");
+        List<String> testDataRowList = new ArrayList<>();
         BufferedReader br = null;
         int lineNumber = 0;
         try {
@@ -35,18 +38,9 @@ public class TestDataFileReaderImpl implements TestDataReader {
         try {
             String testDataRow = br.readLine();
             while (testDataRow != null) {
-                lineNumber++;
+                lineNumber ++;
                 testDataValidator.validate(testDataRow, lineNumber);
-                final String[] sentencePattern = testDataRow.split("#");
-
-                final String[] sentence = sentencePattern[0].split("\\ ");
-                final String[] pattern = sentencePattern[1].split("\\ ");
-//                if (sentence.length != pattern.length) {
-//                    throw new RuntimeException();
-//                }
-                final String[] subSentences = sentencePattern[0].split("\\,");
-                final String[] subPatterns = sentencePattern[1].split("\\,");
-
+                testDataRowList.add(testDataRow);
                 testDataRow = br.readLine();
             }
         } catch (final IOException e) {
@@ -58,6 +52,8 @@ public class TestDataFileReaderImpl implements TestDataReader {
                 e.printStackTrace();
             }
         }
+        LOGGER.info("LEAVING read method of TestDataFileReaderImpl with  " + testDataRowList.size() + " lines read.");
+        LOGGER.info("*********************************************************************");
         return testDataRowList;
     }
 }

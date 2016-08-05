@@ -9,6 +9,6 @@ import java.util.List;
  */
 public interface TestDataReader {
 
-    List<TestDataRow> read();
+    List<String> read();
 
 }

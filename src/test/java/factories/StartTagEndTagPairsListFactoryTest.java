@@ -1,9 +1,10 @@
-package com.trainingdataprocessor.subpaths;
+package factories;
 
 
 import com.trainingdataprocessor.cache.ConstantTagsCache;
-import com.trainingdataprocessor.cache.ConstantWordsCache;
 import com.trainingdataprocessor.data.StartTagEndTagPair;
+import com.trainingdataprocessor.data.factories.StartTagEndTagPairsListFactory;
+import com.trainingdataprocessor.data.factories.StartTagEndTagPairsListFactoryImpl;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -11,13 +12,13 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
-public class StartTagEndTagPairsGeneratorTest {
+public class StartTagEndTagPairsListFactoryTest {
 
     ConstantTagsCache constantTagsCache = new ConstantTagsCache();
-    StartTagEndTagPairsGenerator startTagEndTagPairsGenerator = new StartTagEndTagPairsGeneratorImpl(constantTagsCache);
+    StartTagEndTagPairsListFactory startTagEndTagPairsListFactory = new StartTagEndTagPairsListFactoryImpl(constantTagsCache);
 
     @Test
-    public void testGenerate(){
+    public void testCreate(){
 
         List<String> tags = new ArrayList<String>();
         tags.add("N");
@@ -25,9 +26,8 @@ public class StartTagEndTagPairsGeneratorTest {
         tags.add("DET");
         tags.add("N");
 
-        List<StartTagEndTagPair> startTagEndTagPairList = startTagEndTagPairsGenerator.generate(tags);
+        List<StartTagEndTagPair> startTagEndTagPairList = startTagEndTagPairsListFactory.create(tags);
         assertEquals(6, startTagEndTagPairList.size());
-
 
     }
 }

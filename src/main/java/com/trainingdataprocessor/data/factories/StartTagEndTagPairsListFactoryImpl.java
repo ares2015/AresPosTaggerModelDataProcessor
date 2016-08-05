@@ -1,4 +1,4 @@
-package com.trainingdataprocessor.subpaths;
+package com.trainingdataprocessor.data.factories;
 
 
 import java.util.ArrayList;
@@ -6,23 +6,22 @@ import java.util.List;
 import java.util.logging.Logger;
 
 import com.trainingdataprocessor.cache.ConstantTagsCache;
-import com.trainingdataprocessor.cache.ConstantWordsCache;
 import com.trainingdataprocessor.data.StartTagEndTagPair;
 
 
-public class StartTagEndTagPairsGeneratorImpl implements StartTagEndTagPairsGenerator {
+public class StartTagEndTagPairsListFactoryImpl implements StartTagEndTagPairsListFactory {
 
-    private final static Logger LOGGER = Logger.getLogger(StartTagEndTagPairsGeneratorImpl.class.getName());
+    private final static Logger LOGGER = Logger.getLogger(StartTagEndTagPairsListFactoryImpl.class.getName());
 
     private ConstantTagsCache constantTagsCache;
 
-    public StartTagEndTagPairsGeneratorImpl(ConstantTagsCache constantTagsCache) {
+    public StartTagEndTagPairsListFactoryImpl(ConstantTagsCache constantTagsCache) {
         this.constantTagsCache = constantTagsCache;
     }
 
-    public List<StartTagEndTagPair> generate(List<String> tags) {
+    public List<StartTagEndTagPair> create(List<String> tags) {
         List<StartTagEndTagPair> startTagEndTagPairList = new ArrayList<StartTagEndTagPair>();
-        LOGGER.info("ENTERING generate method of StartTagEndTagPairsGeneratorImpl... ");
+        LOGGER.info("ENTERING create method of StartTagEndTagPairsListFactoryImpl... ");
         LOGGER.info("*********************************************************************");
 
         long startTime = System.currentTimeMillis();
@@ -46,7 +45,7 @@ public class StartTagEndTagPairsGeneratorImpl implements StartTagEndTagPairsGene
         long stopTime = System.currentTimeMillis();
         long elapsedTime = stopTime - startTime;
         LOGGER.info(startTagEndTagPairList.size() + " StarTagEndTag pairs were created in " + elapsedTime + " miliseconds.");
-        LOGGER.info("LEAVING generate method of StartTagEndTagPairsGeneratorImpl... ");
+        LOGGER.info("LEAVING create method of StartTagEndTagPairsListFactoryImpl... ");
         LOGGER.info("*********************************************************************");
 
         return startTagEndTagPairList;

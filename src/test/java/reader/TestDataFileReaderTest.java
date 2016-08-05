@@ -10,6 +10,8 @@ import org.junit.Test;
 
 import java.util.List;
 
+import static org.junit.Assert.assertTrue;
+
 /**
  * Created by Oliver on 8/5/2016.
  */
@@ -22,7 +24,7 @@ public class TestDataFileReaderTest {
 
     @Test
     public void testRead(){
-        List<TestDataRow> testDataRowList = testDataReader.read();
-
+        List<String> testDataRowList = testDataReader.read();
+        assertTrue(testDataRowList.size() > 0);
     }
 }

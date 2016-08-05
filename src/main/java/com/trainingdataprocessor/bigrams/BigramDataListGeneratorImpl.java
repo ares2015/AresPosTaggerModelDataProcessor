@@ -3,7 +3,6 @@ package com.trainingdataprocessor.bigrams;
 import com.trainingdataprocessor.cache.ConstantTagsCache;
 import com.trainingdataprocessor.data.BigramData;
 import com.trainingdataprocessor.database.TrainingDataAccessor;
-import com.trainingdataprocessor.subpaths.StartTagEndTagPairsGeneratorImpl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +25,7 @@ public class BigramDataListGeneratorImpl implements BigramDataListGenerator {
     }
 
     public List<BigramData> generate(List<String> tags) {
-        LOGGER.info("ENTERING generate method of BigramDataListGeneratorImpl... ");
+        LOGGER.info("ENTERING create method of BigramDataListGeneratorImpl... ");
         LOGGER.info("*********************************************************************");
         long startTime = System.currentTimeMillis();
         List<BigramData> bigramDataList = new ArrayList<BigramData>();
@@ -50,7 +49,7 @@ public class BigramDataListGeneratorImpl implements BigramDataListGenerator {
         long stopTime = System.currentTimeMillis();
         long elapsedTime = stopTime - startTime;
         LOGGER.info("BigramDataList with size " + bigramDataList.size() + " was created in " + elapsedTime + " miliseconds.");
-        LOGGER.info("LEAVING generate method of BigramDataListGeneratorImpl... ");
+        LOGGER.info("LEAVING create method of BigramDataListGeneratorImpl... ");
         LOGGER.info("*********************************************************************");
         return bigramDataList;
     }
