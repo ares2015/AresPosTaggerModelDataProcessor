@@ -14,7 +14,7 @@ public final class ConstantTagsCache {
         return constantTagsCache;
     }
 
-    public ConstantTagsCache(){
+    public ConstantTagsCache() {
         constantTagsCache.add(Tags.AND_OR);
         constantTagsCache.add(Tags.CONJUNCTION);
         constantTagsCache.add(Tags.DETERMINER);
@@ -34,13 +34,5 @@ public final class ConstantTagsCache {
         constantTagsCache.add(Tags.WH_PRONOUN);
         constantTagsCache.add(Tags.WH_PRONOUN_POSSESSIVE);
         constantTagsCache.add(Tags.QUANTIFIER);
-
-
-
-
-
-
-
-
     }
 }
