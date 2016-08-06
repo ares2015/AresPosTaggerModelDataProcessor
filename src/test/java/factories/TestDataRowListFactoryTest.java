@@ -2,6 +2,10 @@ package factories;
 
 import com.trainingdataprocessor.data.factories.TestDataRowListFactory;
 import com.trainingdataprocessor.data.factories.TestDataRowListFactoryImpl;
+import com.trainingdataprocessor.encoding.TagsEncoder;
+import com.trainingdataprocessor.encoding.TagsEncoderImpl;
+import com.trainingdataprocessor.tokenizing.Tokenizer;
+import com.trainingdataprocessor.tokenizing.TokenizerImpl;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -12,7 +16,11 @@ import java.util.List;
  */
 public class TestDataRowListFactoryTest {
 
-    private TestDataRowListFactory testDataRowListFactory = new TestDataRowListFactoryImpl();
+    private Tokenizer tokenizer = new TokenizerImpl();
+
+    private TagsEncoder tagsEncoder = new TagsEncoderImpl();
+
+    private TestDataRowListFactory testDataRowListFactory = new TestDataRowListFactoryImpl(tokenizer, tagsEncoder);
 
     @Test
     public void testCreate() {
