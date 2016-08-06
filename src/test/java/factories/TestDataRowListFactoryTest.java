@@ -1,6 +1,8 @@
 package factories;
 
 import com.trainingdataprocessor.cache.TagsCodingCache;
+import com.trainingdataprocessor.data.factories.SubPathsListFactory;
+import com.trainingdataprocessor.data.factories.SubPathsListFactoryImpl;
 import com.trainingdataprocessor.data.factories.TestDataRowListFactory;
 import com.trainingdataprocessor.data.factories.TestDataRowListFactoryImpl;
 import com.trainingdataprocessor.encoding.TagsEncoder;
@@ -23,7 +25,9 @@ public class TestDataRowListFactoryTest {
 
     private TagsEncoder tagsEncoder = new TagsEncoderImpl(tagsCodingCache);
 
-    private TestDataRowListFactory testDataRowListFactory = new TestDataRowListFactoryImpl(tokenizer, tagsEncoder);
+    private SubPathsListFactory subPathsListFactory = new SubPathsListFactoryImpl();
+
+    private TestDataRowListFactory testDataRowListFactory = new TestDataRowListFactoryImpl(tokenizer, tagsEncoder, subPathsListFactory);
 
     @Test
     public void testCreate() {

@@ -17,9 +17,12 @@ public class TestDataRowListFactoryImpl implements TestDataRowListFactory {
 
     private TagsEncoder tagsEncoder;
 
-    public TestDataRowListFactoryImpl(Tokenizer tokenizer, TagsEncoder tagsEncoder) {
+    private SubPathsListFactory subPathsListFactory;
+
+    public TestDataRowListFactoryImpl(Tokenizer tokenizer, TagsEncoder tagsEncoder, SubPathsListFactory subPathsListFactory) {
         this.tokenizer = tokenizer;
         this.tagsEncoder = tagsEncoder;
+        this.subPathsListFactory = subPathsListFactory;
     }
 
     @Override
@@ -52,7 +55,7 @@ public class TestDataRowListFactoryImpl implements TestDataRowListFactory {
                 commaIndexes.add(0);
                 commaIndexes = tokenizer.getCommaIndexes(commaIndexes, tagsList);
                 commaIndexes.add(tags.length - 1);
-                tagSubPaths = tokenizer.getTagSubPaths(commaIndexes, tagsList);
+                tagSubPaths = subPathsListFactory.create(commaIndexes, tagsList);
                 TestDataRow testDataRow = new TestDataRow(sentence, tokensList, tagsAsString,
                         encodedTagsAsString, tagsList, subSentences, tagSubPaths);
                 testDataRowList.add(testDataRow);

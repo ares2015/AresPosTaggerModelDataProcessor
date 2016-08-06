@@ -9,6 +9,4 @@ public interface Tokenizer {
 
     List<Integer> getCommaIndexes(List<Integer> commaIndexes, final List<String> tokens);
 
-    List<List<String>> getTagSubPaths(List<Integer> commaIndexes, List<String> tags);
-
 }
