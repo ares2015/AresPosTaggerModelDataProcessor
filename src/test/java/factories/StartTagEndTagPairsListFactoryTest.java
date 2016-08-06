@@ -3,8 +3,8 @@ package factories;
 
 import com.trainingdataprocessor.cache.ConstantTagsCache;
 import com.trainingdataprocessor.data.StartTagEndTagPair;
-import com.trainingdataprocessor.data.factories.StartTagEndTagPairsListFactory;
-import com.trainingdataprocessor.data.factories.StartTagEndTagPairsListFactoryImpl;
+import com.trainingdataprocessor.factories.StartTagEndTagPairsListFactory;
+import com.trainingdataprocessor.factories.StartTagEndTagPairsListFactoryImpl;
 import org.junit.Test;
 
 import java.util.ArrayList;

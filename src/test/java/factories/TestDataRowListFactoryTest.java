@@ -1,10 +1,11 @@
 package factories;
 
 import com.trainingdataprocessor.cache.TagsCodingCache;
-import com.trainingdataprocessor.data.factories.SubPathsListFactory;
-import com.trainingdataprocessor.data.factories.SubPathsListFactoryImpl;
-import com.trainingdataprocessor.data.factories.TestDataRowListFactory;
-import com.trainingdataprocessor.data.factories.TestDataRowListFactoryImpl;
+import com.trainingdataprocessor.data.TestDataRow;
+import com.trainingdataprocessor.factories.SubPathsListFactory;
+import com.trainingdataprocessor.factories.SubPathsListFactoryImpl;
+import com.trainingdataprocessor.factories.TestDataRowListFactory;
+import com.trainingdataprocessor.factories.TestDataRowListFactoryImpl;
 import com.trainingdataprocessor.encoding.TagsEncoder;
 import com.trainingdataprocessor.encoding.TagsEncoderImpl;
 import com.trainingdataprocessor.tokenizing.Tokenizer;
@@ -13,6 +14,8 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static org.junit.Assert.assertEquals;
 
 /**
  * Created by Oliver on 8/5/2016.
@@ -34,6 +37,18 @@ public class TestDataRowListFactoryTest {
         List<String> testDataRowStringList = new ArrayList<>();
         String testDataRowString = "boys drink beer in pub#N V N PR N";
         testDataRowStringList.add(testDataRowString);
-        testDataRowListFactory.create(testDataRowStringList);
+        List<TestDataRow> testDataRowList = testDataRowListFactory.create(testDataRowStringList);
+        assertEquals(1, testDataRowList.size());
+        assertEquals("boys drink beer in pub", testDataRowList.get(0).getSentence());
+        assertEquals("N V N PR N", testDataRowList.get(0).getTagsAsString());
+        assertEquals("NVNIN", testDataRowList.get(0).getEncodedTagsAsString());
+        assertEquals(5, testDataRowList.get(0).getTokensList().size());
+        assertEquals(5, testDataRowList.get(0).getTagsList().size());
     }
+
+    @Test
+    public void testCreateWithSubSentences() {
+
+    }
+
 }

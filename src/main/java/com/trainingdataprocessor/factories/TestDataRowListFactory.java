@@ -1,4 +1,4 @@
-package com.trainingdataprocessor.data.factories;
+package com.trainingdataprocessor.factories;
 
 import com.trainingdataprocessor.data.TestDataRow;
 
