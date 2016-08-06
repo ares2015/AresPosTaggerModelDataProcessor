@@ -1,5 +1,6 @@
 package factories;
 
+import com.trainingdataprocessor.cache.TagsCodingCache;
 import com.trainingdataprocessor.data.factories.TestDataRowListFactory;
 import com.trainingdataprocessor.data.factories.TestDataRowListFactoryImpl;
 import com.trainingdataprocessor.encoding.TagsEncoder;
@@ -16,9 +17,11 @@ import java.util.List;
  */
 public class TestDataRowListFactoryTest {
 
+    private TagsCodingCache tagsCodingCache = new TagsCodingCache();
+
     private Tokenizer tokenizer = new TokenizerImpl();
 
-    private TagsEncoder tagsEncoder = new TagsEncoderImpl();
+    private TagsEncoder tagsEncoder = new TagsEncoderImpl(tagsCodingCache);
 
     private TestDataRowListFactory testDataRowListFactory = new TestDataRowListFactoryImpl(tokenizer, tagsEncoder);
 

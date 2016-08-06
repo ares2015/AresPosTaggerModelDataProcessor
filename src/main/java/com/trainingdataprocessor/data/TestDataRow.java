@@ -9,35 +9,46 @@ public final class TestDataRow {
 
     private String sentence;
 
-    private String tagPattern;
+    private List<String> tokensList;
 
-    private String encodedTagPattern;
+    private String tagsAsString;
+
+    private String encodedTagsAsString;
+
+    private List<String> tagsList;
 
     private List<List<String>> subSentences;
 
     private List<List<String>> tagSubPaths;
 
-    private List<String> tags;
-
-    public TestDataRow(String sentence, String tagPattern, String encodedTagPattern, List<List<String>> subSentences, List<List<String>> tagSubPaths, List<String> tags) {
+    public TestDataRow(String sentence, List<String> tokensList, String tagsAsString, String encodedTagsAsString, List<String> tagsList) {
         this.sentence = sentence;
-        this.tagPattern = tagPattern;
-        this.encodedTagPattern = encodedTagPattern;
+        this.tokensList = tokensList;
+        this.tagsAsString = tagsAsString;
+        this.encodedTagsAsString = encodedTagsAsString;
+        this.tagsList = tagsList;
+    }
+
+    public TestDataRow(String sentence, List<String> tokensList, String tagsAsString, String encodedTagsAsString, List<String> tagsList, List<List<String>> subSentences, List<List<String>> tagSubPaths) {
+        this.sentence = sentence;
+        this.tokensList = tokensList;
+        this.tagsAsString = tagsAsString;
+        this.encodedTagsAsString = encodedTagsAsString;
+        this.tagsList = tagsList;
         this.subSentences = subSentences;
         this.tagSubPaths = tagSubPaths;
-        this.tags = tags;
     }
 
     public String getSentence() {
         return sentence;
     }
 
-    public String getTagPattern() {
-        return tagPattern;
+    public String getTagsAsString() {
+        return tagsAsString;
     }
 
-    public String getEncodedTagPattern() {
-        return encodedTagPattern;
+    public String getEncodedTagsAsString() {
+        return encodedTagsAsString;
     }
 
     public List<List<String>> getSubSentences() {
@@ -48,7 +59,7 @@ public final class TestDataRow {
         return tagSubPaths;
     }
 
-    public List<String> getTags() {
-        return tags;
+    public List<String> getTagsList() {
+        return tagsList;
     }
 }

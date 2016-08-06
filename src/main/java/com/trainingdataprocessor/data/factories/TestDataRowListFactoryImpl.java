@@ -25,28 +25,41 @@ public class TestDataRowListFactoryImpl implements TestDataRowListFactory {
     @Override
     public List<TestDataRow> create(List<String> testDataRowStringList) {
         List<TestDataRow> testDataRowList = new ArrayList<>();
+        String sentence;
+        List<String> tokensList;
         String tagsAsString;
-        String[] sentenceAndTags;
-        String[] tokens;
-        String[] tags;
+        String encodedTagsAsString;
+        List<String> tagsList;
         List<List<String>> tagSubPaths;
+        List<List<String>> subSentences = null;
 
-        String[] subSentences;
+        String[] sentenceAndTags;
+        String[] subSentencesArray;
+
         for(String testDataRowString : testDataRowStringList){
             sentenceAndTags = testDataRowString.split("#");
-            tokens = sentenceAndTags[0].split("\\ ");
-            tags = sentenceAndTags[1].split("\\ ");
+            String[] tokens = sentenceAndTags[0].split("\\ ");
+            String[] tags = sentenceAndTags[1].split("\\ ");
+            sentence = sentenceAndTags[0];
+            tokensList = Arrays.asList(tokens);
+            tagsList = Arrays.asList(tags);
             tagsAsString = sentenceAndTags[1];
+            encodedTagsAsString  = tagsEncoder.encode(tagsList);
             if(sentenceAndTags[0].contains(", ")){
-                subSentences = sentenceAndTags[0].split("\\,");
+                subSentencesArray = sentenceAndTags[0].split("\\,");
+//                subSentences = Arrays.asList(subSentencesArray);
                 List<Integer> commaIndexes = new ArrayList<>();
                 commaIndexes.add(0);
-                commaIndexes = tokenizer.getCommaIndexes(commaIndexes, Arrays.asList(tags));
+                commaIndexes = tokenizer.getCommaIndexes(commaIndexes, tagsList);
                 commaIndexes.add(tags.length - 1);
-                tagSubPaths = tokenizer.getTagSubPaths(commaIndexes, Arrays.asList(tags));
-                String encodedTagPattern  = tagsEncoder.encode(tagsAsString);
+                tagSubPaths = tokenizer.getTagSubPaths(commaIndexes, tagsList);
+                TestDataRow testDataRow = new TestDataRow(sentence, tokensList, tagsAsString,
+                        encodedTagsAsString, tagsList, subSentences, tagSubPaths);
+                testDataRowList.add(testDataRow);
+            }else{
+                TestDataRow testDataRow = new TestDataRow(sentence, tokensList, tagsAsString, encodedTagsAsString, tagsList);
+                testDataRowList.add(testDataRow);
             }
-
         }
 
         return testDataRowList;
