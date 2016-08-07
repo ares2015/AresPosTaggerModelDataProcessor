@@ -43,11 +43,8 @@ public class TestDataRowListFactoryImpl implements TestDataRowListFactory {
             sentenceAsString = sentenceAndTagsTwoItemsArray[0];
             tagsAsString = sentenceAndTagsTwoItemsArray[1];
 
-            String[] tokensArray = sentenceAndTagsTwoItemsArray[0].split("\\ ");
-            String[] tagsArray = sentenceAndTagsTwoItemsArray[1].split("\\ ");
-
-            tokensList = Arrays.asList(tokensArray);
-            tagsList = Arrays.asList(tagsArray);
+            tokensList = tokenizer.splitStringIntoList(sentenceAsString);
+            tagsList = tokenizer.splitStringIntoList(tagsAsString);
 
             if (sentenceAndTagsTwoItemsArray[0].contains(", ")) {
                 subSentences = subPathsListFactory.create(tokensList);
@@ -66,7 +63,6 @@ public class TestDataRowListFactoryImpl implements TestDataRowListFactory {
                 testDataRowList.add(testDataRow);
             }
         }
-
         return testDataRowList;
     }
 

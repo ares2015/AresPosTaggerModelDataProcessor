@@ -1,7 +1,9 @@
 package com.trainingdataprocessor.validator;
 
 import com.trainingdataprocessor.cache.TagsCache;
+import com.trainingdataprocessor.tokenizing.Tokenizer;
 
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -14,8 +16,14 @@ public class TestDataValidatorImpl implements TestDataValidator {
 
     private TagsCache tagsCache;
 
-    public TestDataValidatorImpl(TagsCache tagsCache) {
+    private Tokenizer tokenizer;
+
+    private ListComparator listComparator;
+
+    public TestDataValidatorImpl(TagsCache tagsCache, Tokenizer tokenizer, ListComparator listComparator) {
         this.tagsCache = tagsCache;
+        this.tokenizer = tokenizer;
+        this.listComparator = listComparator;
     }
 
     @Override
@@ -29,15 +37,37 @@ public class TestDataValidatorImpl implements TestDataValidator {
                     "between sentence and tags.");
         }
         final String[] sentenceAndTags = testDataRow.split("#");
-        final String[] tokens = sentenceAndTags[0].split("\\ ");
-        final String[] tags = sentenceAndTags[1].split("\\ ");
-        if (tokens.length != tags.length) {
+
+        String sentenceAsString = sentenceAndTags[0];
+        String tagsAsString = sentenceAndTags[1];
+
+        List<String> tokensList = tokenizer.splitStringIntoList(sentenceAsString);
+        List<String> tagsList = tokenizer.splitStringIntoList(tagsAsString);
+
+        if (sentenceAsString.contains(",") && !(tagsAsString.contains(",")) ||
+                !(sentenceAsString.contains(",")) && tagsAsString.contains(",")) {
+            LOGGER.log(Level.SEVERE, "EXCEPTION: Sentence or tags does not contain comma but it should probably. Please check" +
+                    " the data.");
+            throw new IllegalStateException("\"EXCEPTION: Sentence or tags does not contain comma but it should probably. Please check\" +\n" +
+                    "                    \" the data.\"");
+        }
+        if (sentenceAsString.contains(",") && tagsAsString.contains(",")) {
+            List<Integer> tokensCommaIndexes = tokenizer.getCommaIndexes(tokensList);
+            List<Integer> tagsCommaIndexes = tokenizer.getCommaIndexes(tagsList);
+            if (!(listComparator.compare(tokensCommaIndexes, tagsCommaIndexes))) {
+                LOGGER.log(Level.SEVERE, "EXCEPTION: Comma indexes for tokens and tags are not equal");
+                throw new IllegalStateException("EXCEPTION: Comma indexes for tokens and tags are not equal.");
+            }
+        }
+
+
+        if (tokensList.size() != tagsList.size()) {
             LOGGER.log(Level.SEVERE, "EXCEPTION: Test data row < " + testDataRow + " > on line " + lineNumber + " " +
                     " -> number of words in sentence is not equal to number of tags.");
             throw new IllegalStateException("Test data row < " + testDataRow + " > on line " + lineNumber + " " +
                     " -> number of words in sentence is not equal to number of tags.");
         }
-        for (String tag : tags) {
+        for (String tag : tagsList) {
             if (!(tagsCache.getTagsCache().contains(tag))) {
                 LOGGER.log(Level.SEVERE, "EXCEPTION: Test data row < " + testDataRow + " > on line " + lineNumber + " " +
                         " -> contains an invalid tag: " + tag);

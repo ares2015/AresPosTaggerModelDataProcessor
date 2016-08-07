@@ -19,6 +19,32 @@ public class TokenizerTest {
     private Tokenizer tokenizer = new TokenizerImpl();
 
     @Test
+    public void testSplitStringIntoList(){
+        String sentence = "john drink beer in bar";
+        List<String> list = tokenizer.splitStringIntoList(sentence);
+        assertEquals(5, list.size());
+    }
+
+    @Test
+    public void testGetCommaIndexes() {
+        List<String> tokens = new ArrayList<>();
+        tokens.add("bob,");
+        tokens.add("alice,");
+        tokens.add("joe");
+        tokens.add("and");
+        tokens.add("mike");
+        tokens.add("are");
+        tokens.add("at");
+        tokens.add("school");
+        List<Integer> commaIndexes = tokenizer.getCommaIndexes(tokens);
+        assertEquals(2, commaIndexes.size());
+        assertTrue(commaIndexes.contains(0));
+        assertTrue(commaIndexes.contains(1));
+    }
+
+
+
+    @Test
     public void testRemoveComma(){
         String word = "drink,";
         assertEquals("drink", tokenizer.removeCommaAndDot(word));

@@ -7,6 +7,10 @@ import java.util.List;
  */
 public interface Tokenizer {
 
+    List<String> splitStringIntoList(String sentence);
+
+    List<Integer> getCommaIndexes(List<String> tokens);
+
     String removeCommaAndDot(final String token);
 
 }

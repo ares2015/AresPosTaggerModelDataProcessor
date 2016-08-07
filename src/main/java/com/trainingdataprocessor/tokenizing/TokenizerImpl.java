@@ -8,6 +8,28 @@ import java.util.List;
  */
 public class TokenizerImpl implements Tokenizer {
 
+
+    @Override
+    public List<String> splitStringIntoList(String sentence) {
+        String[] tokTmp;
+        tokTmp = sentence.split("\\ ");
+        final List<String> tokens = removeEmptyStringInSentence(tokTmp);
+        return tokens;
+    }
+
+    @Override
+    public List<Integer> getCommaIndexes(final List<String> tokens) {
+        final List<Integer> commaIndexes = new ArrayList<Integer>();
+        int index = 0;
+        for (final String token : tokens) {
+            if (token.endsWith(",")) {
+                commaIndexes.add(index);
+            }
+            index++;
+        }
+        return commaIndexes;
+    }
+
     /**
      * If token ends with "," then it is converted to the char array
      * and comma is removed by copying the char array into new array
@@ -26,6 +48,26 @@ public class TokenizerImpl implements Tokenizer {
         }
         final String tokenWithoutComma = new String(charToken);
         return tokenWithoutComma;
+    }
+
+    /**
+     * Removes empty String that is located in sentences with index > 0
+     * that is created by empty space behind each sentence (space between
+     * end of the sentence and the start of the new sentence). It would be more
+     * efficient to remove only first token (empty string) but this loop guarantees
+     * that all accidental empty strings are removed.
+     *
+     * @param tokens Array of tokens with empty strings.
+     * @return List of tokens without empty strings.
+     */
+    private List<String> removeEmptyStringInSentence(final String[] tokens) {
+        final List<String> listTokens = new ArrayList<String>();
+        for (final String token : tokens) {
+            if (!token.equals("")) {
+                listTokens.add(token);
+            }
+        }
+        return listTokens;
     }
 
 
