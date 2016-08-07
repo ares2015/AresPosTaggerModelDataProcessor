@@ -28,6 +28,9 @@ public class TestDataValidatorImpl implements TestDataValidator {
 
     @Override
     public void validate(String testDataRow, int lineNumber) {
+        LOGGER.info("ENTERING validate method of TestDataValidatorImpl... ");
+        LOGGER.info("*********************************************************************");
+
         LOGGER.info("Validating < " + testDataRow + " > on line " + lineNumber);
 
         if (!(testDataRow.contains("#"))) {
@@ -59,8 +62,6 @@ public class TestDataValidatorImpl implements TestDataValidator {
                 throw new IllegalStateException("EXCEPTION: Comma indexes for tokens and tags are not equal.");
             }
         }
-
-
         if (tokensList.size() != tagsList.size()) {
             LOGGER.log(Level.SEVERE, "EXCEPTION: Test data row < " + testDataRow + " > on line " + lineNumber + " " +
                     " -> number of words in sentence is not equal to number of tags.");
@@ -76,5 +77,8 @@ public class TestDataValidatorImpl implements TestDataValidator {
             }
         }
         LOGGER.info("Validation OK");
+        LOGGER.info("LEAVING validate method of TestDataValidatorImpl... ");
+        LOGGER.info("*********************************************************************");
     }
+
 }

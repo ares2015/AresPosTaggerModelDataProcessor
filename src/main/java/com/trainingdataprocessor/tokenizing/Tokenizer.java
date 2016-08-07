@@ -13,4 +13,6 @@ public interface Tokenizer {
 
     String removeCommaAndDot(final String token);
 
+    String convertListToString(List<String> list);
+
 }

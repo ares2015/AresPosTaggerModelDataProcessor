@@ -48,7 +48,18 @@ public class TestDataRowListFactoryTest {
 
     @Test
     public void testCreateWithSubSentences() {
-
+        List<String> testDataRowStringList = new ArrayList<>();
+        String testDataRowString = "john, harry, mike and bob drink beer in pub#N, N, N AO N V N PR N";
+        testDataRowStringList.add(testDataRowString);
+        List<TestDataRow> testDataRowList = testDataRowListFactory.create(testDataRowStringList);
+        assertEquals(1, testDataRowList.size());
+        assertEquals("john, harry, mike and bob drink beer in pub", testDataRowList.get(0).getSentence());
+        assertEquals("N N N AO N V N PR N", testDataRowList.get(0).getTagsAsString());
+        assertEquals("NNN>NVNIN", testDataRowList.get(0).getEncodedTagsAsString());
+        assertEquals(9, testDataRowList.get(0).getTokensList().size());
+        assertEquals(9, testDataRowList.get(0).getTagsList().size());
+        assertEquals(3, testDataRowList.get(0).getSubSentences().size());
+        assertEquals(3, testDataRowList.get(0).getTagSubPaths().size());
     }
 
 }

@@ -50,6 +50,21 @@ public class TokenizerImpl implements Tokenizer {
         return tokenWithoutComma;
     }
 
+    @Override
+    public String convertListToString(List<String> list) {
+        String newString = "";
+        int i = 0;
+        for (String word : list) {
+            if (i < list.size() - 1) {
+                newString += word + " ";
+            } else {
+                newString += word;
+            }
+            i++;
+        }
+        return newString;
+    }
+
     /**
      * Removes empty String that is located in sentences with index > 0
      * that is created by empty space behind each sentence (space between

@@ -50,4 +50,19 @@ public class TokenizerTest {
         assertEquals("drink", tokenizer.removeCommaAndDot(word));
     }
 
+    @Test
+    public void testConvertListToString() {
+        List<String> tokens = new ArrayList<>();
+        tokens.add("bob");
+        tokens.add("alice");
+        tokens.add("joe");
+        tokens.add("and");
+        tokens.add("mike");
+        tokens.add("are");
+        tokens.add("at");
+        tokens.add("school");
+        assertEquals("bob alice joe and mike are at school", tokenizer.convertListToString(tokens));
+
+    }
+
 }
