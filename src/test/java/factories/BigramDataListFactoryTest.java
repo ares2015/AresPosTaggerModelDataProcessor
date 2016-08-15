@@ -1,9 +1,9 @@
-package bigrams;
+package factories;
 
-import com.trainingdataprocessor.bigrams.BigramDataListGenerator;
-import com.trainingdataprocessor.bigrams.BigramDataListGeneratorImpl;
-import com.trainingdataprocessor.bigrams.BigramProbabilityCalculator;
-import com.trainingdataprocessor.bigrams.BigramProbabilityCalculatorImpl;
+import com.trainingdataprocessor.factories.BigramDataListFactory;
+import com.trainingdataprocessor.factories.BigramDataListFactoryImpl;
+import com.trainingdataprocessor.calculator.BigramProbabilityCalculator;
+import com.trainingdataprocessor.calculator.BigramProbabilityCalculatorImpl;
 import com.trainingdataprocessor.cache.ConstantTagsCache;
 import com.trainingdataprocessor.data.BigramData;
 import com.trainingdataprocessor.database.TrainingDataAccessor;
@@ -19,23 +19,23 @@ import java.util.List;
 import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertEquals;
 
-public class BigramDataListGeneratorTest {
+public class BigramDataListFactoryTest {
 
     ApplicationContext context = new ClassPathXmlApplicationContext("beans.xml");
 
     ConstantTagsCache constantTagsCache = new ConstantTagsCache();
     TrainingDataAccessor trainingDataAccessor = new TrainingDataAccessorMock();
     BigramProbabilityCalculator bigramProbabilityCalculator = new BigramProbabilityCalculatorImpl();
-    BigramDataListGenerator bigramDataListGenerator = new BigramDataListGeneratorImpl(constantTagsCache, trainingDataAccessor, bigramProbabilityCalculator);
+    BigramDataListFactory bigramDataListFactory = new BigramDataListFactoryImpl(constantTagsCache, trainingDataAccessor, bigramProbabilityCalculator);
 
     @Test
-    public void testGenerate(){
+    public void testCreate(){
         List<String> tags = new ArrayList<String>();
         tags.add(Tags.DETERMINER);
         tags.add(Tags.ADJECTIVE);
         tags.add(Tags.NOUN);
         tags.add(Tags.VERB);
-        List<BigramData> bigramDataList = bigramDataListGenerator.generate(tags);
+        List<BigramData> bigramDataList = bigramDataListFactory.create(tags);
 
         assertEquals(3, bigramDataList.size());
 

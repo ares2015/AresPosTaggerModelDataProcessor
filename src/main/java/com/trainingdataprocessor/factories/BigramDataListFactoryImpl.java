@@ -1,5 +1,6 @@
-package com.trainingdataprocessor.bigrams;
+package com.trainingdataprocessor.factories;
 
+import com.trainingdataprocessor.calculator.BigramProbabilityCalculator;
 import com.trainingdataprocessor.cache.ConstantTagsCache;
 import com.trainingdataprocessor.data.BigramData;
 import com.trainingdataprocessor.database.TrainingDataAccessor;
@@ -8,9 +9,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
-public class BigramDataListGeneratorImpl implements BigramDataListGenerator {
+public class BigramDataListFactoryImpl implements BigramDataListFactory {
 
-    private final static Logger LOGGER = Logger.getLogger(BigramDataListGeneratorImpl.class.getName());
+    private final static Logger LOGGER = Logger.getLogger(BigramDataListFactoryImpl.class.getName());
 
     private ConstantTagsCache constantTagsCache;
 
@@ -18,14 +19,14 @@ public class BigramDataListGeneratorImpl implements BigramDataListGenerator {
 
     private BigramProbabilityCalculator bigramProbabilityCalculator;
 
-    public BigramDataListGeneratorImpl(ConstantTagsCache constantTagsCache, TrainingDataAccessor trainingDataAccessor, BigramProbabilityCalculator bigramProbabilityCalculator) {
+    public BigramDataListFactoryImpl(ConstantTagsCache constantTagsCache, TrainingDataAccessor trainingDataAccessor, BigramProbabilityCalculator bigramProbabilityCalculator) {
         this.constantTagsCache = constantTagsCache;
         this.trainingDataAccessor = trainingDataAccessor;
         this.bigramProbabilityCalculator = bigramProbabilityCalculator;
     }
 
-    public List<BigramData> generate(List<String> tags) {
-        LOGGER.info("ENTERING create method of BigramDataListGeneratorImpl... ");
+    public List<BigramData> create(List<String> tags) {
+        LOGGER.info("ENTERING create method of BigramDataListFactoryImpl... ");
         LOGGER.info("*********************************************************************");
         long startTime = System.currentTimeMillis();
         List<BigramData> bigramDataList = new ArrayList<BigramData>();
@@ -49,7 +50,7 @@ public class BigramDataListGeneratorImpl implements BigramDataListGenerator {
         long stopTime = System.currentTimeMillis();
         long elapsedTime = stopTime - startTime;
         LOGGER.info("BigramDataList with size " + bigramDataList.size() + " was created in " + elapsedTime + " miliseconds.");
-        LOGGER.info("LEAVING create method of BigramDataListGeneratorImpl... ");
+        LOGGER.info("LEAVING create method of BigramDataListFactoryImpl... ");
         LOGGER.info("*********************************************************************");
         return bigramDataList;
     }

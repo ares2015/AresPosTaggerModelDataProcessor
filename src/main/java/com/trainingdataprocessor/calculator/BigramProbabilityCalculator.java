@@ -1,4 +1,4 @@
-package com.trainingdataprocessor.bigrams;
+package com.trainingdataprocessor.calculator;
 
 /**
  * Created by Oliver on 8/1/2016.
