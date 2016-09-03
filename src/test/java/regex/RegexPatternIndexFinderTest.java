@@ -18,18 +18,18 @@ public class RegexPatternIndexFinderTest {
 
     @Test
     public void testFind(){
-        String encodedPath = "NNIJNNXXJNINNN";
-        String regexPattern =  "[NJD]+NI[NJD]+N";
+        String encodedPath = "NNI#JNPN$N";
+        String regexPattern =  "[NJD]*NI[#NJD]*[N$][P]?[NJD$]?";
         List<RegexPatternIndexData> regexPatternIndexFinderList = regexPatternIndexFinder.find(encodedPath, regexPattern);
-        assertEquals(2, regexPatternIndexFinderList.size());
+        assertEquals(1, regexPatternIndexFinderList.size());
 
-        assertEquals(0, regexPatternIndexFinderList.get(0).getStartIndex());
-        assertEquals(5, regexPatternIndexFinderList.get(0).getEndIndex() - 1);
-        assertEquals("NNIJNN", regexPatternIndexFinderList.get(0).getPattern());
-
-        assertEquals(8, regexPatternIndexFinderList.get(1).getStartIndex());
-        assertEquals(13, regexPatternIndexFinderList.get(1).getEndIndex() - 1);
-        assertEquals("JNINNN", regexPatternIndexFinderList.get(1).getPattern());
+//        assertEquals(0, regexPatternIndexFinderList.get(0).getStartIndex());
+//        assertEquals(5, regexPatternIndexFinderList.get(0).getEndIndex() - 1);
+//        assertEquals("NNIJNN", regexPatternIndexFinderList.get(0).getPattern());
+//
+//        assertEquals(8, regexPatternIndexFinderList.get(1).getStartIndex());
+//        assertEquals(13, regexPatternIndexFinderList.get(1).getEndIndex() - 1);
+//        assertEquals("JNINNN", regexPatternIndexFinderList.get(1).getPattern());
 
     }
 }
