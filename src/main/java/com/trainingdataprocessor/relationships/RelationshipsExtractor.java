@@ -8,8 +8,8 @@ import java.util.List;
 /**
  * Created by Oliver on 8/31/2016.
  */
-public interface RelationshipsExtractor {
+public interface RelationshipsExtractor<T extends RelationshipData>{
 
-    List<RelationshipData> extract(List<RegexPatternIndexData> patternIndexDataList, List<String> tokens);
+    List<T> extract(List<RegexPatternIndexData> patternIndexDataList, List<String> tokens);
 
 }
