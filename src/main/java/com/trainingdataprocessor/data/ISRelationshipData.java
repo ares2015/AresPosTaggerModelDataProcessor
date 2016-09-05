@@ -23,29 +23,17 @@ public class ISRelationshipData extends RelationshipData {
 
     private String level3object2;
 
-    public ISRelationshipData(boolean isPresentTense, int startIndex, int endIndex, String level1object1,
-                              String level1object2) {
-        this.isPresentTense = isPresentTense;
-        this.startIndex = startIndex;
-        this.endIndex = endIndex;
-        this.level1object1 = level1object1;
-        this.level1object2 = level1object2;
-    }
+    private String level4object1;
 
-    public ISRelationshipData(boolean isPresentTense, int startIndex, int endIndex, String level1object1,
-                              String level1object2, String level2object1, String level2object2) {
-        this.isPresentTense = isPresentTense;
-        this.startIndex = startIndex;
-        this.endIndex = endIndex;
-        this.level1object1 = level1object1;
-        this.level1object2 = level1object2;
-        this.level2object1 = level2object1;
-        this.level2object2 = level2object2;
-    }
+    private String level4object2;
 
-    public ISRelationshipData(boolean isPresentTense, int startIndex, int endIndex, String level1object1,
-                              String level1object2,
-                              String level2object1, String level2object2, String level3object1, String level3object2) {
+    private String level5object1;
+
+    private String level5object2;
+
+    public ISRelationshipData(boolean isPresentTense, int startIndex, int endIndex, String level1object1, String level1object2,
+                              String level2object1, String level2object2, String level3object1, String level3object2,
+                              String level4object1, String level4object2, String level5object1, String level5object2) {
         this.isPresentTense = isPresentTense;
         this.startIndex = startIndex;
         this.endIndex = endIndex;
@@ -55,6 +43,10 @@ public class ISRelationshipData extends RelationshipData {
         this.level2object2 = level2object2;
         this.level3object1 = level3object1;
         this.level3object2 = level3object2;
+        this.level4object1 = level4object1;
+        this.level4object2 = level4object2;
+        this.level5object1 = level5object1;
+        this.level5object2 = level5object2;
     }
 
     public boolean isPresentTense() {
@@ -91,5 +83,21 @@ public class ISRelationshipData extends RelationshipData {
 
     public String getLevel3object2() {
         return level3object2;
+    }
+
+    public String getLevel4object1() {
+        return level4object1;
+    }
+
+    public String getLevel4object2() {
+        return level4object2;
+    }
+
+    public String getLevel5object1() {
+        return level5object1;
+    }
+
+    public String getLevel5object2() {
+        return level5object2;
     }
 }
