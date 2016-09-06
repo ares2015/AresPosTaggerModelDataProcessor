@@ -42,7 +42,8 @@ public class ISRelationshipsExtractor implements RelationshipsExtractor<ISRelati
             List<String> subSentence = tokens.subList(startIndex, endIndex);
 
             IndexesLevelsTenseObject indexesLevelsTenseObject = getIndexesLevelsTenseObject(subSentence);
-
+            extendedSubStringBeforeIsIndex = getSubStringFromZeroToISindex(subSentence, indexesLevelsTenseObject.isIndex);
+            extendedSubStringAfterIsIndex = getSubStringFromISindexToEnd(subSentence, indexesLevelsTenseObject.isIndex);
 
             level1object1 = subSentence.get(indexesLevelsTenseObject.isIndex - 1);
             if (indexesLevelsTenseObject.containsPreposition) {
@@ -51,7 +52,6 @@ public class ISRelationshipsExtractor implements RelationshipsExtractor<ISRelati
                 level1object2 = subSentence.get(subSentence.size() - 1);
             }
             if (indexesLevelsTenseObject.hasLevel2) {
-                extendedSubStringBeforeIsIndex = getSubStringFromZeroToISindex(subSentence, indexesLevelsTenseObject.isIndex);
                 level2object1 = extendedSubStringBeforeIsIndex;
                 if (indexesLevelsTenseObject.containsPreposition) {
                     level2object2 = subSentence.get(indexesLevelsTenseObject.prepositionIndexes.get(0) - 1);
@@ -60,8 +60,11 @@ public class ISRelationshipsExtractor implements RelationshipsExtractor<ISRelati
                 }
             }
             if (indexesLevelsTenseObject.hasLevel3) {
-                level3object1 = extendedSubStringBeforeIsIndex;
-                extendedSubStringAfterIsIndex = getSubStringFromISindexToEnd(subSentence, indexesLevelsTenseObject.isIndex);
+                if (indexesLevelsTenseObject.hasLevel2) {
+                    level3object1 = extendedSubStringBeforeIsIndex;
+                } else {
+                    level3object1 = level1object1;
+                }
                 if (indexesLevelsTenseObject.containsPreposition) {
                     level3object2 = getSubStringFromISindexToPrepositionIndex(subSentence, indexesLevelsTenseObject.isIndex,
                             indexesLevelsTenseObject.prepositionIndexes.get(0));
@@ -70,7 +73,11 @@ public class ISRelationshipsExtractor implements RelationshipsExtractor<ISRelati
                 }
             }
             if (indexesLevelsTenseObject.hasLevel4) {
-                level4object1 = extendedSubStringBeforeIsIndex;
+                if (indexesLevelsTenseObject.hasLevel2) {
+                    level4object1 = extendedSubStringBeforeIsIndex;
+                } else {
+                    level4object1 = level1object1;
+                }
                 if (indexesLevelsTenseObject.hasLevel5) {
                     level4object2 = getSubStringFromISindexToPrepositionIndex(subSentence, indexesLevelsTenseObject.isIndex,
                             indexesLevelsTenseObject.prepositionIndexes.get(1));
@@ -133,17 +140,6 @@ public class ISRelationshipsExtractor implements RelationshipsExtractor<ISRelati
         return subString;
     }
 
-    private String getSubStringFromPrepositionIndexToEnd(List<String> subSentence, IndexesLevelsTenseObject indexesLevelsTenseObject) {
-        String subString = "";
-        for (int i = indexesLevelsTenseObject.prepositionIndexes.get(0); i < subSentence.size() - 1; i++) {
-            if (i < subSentence.size() - 1)
-                subString += subSentence.get(i) + " ";
-            else
-                subString += subSentence.get(i);
-        }
-        return subString;
-    }
-
     private class IndexesLevelsTenseObject {
 
         private int isIndex;
@@ -193,17 +189,19 @@ public class ISRelationshipsExtractor implements RelationshipsExtractor<ISRelati
                 isPresentTense = true;
                 isConstantISFound = true;
             } else if ("was".equals(token) || "were".equals(token)) {
+                isIndex = index;
                 isConstantISFound = true;
             }
-            if (Tags.PREPOSITION.equals(constantWordsCache.getConstantWordsCache().get(token))) {
+            if (Tags.PREPOSITION.equals(constantWordsCache.getConstantWordsCache().get(token)) ||
+                    Tags.TO.equals(constantWordsCache.getConstantWordsCache().get(token))) {
                 containsPreposition = true;
                 prepositionIndexes.add(index);
             }
             index++;
         }
         if (isConstantISFound) {
-            hasLevel2 = subSentenceHasLevel2(index);
-            hasLevel3 = subSentenceHasLevel3(index, subSentence);
+            hasLevel2 = subSentenceHasLevel2(isIndex);
+            hasLevel3 = subSentenceHasLevel3(isIndex, subSentence);
 
             if (prepositionIndexes.size() == 1) {
                 hasLevel4 = true;

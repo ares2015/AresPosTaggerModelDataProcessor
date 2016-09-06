@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -135,6 +136,40 @@ public class ISRelationshipsExtractorTest {
 
         assertEquals("American football", relationshipDataList.get(0).getLevel5object1());
         assertEquals("very popular collective sport in Stanford University in California", relationshipDataList.get(0).getLevel5object2());
+    }
+
+    @Test
+    public void testExtractToVerbED(){
+        List<String> tokens = new ArrayList<>();
+        tokens.add("Vivaldi");
+        tokens.add("was");
+        tokens.add("taught");
+        tokens.add("to");
+        tokens.add("play");
+        tokens.add("violin");
+        tokens.add("by");
+        tokens.add("his");
+        tokens.add("father");
+
+        List<RegexPatternIndexData> isPatternIndexDataList = new ArrayList<>();
+        RegexPatternIndexData regexPatternIndexData = new RegexPatternIndexData("NI$TVNPYN", 0, 8);
+        isPatternIndexDataList.add(regexPatternIndexData);
+
+        List<ISRelationshipData> relationshipDataList = isRelationshipsExtractor.extract(isPatternIndexDataList, tokens);
+
+        assertEquals(1, relationshipDataList.size());
+        assertFalse(relationshipDataList.get(0).isPresentTense());
+        assertEquals("Vivaldi", relationshipDataList.get(0).getLevel1object1());
+        assertEquals("taught", relationshipDataList.get(0).getLevel1object2());
+
+        assertEquals("Vivaldi", relationshipDataList.get(0).getLevel3object1());
+        assertEquals("taught ", relationshipDataList.get(0).getLevel3object2());
+
+        assertEquals("Vivaldi", relationshipDataList.get(0).getLevel4object1());
+        assertEquals("taught to play violin ", relationshipDataList.get(0).getLevel4object2());
+
+        assertEquals("Vivaldi", relationshipDataList.get(0).getLevel5object1());
+        assertEquals("taught to play violin by his father", relationshipDataList.get(0).getLevel5object2());
 
     }
 }
