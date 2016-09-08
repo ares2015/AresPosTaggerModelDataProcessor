@@ -20,165 +20,96 @@ public class ISRelationshipsExtractor implements RelationshipsExtractor<ISRelati
     public List<ISRelationshipData> extract(List<RegexPatternIndexData> isPatternIndexDataList, List<String> tokens) {
         List<ISRelationshipData> relationships = new ArrayList<>();
 
-
         for (RegexPatternIndexData indexData : isPatternIndexDataList) {
-            String level1object1 = "";
-            String level1object2 = "";
-            String level2object1 = "";
-            String level2object2 = "";
-            String level3object1 = "";
-            String level3object2 = "";
-            String level4object1 = "";
-            String level4object2 = "";
-            String level5object1 = "";
-            String level5object2 = "";
-
-            String extendedSubStringBeforeIsIndex = "";
-            String extendedSubStringAfterIsIndex = "";
-
-
+            String atomicSubject;
+            String extendedSubject = null;
+            String atomicPredicate;
+            String extendedPredicate;
+            String prepositionPredicate = null;
             int startIndex = indexData.getStartIndex();
             int endIndex = indexData.getEndIndex() + 1;
             List<String> subSentence = tokens.subList(startIndex, endIndex);
 
             IndexesLevelsTenseObject indexesLevelsTenseObject = getIndexesLevelsTenseObject(subSentence);
-            extendedSubStringBeforeIsIndex = getSubStringFromZeroToISindex(subSentence, indexesLevelsTenseObject.isIndex);
-            extendedSubStringAfterIsIndex = getSubStringFromISindexToEnd(subSentence, indexesLevelsTenseObject.isIndex);
-
-            level1object1 = subSentence.get(indexesLevelsTenseObject.isIndex - 1);
+            atomicSubject = subSentence.get(indexesLevelsTenseObject.isIndex - 1);
+            if (indexesLevelsTenseObject.hasExtendedSubject) {
+                extendedSubject = getExtendedSubject(subSentence, indexesLevelsTenseObject.isIndex);
+            }
             if (indexesLevelsTenseObject.containsPreposition) {
-                level1object2 = subSentence.get(indexesLevelsTenseObject.prepositionIndexes.get(0) - 1);
+                atomicPredicate = subSentence.get(indexesLevelsTenseObject.prepositionIndexes.get(0) - 1);
+                extendedPredicate = getExtendedPredicate(subSentence, indexesLevelsTenseObject.isIndex,
+                        indexesLevelsTenseObject.prepositionIndexes.get(0));
+                prepositionPredicate = getPrepositionPredicate(subSentence, indexesLevelsTenseObject.isIndex);
             } else {
-                level1object2 = subSentence.get(subSentence.size() - 1);
-            }
-            if (indexesLevelsTenseObject.hasLevel2) {
-                level2object1 = extendedSubStringBeforeIsIndex;
-                if (indexesLevelsTenseObject.containsPreposition) {
-                    level2object2 = subSentence.get(indexesLevelsTenseObject.prepositionIndexes.get(0) - 1);
-                } else {
-                    level2object2 = subSentence.get(subSentence.size() - 1);
-                }
-            }
-            if (indexesLevelsTenseObject.hasLevel3) {
-                if (indexesLevelsTenseObject.hasLevel2) {
-                    level3object1 = extendedSubStringBeforeIsIndex;
-                } else {
-                    level3object1 = level1object1;
-                }
-                if (indexesLevelsTenseObject.containsPreposition) {
-                    level3object2 = getSubStringFromISindexToPrepositionIndex(subSentence, indexesLevelsTenseObject.isIndex,
-                            indexesLevelsTenseObject.prepositionIndexes.get(0));
-                } else {
-                    level3object2 = extendedSubStringAfterIsIndex;
-                }
-            }
-            if (indexesLevelsTenseObject.hasLevel4) {
-                if (indexesLevelsTenseObject.hasLevel2) {
-                    level4object1 = extendedSubStringBeforeIsIndex;
-                } else {
-                    level4object1 = level1object1;
-                }
-                if (indexesLevelsTenseObject.hasLevel5) {
-                    level4object2 = getSubStringFromISindexToPrepositionIndex(subSentence, indexesLevelsTenseObject.isIndex,
-                            indexesLevelsTenseObject.prepositionIndexes.get(1));
-                } else {
-                    level4object2 = extendedSubStringAfterIsIndex;
-                }
-            }
-            if (indexesLevelsTenseObject.hasLevel5) {
-                level5object1 = extendedSubStringBeforeIsIndex;
-                level5object2 = extendedSubStringAfterIsIndex;
+                atomicPredicate = subSentence.get(subSentence.size() - 1);
+                extendedPredicate = getExtendedPredicate(subSentence, indexesLevelsTenseObject.isIndex);
             }
             ISRelationshipData isRelationshipData = new ISRelationshipData(indexesLevelsTenseObject.isPresentTense, startIndex, endIndex,
-                    level1object1, level1object2, level2object1, level2object2, level3object1, level3object2, level4object1, level4object2,
-                    level5object1, level5object2);
+                    atomicSubject, extendedSubject, atomicPredicate, extendedPredicate, prepositionPredicate);
 
             relationships.add(isRelationshipData);
-
         }
         return relationships;
     }
 
-    private boolean subSentenceHasLevel2(int isIndex) {
+    private boolean hasExtendedSubject(int isIndex) {
         return isIndex > 1;
     }
 
-    private boolean subSentenceHasLevel3(int isIndex, List<String> subSentence) {
+    private boolean hasExtendedPredicate(int isIndex, List<String> subSentence) {
         return isIndex != subSentence.size() - 2;
     }
 
-    private String getSubStringFromZeroToISindex(List<String> subSentence, int isIndex) {
-        String subString = "";
+    private String getExtendedSubject(List<String> subSentence, int isIndex) {
+        String extendedSubject = "";
         for (int i = 0; i < isIndex; i++) {
             if (i < isIndex - 1)
-                subString += subSentence.get(i) + " ";
+                extendedSubject += subSentence.get(i) + " ";
             else
-                subString += subSentence.get(i);
+                extendedSubject += subSentence.get(i);
         }
-        return subString;
+        return extendedSubject;
     }
 
-    private String getSubStringFromISindexToEnd(List<String> subSentence, int isIndex) {
-        String subString = "";
+    private String getExtendedPredicate(List<String> subSentence, int isIndex) {
+        String extendedPredicate = "";
         for (int i = isIndex + 1; i <= subSentence.size() - 1; i++) {
             if (i < subSentence.size() - 1)
-                subString += subSentence.get(i) + " ";
+                extendedPredicate += subSentence.get(i) + " ";
             else
-                subString += subSentence.get(i);
+                extendedPredicate += subSentence.get(i);
         }
-        return subString;
+        return extendedPredicate;
     }
 
-    private String getSubStringFromISindexToPrepositionIndex(List<String> subSentence, int isIndex, int prepositionIndex) {
-        String subString = "";
+    private String getExtendedPredicate(List<String> subSentence, int isIndex, int prepositionIndex) {
+        String extendedPredicate = "";
         for (int i = isIndex + 1; i < prepositionIndex; i++) {
             if (i < subSentence.size() - 1)
-                subString += subSentence.get(i) + " ";
+                extendedPredicate += subSentence.get(i) + " ";
             else
-                subString += subSentence.get(i);
+                extendedPredicate += subSentence.get(i);
         }
-        return subString;
+        return extendedPredicate;
     }
 
-    private class IndexesLevelsTenseObject {
-
-        private int isIndex;
-
-        boolean containsPreposition;
-
-        private List<Integer> prepositionIndexes;
-
-        private boolean isPresentTense;
-
-        private boolean hasLevel2 = false;
-
-        private boolean hasLevel3 = false;
-
-        private boolean hasLevel4 = false;
-
-        private boolean hasLevel5 = false;
-
-        public IndexesLevelsTenseObject(int isIndex, boolean containsPreposition, List<Integer> prepositionIndexes,
-                                        boolean isPresentTense, boolean hasLevel2, boolean hasLevel3, boolean hasLevel4, boolean hasLevel5) {
-            this.isIndex = isIndex;
-            this.containsPreposition = containsPreposition;
-            this.prepositionIndexes = prepositionIndexes;
-            this.isPresentTense = isPresentTense;
-            this.hasLevel2 = hasLevel2;
-            this.hasLevel3 = hasLevel3;
-            this.hasLevel4 = hasLevel4;
-            this.hasLevel5 = hasLevel5;
+    private String getPrepositionPredicate(List<String> subSentence, int isIndex) {
+        String prepositionPredicate = "";
+        for (int i = isIndex + 1; i <= subSentence.size() - 1; i++) {
+            if (i < subSentence.size() - 1)
+                prepositionPredicate += subSentence.get(i) + " ";
+            else
+                prepositionPredicate += subSentence.get(i);
         }
+        return prepositionPredicate;
     }
 
     private IndexesLevelsTenseObject getIndexesLevelsTenseObject(List<String> subSentence) {
         boolean isConstantISFound = false;
         boolean isPresentTense = false;
         boolean containsPreposition = false;
-        boolean hasLevel2 = false;
-        boolean hasLevel3 = false;
-        boolean hasLevel4 = false;
-        boolean hasLevel5 = false;
+        boolean hasExtendedSubject = false;
+        boolean hasExtendedPredicate = false;
         int index = 0;
         int isIndex = -1;
         List<Integer> prepositionIndexes = new ArrayList<>();
@@ -200,20 +131,39 @@ public class ISRelationshipsExtractor implements RelationshipsExtractor<ISRelati
             index++;
         }
         if (isConstantISFound) {
-            hasLevel2 = subSentenceHasLevel2(isIndex);
-            hasLevel3 = subSentenceHasLevel3(isIndex, subSentence);
+            hasExtendedSubject = hasExtendedSubject(isIndex);
+            hasExtendedPredicate = hasExtendedPredicate(isIndex, subSentence);
 
-            if (prepositionIndexes.size() == 1) {
-                hasLevel4 = true;
-            } else if (prepositionIndexes.size() == 2) {
-                hasLevel4 = true;
-                hasLevel5 = true;
-            }
             return new IndexesLevelsTenseObject(isIndex, containsPreposition, prepositionIndexes, isPresentTense,
-                    hasLevel2, hasLevel3, hasLevel4, hasLevel5);
+                    hasExtendedSubject, hasExtendedPredicate);
         }
 
         throw new IllegalStateException("IS pattern (subsentence) does not contain IS constant word.");
+    }
+
+    private class IndexesLevelsTenseObject {
+
+        private int isIndex;
+
+        boolean containsPreposition;
+
+        private List<Integer> prepositionIndexes;
+
+        private boolean isPresentTense;
+
+        boolean hasExtendedSubject = false;
+
+        boolean hasExtendedPredicate = false;
+
+        IndexesLevelsTenseObject(int isIndex, boolean containsPreposition, List<Integer> prepositionIndexes, boolean isPresentTense,
+                                 boolean hasExtendedSubject, boolean hasExtendedPredicate) {
+            this.isIndex = isIndex;
+            this.containsPreposition = containsPreposition;
+            this.prepositionIndexes = prepositionIndexes;
+            this.isPresentTense = isPresentTense;
+            this.hasExtendedSubject = hasExtendedSubject;
+            this.hasExtendedPredicate = hasExtendedPredicate;
+        }
     }
 
 }

@@ -45,14 +45,12 @@ public class ISRelationshipsExtractorTest {
 
         assertEquals(1, relationshipDataList.size());
         assertTrue(relationshipDataList.get(0).isPresentTense());
-        assertEquals("football", relationshipDataList.get(0).getLevel1object1());
-        assertEquals("sport", relationshipDataList.get(0).getLevel1object2());
+        assertEquals("football", relationshipDataList.get(0).getAtomicSubject());
+        assertEquals("sport", relationshipDataList.get(0).getAtomicPredicate());
 
-        assertEquals("American football", relationshipDataList.get(0).getLevel2object1());
-        assertEquals("sport", relationshipDataList.get(0).getLevel2object2());
+        assertEquals("American football", relationshipDataList.get(0).getExtendedSubject());
 
-        assertEquals("American football", relationshipDataList.get(0).getLevel3object1());
-        assertEquals("very popular collective sport", relationshipDataList.get(0).getLevel3object2());
+        assertEquals("very popular collective sport", relationshipDataList.get(0).getExtendedPredicate());
 
     }
 
@@ -81,17 +79,12 @@ public class ISRelationshipsExtractorTest {
 
         assertEquals(1, relationshipDataList.size());
         assertTrue(relationshipDataList.get(0).isPresentTense());
-        assertEquals("football", relationshipDataList.get(0).getLevel1object1());
-        assertEquals("sport", relationshipDataList.get(0).getLevel1object2());
+        assertEquals("football", relationshipDataList.get(0).getAtomicSubject());
+        assertEquals("sport", relationshipDataList.get(0).getAtomicPredicate());
 
-        assertEquals("American football", relationshipDataList.get(0).getLevel2object1());
-        assertEquals("sport", relationshipDataList.get(0).getLevel2object2());
+        assertEquals("American football", relationshipDataList.get(0).getExtendedSubject());
 
-        assertEquals("American football", relationshipDataList.get(0).getLevel3object1());
-        assertEquals("very popular collective sport ", relationshipDataList.get(0).getLevel3object2());
-
-        assertEquals("American football", relationshipDataList.get(0).getLevel4object1());
-        assertEquals("very popular collective sport in Stanford University", relationshipDataList.get(0).getLevel4object2());
+        assertEquals("very popular collective sport in Stanford University", relationshipDataList.get(0).getPrepositionPredicate());
 
     }
 
@@ -122,20 +115,14 @@ public class ISRelationshipsExtractorTest {
 
         assertEquals(1, relationshipDataList.size());
         assertTrue(relationshipDataList.get(0).isPresentTense());
-        assertEquals("football", relationshipDataList.get(0).getLevel1object1());
-        assertEquals("sport", relationshipDataList.get(0).getLevel1object2());
+        assertEquals("football", relationshipDataList.get(0).getAtomicSubject());
+        assertEquals("sport", relationshipDataList.get(0).getAtomicPredicate());
 
-        assertEquals("American football", relationshipDataList.get(0).getLevel2object1());
-        assertEquals("sport", relationshipDataList.get(0).getLevel2object2());
+        assertEquals("American football", relationshipDataList.get(0).getExtendedSubject());
 
-        assertEquals("American football", relationshipDataList.get(0).getLevel3object1());
-        assertEquals("very popular collective sport ", relationshipDataList.get(0).getLevel3object2());
+        assertEquals("very popular collective sport ", relationshipDataList.get(0).getExtendedPredicate());
 
-        assertEquals("American football", relationshipDataList.get(0).getLevel4object1());
-        assertEquals("very popular collective sport in Stanford University ", relationshipDataList.get(0).getLevel4object2());
-
-        assertEquals("American football", relationshipDataList.get(0).getLevel5object1());
-        assertEquals("very popular collective sport in Stanford University in California", relationshipDataList.get(0).getLevel5object2());
+        assertEquals("very popular collective sport in Stanford University in California", relationshipDataList.get(0).getPrepositionPredicate());
     }
 
     @Test
@@ -159,17 +146,9 @@ public class ISRelationshipsExtractorTest {
 
         assertEquals(1, relationshipDataList.size());
         assertFalse(relationshipDataList.get(0).isPresentTense());
-        assertEquals("Vivaldi", relationshipDataList.get(0).getLevel1object1());
-        assertEquals("taught", relationshipDataList.get(0).getLevel1object2());
-
-        assertEquals("Vivaldi", relationshipDataList.get(0).getLevel3object1());
-        assertEquals("taught ", relationshipDataList.get(0).getLevel3object2());
-
-        assertEquals("Vivaldi", relationshipDataList.get(0).getLevel4object1());
-        assertEquals("taught to play violin ", relationshipDataList.get(0).getLevel4object2());
-
-        assertEquals("Vivaldi", relationshipDataList.get(0).getLevel5object1());
-        assertEquals("taught to play violin by his father", relationshipDataList.get(0).getLevel5object2());
+        assertEquals("Vivaldi", relationshipDataList.get(0).getAtomicSubject());
+        assertEquals("taught", relationshipDataList.get(0).getAtomicPredicate());
+        assertEquals("taught to play violin by his father", relationshipDataList.get(0).getPrepositionPredicate());
 
     }
 }

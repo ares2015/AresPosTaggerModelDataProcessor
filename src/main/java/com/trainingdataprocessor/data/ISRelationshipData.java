@@ -1,5 +1,7 @@
 package com.trainingdataprocessor.data;
 
+import java.util.List;
+
 /**
  * Created by Oliver on 8/31/2016.
  */
@@ -11,42 +13,26 @@ public class ISRelationshipData extends RelationshipData {
 
     private int endIndex;
 
-    private String level1object1;
+    private String atomicSubject;
 
-    private String level1object2;
+    private String extendedSubject;
 
-    private String level2object1;
+    private String atomicPredicate;
 
-    private String level2object2;
+    private String extendedPredicate;
 
-    private String level3object1;
+    private String prepositionPredicate;
 
-    private String level3object2;
-
-    private String level4object1;
-
-    private String level4object2;
-
-    private String level5object1;
-
-    private String level5object2;
-
-    public ISRelationshipData(boolean isPresentTense, int startIndex, int endIndex, String level1object1, String level1object2,
-                              String level2object1, String level2object2, String level3object1, String level3object2,
-                              String level4object1, String level4object2, String level5object1, String level5object2) {
+    public ISRelationshipData(boolean isPresentTense, int startIndex, int endIndex, String atomicSubject,
+                              String extendedSubject, String atomicPredicate, String extendedPredicate, String prepositionPredicate) {
         this.isPresentTense = isPresentTense;
         this.startIndex = startIndex;
         this.endIndex = endIndex;
-        this.level1object1 = level1object1;
-        this.level1object2 = level1object2;
-        this.level2object1 = level2object1;
-        this.level2object2 = level2object2;
-        this.level3object1 = level3object1;
-        this.level3object2 = level3object2;
-        this.level4object1 = level4object1;
-        this.level4object2 = level4object2;
-        this.level5object1 = level5object1;
-        this.level5object2 = level5object2;
+        this.atomicSubject = atomicSubject;
+        this.extendedSubject = extendedSubject;
+        this.atomicPredicate = atomicPredicate;
+        this.extendedPredicate = extendedPredicate;
+        this.prepositionPredicate = prepositionPredicate;
     }
 
     public boolean isPresentTense() {
@@ -61,43 +47,23 @@ public class ISRelationshipData extends RelationshipData {
         return endIndex;
     }
 
-    public String getLevel1object1() {
-        return level1object1;
+    public String getAtomicSubject() {
+        return atomicSubject;
     }
 
-    public String getLevel1object2() {
-        return level1object2;
+    public String getAtomicPredicate() {
+        return atomicPredicate;
     }
 
-    public String getLevel2object1() {
-        return level2object1;
+    public String getExtendedSubject() {
+        return extendedSubject;
     }
 
-    public String getLevel2object2() {
-        return level2object2;
+    public String getExtendedPredicate() {
+        return extendedPredicate;
     }
 
-    public String getLevel3object1() {
-        return level3object1;
-    }
-
-    public String getLevel3object2() {
-        return level3object2;
-    }
-
-    public String getLevel4object1() {
-        return level4object1;
-    }
-
-    public String getLevel4object2() {
-        return level4object2;
-    }
-
-    public String getLevel5object1() {
-        return level5object1;
-    }
-
-    public String getLevel5object2() {
-        return level5object2;
+    public String getPrepositionPredicate() {
+        return prepositionPredicate;
     }
 }
