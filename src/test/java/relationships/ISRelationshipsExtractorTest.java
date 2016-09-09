@@ -149,6 +149,31 @@ public class ISRelationshipsExtractorTest {
         assertEquals("Vivaldi", relationshipDataList.get(0).getAtomicSubject());
         assertEquals("taught", relationshipDataList.get(0).getAtomicPredicate());
         assertEquals("taught to play violin by his father", relationshipDataList.get(0).getPrepositionPredicate());
+    }
+
+    @Test
+    public void testExtractExtendedPrepositionSubject(){
+        List<String> tokens = new ArrayList<>();
+        tokens.add("Fans");
+        tokens.add("of");
+        tokens.add("Spartak");
+        tokens.add("Trnava");
+        tokens.add("are");
+        tokens.add("very");
+        tokens.add("aggresive");
+
+        List<RegexPatternIndexData> isPatternIndexDataList = new ArrayList<>();
+        RegexPatternIndexData regexPatternIndexData = new RegexPatternIndexData("NPNNIJJ", 0, 6);
+        isPatternIndexDataList.add(regexPatternIndexData);
+
+        List<ISRelationshipData> relationshipDataList = isRelationshipsExtractor.extract(isPatternIndexDataList, tokens);
+
+        assertEquals(1, relationshipDataList.size());
+        assertTrue(relationshipDataList.get(0).isPresentTense());
+        assertTrue(relationshipDataList.get(0).getAtomicSubject() == null);
+        assertEquals("Fans of Spartak Trnava", relationshipDataList.get(0).getExtendedSubject());
+        assertEquals("aggresive", relationshipDataList.get(0).getAtomicPredicate());
+        assertEquals("very aggresive", relationshipDataList.get(0).getExtendedPredicate());
 
     }
 }

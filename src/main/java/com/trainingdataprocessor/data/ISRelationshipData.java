@@ -1,7 +1,5 @@
 package com.trainingdataprocessor.data;
 
-import java.util.List;
-
 /**
  * Created by Oliver on 8/31/2016.
  */
@@ -23,47 +21,67 @@ public class ISRelationshipData extends RelationshipData {
 
     private String prepositionPredicate;
 
-    public ISRelationshipData(boolean isPresentTense, int startIndex, int endIndex, String atomicSubject,
-                              String extendedSubject, String atomicPredicate, String extendedPredicate, String prepositionPredicate) {
-        this.isPresentTense = isPresentTense;
-        this.startIndex = startIndex;
-        this.endIndex = endIndex;
-        this.atomicSubject = atomicSubject;
-        this.extendedSubject = extendedSubject;
-        this.atomicPredicate = atomicPredicate;
-        this.extendedPredicate = extendedPredicate;
-        this.prepositionPredicate = prepositionPredicate;
-    }
-
     public boolean isPresentTense() {
         return isPresentTense;
+    }
+
+    public void setPresentTense(boolean presentTense) {
+        isPresentTense = presentTense;
     }
 
     public int getStartIndex() {
         return startIndex;
     }
 
+    public void setStartIndex(int startIndex) {
+        this.startIndex = startIndex;
+    }
+
     public int getEndIndex() {
         return endIndex;
+    }
+
+    public void setEndIndex(int endIndex) {
+        this.endIndex = endIndex;
     }
 
     public String getAtomicSubject() {
         return atomicSubject;
     }
 
-    public String getAtomicPredicate() {
-        return atomicPredicate;
+    public void setAtomicSubject(String atomicSubject) {
+        this.atomicSubject = atomicSubject;
     }
 
     public String getExtendedSubject() {
         return extendedSubject;
     }
 
+    public void setExtendedSubject(String extendedSubject) {
+        this.extendedSubject = extendedSubject;
+    }
+
+    public String getAtomicPredicate() {
+        return atomicPredicate;
+    }
+
+    public void setAtomicPredicate(String atomicPredicate) {
+        this.atomicPredicate = atomicPredicate;
+    }
+
     public String getExtendedPredicate() {
         return extendedPredicate;
     }
 
+    public void setExtendedPredicate(String extendedPredicate) {
+        this.extendedPredicate = extendedPredicate;
+    }
+
     public String getPrepositionPredicate() {
         return prepositionPredicate;
+    }
+
+    public void setPrepositionPredicate(String prepositionPredicate) {
+        this.prepositionPredicate = prepositionPredicate;
     }
 }

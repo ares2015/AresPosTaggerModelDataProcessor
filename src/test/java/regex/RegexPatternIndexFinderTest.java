@@ -19,7 +19,7 @@ public class RegexPatternIndexFinderTest {
     @Test
     public void testFindOK(){
 
-        String regexPattern =  "[NJD]*N[A]?I[#NJD$@]*[PT]?[Y#NJD$V]*[PT]?[Y#NJD$V]*";
+        String regexPattern =  "[#NJD$@]?[PT]?[NJD]*N[A]?I[#NJD$@]*[PT]?[Y#NJD$V]*[PT]?[Y#NJD$V]*";
         List<RegexPatternIndexData> regexPatternIndexFinderList = null;
         String encodedPath = null;
 
@@ -95,6 +95,13 @@ public class RegexPatternIndexFinderTest {
 
         //Vivaldi probably was taught to play the violin by father - NAI$TVDNPN
         encodedPath = "NAI$TVDNPYN";
+        regexPatternIndexFinderList = regexPatternIndexFinder.find(encodedPath, regexPattern);
+        assertEquals(1, regexPatternIndexFinderList.size());
+        assertEquals(encodedPath, regexPatternIndexFinderList.get(0).getPattern());
+        System.out.println(regexPatternIndexFinderList.get(0).getPattern());
+
+        //Fans of Spartak Trnava are very aggresive = NPNNIJJ
+        encodedPath = "NPNNIJJ";
         regexPatternIndexFinderList = regexPatternIndexFinder.find(encodedPath, regexPattern);
         assertEquals(1, regexPatternIndexFinderList.size());
         assertEquals(encodedPath, regexPatternIndexFinderList.get(0).getPattern());
