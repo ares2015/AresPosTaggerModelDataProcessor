@@ -3,10 +3,12 @@ package regex;
 import com.trainingdataprocessor.data.RegexPatternIndexData;
 import com.trainingdataprocessor.regex.RegexPatternIndexFinder;
 import com.trainingdataprocessor.regex.RegexPatternIndexFinderImpl;
+import com.trainingdataprocessor.tags.EncodedTags;
 import org.junit.Test;
 
 import java.util.List;
 
+import static com.trainingdataprocessor.regex.RegexExpressions.*;
 import static org.junit.Assert.assertEquals;
 
 /**
@@ -20,7 +22,9 @@ public class RegexPatternIndexFinderTest {
     public void testFindISRelationshipOK(){
         String sentence = "";
 
-        String regexPattern =  "[#NJD$@]?[PT]?[NJD]*N[A]?I[#NJD$@]*[PT]?[Y#NJD$V]*[PT]?[Y#NJD$V]*[PT]?[Y#NJD$V]*";
+//        String regexPattern =  "[#NJD$@]?[PT]?[NJD]*N[A]?I[#NJD$@]*[PT]?[Y#NJD$V]*[PT]?[Y#NJD$V]*[PT]?[Y#NJD$V]*";
+        String regexPattern = BEFORE_IS_PREPOSITION_PHRASE +  BEFORE_IS_NOUN_PHRASE + EncodedTags.IS_ARE + AFTER_IS_NOUN_PHRASE +
+                AFTER_IS_PREPOSITION_PHRASE + AFTER_IS_PREPOSITION_PHRASE + AFTER_IS_PREPOSITION_PHRASE + AFTER_IS_PREPOSITION_PHRASE;
         List<RegexPatternIndexData> regexPatternIndexFinderList = null;
         String encodedPath = null;
 

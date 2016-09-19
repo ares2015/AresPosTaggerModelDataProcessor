@@ -39,7 +39,7 @@ public class EncodedTags {
 
     public static final String ADVERB = "A";
 
-    public static final String PREPOSITION = "I";
+    public static final String PREPOSITION = "P";
 
     public static final String CONJUNCTION = "U";
 
@@ -47,7 +47,7 @@ public class EncodedTags {
 
     public static final String QUANTIFIER = "Q";
 
-    public static final String IS_ARE = "K";
+    public static final String IS_ARE = "I";
 
     public static final String THERE = "Z";
 

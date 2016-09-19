@@ -41,7 +41,7 @@ public class TestDataRowListFactoryTest {
         assertEquals(1, testDataRowList.size());
         assertEquals("boys drink beer in pub", testDataRowList.get(0).getSentence());
         assertEquals("N V N PR N", testDataRowList.get(0).getTagsAsString());
-        assertEquals("NVNIN", testDataRowList.get(0).getEncodedTagsAsString());
+        assertEquals("NVNPN", testDataRowList.get(0).getEncodedTagsAsString());
         assertEquals(5, testDataRowList.get(0).getTokensList().size());
         assertEquals(5, testDataRowList.get(0).getTagsList().size());
     }
@@ -55,7 +55,7 @@ public class TestDataRowListFactoryTest {
         assertEquals(1, testDataRowList.size());
         assertEquals("john, harry, mike and bob drink beer in pub", testDataRowList.get(0).getSentence());
         assertEquals("N N N AO N V N PR N", testDataRowList.get(0).getTagsAsString());
-        assertEquals("NNN>NVNIN", testDataRowList.get(0).getEncodedTagsAsString());
+        assertEquals("NNN>NVNPN", testDataRowList.get(0).getEncodedTagsAsString());
         assertEquals(9, testDataRowList.get(0).getTokensList().size());
         assertEquals(9, testDataRowList.get(0).getTagsList().size());
         assertEquals(3, testDataRowList.get(0).getSubSentences().size());
