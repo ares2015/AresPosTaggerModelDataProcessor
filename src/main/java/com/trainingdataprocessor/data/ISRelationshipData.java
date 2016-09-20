@@ -19,7 +19,7 @@ public class ISRelationshipData extends RelationshipData {
 
     private String extendedPredicate;
 
-    private String prepositionPredicate;
+    private String prepositionWhDetPredicate;
 
     public boolean isPresentTense() {
         return isPresentTense;
@@ -77,11 +77,11 @@ public class ISRelationshipData extends RelationshipData {
         this.extendedPredicate = extendedPredicate;
     }
 
-    public String getPrepositionPredicate() {
-        return prepositionPredicate;
+    public String getPrepositionWhDetPredicate() {
+        return prepositionWhDetPredicate;
     }
 
-    public void setPrepositionPredicate(String prepositionPredicate) {
-        this.prepositionPredicate = prepositionPredicate;
+    public void setPrepositionWhDetPredicate(String prepositionPredicate) {
+        this.prepositionWhDetPredicate = prepositionPredicate;
     }
 }

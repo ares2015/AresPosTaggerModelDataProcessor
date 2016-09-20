@@ -19,12 +19,12 @@ public class RegexPatternIndexFinderTest {
     private RegexPatternIndexFinder regexPatternIndexFinder = new RegexPatternIndexFinderImpl();
 
     @Test
-    public void testFindISRelationshipOK(){
+    public void testFindISRelationshipWholePatternFound(){
         String sentence = "";
 
 //        String regexPattern =  "[#NJD$@]?[PT]?[NJD]*N[A]?I[#NJD$@]*[PT]?[Y#NJD$V]*[PT]?[Y#NJD$V]*[PT]?[Y#NJD$V]*";
         String regexPattern = BEFORE_IS_PREPOSITION_PHRASE +  BEFORE_IS_NOUN_PHRASE + EncodedTags.IS_ARE + AFTER_IS_NOUN_PHRASE +
-                AFTER_IS_PREPOSITION_PHRASE + AFTER_IS_PREPOSITION_PHRASE + AFTER_IS_PREPOSITION_PHRASE + AFTER_IS_PREPOSITION_PHRASE;
+                AFTER_IS_PREPOSITION_WH_PHRASE + AFTER_IS_PREPOSITION_WH_PHRASE + AFTER_IS_PREPOSITION_WH_PHRASE + AFTER_IS_PREPOSITION_WH_PHRASE;
         List<RegexPatternIndexData> regexPatternIndexFinderList = null;
         String encodedPath = null;
 
@@ -136,10 +136,46 @@ public class RegexPatternIndexFinderTest {
         assertEquals(sentence.split("\\ ").length, encodedPath.length());
         System.out.println(sentence + ": " + regexPatternIndexFinderList.get(0).getPattern());
 
+        sentence = "Johannes Vermeer was a Dutch painter who specialized in domestic interior scenes of middle-class life";
+        encodedPath = "NNIDNNW$PJJNPJN";
+        regexPatternIndexFinderList = regexPatternIndexFinder.find(encodedPath, regexPattern);
+        assertEquals(1, regexPatternIndexFinderList.size());
+        assertEquals(encodedPath, regexPatternIndexFinderList.get(0).getPattern());
+        assertEquals(encodedPath.length(), regexPatternIndexFinderList.get(0).getPattern().length());
+        System.out.println(sentence + ": " + regexPatternIndexFinderList.get(0).getPattern());
+
+        sentence = "Vermeer was a moderately successful provincial genre painter in his lifetime";
+        encodedPath = "NNIDNNW$PJJNPJN";
+        regexPatternIndexFinderList = regexPatternIndexFinder.find(encodedPath, regexPattern);
+        assertEquals(1, regexPatternIndexFinderList.size());
+        assertEquals(encodedPath, regexPatternIndexFinderList.get(0).getPattern());
+        assertEquals(encodedPath.length(), regexPatternIndexFinderList.get(0).getPattern().length());
+        System.out.println(sentence + ": " + regexPatternIndexFinderList.get(0).getPattern());
+
     }
 
     @Test
-    public void testFindISRelationshipNOK(){
+    public void testFindISRelationshipPartialPatternFound() {
+        String sentence = "";
+
+//        String regexPattern =  "[#NJD$@]?[PT]?[NJD]*N[A]?I[#NJD$@]*[PT]?[Y#NJD$V]*[PT]?[Y#NJD$V]*[PT]?[Y#NJD$V]*";
+        String regexPattern = BEFORE_IS_PREPOSITION_PHRASE + BEFORE_IS_NOUN_PHRASE + EncodedTags.IS_ARE + AFTER_IS_NOUN_PHRASE +
+                AFTER_IS_PREPOSITION_WH_PHRASE + AFTER_IS_PREPOSITION_WH_PHRASE + AFTER_IS_PREPOSITION_WH_PHRASE + AFTER_IS_PREPOSITION_WH_PHRASE;
+        List<RegexPatternIndexData> regexPatternIndexFinderList = null;
+        String encodedPath = null;
+
+        sentence = "dog is animal and mammal";
+        encodedPath = "NIN<N";
+        regexPatternIndexFinderList = regexPatternIndexFinder.find(encodedPath, regexPattern);
+        assertEquals(1, regexPatternIndexFinderList.size());
+        assertEquals("NIN", regexPatternIndexFinderList.get(0).getPattern());
+        assertEquals(3, regexPatternIndexFinderList.get(0).getPattern().length());
+        System.out.println(sentence + ": " + regexPatternIndexFinderList.get(0).getPattern());
+
+    }
+
+        @Test
+    public void testFindISRelationshipNoPatternFound(){
         String regexPattern =  "[NJD]*N[A]?I[#NJD$]*[PT]?[Y#NJD$V]*[PT]?[Y#NJD$V]*";
         List<RegexPatternIndexData> regexPatternIndexFinderList = null;
         String encodedPath = null;
@@ -151,7 +187,7 @@ public class RegexPatternIndexFinderTest {
     }
 
     @Test
-    public void testFindVerbRelationshipOK(){
+    public void testFindVerbRelationshipWholePatternFound(){
         String sentence = "";
         String regexPattern =  "[#NJD$@]?[PT]?[NJD]*N[A]?[V$][#NJD$]*[PT]?[Y#NJD$V]*[PT]?[Y#NJD$V]*";
         List<RegexPatternIndexData> regexPatternIndexFinderList = null;

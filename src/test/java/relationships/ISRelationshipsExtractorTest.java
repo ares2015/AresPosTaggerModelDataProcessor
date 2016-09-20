@@ -3,11 +3,11 @@ package relationships;
 import com.trainingdataprocessor.cache.ConstantWordsCache;
 import com.trainingdataprocessor.data.ISRelationshipData;
 import com.trainingdataprocessor.data.RegexPatternIndexData;
-import com.trainingdataprocessor.data.RelationshipData;
 import com.trainingdataprocessor.relationships.ISRelationshipsExtractor;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -84,7 +84,7 @@ public class ISRelationshipsExtractorTest {
 
         assertEquals("American football", relationshipDataList.get(0).getExtendedSubject());
 
-        assertEquals("very popular collective sport in Stanford University", relationshipDataList.get(0).getPrepositionPredicate());
+        assertEquals("very popular collective sport in Stanford University", relationshipDataList.get(0).getPrepositionWhDetPredicate());
 
     }
 
@@ -122,7 +122,7 @@ public class ISRelationshipsExtractorTest {
 
         assertEquals("very popular collective sport ", relationshipDataList.get(0).getExtendedPredicate());
 
-        assertEquals("very popular collective sport in Stanford University in California", relationshipDataList.get(0).getPrepositionPredicate());
+        assertEquals("very popular collective sport in Stanford University in California", relationshipDataList.get(0).getPrepositionWhDetPredicate());
     }
 
     @Test
@@ -148,7 +148,7 @@ public class ISRelationshipsExtractorTest {
         assertFalse(relationshipDataList.get(0).isPresentTense());
         assertEquals("Vivaldi", relationshipDataList.get(0).getAtomicSubject());
         assertEquals("taught", relationshipDataList.get(0).getAtomicPredicate());
-        assertEquals("taught to play violin by his father", relationshipDataList.get(0).getPrepositionPredicate());
+        assertEquals("taught to play violin by his father", relationshipDataList.get(0).getPrepositionWhDetPredicate());
     }
 
     @Test
@@ -174,6 +174,28 @@ public class ISRelationshipsExtractorTest {
         assertEquals("Fans of Spartak Trnava", relationshipDataList.get(0).getExtendedSubject());
         assertEquals("aggresive", relationshipDataList.get(0).getAtomicPredicate());
         assertEquals("very aggresive", relationshipDataList.get(0).getExtendedPredicate());
+    }
+
+    @Test
+    public void testExtractExtendedPrepositionSubjectWithWHdeterminer(){
+        String sentence = "Johannes Vermeer was a Dutch painter who specialized in domestic interior scenes of middle-class life";
+        List<String> tokens = Arrays.asList(sentence.split("\\ "));
+
+        List<RegexPatternIndexData> isPatternIndexDataList = new ArrayList<>();
+        RegexPatternIndexData regexPatternIndexData = new RegexPatternIndexData("NNIDNNW$PJJNPJN", 0, "NNIDNNW$PJJNPJN".length() - 1);
+        isPatternIndexDataList.add(regexPatternIndexData);
+
+        List<ISRelationshipData> relationshipDataList = isRelationshipsExtractor.extract(isPatternIndexDataList, tokens);
+        assertEquals(1, relationshipDataList.size());
+        assertFalse(relationshipDataList.get(0).isPresentTense());
+        assertEquals("Vermeer", relationshipDataList.get(0).getAtomicSubject());
+        assertEquals("Johannes Vermeer", relationshipDataList.get(0).getExtendedSubject());
+        assertEquals("painter", relationshipDataList.get(0).getAtomicPredicate());
+        assertEquals("a Dutch painter ", relationshipDataList.get(0).getExtendedPredicate());
+        assertEquals("a Dutch painter who specialized in domestic interior scenes of middle-class life",
+                relationshipDataList.get(0).getPrepositionWhDetPredicate());
 
     }
+
+
 }
