@@ -60,11 +60,11 @@ public class ISRelationshipsExtractor implements RelationshipsExtractor<ISRelati
 
     private void processPredicate(List<String> subSentence, ISRelationshipData isRelationshipData,
                                   IndexesLevelsTenseObject indexesLevelsTenseObject) {
-        if (indexesLevelsTenseObject.containsAfterISPrepositionWhDet) {
+        if (indexesLevelsTenseObject.containsAfterISPreposition) {
             isRelationshipData.setAtomicPredicate(subSentence.get(indexesLevelsTenseObject.afterISprepositionIndexes.get(0) - 1));
             isRelationshipData.setExtendedPredicate(getExtendedPredicate(subSentence, indexesLevelsTenseObject.isIndex,
                     indexesLevelsTenseObject.afterISprepositionIndexes.get(0)));
-            isRelationshipData.setPrepositionWhDetPredicate(getPrepositionWhDetPredicate(subSentence, indexesLevelsTenseObject.isIndex));
+            isRelationshipData.setPrepositionPredicate(getPrepositionPredicate(subSentence, indexesLevelsTenseObject.isIndex));
         } else {
             isRelationshipData.setAtomicPredicate(subSentence.get(subSentence.size() - 1));
             isRelationshipData.setExtendedPredicate(getExtendedPredicate(subSentence, indexesLevelsTenseObject.isIndex));
@@ -105,28 +105,28 @@ public class ISRelationshipsExtractor implements RelationshipsExtractor<ISRelati
         return extendedPredicate;
     }
 
-    private String getPrepositionWhDetPredicate(List<String> subSentence, int isIndex) {
-        String prepositionWhDetPredicate = "";
+    private String getPrepositionPredicate(List<String> subSentence, int isIndex) {
+        String prepositionPredicate = "";
         for (int i = isIndex + 1; i <= subSentence.size() - 1; i++) {
             if (i < subSentence.size() - 1)
-                prepositionWhDetPredicate += subSentence.get(i) + " ";
+                prepositionPredicate += subSentence.get(i) + " ";
             else
-                prepositionWhDetPredicate += subSentence.get(i);
+                prepositionPredicate += subSentence.get(i);
         }
-        return prepositionWhDetPredicate;
+        return prepositionPredicate;
     }
 
     private IndexesLevelsTenseObject getIndexesLevelsTenseObject(List<String> subSentence) {
         boolean isConstantISFound = false;
         boolean isPresentTense = false;
         boolean containsBeforeISPreposition = false;
-        boolean containsAfterISPrepositionWhDet = false;
+        boolean containsAfterISPreposition = false;
         boolean hasExtendedSubject = false;
         boolean hasExtendedPredicate = false;
         int index = 0;
         int isIndex = -1;
         List<Integer> beforeISprepositionIndexes = new ArrayList<>();
-        List<Integer> afterISprepositionWhDetIndexes = new ArrayList<>();
+        List<Integer> afterISprepositionIndexes = new ArrayList<>();
 
         for (String token : subSentence) {
             if ("is".equals(token) || "are".equals(token)) {
@@ -138,11 +138,10 @@ public class ISRelationshipsExtractor implements RelationshipsExtractor<ISRelati
                 isConstantISFound = true;
             }
             if (Tags.PREPOSITION.equals(constantWordsCache.getConstantWordsCache().get(token)) ||
-                    Tags.TO.equals(constantWordsCache.getConstantWordsCache().get(token)) ||
-                    Tags.WH_DETERMINER.equals(constantWordsCache.getConstantWordsCache().get(token))) {
+                    Tags.TO.equals(constantWordsCache.getConstantWordsCache().get(token))) {
                 if (isConstantISFound) {
-                    containsAfterISPrepositionWhDet = true;
-                    afterISprepositionWhDetIndexes.add(index);
+                    containsAfterISPreposition = true;
+                    afterISprepositionIndexes.add(index);
                 } else {
                     containsBeforeISPreposition = true;
                     beforeISprepositionIndexes.add(index);
@@ -154,8 +153,8 @@ public class ISRelationshipsExtractor implements RelationshipsExtractor<ISRelati
             hasExtendedSubject = hasExtendedSubject(isIndex);
             hasExtendedPredicate = hasExtendedPredicate(isIndex, subSentence);
 
-            return new IndexesLevelsTenseObject(isIndex, containsBeforeISPreposition, containsAfterISPrepositionWhDet,
-                    beforeISprepositionIndexes, afterISprepositionWhDetIndexes, isPresentTense,
+            return new IndexesLevelsTenseObject(isIndex, containsBeforeISPreposition, containsAfterISPreposition,
+                    beforeISprepositionIndexes, afterISprepositionIndexes, isPresentTense,
                     hasExtendedSubject, hasExtendedPredicate);
         }
 
@@ -168,7 +167,7 @@ public class ISRelationshipsExtractor implements RelationshipsExtractor<ISRelati
 
         private boolean containsBeforeISPreposition;
 
-        private boolean containsAfterISPrepositionWhDet;
+        private boolean containsAfterISPreposition;
 
         private List<Integer> beforeISprepositionIndexes;
 
@@ -180,13 +179,13 @@ public class ISRelationshipsExtractor implements RelationshipsExtractor<ISRelati
 
         boolean hasExtendedPredicate = false;
 
-        IndexesLevelsTenseObject(int isIndex, boolean containsBeforeISPreposition, boolean containsAfterISPrepositionWhDet,
+        IndexesLevelsTenseObject(int isIndex, boolean containsBeforeISPreposition, boolean containsAfterISPreposition,
                                  List<Integer> beforeISprepositionIndexes,
                                  List<Integer> afterISprepositionIndexes, boolean isPresentTense,
                                  boolean hasExtendedSubject, boolean hasExtendedPredicate) {
             this.isIndex = isIndex;
             this.containsBeforeISPreposition = containsBeforeISPreposition;
-            this.containsAfterISPrepositionWhDet = containsAfterISPrepositionWhDet;
+            this.containsAfterISPreposition = containsAfterISPreposition;
             this.beforeISprepositionIndexes = beforeISprepositionIndexes;
             this.afterISprepositionIndexes = afterISprepositionIndexes;
             this.isPresentTense = isPresentTense;

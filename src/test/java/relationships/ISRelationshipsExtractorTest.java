@@ -84,7 +84,7 @@ public class ISRelationshipsExtractorTest {
 
         assertEquals("American football", relationshipDataList.get(0).getExtendedSubject());
 
-        assertEquals("very popular collective sport in Stanford University", relationshipDataList.get(0).getPrepositionWhDetPredicate());
+        assertEquals("very popular collective sport in Stanford University", relationshipDataList.get(0).getPrepositionPredicate());
 
     }
 
@@ -122,7 +122,7 @@ public class ISRelationshipsExtractorTest {
 
         assertEquals("very popular collective sport ", relationshipDataList.get(0).getExtendedPredicate());
 
-        assertEquals("very popular collective sport in Stanford University in California", relationshipDataList.get(0).getPrepositionWhDetPredicate());
+        assertEquals("very popular collective sport in Stanford University in California", relationshipDataList.get(0).getPrepositionPredicate());
     }
 
     @Test
@@ -148,7 +148,7 @@ public class ISRelationshipsExtractorTest {
         assertFalse(relationshipDataList.get(0).isPresentTense());
         assertEquals("Vivaldi", relationshipDataList.get(0).getAtomicSubject());
         assertEquals("taught", relationshipDataList.get(0).getAtomicPredicate());
-        assertEquals("taught to play violin by his father", relationshipDataList.get(0).getPrepositionWhDetPredicate());
+        assertEquals("taught to play violin by his father", relationshipDataList.get(0).getPrepositionPredicate());
     }
 
     @Test
@@ -182,7 +182,7 @@ public class ISRelationshipsExtractorTest {
         List<String> tokens = Arrays.asList(sentence.split("\\ "));
 
         List<RegexPatternIndexData> isPatternIndexDataList = new ArrayList<>();
-        RegexPatternIndexData regexPatternIndexData = new RegexPatternIndexData("NNIDNNW$PJJNPJN", 0, "NNIDNNW$PJJNPJN".length() - 1);
+        RegexPatternIndexData regexPatternIndexData = new RegexPatternIndexData("NNIDNN", 0, "NNIDNN".length() - 1);
         isPatternIndexDataList.add(regexPatternIndexData);
 
         List<ISRelationshipData> relationshipDataList = isRelationshipsExtractor.extract(isPatternIndexDataList, tokens);
@@ -191,10 +191,7 @@ public class ISRelationshipsExtractorTest {
         assertEquals("Vermeer", relationshipDataList.get(0).getAtomicSubject());
         assertEquals("Johannes Vermeer", relationshipDataList.get(0).getExtendedSubject());
         assertEquals("painter", relationshipDataList.get(0).getAtomicPredicate());
-        assertEquals("a Dutch painter ", relationshipDataList.get(0).getExtendedPredicate());
-        assertEquals("a Dutch painter who specialized in domestic interior scenes of middle-class life",
-                relationshipDataList.get(0).getPrepositionWhDetPredicate());
-
+        assertEquals("a Dutch painter", relationshipDataList.get(0).getExtendedPredicate());
     }
 
 

@@ -24,7 +24,7 @@ public class RegexPatternIndexFinderTest {
 
 //        String regexPattern =  "[#NJD$@]?[PT]?[NJD]*N[A]?I[#NJD$@]*[PT]?[Y#NJD$V]*[PT]?[Y#NJD$V]*[PT]?[Y#NJD$V]*";
         String regexPattern = BEFORE_IS_PREPOSITION_PHRASE +  BEFORE_IS_NOUN_PHRASE + EncodedTags.IS_ARE + AFTER_IS_NOUN_PHRASE +
-                AFTER_IS_PREPOSITION_WH_PHRASE + AFTER_IS_PREPOSITION_WH_PHRASE + AFTER_IS_PREPOSITION_WH_PHRASE + AFTER_IS_PREPOSITION_WH_PHRASE;
+                AFTER_IS_PREPOSITION_PHRASE + AFTER_IS_PREPOSITION_PHRASE + AFTER_IS_PREPOSITION_PHRASE + AFTER_IS_PREPOSITION_PHRASE;
         List<RegexPatternIndexData> regexPatternIndexFinderList = null;
         String encodedPath = null;
 
@@ -136,16 +136,16 @@ public class RegexPatternIndexFinderTest {
         assertEquals(sentence.split("\\ ").length, encodedPath.length());
         System.out.println(sentence + ": " + regexPatternIndexFinderList.get(0).getPattern());
 
-        sentence = "Johannes Vermeer was a Dutch painter who specialized in domestic interior scenes of middle-class life";
-        encodedPath = "NNIDNNW$PJJNPJN";
+        sentence = "Vermeer was a moderately successful provincial genre painter in his lifetime";
+        encodedPath = "NIDAJJNN";
         regexPatternIndexFinderList = regexPatternIndexFinder.find(encodedPath, regexPattern);
         assertEquals(1, regexPatternIndexFinderList.size());
         assertEquals(encodedPath, regexPatternIndexFinderList.get(0).getPattern());
         assertEquals(encodedPath.length(), regexPatternIndexFinderList.get(0).getPattern().length());
         System.out.println(sentence + ": " + regexPatternIndexFinderList.get(0).getPattern());
 
-        sentence = "Vermeer was a moderately successful provincial genre painter in his lifetime";
-        encodedPath = "NNIDNNW$PJJNPJN";
+        sentence  = "Vermeer was rediscovered by Gustav Friedrich Waagen nn the 19th century";
+        encodedPath = "NI$PNNNPD#N";
         regexPatternIndexFinderList = regexPatternIndexFinder.find(encodedPath, regexPattern);
         assertEquals(1, regexPatternIndexFinderList.size());
         assertEquals(encodedPath, regexPatternIndexFinderList.get(0).getPattern());
@@ -160,7 +160,7 @@ public class RegexPatternIndexFinderTest {
 
 //        String regexPattern =  "[#NJD$@]?[PT]?[NJD]*N[A]?I[#NJD$@]*[PT]?[Y#NJD$V]*[PT]?[Y#NJD$V]*[PT]?[Y#NJD$V]*";
         String regexPattern = BEFORE_IS_PREPOSITION_PHRASE + BEFORE_IS_NOUN_PHRASE + EncodedTags.IS_ARE + AFTER_IS_NOUN_PHRASE +
-                AFTER_IS_PREPOSITION_WH_PHRASE + AFTER_IS_PREPOSITION_WH_PHRASE + AFTER_IS_PREPOSITION_WH_PHRASE + AFTER_IS_PREPOSITION_WH_PHRASE;
+                AFTER_IS_PREPOSITION_PHRASE + AFTER_IS_PREPOSITION_PHRASE + AFTER_IS_PREPOSITION_PHRASE + AFTER_IS_PREPOSITION_PHRASE;
         List<RegexPatternIndexData> regexPatternIndexFinderList = null;
         String encodedPath = null;
 
@@ -170,6 +170,22 @@ public class RegexPatternIndexFinderTest {
         assertEquals(1, regexPatternIndexFinderList.size());
         assertEquals("NIN", regexPatternIndexFinderList.get(0).getPattern());
         assertEquals(3, regexPatternIndexFinderList.get(0).getPattern().length());
+        System.out.println(sentence + ": " + regexPatternIndexFinderList.get(0).getPattern());
+
+        sentence = "Johannes Vermeer was a Dutch painter who specialized in domestic interior scenes of middle-class life";
+        encodedPath = "NNIDNNW$PJJNPJN";
+        regexPatternIndexFinderList = regexPatternIndexFinder.find(encodedPath, regexPattern);
+        assertEquals(1, regexPatternIndexFinderList.size());
+        assertEquals("NNIDNN", regexPatternIndexFinderList.get(0).getPattern());
+        assertEquals("NNIDNN".length(), regexPatternIndexFinderList.get(0).getPattern().length());
+        System.out.println(sentence + ": " + regexPatternIndexFinderList.get(0).getPattern());
+
+        sentence = "Wayne Gretzky was hockey player who was the best of all";
+        encodedPath = "NNINNWIDJPQ";
+        regexPatternIndexFinderList = regexPatternIndexFinder.find(encodedPath, regexPattern);
+        assertEquals(1, regexPatternIndexFinderList.size());
+        assertEquals("NNINN", regexPatternIndexFinderList.get(0).getPattern());
+        assertEquals("NNINN".length(), regexPatternIndexFinderList.get(0).getPattern().length());
         System.out.println(sentence + ": " + regexPatternIndexFinderList.get(0).getPattern());
 
     }
