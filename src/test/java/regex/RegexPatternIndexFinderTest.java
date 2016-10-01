@@ -186,13 +186,37 @@ public class RegexPatternIndexFinderTest {
 
     @Test
     public void testFindISRelationshipNoPatternFound() {
-        String regexPattern = "[NJD]*N[A]?I[#NJD$]*[PT]?[Y#NJD$V]*[PT]?[Y#NJD$V]*";
         List<RegexPatternIndexData> regexPatternIndexFinderList = null;
         String encodedPath = null;
 
         //gray wolf eats meat
         encodedPath = "JNVN";
         regexPatternIndexFinderList = regexPatternIndexFinder.find(encodedPath, IS_RELATIONSHIP_PATTERN);
+        assertEquals(0, regexPatternIndexFinderList.size());
+    }
+
+    @Test
+    public void testFindVerbRelationshipNoPatternFound(){
+        String sentence = "";
+        List<RegexPatternIndexData> regexPatternIndexFinderList = null;
+        String encodedPath = null;
+
+        //John can speak Spanish
+        sentence = "John can speak Spanish";
+        encodedPath = "NMVN";
+        regexPatternIndexFinderList = regexPatternIndexFinder.find(encodedPath, VERB_RELATIONSHIP_PATTERN);
+        assertEquals(0, regexPatternIndexFinderList.size());
+
+        //John can speak Spanish fluently
+        sentence = "John can speak Spanish fluently";
+        encodedPath = "NMVNA";
+        regexPatternIndexFinderList = regexPatternIndexFinder.find(encodedPath, VERB_RELATIONSHIP_PATTERN);
+        assertEquals(0, regexPatternIndexFinderList.size());
+
+        //John can speak Spanish fluently
+        sentence = "John can fluently speak Spanish";
+        encodedPath = "NMVAN";
+        regexPatternIndexFinderList = regexPatternIndexFinder.find(encodedPath, VERB_RELATIONSHIP_PATTERN);
         assertEquals(0, regexPatternIndexFinderList.size());
     }
 
@@ -224,6 +248,41 @@ public class RegexPatternIndexFinderTest {
         sentence = "Fans of Russia attacked English fans at European Championships";
         encodedPath = "NPN$NNPNN";
         regexPatternIndexFinderList = regexPatternIndexFinder.find(encodedPath, VERB_RELATIONSHIP_PATTERN);
+        assertEquals(1, regexPatternIndexFinderList.size());
+        assertEquals(encodedPath, regexPatternIndexFinderList.get(0).getPattern());
+        assertEquals(sentence.split("\\ ").length, encodedPath.length());
+        System.out.println(sentence + ": " + regexPatternIndexFinderList.get(0).getPattern());
+
+    }
+
+    @Test
+    public void testFindModalVerbRelationshipWholePatternFound() {
+        String sentence = "";
+        List<RegexPatternIndexData> regexPatternIndexFinderList = null;
+        String encodedPath = null;
+
+        //John can speak Spanish
+        sentence = "John can speak Spanish";
+        encodedPath = "NMVN";
+        regexPatternIndexFinderList = regexPatternIndexFinder.find(encodedPath, MODAL_VERB_RELATIONSHIP_PATTERN);
+        assertEquals(1, regexPatternIndexFinderList.size());
+        assertEquals(encodedPath, regexPatternIndexFinderList.get(0).getPattern());
+        assertEquals(sentence.split("\\ ").length, encodedPath.length());
+        System.out.println(sentence + ": " + regexPatternIndexFinderList.get(0).getPattern());
+
+        //John can speak Spanish fluently
+        sentence = "John can speak Spanish fluently";
+        encodedPath = "NMVNA";
+        regexPatternIndexFinderList = regexPatternIndexFinder.find(encodedPath, MODAL_VERB_RELATIONSHIP_PATTERN);
+        assertEquals(1, regexPatternIndexFinderList.size());
+        assertEquals(encodedPath, regexPatternIndexFinderList.get(0).getPattern());
+        assertEquals(sentence.split("\\ ").length, encodedPath.length());
+        System.out.println(sentence + ": " + regexPatternIndexFinderList.get(0).getPattern());
+
+        //John can speak Spanish fluently
+        sentence = "John can fluently speak Spanish";
+        encodedPath = "NMVAN";
+        regexPatternIndexFinderList = regexPatternIndexFinder.find(encodedPath, MODAL_VERB_RELATIONSHIP_PATTERN);
         assertEquals(1, regexPatternIndexFinderList.size());
         assertEquals(encodedPath, regexPatternIndexFinderList.get(0).getPattern());
         assertEquals(sentence.split("\\ ").length, encodedPath.length());
