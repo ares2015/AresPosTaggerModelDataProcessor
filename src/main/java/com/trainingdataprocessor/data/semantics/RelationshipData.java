@@ -1,4 +1,4 @@
-package com.trainingdataprocessor.data;
+package com.trainingdataprocessor.data.semantics;
 
 /**
  * Created by Oliver on 8/31/2016.

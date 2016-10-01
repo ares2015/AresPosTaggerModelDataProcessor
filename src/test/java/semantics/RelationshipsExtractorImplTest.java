@@ -1,9 +1,11 @@
 package semantics;
 
 import com.trainingdataprocessor.cache.ConstantWordsCache;
-import com.trainingdataprocessor.data.RelationshipData;
+import com.trainingdataprocessor.data.semantics.RelationshipData;
 import com.trainingdataprocessor.data.RegexPatternIndexData;
 import com.trainingdataprocessor.semantics.RelationshipsExtractorImpl;
+import com.trainingdataprocessor.semantics.SemanticalConstantTagAnalyser;
+import com.trainingdataprocessor.semantics.SemanticalConstantTagAnalyserImpl;
 import com.trainingdataprocessor.tags.EncodedTags;
 import org.junit.Test;
 
@@ -22,10 +24,12 @@ public class RelationshipsExtractorImplTest {
 
     private ConstantWordsCache constantWordsCache = new ConstantWordsCache();
 
+    private SemanticalConstantTagAnalyser semanticalConstantTagAnalyser = new SemanticalConstantTagAnalyserImpl(constantWordsCache);
+
 
     @Test
     public void testISrelationshipExtractNoPrepositions() {
-        RelationshipsExtractorImpl relationshipsExtractorImpl = new RelationshipsExtractorImpl(constantWordsCache, EncodedTags.IS_ARE);
+        RelationshipsExtractorImpl relationshipsExtractorImpl = new RelationshipsExtractorImpl(EncodedTags.IS_ARE, semanticalConstantTagAnalyser);
 
         List<String> encodedTags = new ArrayList<String>();
         encodedTags.add(EncodedTags.NOUN);
@@ -67,7 +71,7 @@ public class RelationshipsExtractorImplTest {
 
     @Test
     public void testISrelationshipExtractOnePreposition() {
-        RelationshipsExtractorImpl relationshipsExtractorImpl = new RelationshipsExtractorImpl(constantWordsCache, EncodedTags.IS_ARE);
+        RelationshipsExtractorImpl relationshipsExtractorImpl = new RelationshipsExtractorImpl(EncodedTags.IS_ARE, semanticalConstantTagAnalyser);
 
         List<String> encodedTags = new ArrayList<String>();
         encodedTags.add(EncodedTags.NOUN);
@@ -115,7 +119,7 @@ public class RelationshipsExtractorImplTest {
 
     @Test
     public void testISrelationshipExtractTwoPrepositions() {
-        RelationshipsExtractorImpl relationshipsExtractorImpl = new RelationshipsExtractorImpl(constantWordsCache, EncodedTags.IS_ARE);
+        RelationshipsExtractorImpl relationshipsExtractorImpl = new RelationshipsExtractorImpl(EncodedTags.IS_ARE, semanticalConstantTagAnalyser);
 
         List<String> encodedTags = new ArrayList<String>();
         encodedTags.add(EncodedTags.NOUN);
@@ -165,7 +169,7 @@ public class RelationshipsExtractorImplTest {
 
     @Test
     public void testISrelationshipExtractToVerbED() {
-        RelationshipsExtractorImpl relationshipsExtractorImpl = new RelationshipsExtractorImpl(constantWordsCache, EncodedTags.IS_ARE);
+        RelationshipsExtractorImpl relationshipsExtractorImpl = new RelationshipsExtractorImpl(EncodedTags.IS_ARE, semanticalConstantTagAnalyser);
 
         List<String> encodedTags = new ArrayList<String>();
         encodedTags.add(EncodedTags.NOUN);
@@ -204,7 +208,7 @@ public class RelationshipsExtractorImplTest {
 
     @Test
     public void testISrelationshipExtractExtendedPrepositionSubject() {
-        RelationshipsExtractorImpl relationshipsExtractorImpl = new RelationshipsExtractorImpl(constantWordsCache, EncodedTags.IS_ARE);
+        RelationshipsExtractorImpl relationshipsExtractorImpl = new RelationshipsExtractorImpl(EncodedTags.IS_ARE, semanticalConstantTagAnalyser);
 
         List<String> encodedTags = new ArrayList<String>();
         encodedTags.add(EncodedTags.NOUN);
@@ -240,7 +244,7 @@ public class RelationshipsExtractorImplTest {
 
     @Test
     public void testISrelationshipExtractExtendedPrepositionSubjectWithWHdeterminer() {
-        RelationshipsExtractorImpl relationshipsExtractorImpl = new RelationshipsExtractorImpl(constantWordsCache, EncodedTags.IS_ARE);
+        RelationshipsExtractorImpl relationshipsExtractorImpl = new RelationshipsExtractorImpl(EncodedTags.IS_ARE, semanticalConstantTagAnalyser);
 
         List<String> encodedTags = new ArrayList<String>();
         encodedTags.add(EncodedTags.NOUN);
@@ -269,7 +273,7 @@ public class RelationshipsExtractorImplTest {
 
     @Test
     public void testVerbRelationshipBasic(){
-        RelationshipsExtractorImpl relationshipsExtractorImpl = new RelationshipsExtractorImpl(constantWordsCache, EncodedTags.VERB);
+        RelationshipsExtractorImpl relationshipsExtractorImpl = new RelationshipsExtractorImpl(EncodedTags.VERB, semanticalConstantTagAnalyser);
 
         List<String> encodedTags = new ArrayList<String>();
         encodedTags.add(EncodedTags.ADJECTIVE);
