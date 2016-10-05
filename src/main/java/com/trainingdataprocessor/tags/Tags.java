@@ -52,4 +52,6 @@ public class Tags {
     public static final String HERE = "HR";
 
     public static final String AND_OR = "AO";
+
+    public static final String DO = "DO";
 }

@@ -55,4 +55,7 @@ public class EncodedTags {
 
     public static final String AND_OR = ">";
 
+    public static final String DO = "L";
+
+
 }

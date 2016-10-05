@@ -65,9 +65,13 @@ public class ConstantWordsCache {
         constantWordsCache.put("too",Tags.ADVERB);
 
         constantWordsCache.put("is",Tags.IS_ARE);
+        constantWordsCache.put("isn't",Tags.IS_ARE);
         constantWordsCache.put("are",Tags.IS_ARE);
+        constantWordsCache.put("aren't",Tags.IS_ARE);
         constantWordsCache.put("was",Tags.IS_ARE);
+        constantWordsCache.put("wasn't",Tags.IS_ARE);
         constantWordsCache.put("were",Tags.IS_ARE);
+        constantWordsCache.put("weren't",Tags.IS_ARE);
         constantWordsCache.put("be",Tags.IS_ARE);
         constantWordsCache.put("been",Tags.IS_ARE);
         constantWordsCache.put("being",Tags.IS_ARE);
@@ -210,8 +214,6 @@ public class ConstantWordsCache {
         constantWordsCache.put("came",Tags.VERB_ED);
         constantWordsCache.put("dealt",Tags.VERB_ED);
         constantWordsCache.put("dug",Tags.VERB_ED);
-        constantWordsCache.put("did",Tags.VERB_ED);
-        constantWordsCache.put("done",Tags.VERB_ED);
         constantWordsCache.put("drew",Tags.VERB_ED);
         constantWordsCache.put("drawn",Tags.VERB_ED);
         constantWordsCache.put("dreamt",Tags.VERB_ED);
@@ -621,5 +623,14 @@ public class ConstantWordsCache {
         constantWordsCache.put("wrung",Tags.VERB_ED);
         constantWordsCache.put("wrote",Tags.VERB_ED);
         constantWordsCache.put("written",Tags.VERB_ED);
+
+        constantWordsCache.put("do", Tags.DO);
+        constantWordsCache.put("does", Tags.DO);
+        constantWordsCache.put("don't", Tags.DO);
+        constantWordsCache.put("doesn't", Tags.DO);
+        constantWordsCache.put("did",Tags.VERB_ED);
+        constantWordsCache.put("didn't ",Tags.DO);
+        constantWordsCache.put("done",Tags.DO);
+
     }
 }

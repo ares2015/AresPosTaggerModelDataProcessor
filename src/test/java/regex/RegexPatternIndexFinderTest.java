@@ -3,7 +3,6 @@ package regex;
 import com.trainingdataprocessor.data.RegexPatternIndexData;
 import com.trainingdataprocessor.regex.RegexPatternIndexFinder;
 import com.trainingdataprocessor.regex.RegexPatternIndexFinderImpl;
-import com.trainingdataprocessor.tags.EncodedTags;
 import org.junit.Test;
 
 import java.util.List;
@@ -152,6 +151,41 @@ public class RegexPatternIndexFinderTest {
     }
 
     @Test
+    public void testFindISNOTRelationshipWholePatternFound() {
+        String sentence = "";
+
+        List<RegexPatternIndexData> regexPatternIndexFinderList = null;
+        String encodedPath = null;
+
+        //dog is animal
+        sentence = "stone is not animal";
+        encodedPath = "NION";
+        regexPatternIndexFinderList = regexPatternIndexFinder.find(encodedPath, IS_NOT_RELATIONSHIP_PATTERN);
+        assertEquals(1, regexPatternIndexFinderList.size());
+        assertEquals(encodedPath, regexPatternIndexFinderList.get(0).getPattern());
+        assertEquals(sentence.split("\\ ").length, encodedPath.length());
+        System.out.println(sentence + ": " + regexPatternIndexFinderList.get(0).getPattern());
+
+        //John is his son
+        sentence = "John is not his son";
+        encodedPath = "NIOYN";
+        regexPatternIndexFinderList = regexPatternIndexFinder.find(encodedPath, IS_NOT_RELATIONSHIP_PATTERN);
+        assertEquals(1, regexPatternIndexFinderList.size());
+        assertEquals(encodedPath, regexPatternIndexFinderList.get(0).getPattern());
+        assertEquals(sentence.split("\\ ").length, encodedPath.length());
+        System.out.println(sentence + ": " + regexPatternIndexFinderList.get(0).getPattern());
+
+        //gray wolf is wild animal
+        sentence = "gray wolf is not home animal";
+        encodedPath = "JNIOJN";
+        regexPatternIndexFinderList = regexPatternIndexFinder.find(encodedPath, IS_NOT_RELATIONSHIP_PATTERN);
+        assertEquals(1, regexPatternIndexFinderList.size());
+        assertEquals(encodedPath, regexPatternIndexFinderList.get(0).getPattern());
+        assertEquals(sentence.split("\\ ").length, encodedPath.length());
+        System.out.println(sentence + ": " + regexPatternIndexFinderList.get(0).getPattern());
+    }
+
+    @Test
     public void testFindISRelationshipPartialPatternFound() {
         String sentence = "";
 
@@ -218,6 +252,38 @@ public class RegexPatternIndexFinderTest {
         encodedPath = "NMVAN";
         regexPatternIndexFinderList = regexPatternIndexFinder.find(encodedPath, VERB_RELATIONSHIP_PATTERN);
         assertEquals(0, regexPatternIndexFinderList.size());
+
+        sentence = "John don't speak Spanish";
+        encodedPath = "NLVN";
+        regexPatternIndexFinderList = regexPatternIndexFinder.find(encodedPath, VERB_RELATIONSHIP_PATTERN);
+        assertEquals(0, regexPatternIndexFinderList.size());
+
+        sentence = "John don't speak Spanish fluently";
+        encodedPath = "NLVNA";
+        regexPatternIndexFinderList = regexPatternIndexFinder.find(encodedPath, VERB_RELATIONSHIP_PATTERN);
+        assertEquals(0, regexPatternIndexFinderList.size());
+
+        sentence = "John don't fluently speak Spanish";
+        encodedPath = "NLVAN";
+        regexPatternIndexFinderList = regexPatternIndexFinder.find(encodedPath, VERB_RELATIONSHIP_PATTERN);
+        assertEquals(0, regexPatternIndexFinderList.size());
+
+        sentence = "John does not speak Spanish";
+        encodedPath = "NLOVN";
+        regexPatternIndexFinderList = regexPatternIndexFinder.find(encodedPath, VERB_RELATIONSHIP_PATTERN);
+        assertEquals(0, regexPatternIndexFinderList.size());
+
+
+        sentence = "John does not speak Spanish fluently";
+        encodedPath = "NLOVNA";
+        regexPatternIndexFinderList = regexPatternIndexFinder.find(encodedPath, VERB_RELATIONSHIP_PATTERN);
+        assertEquals(0, regexPatternIndexFinderList.size());
+
+
+        sentence = "John does not fluently speak Spanish";
+        encodedPath = "NLOVAN";
+        regexPatternIndexFinderList = regexPatternIndexFinder.find(encodedPath, VERB_RELATIONSHIP_PATTERN);
+        assertEquals(0, regexPatternIndexFinderList.size());
     }
 
     @Test
@@ -255,6 +321,7 @@ public class RegexPatternIndexFinderTest {
 
     }
 
+
     @Test
     public void testFindModalVerbRelationshipWholePatternFound() {
         String sentence = "";
@@ -289,5 +356,109 @@ public class RegexPatternIndexFinderTest {
         System.out.println(sentence + ": " + regexPatternIndexFinderList.get(0).getPattern());
 
     }
+
+    @Test
+    public void testFindModalVerbNOTRelationshipWholePatternFound() {
+        String sentence = "";
+        List<RegexPatternIndexData> regexPatternIndexFinderList = null;
+        String encodedPath = null;
+
+        //John can speak Spanish
+        sentence = "John can not speak Spanish";
+        encodedPath = "NMOVN";
+        regexPatternIndexFinderList = regexPatternIndexFinder.find(encodedPath, MODAL_VERB_NOT_RELATIONSHIP_PATTERN);
+        assertEquals(1, regexPatternIndexFinderList.size());
+        assertEquals(encodedPath, regexPatternIndexFinderList.get(0).getPattern());
+        assertEquals(sentence.split("\\ ").length, encodedPath.length());
+        System.out.println(sentence + ": " + regexPatternIndexFinderList.get(0).getPattern());
+
+        //John can speak Spanish fluently
+        sentence = "John can speak not Spanish fluently";
+        encodedPath = "NMOVNA";
+        regexPatternIndexFinderList = regexPatternIndexFinder.find(encodedPath, MODAL_VERB_NOT_RELATIONSHIP_PATTERN);
+        assertEquals(1, regexPatternIndexFinderList.size());
+        assertEquals(encodedPath, regexPatternIndexFinderList.get(0).getPattern());
+        assertEquals(sentence.split("\\ ").length, encodedPath.length());
+        System.out.println(sentence + ": " + regexPatternIndexFinderList.get(0).getPattern());
+
+        //John can speak Spanish fluently
+        sentence = "John can not fluently speak Spanish";
+        encodedPath = "NMOVAN";
+        regexPatternIndexFinderList = regexPatternIndexFinder.find(encodedPath, MODAL_VERB_NOT_RELATIONSHIP_PATTERN);
+        assertEquals(1, regexPatternIndexFinderList.size());
+        assertEquals(encodedPath, regexPatternIndexFinderList.get(0).getPattern());
+        assertEquals(sentence.split("\\ ").length, encodedPath.length());
+        System.out.println(sentence + ": " + regexPatternIndexFinderList.get(0).getPattern());
+    }
+
+    @Test
+    public void testFindVerbDontRelationshipWholePatternFound() {
+        String sentence = "";
+        List<RegexPatternIndexData> regexPatternIndexFinderList = null;
+        String encodedPath = null;
+
+        //John can speak Spanish
+        sentence = "John don't speak Spanish";
+        encodedPath = "NLVN";
+        regexPatternIndexFinderList = regexPatternIndexFinder.find(encodedPath, VERB_DONT_RELATIONSHIP_PATTERN);
+        assertEquals(1, regexPatternIndexFinderList.size());
+        assertEquals(encodedPath, regexPatternIndexFinderList.get(0).getPattern());
+        assertEquals(sentence.split("\\ ").length, encodedPath.length());
+        System.out.println(sentence + ": " + regexPatternIndexFinderList.get(0).getPattern());
+
+        //John can speak Spanish fluently
+        sentence = "John don't speak Spanish fluently";
+        encodedPath = "NLVNA";
+        regexPatternIndexFinderList = regexPatternIndexFinder.find(encodedPath, VERB_DONT_RELATIONSHIP_PATTERN);
+        assertEquals(1, regexPatternIndexFinderList.size());
+        assertEquals(encodedPath, regexPatternIndexFinderList.get(0).getPattern());
+        assertEquals(sentence.split("\\ ").length, encodedPath.length());
+        System.out.println(sentence + ": " + regexPatternIndexFinderList.get(0).getPattern());
+
+        //John can speak Spanish fluently
+        sentence = "John don't fluently speak Spanish";
+        encodedPath = "NLVAN";
+        regexPatternIndexFinderList = regexPatternIndexFinder.find(encodedPath, VERB_DONT_RELATIONSHIP_PATTERN);
+        assertEquals(1, regexPatternIndexFinderList.size());
+        assertEquals(encodedPath, regexPatternIndexFinderList.get(0).getPattern());
+        assertEquals(sentence.split("\\ ").length, encodedPath.length());
+        System.out.println(sentence + ": " + regexPatternIndexFinderList.get(0).getPattern());
+
+    }
+
+    @Test
+    public void testFindVerbDoNotRelationshipWholePatternFound() {
+        String sentence = "";
+        List<RegexPatternIndexData> regexPatternIndexFinderList = null;
+        String encodedPath = null;
+
+        sentence = "John does not speak Spanish";
+        encodedPath = "NLOVN";
+        regexPatternIndexFinderList = regexPatternIndexFinder.find(encodedPath, VERB_DO_NOT_RELATIONSHIP_PATTERN);
+        assertEquals(1, regexPatternIndexFinderList.size());
+        assertEquals(encodedPath, regexPatternIndexFinderList.get(0).getPattern());
+        assertEquals(sentence.split("\\ ").length, encodedPath.length());
+        System.out.println(sentence + ": " + regexPatternIndexFinderList.get(0).getPattern());
+
+
+        sentence = "John does not speak Spanish fluently";
+        encodedPath = "NLOVNA";
+        regexPatternIndexFinderList = regexPatternIndexFinder.find(encodedPath, VERB_DO_NOT_RELATIONSHIP_PATTERN);
+        assertEquals(1, regexPatternIndexFinderList.size());
+        assertEquals(encodedPath, regexPatternIndexFinderList.get(0).getPattern());
+        assertEquals(sentence.split("\\ ").length, encodedPath.length());
+        System.out.println(sentence + ": " + regexPatternIndexFinderList.get(0).getPattern());
+
+
+        sentence = "John does not fluently speak Spanish";
+        encodedPath = "NLOVAN";
+        regexPatternIndexFinderList = regexPatternIndexFinder.find(encodedPath, VERB_DO_NOT_RELATIONSHIP_PATTERN);
+        assertEquals(1, regexPatternIndexFinderList.size());
+        assertEquals(encodedPath, regexPatternIndexFinderList.get(0).getPattern());
+        assertEquals(sentence.split("\\ ").length, encodedPath.length());
+        System.out.println(sentence + ": " + regexPatternIndexFinderList.get(0).getPattern());
+
+    }
+
 
 }
