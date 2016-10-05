@@ -6,21 +6,48 @@ import com.trainingdataprocessor.tags.EncodedTags;
 import com.trainingdataprocessor.tags.Tags;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Oliver on 10/1/2016.
  */
-public final class SemanticalConstantTagAnalyserImpl implements SemanticalConstantTagAnalyser {
+public final class SemanticConstantTagAnalyserImpl implements SemanticConstantTagAnalyser {
+
+    private Map<SemanticRelationConstantType, Integer> constantTagTypeExtSubjectIndexMap = new HashMap<SemanticRelationConstantType, Integer>();
+
+    private Map<SemanticRelationConstantType, Integer> constantTagTypeExtPredicateIndexMap = new HashMap<SemanticRelationConstantType, Integer>();
+
+    {
+        constantTagTypeExtSubjectIndexMap.put(SemanticRelationConstantType.IS_ISNT, 1);
+        constantTagTypeExtSubjectIndexMap.put(SemanticRelationConstantType.IS_NOT, 2);
+        constantTagTypeExtSubjectIndexMap.put(SemanticRelationConstantType.VERB, 1);
+        constantTagTypeExtSubjectIndexMap.put(SemanticRelationConstantType.VERB_DONT, 2);
+        constantTagTypeExtSubjectIndexMap.put(SemanticRelationConstantType.VERB_DO_NOT, 3);
+        constantTagTypeExtSubjectIndexMap.put(SemanticRelationConstantType.MODAL_VERB, 1);
+        constantTagTypeExtSubjectIndexMap.put(SemanticRelationConstantType.MODAL_VERB_NOT, 2);
+
+        constantTagTypeExtPredicateIndexMap.put(SemanticRelationConstantType.IS_ISNT, 2);
+        constantTagTypeExtPredicateIndexMap.put(SemanticRelationConstantType.IS_NOT, 3);
+        constantTagTypeExtPredicateIndexMap.put(SemanticRelationConstantType.VERB, 2);
+        constantTagTypeExtPredicateIndexMap.put(SemanticRelationConstantType.VERB_DONT, 3);
+        constantTagTypeExtPredicateIndexMap.put(SemanticRelationConstantType.VERB_DO_NOT, 4);
+        constantTagTypeExtPredicateIndexMap.put(SemanticRelationConstantType.MODAL_VERB, 2);
+        constantTagTypeExtPredicateIndexMap.put(SemanticRelationConstantType.MODAL_VERB_NOT, 3);
+
+    }
 
     private ConstantWordsCache constantWordsCache;
 
-    public SemanticalConstantTagAnalyserImpl(ConstantWordsCache constantWordsCache) {
+    public SemanticConstantTagAnalyserImpl(ConstantWordsCache constantWordsCache) {
         this.constantWordsCache = constantWordsCache;
     }
 
+
     @Override
-    public SemanticalConstantTagAnalysisData analyse(String constantTag, List<String> subSentence, List<String> encodedTags) {
+    public SemanticalConstantTagAnalysisData analyse(String constantTag, List<String> subSentence, List<String> encodedTags,
+                                                     SemanticRelationConstantType constantType) {
         boolean isConstantFound = false;
         String constantToken = "";
         boolean isPresentTense = false;
@@ -51,8 +78,8 @@ public final class SemanticalConstantTagAnalyserImpl implements SemanticalConsta
             }
         }
         if (isConstantFound) {
-            hasExtendedSubject = hasExtendedSubject(constantIndex);
-            hasExtendedPredicate = hasExtendedPredicate(constantIndex, subSentence);
+            hasExtendedSubject = hasExtendedSubject(constantIndex, constantType);
+            hasExtendedPredicate = hasExtendedPredicate(constantIndex, subSentence, constantType);
 
             return new SemanticalConstantTagAnalysisData(constantIndex, constantTag, constantToken,
                     containsBeforeConstantTagPreposition, containsAfterConstantTagPreposition,
@@ -67,11 +94,12 @@ public final class SemanticalConstantTagAnalyserImpl implements SemanticalConsta
         return ("is".equals(token) || "are".equals(token)) || EncodedTags.VERB.equals(encodedTag);
     }
 
-    private boolean hasExtendedSubject(int isIndex) {
-        return isIndex > 1;
+    private boolean hasExtendedSubject(int constantIndex, SemanticRelationConstantType constantType) {
+        return constantIndex > constantTagTypeExtSubjectIndexMap.get(constantType);
     }
 
-    private boolean hasExtendedPredicate(int isIndex, List<String> subSentence) {
-        return isIndex != subSentence.size() - 2;
+    private boolean hasExtendedPredicate(int constantIndex, List<String> subSentence, SemanticRelationConstantType constantType) {
+        return constantIndex != subSentence.size() - constantTagTypeExtPredicateIndexMap.get(constantType);
     }
+
 }

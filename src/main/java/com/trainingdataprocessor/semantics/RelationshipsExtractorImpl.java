@@ -10,15 +10,15 @@ import java.util.List;
 public class RelationshipsExtractorImpl implements RelationshipsExtractor<RelationshipData> {
 
     private String constant;
-    private SemanticalConstantTagAnalyser semanticalConstantTagAnalyser;
+    private SemanticConstantTagAnalyser semanticConstantTagAnalyser;
 
-    public RelationshipsExtractorImpl(String constant, SemanticalConstantTagAnalyser semanticalConstantTagAnalyser) {
-        this.constant = constant;
-        this.semanticalConstantTagAnalyser = semanticalConstantTagAnalyser;
+    public RelationshipsExtractorImpl(SemanticConstantTagAnalyser semanticConstantTagAnalyser) {
+        this.semanticConstantTagAnalyser = semanticConstantTagAnalyser;
     }
 
     @Override
-    public List<RelationshipData> extract(List<RegexPatternIndexData> isPatternIndexDataList, List<String> tokens, List<String> encodedTags) {
+    public List<RelationshipData> extract(String constant, List<RegexPatternIndexData> isPatternIndexDataList, List<String> tokens, List<String> encodedTags,
+                                          SemanticRelationConstantType constantType) {
         List<RelationshipData> relationships = new ArrayList<>();
 
         for (RegexPatternIndexData indexData : isPatternIndexDataList) {
@@ -29,7 +29,9 @@ public class RelationshipsExtractorImpl implements RelationshipsExtractor<Relati
 
             List<String> subSentence = tokens.subList(indexData.getStartIndex(), indexData.getEndIndex() + 1);
 
-            SemanticalConstantTagAnalysisData semanticalConstantTagAnalysisData = semanticalConstantTagAnalyser.analyse(constant, subSentence, encodedTags);
+            SemanticalConstantTagAnalysisData semanticalConstantTagAnalysisData = semanticConstantTagAnalyser.analyse(constant,
+                    subSentence, encodedTags,
+                    constantType);
             relationshipData.setPresentTense(semanticalConstantTagAnalysisData.isPresentTense());
             processSubject(subSentence, relationshipData, semanticalConstantTagAnalysisData);
             processPredicate(subSentence, relationshipData, semanticalConstantTagAnalysisData);

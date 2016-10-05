@@ -4,8 +4,9 @@ import com.trainingdataprocessor.cache.ConstantWordsCache;
 import com.trainingdataprocessor.data.semantics.RelationshipData;
 import com.trainingdataprocessor.data.RegexPatternIndexData;
 import com.trainingdataprocessor.semantics.RelationshipsExtractorImpl;
-import com.trainingdataprocessor.semantics.SemanticalConstantTagAnalyser;
-import com.trainingdataprocessor.semantics.SemanticalConstantTagAnalyserImpl;
+import com.trainingdataprocessor.semantics.SemanticConstantTagAnalyser;
+import com.trainingdataprocessor.semantics.SemanticConstantTagAnalyserImpl;
+import com.trainingdataprocessor.semantics.SemanticRelationConstantType;
 import com.trainingdataprocessor.tags.EncodedTags;
 import org.junit.Test;
 
@@ -24,12 +25,12 @@ public class RelationshipsExtractorImplTest {
 
     private ConstantWordsCache constantWordsCache = new ConstantWordsCache();
 
-    private SemanticalConstantTagAnalyser semanticalConstantTagAnalyser = new SemanticalConstantTagAnalyserImpl(constantWordsCache);
+    private SemanticConstantTagAnalyser semanticConstantTagAnalyser = new SemanticConstantTagAnalyserImpl(constantWordsCache);
 
 
     @Test
     public void testISrelationshipExtractNoPrepositions() {
-        RelationshipsExtractorImpl relationshipsExtractorImpl = new RelationshipsExtractorImpl(EncodedTags.IS_ARE, semanticalConstantTagAnalyser);
+        RelationshipsExtractorImpl relationshipsExtractorImpl = new RelationshipsExtractorImpl(semanticConstantTagAnalyser);
 
         List<String> encodedTags = new ArrayList<String>();
         encodedTags.add(EncodedTags.NOUN);
@@ -56,7 +57,7 @@ public class RelationshipsExtractorImplTest {
         RegexPatternIndexData regexPatternIndexData = new RegexPatternIndexData("NNIJJJN", 3, 9);
         isPatternIndexDataList.add(regexPatternIndexData);
 
-        List<RelationshipData> relationshipDataList = relationshipsExtractorImpl.extract(isPatternIndexDataList, tokens, encodedTags);
+        List<RelationshipData> relationshipDataList = relationshipsExtractorImpl.extract(EncodedTags.IS_ARE, isPatternIndexDataList, tokens, encodedTags, SemanticRelationConstantType.IS_ISNT);
 
         assertEquals(1, relationshipDataList.size());
         assertTrue(relationshipDataList.get(0).isPresentTense());
@@ -71,7 +72,7 @@ public class RelationshipsExtractorImplTest {
 
     @Test
     public void testISrelationshipExtractOnePreposition() {
-        RelationshipsExtractorImpl relationshipsExtractorImpl = new RelationshipsExtractorImpl(EncodedTags.IS_ARE, semanticalConstantTagAnalyser);
+        RelationshipsExtractorImpl relationshipsExtractorImpl = new RelationshipsExtractorImpl(semanticConstantTagAnalyser);
 
         List<String> encodedTags = new ArrayList<String>();
         encodedTags.add(EncodedTags.NOUN);
@@ -104,7 +105,7 @@ public class RelationshipsExtractorImplTest {
         RegexPatternIndexData regexPatternIndexData = new RegexPatternIndexData("NNIJJJNPNN", 3, 12);
         isPatternIndexDataList.add(regexPatternIndexData);
 
-        List<RelationshipData> relationshipDataList = relationshipsExtractorImpl.extract(isPatternIndexDataList, tokens, encodedTags);
+        List<RelationshipData> relationshipDataList = relationshipsExtractorImpl.extract(EncodedTags.IS_ARE, isPatternIndexDataList, tokens, encodedTags, SemanticRelationConstantType.IS_ISNT);
 
         assertEquals(1, relationshipDataList.size());
         assertTrue(relationshipDataList.get(0).isPresentTense());
@@ -119,7 +120,7 @@ public class RelationshipsExtractorImplTest {
 
     @Test
     public void testISrelationshipExtractTwoPrepositions() {
-        RelationshipsExtractorImpl relationshipsExtractorImpl = new RelationshipsExtractorImpl(EncodedTags.IS_ARE, semanticalConstantTagAnalyser);
+        RelationshipsExtractorImpl relationshipsExtractorImpl = new RelationshipsExtractorImpl(semanticConstantTagAnalyser);
 
         List<String> encodedTags = new ArrayList<String>();
         encodedTags.add(EncodedTags.NOUN);
@@ -153,7 +154,7 @@ public class RelationshipsExtractorImplTest {
         RegexPatternIndexData regexPatternIndexData = new RegexPatternIndexData("NNIJJJNPNNPN", 0, 11);
         isPatternIndexDataList.add(regexPatternIndexData);
 
-        List<RelationshipData> relationshipDataList = relationshipsExtractorImpl.extract(isPatternIndexDataList, tokens, encodedTags);
+        List<RelationshipData> relationshipDataList = relationshipsExtractorImpl.extract(EncodedTags.IS_ARE, isPatternIndexDataList, tokens, encodedTags, SemanticRelationConstantType.IS_ISNT);
 
         assertEquals(1, relationshipDataList.size());
         assertTrue(relationshipDataList.get(0).isPresentTense());
@@ -169,7 +170,7 @@ public class RelationshipsExtractorImplTest {
 
     @Test
     public void testISrelationshipExtractToVerbED() {
-        RelationshipsExtractorImpl relationshipsExtractorImpl = new RelationshipsExtractorImpl(EncodedTags.IS_ARE, semanticalConstantTagAnalyser);
+        RelationshipsExtractorImpl relationshipsExtractorImpl = new RelationshipsExtractorImpl(semanticConstantTagAnalyser);
 
         List<String> encodedTags = new ArrayList<String>();
         encodedTags.add(EncodedTags.NOUN);
@@ -197,7 +198,7 @@ public class RelationshipsExtractorImplTest {
         RegexPatternIndexData regexPatternIndexData = new RegexPatternIndexData("NI$TVNPYN", 0, 8);
         isPatternIndexDataList.add(regexPatternIndexData);
 
-        List<RelationshipData> relationshipDataList = relationshipsExtractorImpl.extract(isPatternIndexDataList, tokens, encodedTags);
+        List<RelationshipData> relationshipDataList = relationshipsExtractorImpl.extract(EncodedTags.IS_ARE, isPatternIndexDataList, tokens, encodedTags, SemanticRelationConstantType.IS_ISNT);
 
         assertEquals(1, relationshipDataList.size());
         assertFalse(relationshipDataList.get(0).isPresentTense());
@@ -208,7 +209,7 @@ public class RelationshipsExtractorImplTest {
 
     @Test
     public void testISrelationshipExtractExtendedPrepositionSubject() {
-        RelationshipsExtractorImpl relationshipsExtractorImpl = new RelationshipsExtractorImpl(EncodedTags.IS_ARE, semanticalConstantTagAnalyser);
+        RelationshipsExtractorImpl relationshipsExtractorImpl = new RelationshipsExtractorImpl(semanticConstantTagAnalyser);
 
         List<String> encodedTags = new ArrayList<String>();
         encodedTags.add(EncodedTags.NOUN);
@@ -232,7 +233,7 @@ public class RelationshipsExtractorImplTest {
         RegexPatternIndexData regexPatternIndexData = new RegexPatternIndexData("NPNNIJJ", 0, 6);
         isPatternIndexDataList.add(regexPatternIndexData);
 
-        List<RelationshipData> relationshipDataList = relationshipsExtractorImpl.extract(isPatternIndexDataList, tokens, encodedTags);
+        List<RelationshipData> relationshipDataList = relationshipsExtractorImpl.extract(EncodedTags.IS_ARE, isPatternIndexDataList, tokens, encodedTags, SemanticRelationConstantType.IS_ISNT);
 
         assertEquals(1, relationshipDataList.size());
         assertTrue(relationshipDataList.get(0).isPresentTense());
@@ -244,7 +245,7 @@ public class RelationshipsExtractorImplTest {
 
     @Test
     public void testISrelationshipExtractExtendedPrepositionSubjectWithWHdeterminer() {
-        RelationshipsExtractorImpl relationshipsExtractorImpl = new RelationshipsExtractorImpl(EncodedTags.IS_ARE, semanticalConstantTagAnalyser);
+        RelationshipsExtractorImpl relationshipsExtractorImpl = new RelationshipsExtractorImpl(semanticConstantTagAnalyser);
 
         List<String> encodedTags = new ArrayList<String>();
         encodedTags.add(EncodedTags.NOUN);
@@ -262,7 +263,7 @@ public class RelationshipsExtractorImplTest {
         RegexPatternIndexData regexPatternIndexData = new RegexPatternIndexData("NNIDNN", 0, "NNIDNN".length() - 1);
         isPatternIndexDataList.add(regexPatternIndexData);
 
-        List<RelationshipData> relationshipDataList = relationshipsExtractorImpl.extract(isPatternIndexDataList, tokens, encodedTags);
+        List<RelationshipData> relationshipDataList = relationshipsExtractorImpl.extract(EncodedTags.IS_ARE, isPatternIndexDataList, tokens, encodedTags, SemanticRelationConstantType.IS_ISNT);
         assertEquals(1, relationshipDataList.size());
         assertFalse(relationshipDataList.get(0).isPresentTense());
         assertEquals("Vermeer", relationshipDataList.get(0).getAtomicSubject());
@@ -273,7 +274,7 @@ public class RelationshipsExtractorImplTest {
 
     @Test
     public void testVerbRelationshipBasic(){
-        RelationshipsExtractorImpl relationshipsExtractorImpl = new RelationshipsExtractorImpl(EncodedTags.VERB, semanticalConstantTagAnalyser);
+        RelationshipsExtractorImpl relationshipsExtractorImpl = new RelationshipsExtractorImpl(semanticConstantTagAnalyser);
 
         List<String> encodedTags = new ArrayList<String>();
         encodedTags.add(EncodedTags.ADJECTIVE);
@@ -290,7 +291,7 @@ public class RelationshipsExtractorImplTest {
         RegexPatternIndexData regexPatternIndexData = new RegexPatternIndexData("NNVNN", 0, "NNVNN".length() - 1);
         isPatternIndexDataList.add(regexPatternIndexData);
 
-        List<RelationshipData> relationshipDataList = relationshipsExtractorImpl.extract(isPatternIndexDataList, tokens, encodedTags);
+        List<RelationshipData> relationshipDataList = relationshipsExtractorImpl.extract(EncodedTags.VERB, isPatternIndexDataList, tokens, encodedTags, SemanticRelationConstantType.IS_ISNT);
         assertEquals(1, relationshipDataList.size());
         assertTrue(relationshipDataList.get(0).isPresentTense());
         assertEquals("firemen", relationshipDataList.get(0).getAtomicSubject());
