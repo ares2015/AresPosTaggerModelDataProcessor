@@ -47,9 +47,79 @@ public class SemanticConstantTagAnalyserTest {
         tokens.add("collective");
         tokens.add("sport");
 
-        SemanticalConstantTagAnalysisData semanticalConstantTagAnalysisData = semanticConstantTagAnalyser.analyse(EncodedTags.IS_ARE, tokens, encodedTags, SemanticRelationConstantType.IS_ISNT);
+        SemanticalConstantTagAnalysisData semanticalConstantTagAnalysisData = semanticConstantTagAnalyser.analyse(EncodedTags.IS_ARE, tokens,
+                encodedTags, SemanticRelationConstantType.IS_ISNT);
         assertEquals(2, semanticalConstantTagAnalysisData.getConstantIndex());
     }
+
+    @Test
+    public void testIsNOT() {
+
+        List<String> encodedTags = new ArrayList<String>();
+        encodedTags.add(EncodedTags.NOUN);
+        encodedTags.add(EncodedTags.NOUN);
+        encodedTags.add(EncodedTags.IS_ARE);
+        encodedTags.add(EncodedTags.NOT);
+        encodedTags.add(EncodedTags.ADJECTIVE);
+        encodedTags.add(EncodedTags.ADJECTIVE);
+        encodedTags.add(EncodedTags.ADJECTIVE);
+        encodedTags.add(EncodedTags.NOUN);
+
+        List<String> tokens = new ArrayList<>();
+        tokens.add("American");
+        tokens.add("football");
+        tokens.add("is");
+        tokens.add("not");
+        tokens.add("very");
+        tokens.add("popular");
+        tokens.add("collective");
+        tokens.add("sport");
+
+        SemanticalConstantTagAnalysisData semanticalConstantTagAnalysisData = semanticConstantTagAnalyser.analyse(EncodedTags.IS_ARE, tokens,
+                encodedTags, SemanticRelationConstantType.IS_NOT);
+        assertEquals(2, semanticalConstantTagAnalysisData.getConstantIndex());
+    }
+
+    @Test
+    public void testIsNOTwithAfterPreposition() {
+
+        List<String> encodedTags = new ArrayList<String>();
+        encodedTags.add(EncodedTags.NOUN);
+        encodedTags.add(EncodedTags.NOUN);
+        encodedTags.add(EncodedTags.IS_ARE);
+        encodedTags.add(EncodedTags.NOT);
+        encodedTags.add(EncodedTags.ADJECTIVE);
+        encodedTags.add(EncodedTags.ADJECTIVE);
+        encodedTags.add(EncodedTags.ADJECTIVE);
+        encodedTags.add(EncodedTags.NOUN);
+        encodedTags.add(EncodedTags.PREPOSITION);
+        encodedTags.add(EncodedTags.NOUN);
+        encodedTags.add(EncodedTags.NOUN);
+
+
+
+        List<String> tokens = new ArrayList<>();
+        tokens.add("American");
+        tokens.add("football");
+        tokens.add("is");
+        tokens.add("not");
+        tokens.add("very");
+        tokens.add("popular");
+        tokens.add("collective");
+        tokens.add("sport");
+        tokens.add("in");
+        tokens.add("European");
+        tokens.add("countries");
+
+        SemanticalConstantTagAnalysisData semanticalConstantTagAnalysisData = semanticConstantTagAnalyser.analyse(EncodedTags.IS_ARE, tokens,
+                encodedTags, SemanticRelationConstantType.IS_NOT);
+        assertEquals(2, semanticalConstantTagAnalysisData.getConstantIndex());
+        assertTrue(semanticalConstantTagAnalysisData.isPresentTense());
+        assertTrue(semanticalConstantTagAnalysisData.hasExtendedSubject());
+        assertTrue(semanticalConstantTagAnalysisData.isHasExtendedPredicate());
+        assertTrue(semanticalConstantTagAnalysisData.containsAfterConstantTagPreposition());
+    }
+
 
     @Test
     public void testModalNot() {
@@ -77,6 +147,44 @@ public class SemanticConstantTagAnalyserTest {
         assertEquals(EncodedTags.MODAL_VERB, semanticalConstantTagAnalysisData.getConstantTag());
         assertTrue(semanticalConstantTagAnalysisData.isHasExtendedPredicate());
 
+    }
+
+    @Test
+    public void testModalNotWithAfterPreposition() {
+
+        List<String> encodedTags = new ArrayList<String>();
+        encodedTags.add(EncodedTags.NOUN);
+        encodedTags.add(EncodedTags.NOUN);
+        encodedTags.add(EncodedTags.MODAL_VERB);
+        encodedTags.add(EncodedTags.NOT);
+        encodedTags.add(EncodedTags.VERB);
+        encodedTags.add(EncodedTags.NOUN);
+        encodedTags.add(EncodedTags.NOUN);
+        encodedTags.add(EncodedTags.PREPOSITION);
+        encodedTags.add(EncodedTags.ADJECTIVE);
+        encodedTags.add(EncodedTags.NOUN);
+
+
+        List<String> tokens = new ArrayList<>();
+        tokens.add("Johny");
+        tokens.add("Mnemonic");
+        tokens.add("could");
+        tokens.add("not");
+        tokens.add("speak");
+        tokens.add("Spanish");
+        tokens.add("language");
+        tokens.add("at");
+        tokens.add("high");
+        tokens.add("school");
+
+
+        SemanticalConstantTagAnalysisData semanticalConstantTagAnalysisData = semanticConstantTagAnalyser.analyse(EncodedTags.MODAL_VERB,
+                tokens, encodedTags, SemanticRelationConstantType.MODAL_VERB_NOT);
+        assertEquals(2, semanticalConstantTagAnalysisData.getConstantIndex());
+        assertEquals(EncodedTags.MODAL_VERB, semanticalConstantTagAnalysisData.getConstantTag());
+        assertTrue(semanticalConstantTagAnalysisData.hasExtendedSubject());
+        assertTrue(semanticalConstantTagAnalysisData.isHasExtendedPredicate());
+        assertTrue(semanticalConstantTagAnalysisData.containsAfterConstantTagPreposition());
     }
 
 

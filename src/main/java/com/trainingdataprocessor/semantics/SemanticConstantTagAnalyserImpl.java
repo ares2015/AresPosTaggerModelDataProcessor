@@ -21,12 +21,12 @@ public final class SemanticConstantTagAnalyserImpl implements SemanticConstantTa
 
     {
         constantTagTypeExtSubjectIndexMap.put(SemanticRelationConstantType.IS_ISNT, 1);
-        constantTagTypeExtSubjectIndexMap.put(SemanticRelationConstantType.IS_NOT, 2);
+        constantTagTypeExtSubjectIndexMap.put(SemanticRelationConstantType.IS_NOT, 1);
         constantTagTypeExtSubjectIndexMap.put(SemanticRelationConstantType.VERB, 1);
         constantTagTypeExtSubjectIndexMap.put(SemanticRelationConstantType.VERB_DONT, 2);
         constantTagTypeExtSubjectIndexMap.put(SemanticRelationConstantType.VERB_DO_NOT, 3);
         constantTagTypeExtSubjectIndexMap.put(SemanticRelationConstantType.MODAL_VERB, 1);
-        constantTagTypeExtSubjectIndexMap.put(SemanticRelationConstantType.MODAL_VERB_NOT, 2);
+        constantTagTypeExtSubjectIndexMap.put(SemanticRelationConstantType.MODAL_VERB_NOT, 1);
 
         constantTagTypeExtPredicateIndexMap.put(SemanticRelationConstantType.IS_ISNT, 2);
         constantTagTypeExtPredicateIndexMap.put(SemanticRelationConstantType.IS_NOT, 3);
