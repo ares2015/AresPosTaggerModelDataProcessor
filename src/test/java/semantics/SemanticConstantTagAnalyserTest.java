@@ -1,10 +1,7 @@
 package semantics;
 
 import com.trainingdataprocessor.cache.ConstantWordsCache;
-import com.trainingdataprocessor.data.RegexPatternIndexData;
-import com.trainingdataprocessor.data.semantics.RelationshipData;
 import com.trainingdataprocessor.data.semantics.SemanticalConstantTagAnalysisData;
-import com.trainingdataprocessor.semantics.RelationshipsExtractorImpl;
 import com.trainingdataprocessor.semantics.SemanticConstantTagAnalyser;
 import com.trainingdataprocessor.semantics.SemanticConstantTagAnalyserImpl;
 import com.trainingdataprocessor.semantics.SemanticRelationConstantType;
@@ -15,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -50,6 +48,7 @@ public class SemanticConstantTagAnalyserTest {
         SemanticalConstantTagAnalysisData semanticalConstantTagAnalysisData = semanticConstantTagAnalyser.analyse(EncodedTags.IS_ARE, tokens,
                 encodedTags, SemanticRelationConstantType.IS_ISNT);
         assertEquals(2, semanticalConstantTagAnalysisData.getConstantIndex());
+        assertFalse(semanticalConstantTagAnalysisData.hasVerbAuxiliaryVerbRelation());
     }
 
     @Test
@@ -78,6 +77,7 @@ public class SemanticConstantTagAnalyserTest {
         SemanticalConstantTagAnalysisData semanticalConstantTagAnalysisData = semanticConstantTagAnalyser.analyse(EncodedTags.IS_ARE, tokens,
                 encodedTags, SemanticRelationConstantType.IS_NOT);
         assertEquals(2, semanticalConstantTagAnalysisData.getConstantIndex());
+        assertTrue(semanticalConstantTagAnalysisData.hasVerbAuxiliaryVerbRelation());
     }
 
     @Test
@@ -95,7 +95,6 @@ public class SemanticConstantTagAnalyserTest {
         encodedTags.add(EncodedTags.PREPOSITION);
         encodedTags.add(EncodedTags.NOUN);
         encodedTags.add(EncodedTags.NOUN);
-
 
 
         List<String> tokens = new ArrayList<>();
@@ -116,8 +115,9 @@ public class SemanticConstantTagAnalyserTest {
         assertEquals(2, semanticalConstantTagAnalysisData.getConstantIndex());
         assertTrue(semanticalConstantTagAnalysisData.isPresentTense());
         assertTrue(semanticalConstantTagAnalysisData.hasExtendedSubject());
-        assertTrue(semanticalConstantTagAnalysisData.isHasExtendedPredicate());
+        assertTrue(semanticalConstantTagAnalysisData.hasExtendedPredicate());
         assertTrue(semanticalConstantTagAnalysisData.containsAfterConstantTagPreposition());
+        assertTrue(semanticalConstantTagAnalysisData.hasVerbAuxiliaryVerbRelation());
     }
 
 
@@ -145,7 +145,8 @@ public class SemanticConstantTagAnalyserTest {
                 tokens, encodedTags, SemanticRelationConstantType.MODAL_VERB_NOT);
         assertEquals(1, semanticalConstantTagAnalysisData.getConstantIndex());
         assertEquals(EncodedTags.MODAL_VERB, semanticalConstantTagAnalysisData.getConstantTag());
-        assertTrue(semanticalConstantTagAnalysisData.isHasExtendedPredicate());
+        assertTrue(semanticalConstantTagAnalysisData.hasExtendedPredicate());
+        assertTrue(semanticalConstantTagAnalysisData.hasVerbAuxiliaryVerbRelation());
 
     }
 
@@ -183,8 +184,87 @@ public class SemanticConstantTagAnalyserTest {
         assertEquals(2, semanticalConstantTagAnalysisData.getConstantIndex());
         assertEquals(EncodedTags.MODAL_VERB, semanticalConstantTagAnalysisData.getConstantTag());
         assertTrue(semanticalConstantTagAnalysisData.hasExtendedSubject());
-        assertTrue(semanticalConstantTagAnalysisData.isHasExtendedPredicate());
+        assertTrue(semanticalConstantTagAnalysisData.hasExtendedPredicate());
         assertTrue(semanticalConstantTagAnalysisData.containsAfterConstantTagPreposition());
+        assertTrue(semanticalConstantTagAnalysisData.hasVerbAuxiliaryVerbRelation());
+    }
+
+    @Test
+    public void testVerb() {
+
+        List<String> encodedTags = new ArrayList<String>();
+        encodedTags.add(EncodedTags.NOUN);
+        encodedTags.add(EncodedTags.VERB);
+        encodedTags.add(EncodedTags.NOUN);
+
+        List<String> tokens = new ArrayList<>();
+        tokens.add("Johny");
+        tokens.add("speaks");
+        tokens.add("Spanish");
+
+
+        SemanticalConstantTagAnalysisData semanticalConstantTagAnalysisData = semanticConstantTagAnalyser.analyse(EncodedTags.VERB,
+                tokens, encodedTags, SemanticRelationConstantType.VERB);
+        assertEquals(1, semanticalConstantTagAnalysisData.getConstantIndex());
+        assertEquals(EncodedTags.VERB, semanticalConstantTagAnalysisData.getConstantTag());
+        assertFalse(semanticalConstantTagAnalysisData.hasExtendedPredicate());
+        assertFalse(semanticalConstantTagAnalysisData.hasVerbAuxiliaryVerbRelation());
+    }
+
+    @Test
+    public void testVerbDont() {
+
+        List<String> encodedTags = new ArrayList<String>();
+        encodedTags.add(EncodedTags.NOUN);
+        encodedTags.add(EncodedTags.DO);
+        encodedTags.add(EncodedTags.VERB);
+        encodedTags.add(EncodedTags.NOUN);
+        encodedTags.add(EncodedTags.NOUN);
+
+        List<String> tokens = new ArrayList<>();
+        tokens.add("Johny");
+        tokens.add("didn't");
+        tokens.add("speak");
+        tokens.add("Spanish");
+        tokens.add("language");
+
+
+        SemanticalConstantTagAnalysisData semanticalConstantTagAnalysisData = semanticConstantTagAnalyser.analyse(EncodedTags.VERB,
+                tokens, encodedTags, SemanticRelationConstantType.VERB_DONT);
+        assertEquals(2, semanticalConstantTagAnalysisData.getConstantIndex());
+        assertEquals(EncodedTags.VERB, semanticalConstantTagAnalysisData.getConstantTag());
+        assertTrue(semanticalConstantTagAnalysisData.hasExtendedPredicate());
+        assertTrue(semanticalConstantTagAnalysisData.hasVerbAuxiliaryVerbRelation());
+
+    }
+
+    @Test
+    public void testVerbDoNot() {
+
+        List<String> encodedTags = new ArrayList<String>();
+        encodedTags.add(EncodedTags.NOUN);
+        encodedTags.add(EncodedTags.DO);
+        encodedTags.add(EncodedTags.NOT);
+        encodedTags.add(EncodedTags.VERB);
+        encodedTags.add(EncodedTags.NOUN);
+        encodedTags.add(EncodedTags.NOUN);
+
+        List<String> tokens = new ArrayList<>();
+        tokens.add("Johny");
+        tokens.add("did");
+        tokens.add("not");
+        tokens.add("speak");
+        tokens.add("Spanish");
+        tokens.add("language");
+
+
+        SemanticalConstantTagAnalysisData semanticalConstantTagAnalysisData = semanticConstantTagAnalyser.analyse(EncodedTags.VERB,
+                tokens, encodedTags, SemanticRelationConstantType.VERB_DO_NOT);
+        assertEquals(3, semanticalConstantTagAnalysisData.getConstantIndex());
+        assertEquals(EncodedTags.VERB, semanticalConstantTagAnalysisData.getConstantTag());
+        assertTrue(semanticalConstantTagAnalysisData.hasExtendedPredicate());
+        assertTrue(semanticalConstantTagAnalysisData.hasVerbAuxiliaryVerbRelation());
+
     }
 
 
