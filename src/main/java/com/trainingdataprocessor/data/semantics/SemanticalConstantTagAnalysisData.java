@@ -27,12 +27,12 @@ public final class SemanticalConstantTagAnalysisData {
 
     private boolean hasExtendedPredicate = false;
 
-    private boolean hasVerbAuxiliaryVerbRelation = false;
+    private boolean hasVerbAuxiliaryVerbPhrase = false;
 
     public SemanticalConstantTagAnalysisData(int constantIndex, String constantTag, String constantToken, boolean containsBeforeISPreposition,
                                              boolean containsAfterISPreposition, List<Integer> beforeConstantTagPrepositionIndexes,
                                              List<Integer> afterConstantTagPrepositionIndexes, boolean isPresentTense, boolean hasExtendedSubject,
-                                             boolean hasExtendedPredicate, boolean hasVerbAuxiliaryVerbRelation) {
+                                             boolean hasExtendedPredicate, boolean hasVerbAuxiliaryVerbPhrase) {
         this.constantIndex = constantIndex;
         this.constantTag = constantTag;
         this.constantToken = constantToken;
@@ -43,7 +43,7 @@ public final class SemanticalConstantTagAnalysisData {
         this.isPresentTense = isPresentTense;
         this.hasExtendedSubject = hasExtendedSubject;
         this.hasExtendedPredicate = hasExtendedPredicate;
-        this.hasVerbAuxiliaryVerbRelation = hasVerbAuxiliaryVerbRelation;
+        this.hasVerbAuxiliaryVerbPhrase = hasVerbAuxiliaryVerbPhrase;
     }
 
     public int getConstantIndex() {
@@ -86,7 +86,7 @@ public final class SemanticalConstantTagAnalysisData {
         return hasExtendedPredicate;
     }
 
-    public boolean hasVerbAuxiliaryVerbRelation() {
-        return hasVerbAuxiliaryVerbRelation;
+    public boolean hasVerbAuxiliaryVerbPhrase() {
+        return hasVerbAuxiliaryVerbPhrase;
     }
 }

@@ -3,7 +3,7 @@ package com.trainingdataprocessor.data.semantics;
 /**
  * Created by Oliver on 8/31/2016.
  */
-public class RelationshipData {
+public class SemanticRelationData {
 
     private boolean isPresentTense;
 
@@ -20,6 +20,8 @@ public class RelationshipData {
     private String extendedPredicate;
 
     private String prepositionPredicate;
+
+    private String verbAuxiliaryVerbPhrase;
 
     public boolean isPresentTense() {
         return isPresentTense;
@@ -83,5 +85,13 @@ public class RelationshipData {
 
     public void setPrepositionPredicate(String prepositionPredicate) {
         this.prepositionPredicate = prepositionPredicate;
+    }
+
+    public String getVerbAuxiliaryVerbPhrase() {
+        return verbAuxiliaryVerbPhrase;
+    }
+
+    public void setVerbAuxiliaryVerbPhrase(String verbAuxiliaryVerbPhrase) {
+        this.verbAuxiliaryVerbPhrase = verbAuxiliaryVerbPhrase;
     }
 }

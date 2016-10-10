@@ -48,7 +48,7 @@ public class SemanticConstantTagAnalyserTest {
         SemanticalConstantTagAnalysisData semanticalConstantTagAnalysisData = semanticConstantTagAnalyser.analyse(EncodedTags.IS_ARE, tokens,
                 encodedTags, SemanticRelationConstantType.IS_ISNT);
         assertEquals(2, semanticalConstantTagAnalysisData.getConstantIndex());
-        assertFalse(semanticalConstantTagAnalysisData.hasVerbAuxiliaryVerbRelation());
+        assertFalse(semanticalConstantTagAnalysisData.hasVerbAuxiliaryVerbPhrase());
     }
 
     @Test
@@ -77,7 +77,7 @@ public class SemanticConstantTagAnalyserTest {
         SemanticalConstantTagAnalysisData semanticalConstantTagAnalysisData = semanticConstantTagAnalyser.analyse(EncodedTags.IS_ARE, tokens,
                 encodedTags, SemanticRelationConstantType.IS_NOT);
         assertEquals(2, semanticalConstantTagAnalysisData.getConstantIndex());
-        assertTrue(semanticalConstantTagAnalysisData.hasVerbAuxiliaryVerbRelation());
+        assertTrue(semanticalConstantTagAnalysisData.hasVerbAuxiliaryVerbPhrase());
     }
 
     @Test
@@ -117,7 +117,7 @@ public class SemanticConstantTagAnalyserTest {
         assertTrue(semanticalConstantTagAnalysisData.hasExtendedSubject());
         assertTrue(semanticalConstantTagAnalysisData.hasExtendedPredicate());
         assertTrue(semanticalConstantTagAnalysisData.containsAfterConstantTagPreposition());
-        assertTrue(semanticalConstantTagAnalysisData.hasVerbAuxiliaryVerbRelation());
+        assertTrue(semanticalConstantTagAnalysisData.hasVerbAuxiliaryVerbPhrase());
     }
 
 
@@ -146,7 +146,7 @@ public class SemanticConstantTagAnalyserTest {
         assertEquals(1, semanticalConstantTagAnalysisData.getConstantIndex());
         assertEquals(EncodedTags.MODAL_VERB, semanticalConstantTagAnalysisData.getConstantTag());
         assertTrue(semanticalConstantTagAnalysisData.hasExtendedPredicate());
-        assertTrue(semanticalConstantTagAnalysisData.hasVerbAuxiliaryVerbRelation());
+        assertTrue(semanticalConstantTagAnalysisData.hasVerbAuxiliaryVerbPhrase());
 
     }
 
@@ -186,7 +186,7 @@ public class SemanticConstantTagAnalyserTest {
         assertTrue(semanticalConstantTagAnalysisData.hasExtendedSubject());
         assertTrue(semanticalConstantTagAnalysisData.hasExtendedPredicate());
         assertTrue(semanticalConstantTagAnalysisData.containsAfterConstantTagPreposition());
-        assertTrue(semanticalConstantTagAnalysisData.hasVerbAuxiliaryVerbRelation());
+        assertTrue(semanticalConstantTagAnalysisData.hasVerbAuxiliaryVerbPhrase());
     }
 
     @Test
@@ -208,7 +208,7 @@ public class SemanticConstantTagAnalyserTest {
         assertEquals(1, semanticalConstantTagAnalysisData.getConstantIndex());
         assertEquals(EncodedTags.VERB, semanticalConstantTagAnalysisData.getConstantTag());
         assertFalse(semanticalConstantTagAnalysisData.hasExtendedPredicate());
-        assertFalse(semanticalConstantTagAnalysisData.hasVerbAuxiliaryVerbRelation());
+        assertFalse(semanticalConstantTagAnalysisData.hasVerbAuxiliaryVerbPhrase());
     }
 
     @Test
@@ -234,7 +234,7 @@ public class SemanticConstantTagAnalyserTest {
         assertEquals(2, semanticalConstantTagAnalysisData.getConstantIndex());
         assertEquals(EncodedTags.VERB, semanticalConstantTagAnalysisData.getConstantTag());
         assertTrue(semanticalConstantTagAnalysisData.hasExtendedPredicate());
-        assertTrue(semanticalConstantTagAnalysisData.hasVerbAuxiliaryVerbRelation());
+        assertTrue(semanticalConstantTagAnalysisData.hasVerbAuxiliaryVerbPhrase());
 
     }
 
@@ -263,7 +263,7 @@ public class SemanticConstantTagAnalyserTest {
         assertEquals(3, semanticalConstantTagAnalysisData.getConstantIndex());
         assertEquals(EncodedTags.VERB, semanticalConstantTagAnalysisData.getConstantTag());
         assertTrue(semanticalConstantTagAnalysisData.hasExtendedPredicate());
-        assertTrue(semanticalConstantTagAnalysisData.hasVerbAuxiliaryVerbRelation());
+        assertTrue(semanticalConstantTagAnalysisData.hasVerbAuxiliaryVerbPhrase());
 
     }
 

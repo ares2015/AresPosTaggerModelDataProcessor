@@ -16,6 +16,10 @@ public enum SemanticRelationConstantType {
 
     public static Map<SemanticRelationConstantType, Integer> constantTagAnalyserExtPredicateIndexMap = new HashMap<SemanticRelationConstantType, Integer>();
 
+    public static Map<SemanticRelationConstantType, Integer> relationsExtractorAtomicSubjectIndexMap = new HashMap<SemanticRelationConstantType, Integer>();
+
+    public static Map<SemanticRelationConstantType, Integer> relationsExtractorExtSubjectIndexMap = new HashMap<SemanticRelationConstantType, Integer>();
+
     public static Set<SemanticRelationConstantType> auxiliaryTypes = new HashSet<SemanticRelationConstantType>();
 
     static {
@@ -34,6 +38,22 @@ public enum SemanticRelationConstantType {
         constantTagAnalyserExtPredicateIndexMap.put(SemanticRelationConstantType.VERB_DO_NOT, 2);
         constantTagAnalyserExtPredicateIndexMap.put(SemanticRelationConstantType.MODAL_VERB, 2);
         constantTagAnalyserExtPredicateIndexMap.put(SemanticRelationConstantType.MODAL_VERB_NOT, 3);
+
+        relationsExtractorAtomicSubjectIndexMap.put(SemanticRelationConstantType.IS_ISNT, 1);
+        relationsExtractorAtomicSubjectIndexMap.put(SemanticRelationConstantType.IS_NOT, 1);
+        relationsExtractorAtomicSubjectIndexMap.put(SemanticRelationConstantType.VERB, 1);
+        relationsExtractorAtomicSubjectIndexMap.put(SemanticRelationConstantType.VERB_DONT, 2);
+        relationsExtractorAtomicSubjectIndexMap.put(SemanticRelationConstantType.VERB_DO_NOT, 3);
+        relationsExtractorAtomicSubjectIndexMap.put(SemanticRelationConstantType.MODAL_VERB, 1);
+        relationsExtractorAtomicSubjectIndexMap.put(SemanticRelationConstantType.MODAL_VERB_NOT, 1);
+
+        relationsExtractorExtSubjectIndexMap.put(SemanticRelationConstantType.IS_ISNT, 0);
+        relationsExtractorExtSubjectIndexMap.put(SemanticRelationConstantType.IS_NOT, 0);
+        relationsExtractorExtSubjectIndexMap.put(SemanticRelationConstantType.VERB, 0);
+        relationsExtractorExtSubjectIndexMap.put(SemanticRelationConstantType.VERB_DONT, 1);
+        relationsExtractorExtSubjectIndexMap.put(SemanticRelationConstantType.VERB_DO_NOT, 2);
+        relationsExtractorExtSubjectIndexMap.put(SemanticRelationConstantType.MODAL_VERB, 0);
+        relationsExtractorExtSubjectIndexMap.put(SemanticRelationConstantType.MODAL_VERB_NOT, 0);
 
         auxiliaryTypes.add(SemanticRelationConstantType.IS_NOT);
         auxiliaryTypes.add(SemanticRelationConstantType.VERB_DONT);
