@@ -33,10 +33,8 @@ public class SemanticRelationsExtractorImpl implements SemanticRelationsExtracto
             semanticRelationData.setPresentTense(semanticalConstantTagAnalysisData.isPresentTense());
             processSubject(subSentence, semanticRelationData, semanticalConstantTagAnalysisData, constantType);
             processPredicate(subSentence, encodedTags, semanticRelationData, semanticalConstantTagAnalysisData, constantType);
-            if (semanticalConstantTagAnalysisData.hasVerbAuxiliaryVerbPhrase()) {
-                semanticRelationData.setVerbAuxiliaryVerbPhrase(extractVerbAuxiliaryVerbPhrase(subSentence, encodedTags,
-                        semanticalConstantTagAnalysisData.getConstantIndex(), constantType));
-            }
+            processVerb(semanticRelationData, semanticalConstantTagAnalysisData, subSentence, encodedTags, constantType);
+
             relationships.add(semanticRelationData);
         }
         return relationships;
@@ -66,6 +64,16 @@ public class SemanticRelationsExtractorImpl implements SemanticRelationsExtracto
         } else {
             semanticRelationData.setAtomicPredicate(subSentence.get(subSentence.size() - 1));
             semanticRelationData.setExtendedPredicate(extractExtendedPredicate(subSentence, encodedTags, semanticalConstantTagAnalysisData.getConstantIndex(), constantType));
+        }
+    }
+
+    private void processVerb(SemanticRelationData semanticRelationData, SemanticalConstantTagAnalysisData semanticalConstantTagAnalysisData,
+                             List<String> subSentence, List<String> encodedTags, SemanticRelationConstantType constantType) {
+        if (semanticalConstantTagAnalysisData.hasVerbAuxiliaryVerbPhrase()) {
+            semanticRelationData.setVerbAuxiliaryVerbPhrase(extractVerbAuxiliaryVerbPhrase(subSentence, encodedTags,
+                    semanticalConstantTagAnalysisData.getConstantIndex(), constantType));
+        } else {
+            semanticRelationData.setAtomicVerb(semanticalConstantTagAnalysisData.getConstantToken());
         }
     }
 

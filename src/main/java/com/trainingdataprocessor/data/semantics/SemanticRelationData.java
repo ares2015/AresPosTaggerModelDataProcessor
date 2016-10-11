@@ -21,6 +21,8 @@ public class SemanticRelationData {
 
     private String prepositionPredicate;
 
+    private String atomicVerb;
+
     private String verbAuxiliaryVerbPhrase;
 
     public boolean isPresentTense() {
@@ -85,6 +87,14 @@ public class SemanticRelationData {
 
     public void setPrepositionPredicate(String prepositionPredicate) {
         this.prepositionPredicate = prepositionPredicate;
+    }
+
+    public String getAtomicVerb() {
+        return atomicVerb;
+    }
+
+    public void setAtomicVerb(String atomicVerb) {
+        this.atomicVerb = atomicVerb;
     }
 
     public String getVerbAuxiliaryVerbPhrase() {
