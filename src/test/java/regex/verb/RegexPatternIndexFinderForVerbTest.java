@@ -85,6 +85,12 @@ public class RegexPatternIndexFinderForVerbTest {
         List<RegexPatternIndexData> regexPatternIndexFinderList = null;
         String encodedPath = null;
 
+        sentence = "John speaks";
+        encodedPath = "NV";
+        regexPatternIndexFinderList = regexPatternIndexFinder.find(encodedPath, VERB_RELATIONSHIP_PATTERN);
+        assertEquals(0, regexPatternIndexFinderList.size());
+
+
         sentence = "John can speak Spanish";
         encodedPath = "NMVN";
         regexPatternIndexFinderList = regexPatternIndexFinder.find(encodedPath, VERB_RELATIONSHIP_PATTERN);

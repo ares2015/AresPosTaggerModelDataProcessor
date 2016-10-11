@@ -70,7 +70,6 @@ public class RegexPatternIndexFinderForISTest {
         regexPatternIndexFinderList = regexPatternIndexFinder.find(encodedPath, IS_RELATIONSHIP_PATTERN);
         assertEquals(1, regexPatternIndexFinderList.size());
         assertEquals(encodedPath, regexPatternIndexFinderList.get(0).getPattern());
-        assertEquals(sentence.split("\\ ").length, encodedPath.length());
         System.out.println(sentence + ": " + regexPatternIndexFinderList.get(0).getPattern());
 
         sentence = "New York City was settled by Europeans from The Netherlands in 1624";
