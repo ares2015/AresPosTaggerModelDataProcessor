@@ -10,7 +10,7 @@ import java.util.Set;
  */
 public enum SemanticRelationConstantType {
 
-    IS_ISNT, IS_NOT, VERB, VERB_DONT, VERB_DO_NOT, MODAL_VERB, MODAL_VERB_NOT;
+    IS_ISNT, IS_NOT, VERB, VERB_DONT, VERB_DO_NOT, MODAL_VERB, MODAL_VERB_NOT, VERB_PHRASE;
 
     public static Map<SemanticRelationConstantType, Integer> constantTagAnalyserExtSubjectIndexMap = new HashMap<SemanticRelationConstantType, Integer>();
 

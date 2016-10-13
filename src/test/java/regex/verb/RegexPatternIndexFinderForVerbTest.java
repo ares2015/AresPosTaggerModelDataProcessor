@@ -7,9 +7,7 @@ import org.junit.Test;
 
 import java.util.List;
 
-import static com.trainingdataprocessor.regex.RegexExpressions.VERB_DONT_RELATIONSHIP_PATTERN;
-import static com.trainingdataprocessor.regex.RegexExpressions.VERB_DO_NOT_RELATIONSHIP_PATTERN;
-import static com.trainingdataprocessor.regex.RegexExpressions.VERB_RELATIONSHIP_PATTERN;
+import static com.trainingdataprocessor.regex.RegexExpressions.*;
 import static org.junit.Assert.assertEquals;
 
 /**
@@ -18,6 +16,34 @@ import static org.junit.Assert.assertEquals;
 public class RegexPatternIndexFinderForVerbTest {
 
     private RegexPatternIndexFinder regexPatternIndexFinder = new RegexPatternIndexFinderImpl();
+
+    @Test
+    public void testFindVerbPhrasepWholePatternFound() {
+        String sentence = "";
+        List<RegexPatternIndexData> regexPatternIndexFinderList = null;
+        String encodedPath = null;
+
+        sentence = "gray wolf eats";
+        encodedPath = "JNV";
+        regexPatternIndexFinderList = regexPatternIndexFinder.find(encodedPath, VERB_PHRASE_PATTERN);
+        assertEquals(1, regexPatternIndexFinderList.size());
+        assertEquals(encodedPath, regexPatternIndexFinderList.get(0).getPattern());
+        System.out.println(sentence + ": " + regexPatternIndexFinderList.get(0).getPattern());
+
+        sentence = "boys play at school";
+        encodedPath = "NVPN";
+        regexPatternIndexFinderList = regexPatternIndexFinder.find(encodedPath, VERB_PHRASE_PATTERN);
+        assertEquals(1, regexPatternIndexFinderList.size());
+        assertEquals(encodedPath, regexPatternIndexFinderList.get(0).getPattern());
+        System.out.println(sentence + ": " + regexPatternIndexFinderList.get(0).getPattern());
+
+        sentence = "Fans of Russia celebrated at European Championships";
+        encodedPath = "NPN$PNN";
+        regexPatternIndexFinderList = regexPatternIndexFinder.find(encodedPath, VERB_PHRASE_PATTERN);
+        assertEquals(1, regexPatternIndexFinderList.size());
+        assertEquals(encodedPath, regexPatternIndexFinderList.get(0).getPattern());
+        System.out.println(sentence + ": " + regexPatternIndexFinderList.get(0).getPattern());
+    }
 
     @Test
     public void testFindVerbRelationshipWholePatternFound() {
