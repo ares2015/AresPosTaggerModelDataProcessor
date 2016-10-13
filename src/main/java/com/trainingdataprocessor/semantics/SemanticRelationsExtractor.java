@@ -9,7 +9,7 @@ import java.util.List;
  */
 public interface SemanticRelationsExtractor<T>{
 
-    List<T> extract(String constant, List<RegexPatternIndexData> patternIndexDataList, List<String> tokens, List<String> encodedTags,
+    T extract(String constant, RegexPatternIndexData regexPatternIndexData, List<String> tokens, List<String> encodedTags,
                     SemanticRelationConstantType constantType);
 
 }

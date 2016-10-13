@@ -53,21 +53,19 @@ public class SemanticRelationsExtractorImplForISTest {
         tokens.add("collective");
         tokens.add("sport");
 
-        List<RegexPatternIndexData> isPatternIndexDataList = new ArrayList<>();
         RegexPatternIndexData regexPatternIndexData = new RegexPatternIndexData("NNIJJJN", 3, 9);
-        isPatternIndexDataList.add(regexPatternIndexData);
 
-        List<SemanticRelationData> semanticRelationDataList = relationshipsExtractorImpl.extract(EncodedTags.IS_ARE, isPatternIndexDataList, tokens, encodedTags, SemanticRelationConstantType.IS_ISNT);
+        SemanticRelationData semanticRelationData =
+                relationshipsExtractorImpl.extract(EncodedTags.IS_ARE, regexPatternIndexData, tokens, encodedTags, SemanticRelationConstantType.IS_ISNT);
 
-        assertEquals(1, semanticRelationDataList.size());
-        assertTrue(semanticRelationDataList.get(0).isPresentTense());
-        assertEquals("football", semanticRelationDataList.get(0).getAtomicSubject());
-        assertEquals("sport", semanticRelationDataList.get(0).getAtomicPredicate());
+        assertTrue(semanticRelationData.isPresentTense());
+        assertEquals("football", semanticRelationData.getAtomicSubject());
+        assertEquals("sport", semanticRelationData.getAtomicPredicate());
 
-        assertEquals("American football", semanticRelationDataList.get(0).getExtendedSubject());
+        assertEquals("American football", semanticRelationData.getExtendedSubject());
 
-        assertEquals("very popular collective sport", semanticRelationDataList.get(0).getExtendedPredicate());
-        assertEquals("is", semanticRelationDataList.get(0).getAtomicVerb());
+        assertEquals("very popular collective sport", semanticRelationData.getExtendedPredicate());
+        assertEquals("is", semanticRelationData.getAtomicVerb());
     }
 
     @Test
@@ -101,22 +99,16 @@ public class SemanticRelationsExtractorImplForISTest {
         tokens.add("Stanford");
         tokens.add("University");
 
-        List<RegexPatternIndexData> isPatternIndexDataList = new ArrayList<>();
         RegexPatternIndexData regexPatternIndexData = new RegexPatternIndexData("NNIJJJNPNN", 3, 12);
-        isPatternIndexDataList.add(regexPatternIndexData);
 
-        List<SemanticRelationData> semanticRelationDataList = relationshipsExtractorImpl.extract(EncodedTags.IS_ARE, isPatternIndexDataList, tokens, encodedTags, SemanticRelationConstantType.IS_ISNT);
+        SemanticRelationData semanticRelationData = relationshipsExtractorImpl.extract(EncodedTags.IS_ARE, regexPatternIndexData, tokens, encodedTags, SemanticRelationConstantType.IS_ISNT);
 
-        assertEquals(1, semanticRelationDataList.size());
-        assertTrue(semanticRelationDataList.get(0).isPresentTense());
-        assertEquals("football", semanticRelationDataList.get(0).getAtomicSubject());
-        assertEquals("sport", semanticRelationDataList.get(0).getAtomicPredicate());
-
-        assertEquals("American football", semanticRelationDataList.get(0).getExtendedSubject());
-
-        assertEquals("very popular collective sport in Stanford University", semanticRelationDataList.get(0).getPrepositionPredicate());
-
-        assertEquals("is", semanticRelationDataList.get(0).getAtomicVerb());
+        assertTrue(semanticRelationData.isPresentTense());
+        assertEquals("football", semanticRelationData.getAtomicSubject());
+        assertEquals("sport", semanticRelationData.getAtomicPredicate());
+        assertEquals("American football", semanticRelationData.getExtendedSubject());
+        assertEquals("very popular collective sport in Stanford University", semanticRelationData.getPrepositionPredicate());
+        assertEquals("is", semanticRelationData.getAtomicVerb());
     }
 
     @Test
@@ -151,24 +143,18 @@ public class SemanticRelationsExtractorImplForISTest {
         tokens.add("in");
         tokens.add("California");
 
-        List<RegexPatternIndexData> isPatternIndexDataList = new ArrayList<>();
         RegexPatternIndexData regexPatternIndexData = new RegexPatternIndexData("NNIJJJNPNNPN", 0, 11);
-        isPatternIndexDataList.add(regexPatternIndexData);
 
-        List<SemanticRelationData> semanticRelationDataList = relationshipsExtractorImpl.extract(EncodedTags.IS_ARE, isPatternIndexDataList, tokens, encodedTags, SemanticRelationConstantType.IS_ISNT);
+        SemanticRelationData semanticRelationData = relationshipsExtractorImpl.extract(EncodedTags.IS_ARE, regexPatternIndexData,
+                tokens, encodedTags, SemanticRelationConstantType.IS_ISNT);
 
-        assertEquals(1, semanticRelationDataList.size());
-        assertTrue(semanticRelationDataList.get(0).isPresentTense());
-        assertEquals("football", semanticRelationDataList.get(0).getAtomicSubject());
-        assertEquals("sport", semanticRelationDataList.get(0).getAtomicPredicate());
-
-        assertEquals("American football", semanticRelationDataList.get(0).getExtendedSubject());
-
-        assertEquals("very popular collective sport ", semanticRelationDataList.get(0).getExtendedPredicate());
-
-        assertEquals("very popular collective sport in Stanford University in California", semanticRelationDataList.get(0).getPrepositionPredicate());
-
-        assertEquals("is", semanticRelationDataList.get(0).getAtomicVerb());
+        assertTrue(semanticRelationData.isPresentTense());
+        assertEquals("football", semanticRelationData.getAtomicSubject());
+        assertEquals("sport", semanticRelationData.getAtomicPredicate());
+        assertEquals("American football", semanticRelationData.getExtendedSubject());
+        assertEquals("very popular collective sport ", semanticRelationData.getExtendedPredicate());
+        assertEquals("very popular collective sport in Stanford University in California", semanticRelationData.getPrepositionPredicate());
+        assertEquals("is", semanticRelationData.getAtomicVerb());
     }
 
     @Test
@@ -197,18 +183,16 @@ public class SemanticRelationsExtractorImplForISTest {
         tokens.add("his");
         tokens.add("father");
 
-        List<RegexPatternIndexData> isPatternIndexDataList = new ArrayList<>();
         RegexPatternIndexData regexPatternIndexData = new RegexPatternIndexData("NI$TVNPYN", 0, 8);
-        isPatternIndexDataList.add(regexPatternIndexData);
 
-        List<SemanticRelationData> semanticRelationDataList = relationshipsExtractorImpl.extract(EncodedTags.IS_ARE, isPatternIndexDataList, tokens, encodedTags, SemanticRelationConstantType.IS_ISNT);
+        SemanticRelationData semanticRelationData = relationshipsExtractorImpl.extract(EncodedTags.IS_ARE, regexPatternIndexData,
+                tokens, encodedTags, SemanticRelationConstantType.IS_ISNT);
 
-        assertEquals(1, semanticRelationDataList.size());
-        assertFalse(semanticRelationDataList.get(0).isPresentTense());
-        assertEquals("Vivaldi", semanticRelationDataList.get(0).getAtomicSubject());
-        assertEquals("taught", semanticRelationDataList.get(0).getAtomicPredicate());
-        assertEquals("taught to play violin by his father", semanticRelationDataList.get(0).getPrepositionPredicate());
-        assertEquals("was", semanticRelationDataList.get(0).getAtomicVerb());
+        assertFalse(semanticRelationData.isPresentTense());
+        assertEquals("Vivaldi", semanticRelationData.getAtomicSubject());
+        assertEquals("taught", semanticRelationData.getAtomicPredicate());
+        assertEquals("taught to play violin by his father", semanticRelationData.getPrepositionPredicate());
+        assertEquals("was", semanticRelationData.getAtomicVerb());
     }
 
     @Test
@@ -233,19 +217,17 @@ public class SemanticRelationsExtractorImplForISTest {
         tokens.add("very");
         tokens.add("aggresive");
 
-        List<RegexPatternIndexData> isPatternIndexDataList = new ArrayList<>();
         RegexPatternIndexData regexPatternIndexData = new RegexPatternIndexData("NPNNIJJ", 0, 6);
-        isPatternIndexDataList.add(regexPatternIndexData);
 
-        List<SemanticRelationData> semanticRelationDataList = relationshipsExtractorImpl.extract(EncodedTags.IS_ARE, isPatternIndexDataList, tokens, encodedTags, SemanticRelationConstantType.IS_ISNT);
+        SemanticRelationData semanticRelationData = relationshipsExtractorImpl.extract(EncodedTags.IS_ARE, regexPatternIndexData,
+                tokens, encodedTags, SemanticRelationConstantType.IS_ISNT);
 
-        assertEquals(1, semanticRelationDataList.size());
-        assertTrue(semanticRelationDataList.get(0).isPresentTense());
-        assertTrue(semanticRelationDataList.get(0).getAtomicSubject() == null);
-        assertEquals("Fans of Spartak Trnava", semanticRelationDataList.get(0).getExtendedSubject());
-        assertEquals("aggresive", semanticRelationDataList.get(0).getAtomicPredicate());
-        assertEquals("very aggresive", semanticRelationDataList.get(0).getExtendedPredicate());
-        assertEquals("are", semanticRelationDataList.get(0).getAtomicVerb());
+        assertTrue(semanticRelationData.isPresentTense());
+        assertTrue(semanticRelationData.getAtomicSubject() == null);
+        assertEquals("Fans of Spartak Trnava", semanticRelationData.getExtendedSubject());
+        assertEquals("aggresive", semanticRelationData.getAtomicPredicate());
+        assertEquals("very aggresive", semanticRelationData.getExtendedPredicate());
+        assertEquals("are", semanticRelationData.getAtomicVerb());
     }
 
     @Test
@@ -264,18 +246,17 @@ public class SemanticRelationsExtractorImplForISTest {
         String sentence = "Johannes Vermeer was a Dutch painter who specialized in domestic interior scenes of middle-class life";
         List<String> tokens = Arrays.asList(sentence.split("\\ "));
 
-        List<RegexPatternIndexData> isPatternIndexDataList = new ArrayList<>();
         RegexPatternIndexData regexPatternIndexData = new RegexPatternIndexData("NNIDNN", 0, "NNIDNN".length() - 1);
-        isPatternIndexDataList.add(regexPatternIndexData);
 
-        List<SemanticRelationData> semanticRelationDataList = relationshipsExtractorImpl.extract(EncodedTags.IS_ARE, isPatternIndexDataList, tokens, encodedTags, SemanticRelationConstantType.IS_ISNT);
-        assertEquals(1, semanticRelationDataList.size());
-        assertFalse(semanticRelationDataList.get(0).isPresentTense());
-        assertEquals("Vermeer", semanticRelationDataList.get(0).getAtomicSubject());
-        assertEquals("Johannes Vermeer", semanticRelationDataList.get(0).getExtendedSubject());
-        assertEquals("painter", semanticRelationDataList.get(0).getAtomicPredicate());
-        assertEquals("a Dutch painter", semanticRelationDataList.get(0).getExtendedPredicate());
-        assertEquals("was", semanticRelationDataList.get(0).getAtomicVerb());
+        SemanticRelationData semanticRelationData = relationshipsExtractorImpl.extract(EncodedTags.IS_ARE, regexPatternIndexData, tokens,
+                encodedTags, SemanticRelationConstantType.IS_ISNT);
+
+        assertFalse(semanticRelationData.isPresentTense());
+        assertEquals("Vermeer", semanticRelationData.getAtomicSubject());
+        assertEquals("Johannes Vermeer", semanticRelationData.getExtendedSubject());
+        assertEquals("painter", semanticRelationData.getAtomicPredicate());
+        assertEquals("a Dutch painter", semanticRelationData.getExtendedPredicate());
+        assertEquals("was", semanticRelationData.getAtomicVerb());
 
     }
 }

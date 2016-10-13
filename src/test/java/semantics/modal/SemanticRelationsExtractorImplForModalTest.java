@@ -43,20 +43,18 @@ public class SemanticRelationsExtractorImplForModalTest {
         String sentence = "brave firemen can not fight forest fire";
         List<String> tokens = Arrays.asList(sentence.split("\\ "));
 
-        List<RegexPatternIndexData> isPatternIndexDataList = new ArrayList<>();
         RegexPatternIndexData regexPatternIndexData = new RegexPatternIndexData("JNMLVNN", 0, "JNMLVNN".length() - 1);
-        isPatternIndexDataList.add(regexPatternIndexData);
 
-        List<SemanticRelationData> semanticRelationDataList = relationshipsExtractorImpl.extract(EncodedTags.MODAL_VERB, isPatternIndexDataList, tokens, encodedTags,
-                SemanticRelationConstantType.MODAL_VERB_NOT);
-        assertEquals(1, semanticRelationDataList.size());
-        assertFalse(semanticRelationDataList.get(0).isPresentTense());
-        assertEquals("firemen", semanticRelationDataList.get(0).getAtomicSubject());
-        assertEquals("brave firemen", semanticRelationDataList.get(0).getExtendedSubject());
-        assertEquals("fire", semanticRelationDataList.get(0).getAtomicPredicate());
-        assertEquals("forest fire", semanticRelationDataList.get(0).getExtendedPredicate());
-        assertEquals("can not fight", semanticRelationDataList.get(0).getVerbAuxiliaryVerbPhrase());
-        assertEquals(null , semanticRelationDataList.get(0).getAtomicVerb());
+        SemanticRelationData semanticRelationData = relationshipsExtractorImpl.extract(EncodedTags.MODAL_VERB,
+                regexPatternIndexData, tokens, encodedTags, SemanticRelationConstantType.MODAL_VERB_NOT);
+
+        assertFalse(semanticRelationData.isPresentTense());
+        assertEquals("firemen", semanticRelationData.getAtomicSubject());
+        assertEquals("brave firemen", semanticRelationData.getExtendedSubject());
+        assertEquals("fire", semanticRelationData.getAtomicPredicate());
+        assertEquals("forest fire", semanticRelationData.getExtendedPredicate());
+        assertEquals("can not fight", semanticRelationData.getVerbAuxiliaryVerbPhrase());
+        assertEquals(null , semanticRelationData.getAtomicVerb());
     }
 
     @Test
@@ -74,26 +72,22 @@ public class SemanticRelationsExtractorImplForModalTest {
         encodedTags.add(EncodedTags.NOUN);
         encodedTags.add(EncodedTags.NOUN);
 
-
-
         String sentence = "brave firemen can not fight forest fire in California mountains";
         List<String> tokens = Arrays.asList(sentence.split("\\ "));
 
-        List<RegexPatternIndexData> isPatternIndexDataList = new ArrayList<>();
         RegexPatternIndexData regexPatternIndexData = new RegexPatternIndexData("JNMLVNNPNN", 0, "JNMLVNNPNN".length() - 1);
-        isPatternIndexDataList.add(regexPatternIndexData);
 
-        List<SemanticRelationData> semanticRelationDataList = relationshipsExtractorImpl.extract(EncodedTags.MODAL_VERB, isPatternIndexDataList, tokens, encodedTags,
+        SemanticRelationData semanticRelationData = relationshipsExtractorImpl.extract(EncodedTags.MODAL_VERB, regexPatternIndexData, tokens, encodedTags,
                 SemanticRelationConstantType.MODAL_VERB_NOT);
-        assertEquals(1, semanticRelationDataList.size());
-        assertFalse(semanticRelationDataList.get(0).isPresentTense());
-        assertEquals("firemen", semanticRelationDataList.get(0).getAtomicSubject());
-        assertEquals("brave firemen", semanticRelationDataList.get(0).getExtendedSubject());
-        assertEquals("fire", semanticRelationDataList.get(0).getAtomicPredicate());
-        assertEquals("forest fire ", semanticRelationDataList.get(0).getExtendedPredicate());
-        assertEquals("forest fire in California mountains", semanticRelationDataList.get(0).getPrepositionPredicate());
-        assertEquals("can not fight", semanticRelationDataList.get(0).getVerbAuxiliaryVerbPhrase());
-        assertEquals(null , semanticRelationDataList.get(0).getAtomicVerb());
+
+        assertFalse(semanticRelationData.isPresentTense());
+        assertEquals("firemen", semanticRelationData.getAtomicSubject());
+        assertEquals("brave firemen", semanticRelationData.getExtendedSubject());
+        assertEquals("fire", semanticRelationData.getAtomicPredicate());
+        assertEquals("forest fire ", semanticRelationData.getExtendedPredicate());
+        assertEquals("forest fire in California mountains", semanticRelationData.getPrepositionPredicate());
+        assertEquals("can not fight", semanticRelationData.getVerbAuxiliaryVerbPhrase());
+        assertEquals(null , semanticRelationData.getAtomicVerb());
     }
 
 }

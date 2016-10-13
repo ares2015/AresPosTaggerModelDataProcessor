@@ -28,7 +28,7 @@ public class SemanticRelationsExtractorImplForVerbTest {
     private SemanticConstantTagAnalyser semanticConstantTagAnalyser = new SemanticConstantTagAnalyserImpl(constantWordsCache);
 
     @Test
-    public void testVerbRelationshipBasic(){
+    public void testVerbRelationshipBasic() {
         SemanticRelationsExtractorImpl relationshipsExtractorImpl = new SemanticRelationsExtractorImpl(semanticConstantTagAnalyser);
 
         List<String> encodedTags = new ArrayList<String>();
@@ -42,22 +42,20 @@ public class SemanticRelationsExtractorImplForVerbTest {
         String sentence = "brave firemen fight forest fire";
         List<String> tokens = Arrays.asList(sentence.split("\\ "));
 
-        List<RegexPatternIndexData> isPatternIndexDataList = new ArrayList<>();
         RegexPatternIndexData regexPatternIndexData = new RegexPatternIndexData("NNVNN", 0, "NNVNN".length() - 1);
-        isPatternIndexDataList.add(regexPatternIndexData);
 
-        List<SemanticRelationData> semanticRelationDataList = relationshipsExtractorImpl.extract(EncodedTags.VERB, isPatternIndexDataList, tokens, encodedTags, SemanticRelationConstantType.IS_ISNT);
-        assertEquals(1, semanticRelationDataList.size());
-        assertTrue(semanticRelationDataList.get(0).isPresentTense());
-        assertEquals("firemen", semanticRelationDataList.get(0).getAtomicSubject());
-        assertEquals("brave firemen", semanticRelationDataList.get(0).getExtendedSubject());
-        assertEquals("fire", semanticRelationDataList.get(0).getAtomicPredicate());
-        assertEquals("forest fire", semanticRelationDataList.get(0).getExtendedPredicate());
-        assertEquals("fight", semanticRelationDataList.get(0).getAtomicVerb());
+        SemanticRelationData semanticRelationData = relationshipsExtractorImpl.extract(EncodedTags.VERB, regexPatternIndexData, tokens, encodedTags, SemanticRelationConstantType.IS_ISNT);
+
+        assertTrue(semanticRelationData.isPresentTense());
+        assertEquals("firemen", semanticRelationData.getAtomicSubject());
+        assertEquals("brave firemen", semanticRelationData.getExtendedSubject());
+        assertEquals("fire", semanticRelationData.getAtomicPredicate());
+        assertEquals("forest fire", semanticRelationData.getExtendedPredicate());
+        assertEquals("fight", semanticRelationData.getAtomicVerb());
     }
 
     @Test
-    public void testVerbRelationshipWithBeforeAndAfterPrepositions(){
+    public void testVerbRelationshipWithBeforeAndAfterPrepositions() {
         SemanticRelationsExtractorImpl relationshipsExtractorImpl = new SemanticRelationsExtractorImpl(semanticConstantTagAnalyser);
 
         List<String> encodedTags = new ArrayList<String>();
@@ -75,24 +73,22 @@ public class SemanticRelationsExtractorImplForVerbTest {
         String sentence = "Fans of Russia attacked English supporters at European Championships";
         List<String> tokens = Arrays.asList(sentence.split("\\ "));
 
-        List<RegexPatternIndexData> isPatternIndexDataList = new ArrayList<>();
         RegexPatternIndexData regexPatternIndexData = new RegexPatternIndexData("NPN$NNPNN", 0, "NPN$NNPNN".length() - 1);
-        isPatternIndexDataList.add(regexPatternIndexData);
 
-        List<SemanticRelationData> semanticRelationDataList = relationshipsExtractorImpl.extract(EncodedTags.VERB_ED, isPatternIndexDataList,
+        SemanticRelationData semanticRelationData = relationshipsExtractorImpl.extract(EncodedTags.VERB_ED, regexPatternIndexData,
                 tokens, encodedTags, SemanticRelationConstantType.VERB);
-        assertEquals(1, semanticRelationDataList.size());
-        assertFalse(semanticRelationDataList.get(0).isPresentTense());
-        assertEquals(null, semanticRelationDataList.get(0).getAtomicSubject());
-        assertEquals("Fans of Russia", semanticRelationDataList.get(0).getExtendedSubject());
-        assertEquals("supporters", semanticRelationDataList.get(0).getAtomicPredicate());
-        assertEquals("English supporters ", semanticRelationDataList.get(0).getExtendedPredicate());
-        assertEquals("English supporters at European Championships", semanticRelationDataList.get(0).getPrepositionPredicate());
-        assertEquals("attacked", semanticRelationDataList.get(0).getAtomicVerb());
+
+        assertFalse(semanticRelationData.isPresentTense());
+        assertEquals(null, semanticRelationData.getAtomicSubject());
+        assertEquals("Fans of Russia", semanticRelationData.getExtendedSubject());
+        assertEquals("supporters", semanticRelationData.getAtomicPredicate());
+        assertEquals("English supporters ", semanticRelationData.getExtendedPredicate());
+        assertEquals("English supporters at European Championships", semanticRelationData.getPrepositionPredicate());
+        assertEquals("attacked", semanticRelationData.getAtomicVerb());
     }
 
     @Test
-    public void testDontVerbRelationship(){
+    public void testDontVerbRelationship() {
         SemanticRelationsExtractorImpl relationshipsExtractorImpl = new SemanticRelationsExtractorImpl(semanticConstantTagAnalyser);
 
         List<String> encodedTags = new ArrayList<String>();
@@ -107,22 +103,18 @@ public class SemanticRelationsExtractorImplForVerbTest {
         String sentence = "drunken guys didn't catch Ryanair flight";
         List<String> tokens = Arrays.asList(sentence.split("\\ "));
 
-        List<RegexPatternIndexData> isPatternIndexDataList = new ArrayList<>();
         RegexPatternIndexData regexPatternIndexData = new RegexPatternIndexData("JNLVNN", 0, "JNLVNN".length() - 1);
-        isPatternIndexDataList.add(regexPatternIndexData);
 
-        List<SemanticRelationData> semanticRelationDataList = relationshipsExtractorImpl.extract(EncodedTags.VERB, isPatternIndexDataList, tokens, encodedTags,
+        SemanticRelationData semanticRelationData = relationshipsExtractorImpl.extract(EncodedTags.VERB, regexPatternIndexData, tokens, encodedTags,
                 SemanticRelationConstantType.VERB_DONT);
-        assertEquals(1, semanticRelationDataList.size());
-        assertTrue(semanticRelationDataList.get(0).isPresentTense());
-        assertEquals("guys", semanticRelationDataList.get(0).getAtomicSubject());
-        assertEquals("drunken guys", semanticRelationDataList.get(0).getExtendedSubject());
-        assertEquals("flight", semanticRelationDataList.get(0).getAtomicPredicate());
-        assertEquals("Ryanair flight", semanticRelationDataList.get(0).getExtendedPredicate());
-        assertEquals("didn't catch", semanticRelationDataList.get(0).getVerbAuxiliaryVerbPhrase());
-        assertEquals(null , semanticRelationDataList.get(0).getAtomicVerb());
+
+        assertTrue(semanticRelationData.isPresentTense());
+        assertEquals("guys", semanticRelationData.getAtomicSubject());
+        assertEquals("drunken guys", semanticRelationData.getExtendedSubject());
+        assertEquals("flight", semanticRelationData.getAtomicPredicate());
+        assertEquals("Ryanair flight", semanticRelationData.getExtendedPredicate());
+        assertEquals("didn't catch", semanticRelationData.getVerbAuxiliaryVerbPhrase());
+        assertEquals(null, semanticRelationData.getAtomicVerb());
     }
-
-
 
 }

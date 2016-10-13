@@ -17,27 +17,24 @@ public class SemanticRelationsExtractorImpl implements SemanticRelationsExtracto
     }
 
     @Override
-    public List<SemanticRelationData> extract(String constant, List<RegexPatternIndexData> isPatternIndexDataList, List<String> tokens, List<String> encodedTags,
-                                              SemanticRelationConstantType constantType) {
-        List<SemanticRelationData> relationships = new ArrayList<>();
+    public SemanticRelationData extract(String constant, RegexPatternIndexData regexPatternIndexData, List<String> tokens, List<String> encodedTags,
+                                        SemanticRelationConstantType constantType) {
 
-        for (RegexPatternIndexData indexData : isPatternIndexDataList) {
-            SemanticRelationData semanticRelationData = new SemanticRelationData();
+        SemanticRelationData semanticRelationData = new SemanticRelationData();
 
-            semanticRelationData.setStartIndex(indexData.getStartIndex());
-            semanticRelationData.setEndIndex(indexData.getEndIndex());
+        semanticRelationData.setStartIndex(regexPatternIndexData.getStartIndex());
+        semanticRelationData.setEndIndex(regexPatternIndexData.getEndIndex());
 
-            List<String> subSentence = tokens.subList(indexData.getStartIndex(), indexData.getEndIndex() + 1);
+        List<String> subSentence = tokens.subList(regexPatternIndexData.getStartIndex(), regexPatternIndexData.getEndIndex() + 1);
 
-            SemanticalConstantTagAnalysisData semanticalConstantTagAnalysisData = semanticConstantTagAnalyser.analyse(constant, subSentence, encodedTags, constantType);
-            semanticRelationData.setPresentTense(semanticalConstantTagAnalysisData.isPresentTense());
-            processSubject(subSentence, semanticRelationData, semanticalConstantTagAnalysisData, constantType);
-            processPredicate(subSentence, encodedTags, semanticRelationData, semanticalConstantTagAnalysisData, constantType);
-            processVerb(semanticRelationData, semanticalConstantTagAnalysisData, subSentence, encodedTags, constantType);
+        SemanticalConstantTagAnalysisData semanticalConstantTagAnalysisData = semanticConstantTagAnalyser.analyse(constant, subSentence,
+                encodedTags, constantType);
+        semanticRelationData.setPresentTense(semanticalConstantTagAnalysisData.isPresentTense());
+        processSubject(subSentence, semanticRelationData, semanticalConstantTagAnalysisData, constantType);
+        processPredicate(subSentence, encodedTags, semanticRelationData, semanticalConstantTagAnalysisData, constantType);
+        processVerb(semanticRelationData, semanticalConstantTagAnalysisData, subSentence, encodedTags, constantType);
 
-            relationships.add(semanticRelationData);
-        }
-        return relationships;
+        return semanticRelationData;
     }
 
     private void processSubject(List<String> subSentence, SemanticRelationData semanticRelationData,
