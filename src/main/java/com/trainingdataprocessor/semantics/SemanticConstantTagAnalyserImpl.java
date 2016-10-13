@@ -18,52 +18,39 @@ public final class SemanticConstantTagAnalyserImpl implements SemanticConstantTa
         this.constantWordsCache = constantWordsCache;
     }
 
-
     @Override
     public SemanticalConstantTagAnalysisData analyse(String constantTag, List<String> subSentence, List<String> encodedTags,
                                                      SemanticRelationConstantType constantType) {
+        SemanticalConstantTagAnalysisData analysisData = new SemanticalConstantTagAnalysisData();
         boolean isConstantFound = false;
-        String constantToken = "";
-        boolean isPresentTense = false;
-        boolean containsBeforeConstantTagPreposition = false;
-        boolean containsAfterConstantTagPreposition = false;
-        boolean hasExtendedSubject = false;
-        boolean hasExtendedPredicate = false;
-        boolean hasVerbAuxiliaryVerbRelation = false;
         int constantIndex = -1;
-        List<Integer> beforeConstantTagPrepositionIndexes = new ArrayList<>();
-        List<Integer> afterConstantTagPrepositionIndexes = new ArrayList<>();
-
         for (int index = 0; index <= encodedTags.size() - 1; index++) {
             if (constantTag.equals(encodedTags.get(index))) {
-                constantToken = subSentence.get(index);
+                analysisData.setConstantIndex(index);
+                analysisData.setConstantTag(constantTag);
+                analysisData.setConstantToken(subSentence.get(index));
                 constantIndex = index;
                 isConstantFound = true;
-                isPresentTense = isPresentTense(subSentence.get(index), encodedTags.get(index));
+                analysisData.setPresentTense(isPresentTense(subSentence.get(index), encodedTags.get(index)));
             }
             if (Tags.PREPOSITION.equals(constantWordsCache.getConstantWordsCache().get(subSentence.get(index))) ||
                     Tags.TO.equals(constantWordsCache.getConstantWordsCache().get(subSentence.get(index)))) {
                 if (isConstantFound) {
-                    containsAfterConstantTagPreposition = true;
-                    afterConstantTagPrepositionIndexes.add(index);
+                    analysisData.setContainsAfterConstantPreposition(true);
+                    analysisData.getAfterConstantTagPrepositionIndexes().add(index);
                 } else {
-                    containsBeforeConstantTagPreposition = true;
-                    beforeConstantTagPrepositionIndexes.add(index);
+                    analysisData.setContainsBeforeConstantPreposition(true);
+                    analysisData.getBeforeConstantTagPrepositionIndexes().add(index);
                 }
             }
         }
         if (isConstantFound) {
+            analysisData.setHasExtendedSubject(hasExtendedSubject(constantIndex, constantType));
+            analysisData.setHasExtendedPredicate(hasExtendedPredicate(constantIndex, subSentence, constantType));
+            analysisData.setHasVerbAuxiliaryVerbPhrase(hasVerbAuxiliaryVerbRelation(constantType));
 
-            hasExtendedSubject = hasExtendedSubject(constantIndex, constantType);
-            hasExtendedPredicate = hasExtendedPredicate(constantIndex, subSentence, constantType);
-            hasVerbAuxiliaryVerbRelation = hasVerbAuxiliaryVerbRelation(constantType);
-
-            return new SemanticalConstantTagAnalysisData(constantIndex, constantTag, constantToken,
-                    containsBeforeConstantTagPreposition, containsAfterConstantTagPreposition,
-                    beforeConstantTagPrepositionIndexes, afterConstantTagPrepositionIndexes, isPresentTense,
-                    hasExtendedSubject, hasExtendedPredicate, hasVerbAuxiliaryVerbRelation);
+            return analysisData;
         }
-
         throw new IllegalStateException("IS pattern (subsentence) does not contain IS constant word.");
     }
 

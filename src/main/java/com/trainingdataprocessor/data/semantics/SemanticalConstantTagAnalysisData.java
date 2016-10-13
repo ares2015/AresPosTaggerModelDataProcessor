@@ -1,5 +1,6 @@
 package com.trainingdataprocessor.data.semantics;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -13,13 +14,49 @@ public final class SemanticalConstantTagAnalysisData {
 
     private String constantToken = "";
 
-    private boolean containsBeforeISPreposition;
+    private boolean containsBeforeConstantPreposition;
 
-    private boolean containsAfterISPreposition;
+    private boolean containsAfterConstantPreposition;
 
-    private List<Integer> beforeConstantTagPrepositionIndexes;
+    private List<Integer> beforeConstantTagPrepositionIndexes = new ArrayList<>();
 
-    private List<Integer> afterConstantTagPrepositionIndexes;
+    private List<Integer> afterConstantTagPrepositionIndexes = new ArrayList<>();
+
+    public void setConstantIndex(int constantIndex) {
+        this.constantIndex = constantIndex;
+    }
+
+    public void setConstantTag(String constantTag) {
+        this.constantTag = constantTag;
+    }
+
+    public void setConstantToken(String constantToken) {
+        this.constantToken = constantToken;
+    }
+
+    public void setContainsBeforeConstantPreposition(boolean containsBeforeConstantPreposition) {
+        this.containsBeforeConstantPreposition = containsBeforeConstantPreposition;
+    }
+
+    public void setContainsAfterConstantPreposition(boolean containsAfterConstantPreposition) {
+        this.containsAfterConstantPreposition = containsAfterConstantPreposition;
+    }
+
+    public void setPresentTense(boolean presentTense) {
+        isPresentTense = presentTense;
+    }
+
+    public void setHasExtendedSubject(boolean hasExtendedSubject) {
+        this.hasExtendedSubject = hasExtendedSubject;
+    }
+
+    public void setHasExtendedPredicate(boolean hasExtendedPredicate) {
+        this.hasExtendedPredicate = hasExtendedPredicate;
+    }
+
+    public void setHasVerbAuxiliaryVerbPhrase(boolean hasVerbAuxiliaryVerbPhrase) {
+        this.hasVerbAuxiliaryVerbPhrase = hasVerbAuxiliaryVerbPhrase;
+    }
 
     private boolean isPresentTense;
 
@@ -28,23 +65,6 @@ public final class SemanticalConstantTagAnalysisData {
     private boolean hasExtendedPredicate = false;
 
     private boolean hasVerbAuxiliaryVerbPhrase = false;
-
-    public SemanticalConstantTagAnalysisData(int constantIndex, String constantTag, String constantToken, boolean containsBeforeISPreposition,
-                                             boolean containsAfterISPreposition, List<Integer> beforeConstantTagPrepositionIndexes,
-                                             List<Integer> afterConstantTagPrepositionIndexes, boolean isPresentTense, boolean hasExtendedSubject,
-                                             boolean hasExtendedPredicate, boolean hasVerbAuxiliaryVerbPhrase) {
-        this.constantIndex = constantIndex;
-        this.constantTag = constantTag;
-        this.constantToken = constantToken;
-        this.containsBeforeISPreposition = containsBeforeISPreposition;
-        this.containsAfterISPreposition = containsAfterISPreposition;
-        this.beforeConstantTagPrepositionIndexes = beforeConstantTagPrepositionIndexes;
-        this.afterConstantTagPrepositionIndexes = afterConstantTagPrepositionIndexes;
-        this.isPresentTense = isPresentTense;
-        this.hasExtendedSubject = hasExtendedSubject;
-        this.hasExtendedPredicate = hasExtendedPredicate;
-        this.hasVerbAuxiliaryVerbPhrase = hasVerbAuxiliaryVerbPhrase;
-    }
 
     public int getConstantIndex() {
         return constantIndex;
@@ -59,11 +79,11 @@ public final class SemanticalConstantTagAnalysisData {
     }
 
     public boolean containsBeforeConstantTagPreposition() {
-        return containsBeforeISPreposition;
+        return containsBeforeConstantPreposition;
     }
 
     public boolean containsAfterConstantTagPreposition() {
-        return containsAfterISPreposition;
+        return containsAfterConstantPreposition;
     }
 
     public List<Integer> getBeforeConstantTagPrepositionIndexes() {
