@@ -5,7 +5,6 @@ import com.trainingdataprocessor.data.RegexPatternIndexData;
 import com.trainingdataprocessor.data.semantics.SemanticalConstantTagAnalysisData;
 import com.trainingdataprocessor.tags.EncodedTags;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class SemanticRelationsExtractorImpl implements SemanticRelationsExtractor<SemanticRelationData> {
@@ -66,10 +65,14 @@ public class SemanticRelationsExtractorImpl implements SemanticRelationsExtracto
 
     private void processVerb(SemanticRelationData semanticRelationData, SemanticalConstantTagAnalysisData semanticalConstantTagAnalysisData,
                              List<String> subSentence, List<String> encodedTags, SemanticRelationConstantType constantType) {
+        int constantIndex = semanticalConstantTagAnalysisData.getConstantIndex();
         if (semanticalConstantTagAnalysisData.hasVerbAuxiliaryVerbPhrase()) {
             semanticRelationData.setVerbAuxiliaryVerbPhrase(extractVerbAuxiliaryVerbPhrase(subSentence, encodedTags,
-                    semanticalConstantTagAnalysisData.getConstantIndex(), constantType));
-        } else {
+                    constantIndex, constantType));
+        }
+        if (constantType == SemanticRelationConstantType.MODAL_VERB || constantType == SemanticRelationConstantType.MODAL_VERB_NOT) {
+            semanticRelationData.setAtomicVerb(extractVerbFromModalVerbPhrase(subSentence, encodedTags, constantIndex));
+        }else{
             semanticRelationData.setAtomicVerb(semanticalConstantTagAnalysisData.getConstantToken());
         }
     }
@@ -145,6 +148,11 @@ public class SemanticRelationsExtractorImpl implements SemanticRelationsExtracto
             verbAuxiliaryVerbPhrase = subSentence.get(constantIndex) + " " + subSentence.get(constantIndex + 1);
         }
         return verbAuxiliaryVerbPhrase;
+    }
+
+    private String extractVerbFromModalVerbPhrase(List<String> subSentence, List<String> encodedTags, int constantIndex) {
+        int verbIndex = getVerbIndex(encodedTags, constantIndex);
+        return subSentence.get(verbIndex);
     }
 
     private int getStartIndexForPredicateExtraction(int constantIndex, List<String> encodedTags, SemanticRelationConstantType constantType) {
