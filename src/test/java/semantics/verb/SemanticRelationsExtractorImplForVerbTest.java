@@ -122,7 +122,7 @@ public class SemanticRelationsExtractorImplForVerbTest {
         assertEquals("drunken guys", semanticRelationData.getExtendedSubject());
         assertEquals("flight", semanticRelationData.getAtomicPredicate());
         assertEquals("Ryanair flight", semanticRelationData.getExtendedPredicate());
-        assertEquals("didn't catch", semanticRelationData.getVerbAuxiliaryVerbPhrase());
+        assertEquals("didn't catch", semanticRelationData.getExtendedVerb());
         assertEquals("catch" , semanticRelationData.getAtomicVerb());
     }
 

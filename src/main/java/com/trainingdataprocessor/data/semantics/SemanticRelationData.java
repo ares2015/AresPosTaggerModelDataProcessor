@@ -25,7 +25,7 @@ public class SemanticRelationData {
 
     private String atomicModalVerb;
 
-    private String verbAuxiliaryVerbPhrase;
+    private String extendedVerb;
 
     private boolean isPositiveVerb;
 
@@ -109,12 +109,12 @@ public class SemanticRelationData {
         this.atomicModalVerb = atomicModalVerb;
     }
 
-    public String getVerbAuxiliaryVerbPhrase() {
-        return verbAuxiliaryVerbPhrase;
+    public String getExtendedVerb() {
+        return extendedVerb;
     }
 
-    public void setVerbAuxiliaryVerbPhrase(String verbAuxiliaryVerbPhrase) {
-        this.verbAuxiliaryVerbPhrase = verbAuxiliaryVerbPhrase;
+    public void setExtendedVerb(String extendedVerb) {
+        this.extendedVerb = extendedVerb;
     }
 
     public boolean isPositiveVerb() {

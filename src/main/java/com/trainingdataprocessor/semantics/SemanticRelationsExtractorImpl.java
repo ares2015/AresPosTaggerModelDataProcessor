@@ -3,13 +3,8 @@ package com.trainingdataprocessor.semantics;
 import com.trainingdataprocessor.data.semantics.SemanticRelationData;
 import com.trainingdataprocessor.data.RegexPatternIndexData;
 import com.trainingdataprocessor.data.semantics.SemanticalConstantTagAnalysisData;
-import com.trainingdataprocessor.tags.EncodedTags;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
-
-import static com.trainingdataprocessor.semantics.SemanticExtractionUtils.getVerbIndex;
 
 public class SemanticRelationsExtractorImpl implements SemanticRelationsExtractor<SemanticRelationData> {
 
@@ -82,7 +77,7 @@ public class SemanticRelationsExtractorImpl implements SemanticRelationsExtracto
         int constantIndex = semanticalConstantTagAnalysisData.getConstantIndex();
         semanticRelationData.setPositiveVerb(verbExtractor.isPositiveVerb(subSentence, constantIndex, constantType));
         if (semanticalConstantTagAnalysisData.hasVerbAuxiliaryVerbPhrase()) {
-            semanticRelationData.setVerbAuxiliaryVerbPhrase(verbExtractor.extractVerbAuxiliaryVerbPhrase(subSentence, encodedTags,
+            semanticRelationData.setExtendedVerb(verbExtractor.extractExtendedVerb(subSentence, encodedTags,
                     constantIndex, constantType));
         }
         if (constantType == SemanticRelationConstantType.MODAL_VERB || constantType == SemanticRelationConstantType.MODAL_VERB_NOT) {

@@ -20,7 +20,7 @@ public class VerbExtractorImpl implements VerbExtractor {
         positiveIsNouns.add("were");
     }
 
-    public String extractVerbAuxiliaryVerbPhrase(List<String> subSentence, List<String> encodedTags, int constantIndex, SemanticRelationConstantType constantType) {
+    public String extractExtendedVerb(List<String> subSentence, List<String> encodedTags, int constantIndex, SemanticRelationConstantType constantType) {
         String verbAuxiliaryVerbPhrase = "";
         int verbIndex = getVerbIndex(encodedTags, constantIndex);
         if (SemanticRelationConstantType.MODAL_VERB == constantType || SemanticRelationConstantType.MODAL_VERB_NOT == constantType) {

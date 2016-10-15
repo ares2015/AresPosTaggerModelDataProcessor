@@ -7,7 +7,7 @@ import java.util.List;
  */
 public interface VerbExtractor {
 
-    String extractVerbAuxiliaryVerbPhrase(List<String> subSentence, List<String> encodedTags, int constantIndex, SemanticRelationConstantType constantType);
+    String extractExtendedVerb(List<String> subSentence, List<String> encodedTags, int constantIndex, SemanticRelationConstantType constantType);
 
     String extractVerbFromModalVerbPhrase(List<String> subSentence, List<String> encodedTags, int constantIndex);
 

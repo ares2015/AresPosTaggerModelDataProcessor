@@ -59,7 +59,7 @@ public class SemanticRelationsExtractorImplForModalTest {
         assertEquals("brave firemen", semanticRelationData.getExtendedSubject());
         assertEquals("fire", semanticRelationData.getAtomicPredicate());
         assertEquals("forest fire", semanticRelationData.getExtendedPredicate());
-        assertEquals("can not fight", semanticRelationData.getVerbAuxiliaryVerbPhrase());
+        assertEquals("can not fight", semanticRelationData.getExtendedVerb());
         assertEquals("fight" , semanticRelationData.getAtomicVerb());
         assertEquals("can" , semanticRelationData.getAtomicModalVerb());
     }
@@ -94,7 +94,7 @@ public class SemanticRelationsExtractorImplForModalTest {
         assertEquals("fire", semanticRelationData.getAtomicPredicate());
         assertEquals("forest fire ", semanticRelationData.getExtendedPredicate());
         assertEquals("forest fire in California mountains", semanticRelationData.getPrepositionPredicate());
-        assertEquals("can not fight", semanticRelationData.getVerbAuxiliaryVerbPhrase());
+        assertEquals("can not fight", semanticRelationData.getExtendedVerb());
         assertEquals("fight" , semanticRelationData.getAtomicVerb());
         assertEquals("can" , semanticRelationData.getAtomicModalVerb());
     }
