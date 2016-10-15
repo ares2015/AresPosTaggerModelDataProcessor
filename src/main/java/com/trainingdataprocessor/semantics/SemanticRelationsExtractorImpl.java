@@ -5,14 +5,28 @@ import com.trainingdataprocessor.data.RegexPatternIndexData;
 import com.trainingdataprocessor.data.semantics.SemanticalConstantTagAnalysisData;
 import com.trainingdataprocessor.tags.EncodedTags;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+
+import static com.trainingdataprocessor.semantics.SemanticExtractionUtils.getVerbIndex;
 
 public class SemanticRelationsExtractorImpl implements SemanticRelationsExtractor<SemanticRelationData> {
 
     private SemanticConstantTagAnalyser semanticConstantTagAnalyser;
 
-    public SemanticRelationsExtractorImpl(SemanticConstantTagAnalyser semanticConstantTagAnalyser) {
+    private SubjectExtractor subjectExtractor;
+
+    private PredicateExtractor predicateExtractor;
+
+    private VerbExtractor verbExtractor;
+
+    public SemanticRelationsExtractorImpl(SemanticConstantTagAnalyser semanticConstantTagAnalyser, SubjectExtractor subjectExtractor,
+                                          PredicateExtractor predicateExtractor, VerbExtractor verbExtractor) {
         this.semanticConstantTagAnalyser = semanticConstantTagAnalyser;
+        this.subjectExtractor = subjectExtractor;
+        this.predicateExtractor = predicateExtractor;
+        this.verbExtractor = verbExtractor;
     }
 
     @Override
@@ -39,12 +53,12 @@ public class SemanticRelationsExtractorImpl implements SemanticRelationsExtracto
     private void processSubject(List<String> subSentence, SemanticRelationData semanticRelationData,
                                 SemanticalConstantTagAnalysisData semanticalConstantTagAnalysisData, SemanticRelationConstantType constantType) {
         if (semanticalConstantTagAnalysisData.containsBeforeConstantTagPreposition()) {
-            semanticRelationData.setExtendedSubject(extractExtendedSubject(subSentence, semanticalConstantTagAnalysisData.getConstantIndex(), constantType));
+            semanticRelationData.setExtendedSubject(subjectExtractor.extract(subSentence, semanticalConstantTagAnalysisData.getConstantIndex(), constantType));
         } else {
             semanticRelationData.setAtomicSubject(subSentence.get(semanticalConstantTagAnalysisData.getConstantIndex() -
                     SemanticRelationConstantType.relationsExtractorAtomicSubjectIndexMap.get(constantType)));
             if (semanticalConstantTagAnalysisData.hasExtendedSubject()) {
-                semanticRelationData.setExtendedSubject(extractExtendedSubject(subSentence, semanticalConstantTagAnalysisData.getConstantIndex(), constantType));
+                semanticRelationData.setExtendedSubject(subjectExtractor.extract(subSentence, semanticalConstantTagAnalysisData.getConstantIndex(), constantType));
             }
         }
     }
@@ -53,123 +67,30 @@ public class SemanticRelationsExtractorImpl implements SemanticRelationsExtracto
                                   SemanticalConstantTagAnalysisData semanticalConstantTagAnalysisData, SemanticRelationConstantType constantType) {
         if (semanticalConstantTagAnalysisData.containsAfterConstantTagPreposition()) {
             semanticRelationData.setAtomicPredicate(subSentence.get(semanticalConstantTagAnalysisData.getAfterConstantTagPrepositionIndexes().get(0) - 1));
-            semanticRelationData.setExtendedPredicate(extractExtendedPredicate(subSentence, encodedTags, semanticalConstantTagAnalysisData.getConstantIndex(),
+            semanticRelationData.setExtendedPredicate(predicateExtractor.extractExtendedPredicate(subSentence, encodedTags, semanticalConstantTagAnalysisData.getConstantIndex(),
                     semanticalConstantTagAnalysisData.getAfterConstantTagPrepositionIndexes().get(0), constantType));
-            semanticRelationData.setPrepositionPredicate(extractPrepositionPredicate(subSentence, encodedTags,
+            semanticRelationData.setPrepositionPredicate(predicateExtractor.extractPrepositionPredicate(subSentence, encodedTags,
                     semanticalConstantTagAnalysisData.getConstantIndex(), constantType));
         } else {
             semanticRelationData.setAtomicPredicate(subSentence.get(subSentence.size() - 1));
-            semanticRelationData.setExtendedPredicate(extractExtendedPredicate(subSentence, encodedTags, semanticalConstantTagAnalysisData.getConstantIndex(), constantType));
+            semanticRelationData.setExtendedPredicate(predicateExtractor.extractExtendedPredicate(subSentence, encodedTags, semanticalConstantTagAnalysisData.getConstantIndex(), constantType));
         }
     }
 
     private void processVerb(SemanticRelationData semanticRelationData, SemanticalConstantTagAnalysisData semanticalConstantTagAnalysisData,
                              List<String> subSentence, List<String> encodedTags, SemanticRelationConstantType constantType) {
         int constantIndex = semanticalConstantTagAnalysisData.getConstantIndex();
+        semanticRelationData.setPositiveVerb(verbExtractor.isPositiveVerb(subSentence, constantIndex, constantType));
         if (semanticalConstantTagAnalysisData.hasVerbAuxiliaryVerbPhrase()) {
-            semanticRelationData.setVerbAuxiliaryVerbPhrase(extractVerbAuxiliaryVerbPhrase(subSentence, encodedTags,
+            semanticRelationData.setVerbAuxiliaryVerbPhrase(verbExtractor.extractVerbAuxiliaryVerbPhrase(subSentence, encodedTags,
                     constantIndex, constantType));
         }
         if (constantType == SemanticRelationConstantType.MODAL_VERB || constantType == SemanticRelationConstantType.MODAL_VERB_NOT) {
-            semanticRelationData.setAtomicVerb(extractVerbFromModalVerbPhrase(subSentence, encodedTags, constantIndex));
-        }else{
+            semanticRelationData.setAtomicModalVerb(subSentence.get(constantIndex));
+            semanticRelationData.setAtomicVerb(verbExtractor.extractVerbFromModalVerbPhrase(subSentence, encodedTags, constantIndex));
+        } else {
             semanticRelationData.setAtomicVerb(semanticalConstantTagAnalysisData.getConstantToken());
         }
-    }
-
-
-    private String extractExtendedSubject(List<String> subSentence, int constantIndex, SemanticRelationConstantType constantType) {
-        String extendedSubject = "";
-        int endIndex = constantIndex - SemanticRelationConstantType.relationsExtractorExtSubjectIndexMap.get(constantType);
-        for (int i = 0; i < endIndex; i++) {
-            if (i < endIndex - 1)
-                extendedSubject += subSentence.get(i) + " ";
-            else
-                extendedSubject += subSentence.get(i);
-        }
-        return extendedSubject;
-    }
-
-    private String extractExtendedPredicate(List<String> subSentence, List<String> encodedTags,
-                                            int constantIndex, SemanticRelationConstantType constantType) {
-        String extendedPredicate = "";
-        int startIndex = getStartIndexForPredicateExtraction(constantIndex, encodedTags, constantType);
-        for (int i = startIndex; i <= subSentence.size() - 1; i++) {
-            if (i < subSentence.size() - 1)
-                extendedPredicate += subSentence.get(i) + " ";
-            else
-                extendedPredicate += subSentence.get(i);
-        }
-        return extendedPredicate;
-    }
-
-    private String extractExtendedPredicate(List<String> subSentence, List<String> encodedTags,
-                                            int constantIndex, int prepositionIndex, SemanticRelationConstantType constantType) {
-        String extendedPredicate = "";
-        int startIndex = getStartIndexForPredicateExtraction(constantIndex, encodedTags, constantType);
-        for (int i = startIndex; i < prepositionIndex; i++) {
-            if (i < subSentence.size() - 1)
-                extendedPredicate += subSentence.get(i) + " ";
-            else
-                extendedPredicate += subSentence.get(i);
-        }
-        return extendedPredicate;
-    }
-
-    private String extractPrepositionPredicate(List<String> subSentence, List<String> encodedTags, int constantIndex,
-                                               SemanticRelationConstantType constantType) {
-        String prepositionPredicate = "";
-        int startIndex = getStartIndexForPredicateExtraction(constantIndex, encodedTags, constantType);
-        for (int i = startIndex; i <= subSentence.size() - 1; i++) {
-            if (i < subSentence.size() - 1)
-                prepositionPredicate += subSentence.get(i) + " ";
-            else
-                prepositionPredicate += subSentence.get(i);
-        }
-        return prepositionPredicate;
-    }
-
-    private String extractVerbAuxiliaryVerbPhrase(List<String> subSentence, List<String> encodedTags, int constantIndex, SemanticRelationConstantType constantType) {
-        String verbAuxiliaryVerbPhrase = "";
-        int verbIndex = getVerbIndex(encodedTags, constantIndex);
-        if (SemanticRelationConstantType.MODAL_VERB == constantType || SemanticRelationConstantType.MODAL_VERB_NOT == constantType) {
-            for (int i = constantIndex; i <= verbIndex; i++) {
-                if (i < verbIndex) {
-                    verbAuxiliaryVerbPhrase += subSentence.get(i) + " ";
-                } else {
-                    verbAuxiliaryVerbPhrase += subSentence.get(i);
-                }
-            }
-        } else if (SemanticRelationConstantType.VERB_DONT == constantType) {
-            verbAuxiliaryVerbPhrase = subSentence.get(constantIndex - 1) + " " + subSentence.get(constantIndex);
-        } else if (SemanticRelationConstantType.VERB_DO_NOT == constantType) {
-            verbAuxiliaryVerbPhrase = subSentence.get(constantIndex - 2) + " " + subSentence.get(constantIndex - 1) + " " + subSentence.get(constantIndex);
-        } else if (SemanticRelationConstantType.IS_NOT == constantType) {
-            verbAuxiliaryVerbPhrase = subSentence.get(constantIndex) + " " + subSentence.get(constantIndex + 1);
-        }
-        return verbAuxiliaryVerbPhrase;
-    }
-
-    private String extractVerbFromModalVerbPhrase(List<String> subSentence, List<String> encodedTags, int constantIndex) {
-        int verbIndex = getVerbIndex(encodedTags, constantIndex);
-        return subSentence.get(verbIndex);
-    }
-
-    private int getStartIndexForPredicateExtraction(int constantIndex, List<String> encodedTags, SemanticRelationConstantType constantType) {
-        if (SemanticRelationConstantType.MODAL_VERB == constantType || SemanticRelationConstantType.MODAL_VERB_NOT == constantType) {
-            return getVerbIndex(encodedTags, constantIndex) + 1;
-        } else {
-            return constantIndex + 1;
-        }
-    }
-
-    private int getVerbIndex(List<String> encodedTags, int modalVerbIndex) {
-        for (int i = modalVerbIndex; i <= encodedTags.size() - 1; i++) {
-            if (EncodedTags.VERB.equals(encodedTags.get(i))) {
-                return i;
-            }
-        }
-        throw new IllegalStateException("There is no verb in the list of tags.");
     }
 
 }

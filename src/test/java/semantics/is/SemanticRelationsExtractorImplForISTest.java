@@ -3,10 +3,7 @@ package semantics.is;
 import com.trainingdataprocessor.cache.ConstantWordsCache;
 import com.trainingdataprocessor.data.RegexPatternIndexData;
 import com.trainingdataprocessor.data.semantics.SemanticRelationData;
-import com.trainingdataprocessor.semantics.SemanticConstantTagAnalyser;
-import com.trainingdataprocessor.semantics.SemanticConstantTagAnalyserImpl;
-import com.trainingdataprocessor.semantics.SemanticRelationConstantType;
-import com.trainingdataprocessor.semantics.SemanticRelationsExtractorImpl;
+import com.trainingdataprocessor.semantics.*;
 import com.trainingdataprocessor.tags.EncodedTags;
 import org.junit.Test;
 
@@ -27,10 +24,17 @@ public class SemanticRelationsExtractorImplForISTest {
 
     private SemanticConstantTagAnalyser semanticConstantTagAnalyser = new SemanticConstantTagAnalyserImpl(constantWordsCache);
 
+    private SubjectExtractor subjectExtractor = new SubjectExtractorImpl();
+
+    private PredicateExtractor predicateExtractor = new PredicateExtractorImpl();
+
+    private VerbExtractor verbExtractor = new VerbExtractorImpl();
+
 
     @Test
     public void testISrelationshipExtractNoPrepositions() {
-        SemanticRelationsExtractorImpl relationshipsExtractorImpl = new SemanticRelationsExtractorImpl(semanticConstantTagAnalyser);
+        SemanticRelationsExtractorImpl relationshipsExtractorImpl = new SemanticRelationsExtractorImpl(semanticConstantTagAnalyser, subjectExtractor,
+                predicateExtractor, verbExtractor);
 
         List<String> encodedTags = new ArrayList<String>();
         encodedTags.add(EncodedTags.NOUN);
@@ -70,7 +74,8 @@ public class SemanticRelationsExtractorImplForISTest {
 
     @Test
     public void testISrelationshipExtractOnePreposition() {
-        SemanticRelationsExtractorImpl relationshipsExtractorImpl = new SemanticRelationsExtractorImpl(semanticConstantTagAnalyser);
+        SemanticRelationsExtractorImpl relationshipsExtractorImpl = new SemanticRelationsExtractorImpl(semanticConstantTagAnalyser, subjectExtractor, predicateExtractor,
+                verbExtractor);
 
         List<String> encodedTags = new ArrayList<String>();
         encodedTags.add(EncodedTags.NOUN);
@@ -113,7 +118,8 @@ public class SemanticRelationsExtractorImplForISTest {
 
     @Test
     public void testISrelationshipExtractTwoPrepositions() {
-        SemanticRelationsExtractorImpl relationshipsExtractorImpl = new SemanticRelationsExtractorImpl(semanticConstantTagAnalyser);
+        SemanticRelationsExtractorImpl relationshipsExtractorImpl = new SemanticRelationsExtractorImpl(semanticConstantTagAnalyser, subjectExtractor, predicateExtractor,
+                verbExtractor);
 
         List<String> encodedTags = new ArrayList<String>();
         encodedTags.add(EncodedTags.NOUN);
@@ -148,6 +154,7 @@ public class SemanticRelationsExtractorImplForISTest {
         SemanticRelationData semanticRelationData = relationshipsExtractorImpl.extract(EncodedTags.IS_ARE, regexPatternIndexData,
                 tokens, encodedTags, SemanticRelationConstantType.IS_ISNT);
 
+        assertTrue(semanticRelationData.isPositiveVerb());
         assertTrue(semanticRelationData.isPresentTense());
         assertEquals("football", semanticRelationData.getAtomicSubject());
         assertEquals("sport", semanticRelationData.getAtomicPredicate());
@@ -159,7 +166,8 @@ public class SemanticRelationsExtractorImplForISTest {
 
     @Test
     public void testISrelationshipExtractToVerbED() {
-        SemanticRelationsExtractorImpl relationshipsExtractorImpl = new SemanticRelationsExtractorImpl(semanticConstantTagAnalyser);
+        SemanticRelationsExtractorImpl relationshipsExtractorImpl = new SemanticRelationsExtractorImpl(semanticConstantTagAnalyser, subjectExtractor, predicateExtractor,
+                verbExtractor);
 
         List<String> encodedTags = new ArrayList<String>();
         encodedTags.add(EncodedTags.NOUN);
@@ -188,6 +196,7 @@ public class SemanticRelationsExtractorImplForISTest {
         SemanticRelationData semanticRelationData = relationshipsExtractorImpl.extract(EncodedTags.IS_ARE, regexPatternIndexData,
                 tokens, encodedTags, SemanticRelationConstantType.IS_ISNT);
 
+        assertTrue(semanticRelationData.isPositiveVerb());
         assertFalse(semanticRelationData.isPresentTense());
         assertEquals("Vivaldi", semanticRelationData.getAtomicSubject());
         assertEquals("taught", semanticRelationData.getAtomicPredicate());
@@ -197,7 +206,8 @@ public class SemanticRelationsExtractorImplForISTest {
 
     @Test
     public void testISrelationshipExtractExtendedPrepositionSubject() {
-        SemanticRelationsExtractorImpl relationshipsExtractorImpl = new SemanticRelationsExtractorImpl(semanticConstantTagAnalyser);
+        SemanticRelationsExtractorImpl relationshipsExtractorImpl = new SemanticRelationsExtractorImpl(semanticConstantTagAnalyser, subjectExtractor, predicateExtractor,
+                verbExtractor);
 
         List<String> encodedTags = new ArrayList<String>();
         encodedTags.add(EncodedTags.NOUN);
@@ -222,6 +232,7 @@ public class SemanticRelationsExtractorImplForISTest {
         SemanticRelationData semanticRelationData = relationshipsExtractorImpl.extract(EncodedTags.IS_ARE, regexPatternIndexData,
                 tokens, encodedTags, SemanticRelationConstantType.IS_ISNT);
 
+        assertTrue(semanticRelationData.isPositiveVerb());
         assertTrue(semanticRelationData.isPresentTense());
         assertTrue(semanticRelationData.getAtomicSubject() == null);
         assertEquals("Fans of Spartak Trnava", semanticRelationData.getExtendedSubject());
@@ -232,7 +243,7 @@ public class SemanticRelationsExtractorImplForISTest {
 
     @Test
     public void testISrelationshipExtractExtendedPrepositionSubjectWithWHdeterminer() {
-        SemanticRelationsExtractorImpl relationshipsExtractorImpl = new SemanticRelationsExtractorImpl(semanticConstantTagAnalyser);
+        SemanticRelationsExtractorImpl relationshipsExtractorImpl = new SemanticRelationsExtractorImpl(semanticConstantTagAnalyser, subjectExtractor, predicateExtractor, verbExtractor);
 
         List<String> encodedTags = new ArrayList<String>();
         encodedTags.add(EncodedTags.NOUN);
@@ -251,6 +262,7 @@ public class SemanticRelationsExtractorImplForISTest {
         SemanticRelationData semanticRelationData = relationshipsExtractorImpl.extract(EncodedTags.IS_ARE, regexPatternIndexData, tokens,
                 encodedTags, SemanticRelationConstantType.IS_ISNT);
 
+        assertTrue(semanticRelationData.isPositiveVerb());
         assertFalse(semanticRelationData.isPresentTense());
         assertEquals("Vermeer", semanticRelationData.getAtomicSubject());
         assertEquals("Johannes Vermeer", semanticRelationData.getExtendedSubject());

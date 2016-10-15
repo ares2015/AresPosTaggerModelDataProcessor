@@ -23,7 +23,11 @@ public class SemanticRelationData {
 
     private String atomicVerb;
 
+    private String atomicModalVerb;
+
     private String verbAuxiliaryVerbPhrase;
+
+    private boolean isPositiveVerb;
 
     public boolean isPresentTense() {
         return isPresentTense;
@@ -97,11 +101,27 @@ public class SemanticRelationData {
         this.atomicVerb = atomicVerb;
     }
 
+    public String getAtomicModalVerb() {
+        return atomicModalVerb;
+    }
+
+    public void setAtomicModalVerb(String atomicModalVerb) {
+        this.atomicModalVerb = atomicModalVerb;
+    }
+
     public String getVerbAuxiliaryVerbPhrase() {
         return verbAuxiliaryVerbPhrase;
     }
 
     public void setVerbAuxiliaryVerbPhrase(String verbAuxiliaryVerbPhrase) {
         this.verbAuxiliaryVerbPhrase = verbAuxiliaryVerbPhrase;
+    }
+
+    public boolean isPositiveVerb() {
+        return isPositiveVerb;
+    }
+
+    public void setPositiveVerb(boolean positiveVerb) {
+        isPositiveVerb = positiveVerb;
     }
 }

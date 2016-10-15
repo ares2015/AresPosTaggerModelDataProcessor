@@ -3,10 +3,7 @@ package semantics.modal;
 import com.trainingdataprocessor.cache.ConstantWordsCache;
 import com.trainingdataprocessor.data.RegexPatternIndexData;
 import com.trainingdataprocessor.data.semantics.SemanticRelationData;
-import com.trainingdataprocessor.semantics.SemanticConstantTagAnalyser;
-import com.trainingdataprocessor.semantics.SemanticConstantTagAnalyserImpl;
-import com.trainingdataprocessor.semantics.SemanticRelationConstantType;
-import com.trainingdataprocessor.semantics.SemanticRelationsExtractorImpl;
+import com.trainingdataprocessor.semantics.*;
 import com.trainingdataprocessor.tags.EncodedTags;
 import org.junit.Test;
 
@@ -26,9 +23,17 @@ public class SemanticRelationsExtractorImplForModalTest {
 
     private SemanticConstantTagAnalyser semanticConstantTagAnalyser = new SemanticConstantTagAnalyserImpl(constantWordsCache);
 
+    private SubjectExtractor subjectExtractor = new SubjectExtractorImpl();
+
+    private PredicateExtractor predicateExtractor = new PredicateExtractorImpl();
+
+    private VerbExtractor verbExtractor = new VerbExtractorImpl();
+
+
     @Test
     public void testModalVerbNotRelationship(){
-        SemanticRelationsExtractorImpl relationshipsExtractorImpl = new SemanticRelationsExtractorImpl(semanticConstantTagAnalyser);
+        SemanticRelationsExtractorImpl relationshipsExtractorImpl = new SemanticRelationsExtractorImpl(semanticConstantTagAnalyser, subjectExtractor, predicateExtractor,
+                verbExtractor);
 
         List<String> encodedTags = new ArrayList<String>();
         encodedTags.add(EncodedTags.ADJECTIVE);
@@ -48,6 +53,7 @@ public class SemanticRelationsExtractorImplForModalTest {
         SemanticRelationData semanticRelationData = relationshipsExtractorImpl.extract(EncodedTags.MODAL_VERB,
                 regexPatternIndexData, tokens, encodedTags, SemanticRelationConstantType.MODAL_VERB_NOT);
 
+        assertFalse(semanticRelationData.isPositiveVerb());
         assertFalse(semanticRelationData.isPresentTense());
         assertEquals("firemen", semanticRelationData.getAtomicSubject());
         assertEquals("brave firemen", semanticRelationData.getExtendedSubject());
@@ -55,11 +61,12 @@ public class SemanticRelationsExtractorImplForModalTest {
         assertEquals("forest fire", semanticRelationData.getExtendedPredicate());
         assertEquals("can not fight", semanticRelationData.getVerbAuxiliaryVerbPhrase());
         assertEquals("fight" , semanticRelationData.getAtomicVerb());
+        assertEquals("can" , semanticRelationData.getAtomicModalVerb());
     }
 
     @Test
     public void testModalVerbNotRelationshipWithPreposition(){
-        SemanticRelationsExtractorImpl relationshipsExtractorImpl = new SemanticRelationsExtractorImpl(semanticConstantTagAnalyser);
+        SemanticRelationsExtractorImpl relationshipsExtractorImpl = new SemanticRelationsExtractorImpl(semanticConstantTagAnalyser, subjectExtractor, predicateExtractor, verbExtractor);
 
         List<String> encodedTags = new ArrayList<String>();
         encodedTags.add(EncodedTags.ADJECTIVE);
@@ -80,6 +87,7 @@ public class SemanticRelationsExtractorImplForModalTest {
         SemanticRelationData semanticRelationData = relationshipsExtractorImpl.extract(EncodedTags.MODAL_VERB, regexPatternIndexData, tokens, encodedTags,
                 SemanticRelationConstantType.MODAL_VERB_NOT);
 
+        assertFalse(semanticRelationData.isPositiveVerb());
         assertFalse(semanticRelationData.isPresentTense());
         assertEquals("firemen", semanticRelationData.getAtomicSubject());
         assertEquals("brave firemen", semanticRelationData.getExtendedSubject());
@@ -88,6 +96,7 @@ public class SemanticRelationsExtractorImplForModalTest {
         assertEquals("forest fire in California mountains", semanticRelationData.getPrepositionPredicate());
         assertEquals("can not fight", semanticRelationData.getVerbAuxiliaryVerbPhrase());
         assertEquals("fight" , semanticRelationData.getAtomicVerb());
+        assertEquals("can" , semanticRelationData.getAtomicModalVerb());
     }
 
 }
