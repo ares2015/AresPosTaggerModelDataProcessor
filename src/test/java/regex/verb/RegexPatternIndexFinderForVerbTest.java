@@ -246,13 +246,6 @@ public class RegexPatternIndexFinderForVerbTest {
         assertEquals(1, regexPatternIndexFinderList.size());
         assertEquals(encodedPath, regexPatternIndexFinderList.get(0).getPattern());
         System.out.println(sentence + ": " + regexPatternIndexFinderList.get(0).getPattern());
-
-        sentence = "brave firemen fight furiously forest fire in California mountains";
-        encodedPath = "JNVANNPNN";
-        regexPatternIndexFinderList = regexPatternIndexFinder.find(encodedPath, NOUN_VERB_RELATION_PATTERN);
-        assertEquals(1, regexPatternIndexFinderList.size());
-        assertEquals(encodedPath, regexPatternIndexFinderList.get(0).getPattern());
-        System.out.println(sentence + ": " + regexPatternIndexFinderList.get(0).getPattern());
     }
 
     @Test

@@ -46,9 +46,6 @@ public class SemanticRelationsExtractorImplForISTest {
         encodedTags.add(EncodedTags.NOUN);
 
         List<String> tokens = new ArrayList<>();
-        tokens.add("Wikipedia");
-        tokens.add("says");
-        tokens.add("that");
         tokens.add("American");
         tokens.add("football");
         tokens.add("is");
@@ -57,7 +54,7 @@ public class SemanticRelationsExtractorImplForISTest {
         tokens.add("collective");
         tokens.add("sport");
 
-        RegexPatternIndexData regexPatternIndexData = new RegexPatternIndexData("NNIJJJN", 3, "NNIJJJN".length());
+        RegexPatternIndexData regexPatternIndexData = new RegexPatternIndexData("NNIJJJN", 0, "NNIJJJN".length());
 
         SemanticRelationData semanticRelationData =
                 relationshipsExtractorImpl.extract(EncodedTags.IS_ARE, regexPatternIndexData, tokens, encodedTags, SemanticRelationConstantType.IS_ISNT_3_LEVEL);
@@ -90,9 +87,6 @@ public class SemanticRelationsExtractorImplForISTest {
         encodedTags.add(EncodedTags.NOUN);
 
         List<String> tokens = new ArrayList<>();
-        tokens.add("Wikipedia");
-        tokens.add("says");
-        tokens.add("that");
         tokens.add("American");
         tokens.add("football");
         tokens.add("is");
@@ -104,7 +98,7 @@ public class SemanticRelationsExtractorImplForISTest {
         tokens.add("Stanford");
         tokens.add("University");
 
-        RegexPatternIndexData regexPatternIndexData = new RegexPatternIndexData("NNIJJJNPNN", 3, 12);
+        RegexPatternIndexData regexPatternIndexData = new RegexPatternIndexData("NNIJJJNPNN", 0, "NNIJJJNPNN".length());
 
         SemanticRelationData semanticRelationData = relationshipsExtractorImpl.extract(EncodedTags.IS_ARE, regexPatternIndexData, tokens, encodedTags, SemanticRelationConstantType.IS_ISNT_3_LEVEL);
 
