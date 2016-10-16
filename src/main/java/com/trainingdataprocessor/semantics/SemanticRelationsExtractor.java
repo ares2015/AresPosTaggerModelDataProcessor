@@ -1,6 +1,7 @@
 package com.trainingdataprocessor.semantics;
 
 import com.trainingdataprocessor.data.RegexPatternIndexData;
+import com.trainingdataprocessor.data.semantics.SemanticRelationData;
 
 import java.util.List;
 
@@ -9,7 +10,7 @@ import java.util.List;
  */
 public interface SemanticRelationsExtractor<T>{
 
-    T extract(String constant, RegexPatternIndexData regexPatternIndexData, List<String> tokens, List<String> encodedTags,
-                    SemanticRelationConstantType constantType);
+    SemanticRelationData extract(String constant, RegexPatternIndexData regexPatternIndexData, List<String> tokens, List<String> encodedTags,
+                                 SemanticRelationConstantType constantType);
 
 }

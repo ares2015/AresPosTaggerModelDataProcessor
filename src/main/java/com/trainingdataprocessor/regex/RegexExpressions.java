@@ -1,6 +1,9 @@
 package com.trainingdataprocessor.regex;
 
+import com.trainingdataprocessor.semantics.SemanticRelationConstantType;
 import com.trainingdataprocessor.tags.EncodedTags;
+
+import java.util.*;
 
 /**
  * Created by Oliver on 9/19/2016.
@@ -64,4 +67,52 @@ public final class RegexExpressions {
             EncodedTags.MODAL_VERB + EncodedTags.NOT + ADVERB_SEQUENCE + EncodedTags.VERB + ADVERB_SEQUENCE + ADVERB_SEQUENCE +
             AFTER_VERB_PREPOSITION_PHRASE + AFTER_VERB_PREPOSITION_PHRASE + AFTER_VERB_PREPOSITION_PHRASE + AFTER_VERB_PREPOSITION_PHRASE;
 
+    public static final List<String> regexPatterns = new ArrayList<>();
+
+    public static final Map<String, String> patternsConstantTagsMap = new HashMap<String, String>();
+
+    public static final Map<String, SemanticRelationConstantType> patternsSemanticRelationConstantTypeMap = new HashMap<String, SemanticRelationConstantType>();
+
+
+    static{
+        regexPatterns.add(NOUN_IS_NOUN_RELATION_PATTERN);
+        regexPatterns.add(NOUN_IS_NOT_NOUN_RELATION_PATTERN);
+        regexPatterns.add(NOUN_VERB_NOUN_RELATION_PATTERN);
+        regexPatterns.add(NOUN_VERB_DONT_NOUN_RELATION_PATTERN);
+        regexPatterns.add(NOUN_VERB_DO_NOT_NOUN_RELATION_PATTERN);
+        regexPatterns.add(NOUN_MODAL_VERB_NOUN_RELATION_PATTERN);
+        regexPatterns.add(NOUN_MODAL_VERB_NOT_NOUN_RELATION_PATTERN);
+        regexPatterns.add(NOUN_VERB_RELATION_PATTERN);
+        regexPatterns.add(NOUN_VERB_DONT_RELATION_PATTERN);
+        regexPatterns.add(NOUN_VERB_DO_NOT_RELATION_PATTERN);
+        regexPatterns.add(NOUN_MODAL_VERB_RELATION_PATTERN);
+        regexPatterns.add(NOUN_MODAL_VERB_NOT_RELATION_PATTERN);
+
+        patternsConstantTagsMap.put(NOUN_IS_NOUN_RELATION_PATTERN, EncodedTags.IS_ARE);
+        patternsConstantTagsMap.put(NOUN_IS_NOT_NOUN_RELATION_PATTERN, EncodedTags.IS_ARE);
+        patternsConstantTagsMap.put(NOUN_VERB_NOUN_RELATION_PATTERN, EncodedTags.VERB);
+        patternsConstantTagsMap.put(NOUN_VERB_DONT_NOUN_RELATION_PATTERN, EncodedTags.VERB);
+        patternsConstantTagsMap.put(NOUN_VERB_DO_NOT_NOUN_RELATION_PATTERN, EncodedTags.VERB);
+        patternsConstantTagsMap.put(NOUN_MODAL_VERB_NOUN_RELATION_PATTERN, EncodedTags.MODAL_VERB);
+        patternsConstantTagsMap.put(NOUN_MODAL_VERB_NOT_NOUN_RELATION_PATTERN, EncodedTags.MODAL_VERB);
+        patternsConstantTagsMap.put(NOUN_VERB_RELATION_PATTERN, EncodedTags.VERB);
+        patternsConstantTagsMap.put(NOUN_VERB_DONT_RELATION_PATTERN, EncodedTags.VERB);
+        patternsConstantTagsMap.put(NOUN_VERB_DO_NOT_RELATION_PATTERN, EncodedTags.VERB);
+        patternsConstantTagsMap.put(NOUN_MODAL_VERB_RELATION_PATTERN, EncodedTags.MODAL_VERB);
+        patternsConstantTagsMap.put(NOUN_MODAL_VERB_NOT_RELATION_PATTERN, EncodedTags.MODAL_VERB);
+
+        patternsSemanticRelationConstantTypeMap.put(NOUN_IS_NOUN_RELATION_PATTERN, SemanticRelationConstantType.IS_ISNT_3_LEVEL);
+        patternsSemanticRelationConstantTypeMap.put(NOUN_IS_NOT_NOUN_RELATION_PATTERN, SemanticRelationConstantType.IS_NOT_3_LEVEL);
+        patternsSemanticRelationConstantTypeMap.put(NOUN_VERB_NOUN_RELATION_PATTERN, SemanticRelationConstantType.VERB_3_LEVEL);
+        patternsSemanticRelationConstantTypeMap.put(NOUN_VERB_DONT_NOUN_RELATION_PATTERN, SemanticRelationConstantType.VERB_DONT_3_LEVEL);
+        patternsSemanticRelationConstantTypeMap.put(NOUN_VERB_DO_NOT_NOUN_RELATION_PATTERN, SemanticRelationConstantType.VERB_DO_NOT_3_LEVEL);
+        patternsSemanticRelationConstantTypeMap.put(NOUN_MODAL_VERB_NOUN_RELATION_PATTERN, SemanticRelationConstantType.MODAL_VERB_3_LEVEL);
+        patternsSemanticRelationConstantTypeMap.put(NOUN_MODAL_VERB_NOT_NOUN_RELATION_PATTERN, SemanticRelationConstantType.MODAL_VERB_NOT_3_LEVEL);
+        patternsSemanticRelationConstantTypeMap.put(NOUN_VERB_RELATION_PATTERN, SemanticRelationConstantType.VERB_2_LEVEL);
+        patternsSemanticRelationConstantTypeMap.put(NOUN_VERB_DONT_RELATION_PATTERN, SemanticRelationConstantType.VERB_DONT_2_LEVEL);
+        patternsSemanticRelationConstantTypeMap.put(NOUN_VERB_DO_NOT_RELATION_PATTERN, SemanticRelationConstantType.VERB_DO_NOT_2_LEVEL);
+        patternsSemanticRelationConstantTypeMap.put(NOUN_MODAL_VERB_RELATION_PATTERN, SemanticRelationConstantType.MODAL_VERB_2_LEVEL);
+        patternsSemanticRelationConstantTypeMap.put(NOUN_MODAL_VERB_NOT_RELATION_PATTERN, SemanticRelationConstantType.MODAL_VERB_3_LEVEL);
+
+    }
 }

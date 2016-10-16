@@ -33,7 +33,7 @@ public class SemanticRelationsExtractorImpl implements SemanticRelationsExtracto
         semanticRelationData.setStartIndex(regexPatternIndexData.getStartIndex());
         semanticRelationData.setEndIndex(regexPatternIndexData.getEndIndex());
 
-        List<String> subSentence = tokens.subList(regexPatternIndexData.getStartIndex(), regexPatternIndexData.getEndIndex() + 1);
+        List<String> subSentence = tokens.subList(regexPatternIndexData.getStartIndex(), regexPatternIndexData.getEndIndex());
 
         SemanticalConstantTagAnalysisData semanticalConstantTagAnalysisData = semanticConstantTagAnalyser.analyse(constant, subSentence,
                 encodedTags, constantType);
