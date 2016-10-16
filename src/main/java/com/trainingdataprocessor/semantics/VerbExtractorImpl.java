@@ -11,13 +11,18 @@ import static com.trainingdataprocessor.semantics.SemanticExtractionUtils.getVer
  */
 public class VerbExtractorImpl implements VerbExtractor {
 
-    private final Set<String> positiveIsNouns = new HashSet<>();
+    private final Set<String> negativeIsAndModalVerbs = new HashSet<>();
 
     {
-        positiveIsNouns.add("is");
-        positiveIsNouns.add("are");
-        positiveIsNouns.add("was");
-        positiveIsNouns.add("were");
+        negativeIsAndModalVerbs.add("isn't");
+        negativeIsAndModalVerbs.add("aren't");
+        negativeIsAndModalVerbs.add("wasn't");
+        negativeIsAndModalVerbs.add("weren't");
+        negativeIsAndModalVerbs.add("shouldn't");
+        negativeIsAndModalVerbs.add("wouldn't");
+        negativeIsAndModalVerbs.add("mustn't");
+        negativeIsAndModalVerbs.add("can't");
+        negativeIsAndModalVerbs.add("couldn't");
     }
 
     public String extractExtendedVerb(List<String> subSentence, List<String> encodedTags, int constantIndex, SemanticRelationConstantType constantType) {
@@ -47,6 +52,6 @@ public class VerbExtractorImpl implements VerbExtractor {
     }
 
     public boolean isPositiveVerb(List<String> subSentence, int constantIndex, SemanticRelationConstantType constantType) {
-        return positiveIsNouns.contains(subSentence.get(constantIndex)) || SemanticRelationConstantType.positiveTypes.contains(constantType);
+        return !(negativeIsAndModalVerbs.contains(subSentence.get(constantIndex)) || SemanticRelationConstantType.negativeTypes.contains(constantType));
     }
 }

@@ -22,7 +22,7 @@ public enum SemanticRelationConstantType {
 
     public static Set<SemanticRelationConstantType> auxiliaryTypes = new HashSet<SemanticRelationConstantType>();
 
-    public static Set<SemanticRelationConstantType> positiveTypes = new HashSet<SemanticRelationConstantType>();
+    public static Set<SemanticRelationConstantType> negativeTypes = new HashSet<SemanticRelationConstantType>();
 
     static {
         constantTagAnalyserExtSubjectIndexMap.put(SemanticRelationConstantType.IS_ISNT, 1);
@@ -62,9 +62,10 @@ public enum SemanticRelationConstantType {
         auxiliaryTypes.add(SemanticRelationConstantType.VERB_DO_NOT);
         auxiliaryTypes.add(SemanticRelationConstantType.MODAL_VERB_NOT);
 
-        positiveTypes.add(SemanticRelationConstantType.VERB);
-        positiveTypes.add(SemanticRelationConstantType.MODAL_VERB);
-        positiveTypes.add(SemanticRelationConstantType.VERB_PHRASE);
+        negativeTypes.add(SemanticRelationConstantType.IS_NOT);
+        negativeTypes.add(SemanticRelationConstantType.VERB_DO_NOT);
+        negativeTypes.add(SemanticRelationConstantType.VERB_DONT);
+        negativeTypes.add(SemanticRelationConstantType.MODAL_VERB_NOT);
 
     }
 
