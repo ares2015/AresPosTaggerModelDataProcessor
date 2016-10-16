@@ -31,10 +31,8 @@ public final class SemanticConstantTagAnalyserImpl implements SemanticConstantTa
                 analysisData.setConstantToken(subSentence.get(index));
                 constantIndex = index;
                 isConstantFound = true;
-                analysisData.setPresentTense(isPresentTense(subSentence.get(index), encodedTags.get(index)));
             }
-            if (Tags.PREPOSITION.equals(constantWordsCache.getConstantWordsCache().get(subSentence.get(index))) ||
-                    Tags.TO.equals(constantWordsCache.getConstantWordsCache().get(subSentence.get(index)))) {
+            if (isTokenPreposition(index, subSentence)) {
                 if (isConstantFound) {
                     analysisData.setContainsAfterConstantPreposition(true);
                     analysisData.getAfterConstantTagPrepositionIndexes().add(index);
@@ -56,10 +54,6 @@ public final class SemanticConstantTagAnalyserImpl implements SemanticConstantTa
         throw new IllegalStateException("IS pattern (subsentence) does not contain IS constant word.");
     }
 
-    private boolean isPresentTense(String token, String encodedTag) {
-        return ("is".equals(token) || "are".equals(token)) || EncodedTags.VERB.equals(encodedTag);
-    }
-
     private boolean hasExtendedSubject(int constantIndex, SemanticRelationConstantType constantType) {
         return constantIndex > SemanticRelationConstantType.constantTagAnalyserExtSubjectIndexMap.get(constantType);
     }
@@ -70,6 +64,11 @@ public final class SemanticConstantTagAnalyserImpl implements SemanticConstantTa
 
     private boolean hasVerbAuxiliaryVerbRelation(SemanticRelationConstantType constantType) {
         return SemanticRelationConstantType.auxiliaryTypes.contains(constantType);
+    }
+
+    private boolean isTokenPreposition(int index, List<String> subSentence){
+        return Tags.PREPOSITION.equals(constantWordsCache.getConstantWordsCache().get(subSentence.get(index))) ||
+                Tags.TO.equals(constantWordsCache.getConstantWordsCache().get(subSentence.get(index)));
     }
 
 }

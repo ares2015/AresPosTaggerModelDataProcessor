@@ -13,6 +13,7 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Created by Oliver on 10/11/2016.
@@ -54,7 +55,7 @@ public class SemanticRelationsExtractorImplForModalTest {
                 regexPatternIndexData, tokens, encodedTags, SemanticRelationConstantType.MODAL_VERB_NOT_3_LEVEL);
 
         assertFalse(semanticRelationData.isPositiveVerb());
-        assertFalse(semanticRelationData.isPresentTense());
+        assertTrue(semanticRelationData.isPresentTense());
         assertEquals("firemen", semanticRelationData.getAtomicSubject());
         assertEquals("brave firemen", semanticRelationData.getExtendedSubject());
         assertEquals("fire", semanticRelationData.getAtomicPredicate());
@@ -88,7 +89,7 @@ public class SemanticRelationsExtractorImplForModalTest {
                 SemanticRelationConstantType.MODAL_VERB_NOT_3_LEVEL);
 
         assertFalse(semanticRelationData.isPositiveVerb());
-        assertFalse(semanticRelationData.isPresentTense());
+        assertTrue(semanticRelationData.isPresentTense());
         assertEquals("firemen", semanticRelationData.getAtomicSubject());
         assertEquals("brave firemen", semanticRelationData.getExtendedSubject());
         assertEquals("fire", semanticRelationData.getAtomicPredicate());

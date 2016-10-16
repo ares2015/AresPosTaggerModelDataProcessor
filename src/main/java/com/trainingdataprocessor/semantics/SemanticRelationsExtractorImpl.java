@@ -37,7 +37,7 @@ public class SemanticRelationsExtractorImpl implements SemanticRelationsExtracto
 
         SemanticalConstantTagAnalysisData semanticalConstantTagAnalysisData = semanticConstantTagAnalyser.analyse(constant, subSentence,
                 encodedTags, constantType);
-        semanticRelationData.setPresentTense(semanticalConstantTagAnalysisData.isPresentTense());
+
         processSubject(subSentence, semanticRelationData, semanticalConstantTagAnalysisData, constantType);
         processPredicate(subSentence, encodedTags, semanticRelationData, semanticalConstantTagAnalysisData, constantType);
         processVerb(semanticRelationData, semanticalConstantTagAnalysisData, subSentence, encodedTags, constantType);
@@ -79,11 +79,12 @@ public class SemanticRelationsExtractorImpl implements SemanticRelationsExtracto
                              List<String> subSentence, List<String> encodedTags, SemanticRelationConstantType constantType) {
         int constantIndex = semanticalConstantTagAnalysisData.getConstantIndex();
         semanticRelationData.setPositiveVerb(verbExtractor.isPositiveVerb(subSentence, constantIndex, constantType));
+        semanticRelationData.setPresentTense(verbExtractor.isPresentTense(subSentence, encodedTags, constantIndex, constantType));
         if (semanticalConstantTagAnalysisData.hasVerbAuxiliaryVerbPhrase()) {
             semanticRelationData.setExtendedVerb(verbExtractor.extractExtendedVerb(subSentence, encodedTags,
                     constantIndex, constantType));
         }
-        if (constantType == SemanticRelationConstantType.MODAL_VERB_3_LEVEL || constantType == SemanticRelationConstantType.MODAL_VERB_NOT_3_LEVEL) {
+        if (SemanticRelationConstantType.modalVerbs.contains(constantType)) {
             semanticRelationData.setAtomicModalVerb(subSentence.get(constantIndex));
             semanticRelationData.setAtomicVerb(verbExtractor.extractVerbFromModalVerbPhrase(subSentence, encodedTags, constantIndex));
         } else {

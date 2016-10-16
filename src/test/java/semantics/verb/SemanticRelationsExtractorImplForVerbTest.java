@@ -117,7 +117,7 @@ public class SemanticRelationsExtractorImplForVerbTest {
                 SemanticRelationConstantType.VERB_DONT_3_LEVEL);
 
         assertFalse(semanticRelationData.isPositiveVerb());
-        assertTrue(semanticRelationData.isPresentTense());
+        assertFalse(semanticRelationData.isPresentTense());
         assertEquals("guys", semanticRelationData.getAtomicSubject());
         assertEquals("drunken guys", semanticRelationData.getExtendedSubject());
         assertEquals("flight", semanticRelationData.getAtomicPredicate());
@@ -201,7 +201,7 @@ public class SemanticRelationsExtractorImplForVerbTest {
         SemanticRelationData semanticRelationData = relationshipsExtractorImpl.extract(EncodedTags.VERB, regexPatternIndexData, tokens, encodedTags,
                 SemanticRelationConstantType.VERB_DONT_2_LEVEL);
 
-        assertTrue(semanticRelationData.isPositiveVerb());
+        assertFalse(semanticRelationData.isPositiveVerb());
         assertTrue(semanticRelationData.isPresentTense());
         assertEquals("soldiers", semanticRelationData.getAtomicSubject());
         assertEquals("brave soldiers", semanticRelationData.getExtendedSubject());
@@ -228,7 +228,7 @@ public class SemanticRelationsExtractorImplForVerbTest {
         SemanticRelationData semanticRelationData = relationshipsExtractorImpl.extract(EncodedTags.VERB, regexPatternIndexData, tokens, encodedTags,
                 SemanticRelationConstantType.VERB_DO_NOT_2_LEVEL);
 
-        assertTrue(semanticRelationData.isPositiveVerb());
+        assertFalse(semanticRelationData.isPositiveVerb());
         assertTrue(semanticRelationData.isPresentTense());
         assertEquals("soldiers", semanticRelationData.getAtomicSubject());
         assertEquals("brave soldiers", semanticRelationData.getExtendedSubject());
@@ -258,7 +258,7 @@ public class SemanticRelationsExtractorImplForVerbTest {
         assertTrue(semanticRelationData.isPresentTense());
         assertEquals("soldiers", semanticRelationData.getAtomicSubject());
         assertEquals("brave soldiers", semanticRelationData.getExtendedSubject());
-        assertEquals("can't", semanticRelationData.getAtomicVerb());
+        assertEquals("can't", semanticRelationData.getAtomicModalVerb());
         assertEquals("fight", semanticRelationData.getAtomicVerb());
     }
 

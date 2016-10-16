@@ -25,7 +25,12 @@ public enum SemanticRelationConstantType {
 
     public static Set<SemanticRelationConstantType> negativeTypes = new HashSet<SemanticRelationConstantType>();
 
+    public static Set<SemanticRelationConstantType> negativeTypesForPresentTenseTest = new HashSet<SemanticRelationConstantType>();
+
     public static Set<SemanticRelationConstantType> nounVerbRelationTypes = new HashSet<SemanticRelationConstantType>();
+
+    public static Set<SemanticRelationConstantType> modalVerbs = new HashSet<SemanticRelationConstantType>();
+
 
 
     static {
@@ -91,6 +96,19 @@ public enum SemanticRelationConstantType {
         negativeTypes.add(SemanticRelationConstantType.VERB_DO_NOT_3_LEVEL);
         negativeTypes.add(SemanticRelationConstantType.VERB_DONT_3_LEVEL);
         negativeTypes.add(SemanticRelationConstantType.MODAL_VERB_NOT_3_LEVEL);
+        negativeTypes.add(SemanticRelationConstantType.VERB_DO_NOT_2_LEVEL);
+        negativeTypes.add(SemanticRelationConstantType.VERB_DONT_2_LEVEL);
+        negativeTypes.add(SemanticRelationConstantType.MODAL_VERB_NOT_2_LEVEL);
+
+        negativeTypesForPresentTenseTest.add(SemanticRelationConstantType.VERB_DO_NOT_3_LEVEL);
+        negativeTypesForPresentTenseTest.add(SemanticRelationConstantType.VERB_DONT_3_LEVEL);
+        negativeTypesForPresentTenseTest.add(SemanticRelationConstantType.VERB_DO_NOT_2_LEVEL);
+        negativeTypesForPresentTenseTest.add(SemanticRelationConstantType.VERB_DONT_2_LEVEL);
+
+        modalVerbs.add(SemanticRelationConstantType.MODAL_VERB_2_LEVEL);
+        modalVerbs.add(SemanticRelationConstantType.MODAL_VERB_3_LEVEL);
+        modalVerbs.add(SemanticRelationConstantType.MODAL_VERB_NOT_2_LEVEL);
+        modalVerbs.add(SemanticRelationConstantType.MODAL_VERB_NOT_3_LEVEL);
 
     }
 

@@ -42,10 +42,6 @@ public final class SemanticalConstantTagAnalysisData {
         this.containsAfterConstantPreposition = containsAfterConstantPreposition;
     }
 
-    public void setPresentTense(boolean presentTense) {
-        isPresentTense = presentTense;
-    }
-
     public void setHasExtendedSubject(boolean hasExtendedSubject) {
         this.hasExtendedSubject = hasExtendedSubject;
     }
@@ -57,8 +53,6 @@ public final class SemanticalConstantTagAnalysisData {
     public void setHasVerbAuxiliaryVerbPhrase(boolean hasVerbAuxiliaryVerbPhrase) {
         this.hasVerbAuxiliaryVerbPhrase = hasVerbAuxiliaryVerbPhrase;
     }
-
-    private boolean isPresentTense;
 
     private boolean hasExtendedSubject = false;
 
@@ -92,10 +86,6 @@ public final class SemanticalConstantTagAnalysisData {
 
     public List<Integer> getAfterConstantTagPrepositionIndexes() {
         return afterConstantTagPrepositionIndexes;
-    }
-
-    public boolean isPresentTense() {
-        return isPresentTense;
     }
 
     public boolean hasExtendedSubject() {

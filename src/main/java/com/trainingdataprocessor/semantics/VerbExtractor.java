@@ -13,4 +13,6 @@ public interface VerbExtractor {
 
     boolean isPositiveVerb(List<String> subSentence, int constantIndex, SemanticRelationConstantType constantType);
 
+    boolean isPresentTense(List<String> subSentence, List<String> encodedTags, int constantIndex, SemanticRelationConstantType constantType);
+
 }

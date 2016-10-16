@@ -113,7 +113,6 @@ public class SemanticConstantTagAnalyserTest {
         SemanticalConstantTagAnalysisData semanticalConstantTagAnalysisData = semanticConstantTagAnalyser.analyse(EncodedTags.IS_ARE, tokens,
                 encodedTags, SemanticRelationConstantType.IS_NOT_3_LEVEL);
         assertEquals(2, semanticalConstantTagAnalysisData.getConstantIndex());
-        assertTrue(semanticalConstantTagAnalysisData.isPresentTense());
         assertTrue(semanticalConstantTagAnalysisData.hasExtendedSubject());
         assertTrue(semanticalConstantTagAnalysisData.hasExtendedPredicate());
         assertTrue(semanticalConstantTagAnalysisData.containsAfterConstantTagPreposition());
