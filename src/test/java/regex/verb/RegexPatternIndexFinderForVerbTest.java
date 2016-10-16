@@ -190,7 +190,7 @@ public class RegexPatternIndexFinderForVerbTest {
     }
 
     @Test
-    public void testFindVerbDoNotRelationshipWholePatternFound() {
+    public void testFindNounVerbDoNotNounRelationWholePatternFound() {
         String sentence = "";
         List<RegexPatternIndexData> regexPatternIndexFinderList = null;
         String encodedPath = null;
@@ -217,6 +217,104 @@ public class RegexPatternIndexFinderForVerbTest {
         assertEquals(1, regexPatternIndexFinderList.size());
         assertEquals(encodedPath, regexPatternIndexFinderList.get(0).getPattern());
         assertEquals(sentence.split("\\ ").length, encodedPath.length());
+        System.out.println(sentence + ": " + regexPatternIndexFinderList.get(0).getPattern());
+    }
+
+    @Test
+    public void testFindNounVerbRelationWholePatternFound() {
+        String sentence = "";
+        List<RegexPatternIndexData> regexPatternIndexFinderList = null;
+        String encodedPath = null;
+
+        sentence = "gray wolf eats";
+        encodedPath = "JNV";
+        regexPatternIndexFinderList = regexPatternIndexFinder.find(encodedPath, NOUN_VERB_RELATION_PATTERN);
+        assertEquals(1, regexPatternIndexFinderList.size());
+        assertEquals(encodedPath, regexPatternIndexFinderList.get(0).getPattern());
+        System.out.println(sentence + ": " + regexPatternIndexFinderList.get(0).getPattern());
+
+        sentence = "boys play at school";
+        encodedPath = "NVPN";
+        regexPatternIndexFinderList = regexPatternIndexFinder.find(encodedPath, NOUN_VERB_RELATION_PATTERN);
+        assertEquals(1, regexPatternIndexFinderList.size());
+        assertEquals(encodedPath, regexPatternIndexFinderList.get(0).getPattern());
+        System.out.println(sentence + ": " + regexPatternIndexFinderList.get(0).getPattern());
+
+        sentence = "Fans of Russia celebrated at European Championships";
+        encodedPath = "NPN$PNN";
+        regexPatternIndexFinderList = regexPatternIndexFinder.find(encodedPath, NOUN_VERB_RELATION_PATTERN);
+        assertEquals(1, regexPatternIndexFinderList.size());
+        assertEquals(encodedPath, regexPatternIndexFinderList.get(0).getPattern());
+        System.out.println(sentence + ": " + regexPatternIndexFinderList.get(0).getPattern());
+    }
+
+    @Test
+    public void testFindNounVerbDontRelationWholePatternFound() {
+        String sentence = "";
+        List<RegexPatternIndexData> regexPatternIndexFinderList = null;
+        String encodedPath = null;
+
+        sentence = "gray wolf doesn't eat";
+        encodedPath = "JNLV";
+        regexPatternIndexFinderList = regexPatternIndexFinder.find(encodedPath, NOUN_VERB_DONT_RELATION_PATTERN);
+        assertEquals(1, regexPatternIndexFinderList.size());
+        assertEquals(encodedPath, regexPatternIndexFinderList.get(0).getPattern());
+        System.out.println(sentence + ": " + regexPatternIndexFinderList.get(0).getPattern());
+
+        sentence = "boys don't play at school";
+        encodedPath = "NLVPN";
+        regexPatternIndexFinderList = regexPatternIndexFinder.find(encodedPath, NOUN_VERB_DONT_RELATION_PATTERN);
+        assertEquals(1, regexPatternIndexFinderList.size());
+        assertEquals(encodedPath, regexPatternIndexFinderList.get(0).getPattern());
+        System.out.println(sentence + ": " + regexPatternIndexFinderList.get(0).getPattern());
+
+        sentence = "Fans of Russia didn't celebrate at European Championships";
+        encodedPath = "NPNLVPNN";
+        regexPatternIndexFinderList = regexPatternIndexFinder.find(encodedPath, NOUN_VERB_DONT_RELATION_PATTERN);
+        assertEquals(1, regexPatternIndexFinderList.size());
+        assertEquals(encodedPath, regexPatternIndexFinderList.get(0).getPattern());
+        System.out.println(sentence + ": " + regexPatternIndexFinderList.get(0).getPattern());
+    }
+
+    @Test
+    public void testFindNounVerbDoNotRelationWholePatternFound() {
+        String sentence = "";
+        List<RegexPatternIndexData> regexPatternIndexFinderList = null;
+        String encodedPath = null;
+
+        sentence = "gray wolf does not eat";
+        encodedPath = "JNLOV";
+        regexPatternIndexFinderList = regexPatternIndexFinder.find(encodedPath, NOUN_VERB_DO_NOT_RELATION_PATTERN);
+        assertEquals(1, regexPatternIndexFinderList.size());
+        assertEquals(encodedPath, regexPatternIndexFinderList.get(0).getPattern());
+        System.out.println(sentence + ": " + regexPatternIndexFinderList.get(0).getPattern());
+
+        sentence = "boys do not play at school";
+        encodedPath = "NLOVPN";
+        regexPatternIndexFinderList = regexPatternIndexFinder.find(encodedPath, NOUN_VERB_DO_NOT_RELATION_PATTERN);
+        assertEquals(1, regexPatternIndexFinderList.size());
+        assertEquals(encodedPath, regexPatternIndexFinderList.get(0).getPattern());
+        System.out.println(sentence + ": " + regexPatternIndexFinderList.get(0).getPattern());
+
+        sentence = "Fans of Russia did not celebrate at European Championships";
+        encodedPath = "NPNLOVPNN";
+        regexPatternIndexFinderList = regexPatternIndexFinder.find(encodedPath, NOUN_VERB_DO_NOT_RELATION_PATTERN);
+        assertEquals(1, regexPatternIndexFinderList.size());
+        assertEquals(encodedPath, regexPatternIndexFinderList.get(0).getPattern());
+        System.out.println(sentence + ": " + regexPatternIndexFinderList.get(0).getPattern());
+
+        sentence = "Fans of Russia did not celebrate wildly at European Championships";
+        encodedPath = "NPNLOVAPNN";
+        regexPatternIndexFinderList = regexPatternIndexFinder.find(encodedPath, NOUN_VERB_DO_NOT_RELATION_PATTERN);
+        assertEquals(1, regexPatternIndexFinderList.size());
+        assertEquals(encodedPath, regexPatternIndexFinderList.get(0).getPattern());
+        System.out.println(sentence + ": " + regexPatternIndexFinderList.get(0).getPattern());
+
+        sentence = "Fans of Russia did not wildy celebrate at European Championships";
+        encodedPath = "NPNLOAVPNN";
+        regexPatternIndexFinderList = regexPatternIndexFinder.find(encodedPath, NOUN_VERB_DO_NOT_RELATION_PATTERN);
+        assertEquals(1, regexPatternIndexFinderList.size());
+        assertEquals(encodedPath, regexPatternIndexFinderList.get(0).getPattern());
         System.out.println(sentence + ": " + regexPatternIndexFinderList.get(0).getPattern());
     }
 

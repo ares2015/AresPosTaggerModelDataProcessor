@@ -7,9 +7,8 @@ import org.junit.Test;
 
 import java.util.List;
 
-import static com.trainingdataprocessor.regex.RegexExpressions.NOUN_MODAL_VERB_NOT_NOUN_RELATION_PATTERN;
-import static com.trainingdataprocessor.regex.RegexExpressions.NOUN_MODAL_VERB_NOT_RELATION_PATTERN;
-import static com.trainingdataprocessor.regex.RegexExpressions.NOUN_MODAL_VERB_NOUN_RELATION_PATTERN;
+import static com.trainingdataprocessor.regex.RegexExpressions.*;
+import static com.trainingdataprocessor.regex.RegexExpressions.NOUN_VERB_DO_NOT_RELATION_PATTERN;
 import static org.junit.Assert.assertEquals;
 
 /**
@@ -75,7 +74,7 @@ public class RegexPatternIndexFinderForModalVerbTest {
 
 
     @Test
-    public void testFindNounModalVerbNounWholePatternFound() {
+    public void testFindNounModalNotVerbNounWholePatternFound() {
         String sentence = "";
         List<RegexPatternIndexData> regexPatternIndexFinderList = null;
         String encodedPath = null;
@@ -107,4 +106,83 @@ public class RegexPatternIndexFinderForModalVerbTest {
         assertEquals(sentence.split("\\ ").length, encodedPath.length());
         System.out.println(sentence + ": " + regexPatternIndexFinderList.get(0).getPattern());
     }
+
+
+    @Test
+    public void testFindNounModalVerbRelationWholePatternFound() {
+        String sentence = "";
+        List<RegexPatternIndexData> regexPatternIndexFinderList = null;
+        String encodedPath = null;
+
+        sentence = "gray wolf can eat";
+        encodedPath = "JNMV";
+        regexPatternIndexFinderList = regexPatternIndexFinder.find(encodedPath, NOUN_MODAL_VERB_RELATION_PATTERN);
+        assertEquals(1, regexPatternIndexFinderList.size());
+        assertEquals(encodedPath, regexPatternIndexFinderList.get(0).getPattern());
+        System.out.println(sentence + ": " + regexPatternIndexFinderList.get(0).getPattern());
+
+        sentence = "boys can play at school";
+        encodedPath = "NMVPN";
+        regexPatternIndexFinderList = regexPatternIndexFinder.find(encodedPath, NOUN_MODAL_VERB_RELATION_PATTERN);
+        assertEquals(1, regexPatternIndexFinderList.size());
+        assertEquals(encodedPath, regexPatternIndexFinderList.get(0).getPattern());
+        System.out.println(sentence + ": " + regexPatternIndexFinderList.get(0).getPattern());
+
+        sentence = "Fans of Russia could celebrate at European Championships";
+        encodedPath = "NPNMVPNN";
+        regexPatternIndexFinderList = regexPatternIndexFinder.find(encodedPath, NOUN_MODAL_VERB_RELATION_PATTERN);
+        assertEquals(1, regexPatternIndexFinderList.size());
+        assertEquals(encodedPath, regexPatternIndexFinderList.get(0).getPattern());
+        System.out.println(sentence + ": " + regexPatternIndexFinderList.get(0).getPattern());
+
+        sentence = "gray wolf can't eat";
+        encodedPath = "JNMV";
+        regexPatternIndexFinderList = regexPatternIndexFinder.find(encodedPath, NOUN_MODAL_VERB_RELATION_PATTERN);
+        assertEquals(1, regexPatternIndexFinderList.size());
+        assertEquals(encodedPath, regexPatternIndexFinderList.get(0).getPattern());
+        System.out.println(sentence + ": " + regexPatternIndexFinderList.get(0).getPattern());
+
+        sentence = "boys can't play at school";
+        encodedPath = "NMVPN";
+        regexPatternIndexFinderList = regexPatternIndexFinder.find(encodedPath, NOUN_MODAL_VERB_RELATION_PATTERN);
+        assertEquals(1, regexPatternIndexFinderList.size());
+        assertEquals(encodedPath, regexPatternIndexFinderList.get(0).getPattern());
+        System.out.println(sentence + ": " + regexPatternIndexFinderList.get(0).getPattern());
+
+        sentence = "Fans of Russia couldn't celebrate at European Championships";
+        encodedPath = "NPNMVPNN";
+        regexPatternIndexFinderList = regexPatternIndexFinder.find(encodedPath, NOUN_MODAL_VERB_RELATION_PATTERN);
+        assertEquals(1, regexPatternIndexFinderList.size());
+        assertEquals(encodedPath, regexPatternIndexFinderList.get(0).getPattern());
+        System.out.println(sentence + ": " + regexPatternIndexFinderList.get(0).getPattern());
+    }
+
+    @Test
+    public void testFindNounModalVerbNotRelationWholePatternFound() {
+        String sentence = "";
+        List<RegexPatternIndexData> regexPatternIndexFinderList = null;
+        String encodedPath = null;
+
+        sentence = "gray wolf can not eat";
+        encodedPath = "JNMOV";
+        regexPatternIndexFinderList = regexPatternIndexFinder.find(encodedPath, NOUN_MODAL_VERB_NOT_RELATION_PATTERN);
+        assertEquals(1, regexPatternIndexFinderList.size());
+        assertEquals(encodedPath, regexPatternIndexFinderList.get(0).getPattern());
+        System.out.println(sentence + ": " + regexPatternIndexFinderList.get(0).getPattern());
+
+        sentence = "boys can not play at school";
+        encodedPath = "NMOVPN";
+        regexPatternIndexFinderList = regexPatternIndexFinder.find(encodedPath, NOUN_MODAL_VERB_NOT_RELATION_PATTERN);
+        assertEquals(1, regexPatternIndexFinderList.size());
+        assertEquals(encodedPath, regexPatternIndexFinderList.get(0).getPattern());
+        System.out.println(sentence + ": " + regexPatternIndexFinderList.get(0).getPattern());
+
+        sentence = "Fans of Russia could not celebrate at European Championships";
+        encodedPath = "NPNMOVPNN";
+        regexPatternIndexFinderList = regexPatternIndexFinder.find(encodedPath, NOUN_MODAL_VERB_NOT_RELATION_PATTERN);
+        assertEquals(1, regexPatternIndexFinderList.size());
+        assertEquals(encodedPath, regexPatternIndexFinderList.get(0).getPattern());
+        System.out.println(sentence + ": " + regexPatternIndexFinderList.get(0).getPattern());
+    }
+
 }
