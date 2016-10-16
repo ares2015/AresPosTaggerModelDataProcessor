@@ -36,6 +36,11 @@ public enum SemanticRelationConstantType {
         constantTagAnalyserExtSubjectIndexMap.put(SemanticRelationConstantType.VERB_DO_NOT_3_LEVEL, 3);
         constantTagAnalyserExtSubjectIndexMap.put(SemanticRelationConstantType.MODAL_VERB_3_LEVEL, 1);
         constantTagAnalyserExtSubjectIndexMap.put(SemanticRelationConstantType.MODAL_VERB_NOT_3_LEVEL, 1);
+        constantTagAnalyserExtSubjectIndexMap.put(SemanticRelationConstantType.VERB_2_LEVEL, 1);
+        constantTagAnalyserExtSubjectIndexMap.put(SemanticRelationConstantType.VERB_DONT_2_LEVEL, 2);
+        constantTagAnalyserExtSubjectIndexMap.put(SemanticRelationConstantType.VERB_DO_NOT_2_LEVEL, 3);
+        constantTagAnalyserExtSubjectIndexMap.put(SemanticRelationConstantType.MODAL_VERB_2_LEVEL, 1);
+        constantTagAnalyserExtSubjectIndexMap.put(SemanticRelationConstantType.MODAL_VERB_NOT_2_LEVEL, 1);
 
         constantTagAnalyserExtPredicateIndexMap.put(SemanticRelationConstantType.IS_ISNT_3_LEVEL, 2);
         constantTagAnalyserExtPredicateIndexMap.put(SemanticRelationConstantType.IS_NOT_3_LEVEL, 3);
@@ -52,6 +57,11 @@ public enum SemanticRelationConstantType {
         relationsExtractorAtomicSubjectIndexMap.put(SemanticRelationConstantType.VERB_DO_NOT_3_LEVEL, 3);
         relationsExtractorAtomicSubjectIndexMap.put(SemanticRelationConstantType.MODAL_VERB_3_LEVEL, 1);
         relationsExtractorAtomicSubjectIndexMap.put(SemanticRelationConstantType.MODAL_VERB_NOT_3_LEVEL, 1);
+        relationsExtractorAtomicSubjectIndexMap.put(SemanticRelationConstantType.VERB_2_LEVEL, 1);
+        relationsExtractorAtomicSubjectIndexMap.put(SemanticRelationConstantType.VERB_DONT_2_LEVEL, 2);
+        relationsExtractorAtomicSubjectIndexMap.put(SemanticRelationConstantType.VERB_DO_NOT_2_LEVEL, 3);
+        relationsExtractorAtomicSubjectIndexMap.put(SemanticRelationConstantType.MODAL_VERB_2_LEVEL, 1);
+        relationsExtractorAtomicSubjectIndexMap.put(SemanticRelationConstantType.MODAL_VERB_NOT_2_LEVEL, 1);
 
         relationsExtractorExtSubjectIndexMap.put(SemanticRelationConstantType.IS_ISNT_3_LEVEL, 0);
         relationsExtractorExtSubjectIndexMap.put(SemanticRelationConstantType.IS_NOT_3_LEVEL, 0);
@@ -60,6 +70,11 @@ public enum SemanticRelationConstantType {
         relationsExtractorExtSubjectIndexMap.put(SemanticRelationConstantType.VERB_DO_NOT_3_LEVEL, 2);
         relationsExtractorExtSubjectIndexMap.put(SemanticRelationConstantType.MODAL_VERB_3_LEVEL, 0);
         relationsExtractorExtSubjectIndexMap.put(SemanticRelationConstantType.MODAL_VERB_NOT_3_LEVEL, 0);
+        relationsExtractorExtSubjectIndexMap.put(SemanticRelationConstantType.VERB_2_LEVEL, 0);
+        relationsExtractorExtSubjectIndexMap.put(SemanticRelationConstantType.VERB_DONT_2_LEVEL, 1);
+        relationsExtractorExtSubjectIndexMap.put(SemanticRelationConstantType.VERB_DO_NOT_2_LEVEL, 2);
+        relationsExtractorExtSubjectIndexMap.put(SemanticRelationConstantType.MODAL_VERB_2_LEVEL, 0);
+        relationsExtractorExtSubjectIndexMap.put(SemanticRelationConstantType.MODAL_VERB_NOT_2_LEVEL, 0);
 
         auxiliaryTypes.add(SemanticRelationConstantType.IS_NOT_3_LEVEL);
         auxiliaryTypes.add(SemanticRelationConstantType.VERB_DONT_3_LEVEL);

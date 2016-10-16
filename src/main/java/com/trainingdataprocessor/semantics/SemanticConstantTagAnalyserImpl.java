@@ -46,7 +46,9 @@ public final class SemanticConstantTagAnalyserImpl implements SemanticConstantTa
         }
         if (isConstantFound) {
             analysisData.setHasExtendedSubject(hasExtendedSubject(constantIndex, constantType));
-            analysisData.setHasExtendedPredicate(hasExtendedPredicate(constantIndex, subSentence, constantType));
+            if (!(SemanticRelationConstantType.nounVerbRelationTypes.contains(constantType))) {
+                analysisData.setHasExtendedPredicate(hasExtendedPredicate(constantIndex, subSentence, constantType));
+            }
             analysisData.setHasVerbAuxiliaryVerbPhrase(hasVerbAuxiliaryVerbRelation(constantType));
 
             return analysisData;

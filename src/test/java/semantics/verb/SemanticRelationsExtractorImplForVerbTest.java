@@ -146,8 +146,119 @@ public class SemanticRelationsExtractorImplForVerbTest {
 
         assertTrue(semanticRelationData.isPositiveVerb());
         assertTrue(semanticRelationData.isPresentTense());
-        assertEquals("brave", semanticRelationData.getAtomicSubject());
+        assertEquals("soldiers", semanticRelationData.getAtomicSubject());
         assertEquals("brave soldiers", semanticRelationData.getExtendedSubject());
+        assertEquals("fight", semanticRelationData.getAtomicVerb());
+    }
+
+    @Test
+    public void testNounVerbWithAfterPreposition() {
+        SemanticRelationsExtractorImpl relationshipsExtractorImpl = new SemanticRelationsExtractorImpl(semanticConstantTagAnalyser, subjectExtractor, predicateExtractor,
+                verbExtractor);
+
+        List<String> encodedTags = new ArrayList<String>();
+        encodedTags.add(EncodedTags.ADJECTIVE);
+        encodedTags.add(EncodedTags.NOUN);
+        encodedTags.add(EncodedTags.VERB_ED);
+        encodedTags.add(EncodedTags.PREPOSITION);
+        encodedTags.add(EncodedTags.NOUN);
+        encodedTags.add(EncodedTags.NOUN);
+
+
+        String sentence = "brave soldiers fought in Vietnam war";
+        List<String> tokens = Arrays.asList(sentence.split("\\ "));
+
+        RegexPatternIndexData regexPatternIndexData = new RegexPatternIndexData("JN$PNN", 0, "JN$PNN".length() - 1);
+
+        SemanticRelationData semanticRelationData = relationshipsExtractorImpl.extract(EncodedTags.VERB_ED, regexPatternIndexData, tokens, encodedTags,
+                SemanticRelationConstantType.VERB_2_LEVEL);
+
+        assertTrue(semanticRelationData.isPositiveVerb());
+        assertFalse(semanticRelationData.isPresentTense());
+        assertEquals("soldiers", semanticRelationData.getAtomicSubject());
+        assertEquals("brave soldiers", semanticRelationData.getExtendedSubject());
+        assertEquals("fought", semanticRelationData.getAtomicVerb());
+        assertEquals("in Vietnam war", semanticRelationData.getPrepositionPredicate());
+
+    }
+
+    @Test
+    public void testNounVerbDont() {
+        SemanticRelationsExtractorImpl relationshipsExtractorImpl = new SemanticRelationsExtractorImpl(semanticConstantTagAnalyser, subjectExtractor, predicateExtractor,
+                verbExtractor);
+
+        List<String> encodedTags = new ArrayList<String>();
+        encodedTags.add(EncodedTags.ADJECTIVE);
+        encodedTags.add(EncodedTags.NOUN);
+        encodedTags.add(EncodedTags.DO);
+        encodedTags.add(EncodedTags.VERB);
+
+        String sentence = "brave soldiers don't fight";
+        List<String> tokens = Arrays.asList(sentence.split("\\ "));
+
+        RegexPatternIndexData regexPatternIndexData = new RegexPatternIndexData("JNLV", 0, "JNLV".length() - 1);
+
+        SemanticRelationData semanticRelationData = relationshipsExtractorImpl.extract(EncodedTags.VERB, regexPatternIndexData, tokens, encodedTags,
+                SemanticRelationConstantType.VERB_DONT_2_LEVEL);
+
+        assertTrue(semanticRelationData.isPositiveVerb());
+        assertTrue(semanticRelationData.isPresentTense());
+        assertEquals("soldiers", semanticRelationData.getAtomicSubject());
+        assertEquals("brave soldiers", semanticRelationData.getExtendedSubject());
+        assertEquals("fight", semanticRelationData.getAtomicVerb());
+    }
+
+    @Test
+    public void testNounVerbDoNot() {
+        SemanticRelationsExtractorImpl relationshipsExtractorImpl = new SemanticRelationsExtractorImpl(semanticConstantTagAnalyser, subjectExtractor, predicateExtractor,
+                verbExtractor);
+
+        List<String> encodedTags = new ArrayList<String>();
+        encodedTags.add(EncodedTags.ADJECTIVE);
+        encodedTags.add(EncodedTags.NOUN);
+        encodedTags.add(EncodedTags.DO);
+        encodedTags.add(EncodedTags.NOT);
+        encodedTags.add(EncodedTags.VERB);
+
+        String sentence = "brave soldiers do not fight";
+        List<String> tokens = Arrays.asList(sentence.split("\\ "));
+
+        RegexPatternIndexData regexPatternIndexData = new RegexPatternIndexData("JNLOV", 0, "JNLOV".length() - 1);
+
+        SemanticRelationData semanticRelationData = relationshipsExtractorImpl.extract(EncodedTags.VERB, regexPatternIndexData, tokens, encodedTags,
+                SemanticRelationConstantType.VERB_DO_NOT_2_LEVEL);
+
+        assertTrue(semanticRelationData.isPositiveVerb());
+        assertTrue(semanticRelationData.isPresentTense());
+        assertEquals("soldiers", semanticRelationData.getAtomicSubject());
+        assertEquals("brave soldiers", semanticRelationData.getExtendedSubject());
+        assertEquals("fight", semanticRelationData.getAtomicVerb());
+    }
+
+    @Test
+    public void testNounModalVerb() {
+        SemanticRelationsExtractorImpl relationshipsExtractorImpl = new SemanticRelationsExtractorImpl(semanticConstantTagAnalyser, subjectExtractor, predicateExtractor,
+                verbExtractor);
+
+        List<String> encodedTags = new ArrayList<String>();
+        encodedTags.add(EncodedTags.ADJECTIVE);
+        encodedTags.add(EncodedTags.NOUN);
+        encodedTags.add(EncodedTags.MODAL_VERB);
+        encodedTags.add(EncodedTags.VERB);
+
+        String sentence = "brave soldiers can't fight";
+        List<String> tokens = Arrays.asList(sentence.split("\\ "));
+
+        RegexPatternIndexData regexPatternIndexData = new RegexPatternIndexData("JNMV", 0, "JNMV".length() - 1);
+
+        SemanticRelationData semanticRelationData = relationshipsExtractorImpl.extract(EncodedTags.MODAL_VERB, regexPatternIndexData, tokens, encodedTags,
+                SemanticRelationConstantType.MODAL_VERB_2_LEVEL);
+
+        assertFalse(semanticRelationData.isPositiveVerb());
+        assertTrue(semanticRelationData.isPresentTense());
+        assertEquals("soldiers", semanticRelationData.getAtomicSubject());
+        assertEquals("brave soldiers", semanticRelationData.getExtendedSubject());
+        assertEquals("can't", semanticRelationData.getAtomicVerb());
         assertEquals("fight", semanticRelationData.getAtomicVerb());
     }
 
