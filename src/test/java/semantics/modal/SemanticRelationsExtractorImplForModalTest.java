@@ -76,6 +76,7 @@ public class SemanticRelationsExtractorImplForModalTest {
         encodedTags.add(EncodedTags.NOT);
         encodedTags.add(EncodedTags.VERB);
         encodedTags.add(EncodedTags.NOUN);
+        encodedTags.add(EncodedTags.NOUN);
         encodedTags.add(EncodedTags.PREPOSITION);
         encodedTags.add(EncodedTags.NOUN);
         encodedTags.add(EncodedTags.NOUN);

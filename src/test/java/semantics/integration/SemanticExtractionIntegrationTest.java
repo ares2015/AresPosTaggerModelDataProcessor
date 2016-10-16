@@ -14,6 +14,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import static org.junit.Assert.assertEquals;
+
 /**
  * Created by Oliver on 10/16/2016.
  */
@@ -55,12 +57,28 @@ public class SemanticExtractionIntegrationTest {
         for(String regexPattern : RegexExpressions.regexPatterns){
             regexPatternIndexDataList =  regexPatternIndexFinder.find(pattern, regexPattern);
             if(regexPatternIndexDataList.size() > 0){
-                System.out.println(RegexExpressions.patternsSemanticRelationConstantTypeMap.get(regexPattern));
                 RegexPatternIndexData regexPatternIndexData = regexPatternIndexDataList.get(0);
+
                 String constantTag = RegexExpressions.patternsConstantTagsMap.get(regexPattern);
                 SemanticRelationConstantType semanticRelationConstantType = RegexExpressions.patternsSemanticRelationConstantTypeMap.get(regexPattern);
                 SemanticRelationData semanticRelationData = relationsExtractor.extract(constantTag, regexPatternIndexData, tokens, encodedTags, semanticRelationConstantType);
+                if(regexPatternIndexData.getPattern() != null && "JNVANNPNN".equals(regexPatternIndexData.getPattern())){
+                    assertEquals("JNVANNPNN", regexPatternIndexDataList.get(0).getPattern());
+                    assertEquals("firemen", semanticRelationData.getAtomicSubject());
+                    assertEquals("brave firemen", semanticRelationData.getExtendedSubject());
+                    assertEquals("fight", semanticRelationData.getAtomicVerb());
+                    assertEquals("furiously forest fire ", semanticRelationData.getExtendedPredicate());
+                    assertEquals("fire", semanticRelationData.getAtomicPredicate());
+
+
+
+                }else if(regexPatternIndexData.getPattern() != null && "JNV".equals(regexPatternIndexData.getPattern())){
+                    assertEquals("JNV", regexPatternIndexDataList.get(0).getPattern());
+                    assertEquals("firemen", semanticRelationData.getAtomicSubject());
+                    assertEquals("brave firemen", semanticRelationData.getExtendedSubject());
+                }
             }
+
         }
 
     }
