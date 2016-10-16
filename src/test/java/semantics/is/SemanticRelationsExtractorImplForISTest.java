@@ -60,7 +60,7 @@ public class SemanticRelationsExtractorImplForISTest {
         RegexPatternIndexData regexPatternIndexData = new RegexPatternIndexData("NNIJJJN", 3, 9);
 
         SemanticRelationData semanticRelationData =
-                relationshipsExtractorImpl.extract(EncodedTags.IS_ARE, regexPatternIndexData, tokens, encodedTags, SemanticRelationConstantType.IS_ISNT);
+                relationshipsExtractorImpl.extract(EncodedTags.IS_ARE, regexPatternIndexData, tokens, encodedTags, SemanticRelationConstantType.IS_ISNT_3_LEVEL);
 
         assertTrue(semanticRelationData.isPresentTense());
         assertEquals("football", semanticRelationData.getAtomicSubject());
@@ -106,7 +106,7 @@ public class SemanticRelationsExtractorImplForISTest {
 
         RegexPatternIndexData regexPatternIndexData = new RegexPatternIndexData("NNIJJJNPNN", 3, 12);
 
-        SemanticRelationData semanticRelationData = relationshipsExtractorImpl.extract(EncodedTags.IS_ARE, regexPatternIndexData, tokens, encodedTags, SemanticRelationConstantType.IS_ISNT);
+        SemanticRelationData semanticRelationData = relationshipsExtractorImpl.extract(EncodedTags.IS_ARE, regexPatternIndexData, tokens, encodedTags, SemanticRelationConstantType.IS_ISNT_3_LEVEL);
 
         assertTrue(semanticRelationData.isPresentTense());
         assertEquals("football", semanticRelationData.getAtomicSubject());
@@ -152,7 +152,7 @@ public class SemanticRelationsExtractorImplForISTest {
         RegexPatternIndexData regexPatternIndexData = new RegexPatternIndexData("NNIJJJNPNNPN", 0, 11);
 
         SemanticRelationData semanticRelationData = relationshipsExtractorImpl.extract(EncodedTags.IS_ARE, regexPatternIndexData,
-                tokens, encodedTags, SemanticRelationConstantType.IS_ISNT);
+                tokens, encodedTags, SemanticRelationConstantType.IS_ISNT_3_LEVEL);
 
         assertTrue(semanticRelationData.isPositiveVerb());
         assertTrue(semanticRelationData.isPresentTense());
@@ -194,7 +194,7 @@ public class SemanticRelationsExtractorImplForISTest {
         RegexPatternIndexData regexPatternIndexData = new RegexPatternIndexData("NI$TVNPYN", 0, 8);
 
         SemanticRelationData semanticRelationData = relationshipsExtractorImpl.extract(EncodedTags.IS_ARE, regexPatternIndexData,
-                tokens, encodedTags, SemanticRelationConstantType.IS_ISNT);
+                tokens, encodedTags, SemanticRelationConstantType.IS_ISNT_3_LEVEL);
 
         assertTrue(semanticRelationData.isPositiveVerb());
         assertFalse(semanticRelationData.isPresentTense());
@@ -230,7 +230,7 @@ public class SemanticRelationsExtractorImplForISTest {
         RegexPatternIndexData regexPatternIndexData = new RegexPatternIndexData("NPNNIJJ", 0, 6);
 
         SemanticRelationData semanticRelationData = relationshipsExtractorImpl.extract(EncodedTags.IS_ARE, regexPatternIndexData,
-                tokens, encodedTags, SemanticRelationConstantType.IS_ISNT);
+                tokens, encodedTags, SemanticRelationConstantType.IS_ISNT_3_LEVEL);
 
         assertTrue(semanticRelationData.isPositiveVerb());
         assertTrue(semanticRelationData.isPresentTense());
@@ -260,7 +260,7 @@ public class SemanticRelationsExtractorImplForISTest {
         RegexPatternIndexData regexPatternIndexData = new RegexPatternIndexData("NNIDNN", 0, "NNIDNN".length() - 1);
 
         SemanticRelationData semanticRelationData = relationshipsExtractorImpl.extract(EncodedTags.IS_ARE, regexPatternIndexData, tokens,
-                encodedTags, SemanticRelationConstantType.IS_ISNT);
+                encodedTags, SemanticRelationConstantType.IS_ISNT_3_LEVEL);
 
         assertTrue(semanticRelationData.isPositiveVerb());
         assertFalse(semanticRelationData.isPresentTense());

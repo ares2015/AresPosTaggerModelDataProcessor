@@ -28,7 +28,7 @@ public class VerbExtractorImpl implements VerbExtractor {
     public String extractExtendedVerb(List<String> subSentence, List<String> encodedTags, int constantIndex, SemanticRelationConstantType constantType) {
         String verbAuxiliaryVerbPhrase = "";
         int verbIndex = getVerbIndex(encodedTags, constantIndex);
-        if (SemanticRelationConstantType.MODAL_VERB == constantType || SemanticRelationConstantType.MODAL_VERB_NOT == constantType) {
+        if (SemanticRelationConstantType.MODAL_VERB_3_LEVEL == constantType || SemanticRelationConstantType.MODAL_VERB_NOT_3_LEVEL == constantType) {
             for (int i = constantIndex; i <= verbIndex; i++) {
                 if (i < verbIndex) {
                     verbAuxiliaryVerbPhrase += subSentence.get(i) + " ";
@@ -36,11 +36,11 @@ public class VerbExtractorImpl implements VerbExtractor {
                     verbAuxiliaryVerbPhrase += subSentence.get(i);
                 }
             }
-        } else if (SemanticRelationConstantType.VERB_DONT == constantType) {
+        } else if (SemanticRelationConstantType.VERB_DONT_3_LEVEL == constantType) {
             verbAuxiliaryVerbPhrase = subSentence.get(constantIndex - 1) + " " + subSentence.get(constantIndex);
-        } else if (SemanticRelationConstantType.VERB_DO_NOT == constantType) {
+        } else if (SemanticRelationConstantType.VERB_DO_NOT_3_LEVEL == constantType) {
             verbAuxiliaryVerbPhrase = subSentence.get(constantIndex - 2) + " " + subSentence.get(constantIndex - 1) + " " + subSentence.get(constantIndex);
-        } else if (SemanticRelationConstantType.IS_NOT == constantType) {
+        } else if (SemanticRelationConstantType.IS_NOT_3_LEVEL == constantType) {
             verbAuxiliaryVerbPhrase = subSentence.get(constantIndex) + " " + subSentence.get(constantIndex + 1);
         }
         return verbAuxiliaryVerbPhrase;

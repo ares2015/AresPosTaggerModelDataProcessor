@@ -60,7 +60,10 @@ public class SemanticRelationsExtractorImpl implements SemanticRelationsExtracto
 
     private void processPredicate(List<String> subSentence, List<String> encodedTags, SemanticRelationData semanticRelationData,
                                   SemanticalConstantTagAnalysisData semanticalConstantTagAnalysisData, SemanticRelationConstantType constantType) {
-        if (semanticalConstantTagAnalysisData.containsAfterConstantTagPreposition()) {
+        if (SemanticRelationConstantType.nounVerbRelationTypes.contains(constantType) && semanticalConstantTagAnalysisData.containsAfterConstantTagPreposition()) {
+            semanticRelationData.setPrepositionPredicate(predicateExtractor.extractPrepositionPredicate(subSentence, encodedTags,
+                    semanticalConstantTagAnalysisData.getConstantIndex(), constantType));
+        } else if (!(SemanticRelationConstantType.nounVerbRelationTypes.contains(constantType)) && semanticalConstantTagAnalysisData.containsAfterConstantTagPreposition()) {
             semanticRelationData.setAtomicPredicate(subSentence.get(semanticalConstantTagAnalysisData.getAfterConstantTagPrepositionIndexes().get(0) - 1));
             semanticRelationData.setExtendedPredicate(predicateExtractor.extractExtendedPredicate(subSentence, encodedTags, semanticalConstantTagAnalysisData.getConstantIndex(),
                     semanticalConstantTagAnalysisData.getAfterConstantTagPrepositionIndexes().get(0), constantType));
@@ -80,7 +83,7 @@ public class SemanticRelationsExtractorImpl implements SemanticRelationsExtracto
             semanticRelationData.setExtendedVerb(verbExtractor.extractExtendedVerb(subSentence, encodedTags,
                     constantIndex, constantType));
         }
-        if (constantType == SemanticRelationConstantType.MODAL_VERB || constantType == SemanticRelationConstantType.MODAL_VERB_NOT) {
+        if (constantType == SemanticRelationConstantType.MODAL_VERB_3_LEVEL || constantType == SemanticRelationConstantType.MODAL_VERB_NOT_3_LEVEL) {
             semanticRelationData.setAtomicModalVerb(subSentence.get(constantIndex));
             semanticRelationData.setAtomicVerb(verbExtractor.extractVerbFromModalVerbPhrase(subSentence, encodedTags, constantIndex));
         } else {

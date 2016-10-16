@@ -51,7 +51,7 @@ public class SemanticRelationsExtractorImplForModalTest {
         RegexPatternIndexData regexPatternIndexData = new RegexPatternIndexData("JNMLVNN", 0, "JNMLVNN".length() - 1);
 
         SemanticRelationData semanticRelationData = relationshipsExtractorImpl.extract(EncodedTags.MODAL_VERB,
-                regexPatternIndexData, tokens, encodedTags, SemanticRelationConstantType.MODAL_VERB_NOT);
+                regexPatternIndexData, tokens, encodedTags, SemanticRelationConstantType.MODAL_VERB_NOT_3_LEVEL);
 
         assertFalse(semanticRelationData.isPositiveVerb());
         assertFalse(semanticRelationData.isPresentTense());
@@ -85,7 +85,7 @@ public class SemanticRelationsExtractorImplForModalTest {
         RegexPatternIndexData regexPatternIndexData = new RegexPatternIndexData("JNMLVNNPNN", 0, "JNMLVNNPNN".length() - 1);
 
         SemanticRelationData semanticRelationData = relationshipsExtractorImpl.extract(EncodedTags.MODAL_VERB, regexPatternIndexData, tokens, encodedTags,
-                SemanticRelationConstantType.MODAL_VERB_NOT);
+                SemanticRelationConstantType.MODAL_VERB_NOT_3_LEVEL);
 
         assertFalse(semanticRelationData.isPositiveVerb());
         assertFalse(semanticRelationData.isPresentTense());

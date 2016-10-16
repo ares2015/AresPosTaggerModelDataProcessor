@@ -46,7 +46,7 @@ public class SemanticConstantTagAnalyserTest {
         tokens.add("sport");
 
         SemanticalConstantTagAnalysisData semanticalConstantTagAnalysisData = semanticConstantTagAnalyser.analyse(EncodedTags.IS_ARE, tokens,
-                encodedTags, SemanticRelationConstantType.IS_ISNT);
+                encodedTags, SemanticRelationConstantType.IS_ISNT_3_LEVEL);
         assertEquals(2, semanticalConstantTagAnalysisData.getConstantIndex());
         assertFalse(semanticalConstantTagAnalysisData.hasVerbAuxiliaryVerbPhrase());
     }
@@ -75,7 +75,7 @@ public class SemanticConstantTagAnalyserTest {
         tokens.add("sport");
 
         SemanticalConstantTagAnalysisData semanticalConstantTagAnalysisData = semanticConstantTagAnalyser.analyse(EncodedTags.IS_ARE, tokens,
-                encodedTags, SemanticRelationConstantType.IS_NOT);
+                encodedTags, SemanticRelationConstantType.IS_NOT_3_LEVEL);
         assertEquals(2, semanticalConstantTagAnalysisData.getConstantIndex());
         assertTrue(semanticalConstantTagAnalysisData.hasVerbAuxiliaryVerbPhrase());
     }
@@ -111,7 +111,7 @@ public class SemanticConstantTagAnalyserTest {
         tokens.add("countries");
 
         SemanticalConstantTagAnalysisData semanticalConstantTagAnalysisData = semanticConstantTagAnalyser.analyse(EncodedTags.IS_ARE, tokens,
-                encodedTags, SemanticRelationConstantType.IS_NOT);
+                encodedTags, SemanticRelationConstantType.IS_NOT_3_LEVEL);
         assertEquals(2, semanticalConstantTagAnalysisData.getConstantIndex());
         assertTrue(semanticalConstantTagAnalysisData.isPresentTense());
         assertTrue(semanticalConstantTagAnalysisData.hasExtendedSubject());
@@ -142,7 +142,7 @@ public class SemanticConstantTagAnalyserTest {
 
 
         SemanticalConstantTagAnalysisData semanticalConstantTagAnalysisData = semanticConstantTagAnalyser.analyse(EncodedTags.MODAL_VERB,
-                tokens, encodedTags, SemanticRelationConstantType.MODAL_VERB_NOT);
+                tokens, encodedTags, SemanticRelationConstantType.MODAL_VERB_NOT_3_LEVEL);
         assertEquals(1, semanticalConstantTagAnalysisData.getConstantIndex());
         assertEquals(EncodedTags.MODAL_VERB, semanticalConstantTagAnalysisData.getConstantTag());
         assertTrue(semanticalConstantTagAnalysisData.hasExtendedPredicate());
@@ -180,7 +180,7 @@ public class SemanticConstantTagAnalyserTest {
 
 
         SemanticalConstantTagAnalysisData semanticalConstantTagAnalysisData = semanticConstantTagAnalyser.analyse(EncodedTags.MODAL_VERB,
-                tokens, encodedTags, SemanticRelationConstantType.MODAL_VERB_NOT);
+                tokens, encodedTags, SemanticRelationConstantType.MODAL_VERB_NOT_3_LEVEL);
         assertEquals(2, semanticalConstantTagAnalysisData.getConstantIndex());
         assertEquals(EncodedTags.MODAL_VERB, semanticalConstantTagAnalysisData.getConstantTag());
         assertTrue(semanticalConstantTagAnalysisData.hasExtendedSubject());
@@ -204,7 +204,7 @@ public class SemanticConstantTagAnalyserTest {
 
 
         SemanticalConstantTagAnalysisData semanticalConstantTagAnalysisData = semanticConstantTagAnalyser.analyse(EncodedTags.VERB,
-                tokens, encodedTags, SemanticRelationConstantType.VERB);
+                tokens, encodedTags, SemanticRelationConstantType.VERB_3_LEVEL);
         assertEquals(1, semanticalConstantTagAnalysisData.getConstantIndex());
         assertEquals(EncodedTags.VERB, semanticalConstantTagAnalysisData.getConstantTag());
         assertFalse(semanticalConstantTagAnalysisData.hasExtendedPredicate());
@@ -230,7 +230,7 @@ public class SemanticConstantTagAnalyserTest {
 
 
         SemanticalConstantTagAnalysisData semanticalConstantTagAnalysisData = semanticConstantTagAnalyser.analyse(EncodedTags.VERB,
-                tokens, encodedTags, SemanticRelationConstantType.VERB_DONT);
+                tokens, encodedTags, SemanticRelationConstantType.VERB_DONT_3_LEVEL);
         assertEquals(2, semanticalConstantTagAnalysisData.getConstantIndex());
         assertEquals(EncodedTags.VERB, semanticalConstantTagAnalysisData.getConstantTag());
         assertTrue(semanticalConstantTagAnalysisData.hasExtendedPredicate());
@@ -259,7 +259,7 @@ public class SemanticConstantTagAnalyserTest {
 
 
         SemanticalConstantTagAnalysisData semanticalConstantTagAnalysisData = semanticConstantTagAnalyser.analyse(EncodedTags.VERB,
-                tokens, encodedTags, SemanticRelationConstantType.VERB_DO_NOT);
+                tokens, encodedTags, SemanticRelationConstantType.VERB_DO_NOT_3_LEVEL);
         assertEquals(3, semanticalConstantTagAnalysisData.getConstantIndex());
         assertEquals(EncodedTags.VERB, semanticalConstantTagAnalysisData.getConstantTag());
         assertTrue(semanticalConstantTagAnalysisData.hasExtendedPredicate());

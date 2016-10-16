@@ -10,7 +10,7 @@ import java.util.List;
 public final class SemanticExtractionUtils {
 
     public static int getStartIndexForPredicateExtraction(int constantIndex, List<String> encodedTags, SemanticRelationConstantType constantType) {
-        if (SemanticRelationConstantType.MODAL_VERB == constantType || SemanticRelationConstantType.MODAL_VERB_NOT == constantType) {
+        if (SemanticRelationConstantType.MODAL_VERB_3_LEVEL == constantType || SemanticRelationConstantType.MODAL_VERB_NOT_3_LEVEL == constantType) {
             return getVerbIndex(encodedTags, constantIndex) + 1;
         } else {
             return constantIndex + 1;

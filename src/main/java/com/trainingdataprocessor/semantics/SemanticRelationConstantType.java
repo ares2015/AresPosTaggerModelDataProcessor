@@ -10,7 +10,8 @@ import java.util.Set;
  */
 public enum SemanticRelationConstantType {
 
-    IS_ISNT, IS_NOT, VERB, VERB_DONT, VERB_DO_NOT, MODAL_VERB, MODAL_VERB_NOT, VERB_PHRASE;
+    IS_ISNT_3_LEVEL, IS_NOT_3_LEVEL, VERB_3_LEVEL, VERB_DONT_3_LEVEL, VERB_DO_NOT_3_LEVEL, MODAL_VERB_3_LEVEL, MODAL_VERB_NOT_3_LEVEL,
+    VERB_2_LEVEL, VERB_DONT_2_LEVEL, VERB_DO_NOT_2_LEVEL, MODAL_VERB_2_LEVEL, MODAL_VERB_NOT_2_LEVEL;
 
     public static Map<SemanticRelationConstantType, Integer> constantTagAnalyserExtSubjectIndexMap = new HashMap<SemanticRelationConstantType, Integer>();
 
@@ -24,48 +25,57 @@ public enum SemanticRelationConstantType {
 
     public static Set<SemanticRelationConstantType> negativeTypes = new HashSet<SemanticRelationConstantType>();
 
+    public static Set<SemanticRelationConstantType> nounVerbRelationTypes = new HashSet<SemanticRelationConstantType>();
+
+
     static {
-        constantTagAnalyserExtSubjectIndexMap.put(SemanticRelationConstantType.IS_ISNT, 1);
-        constantTagAnalyserExtSubjectIndexMap.put(SemanticRelationConstantType.IS_NOT, 1);
-        constantTagAnalyserExtSubjectIndexMap.put(SemanticRelationConstantType.VERB, 1);
-        constantTagAnalyserExtSubjectIndexMap.put(SemanticRelationConstantType.VERB_DONT, 2);
-        constantTagAnalyserExtSubjectIndexMap.put(SemanticRelationConstantType.VERB_DO_NOT, 3);
-        constantTagAnalyserExtSubjectIndexMap.put(SemanticRelationConstantType.MODAL_VERB, 1);
-        constantTagAnalyserExtSubjectIndexMap.put(SemanticRelationConstantType.MODAL_VERB_NOT, 1);
+        constantTagAnalyserExtSubjectIndexMap.put(SemanticRelationConstantType.IS_ISNT_3_LEVEL, 1);
+        constantTagAnalyserExtSubjectIndexMap.put(SemanticRelationConstantType.IS_NOT_3_LEVEL, 1);
+        constantTagAnalyserExtSubjectIndexMap.put(SemanticRelationConstantType.VERB_3_LEVEL, 1);
+        constantTagAnalyserExtSubjectIndexMap.put(SemanticRelationConstantType.VERB_DONT_3_LEVEL, 2);
+        constantTagAnalyserExtSubjectIndexMap.put(SemanticRelationConstantType.VERB_DO_NOT_3_LEVEL, 3);
+        constantTagAnalyserExtSubjectIndexMap.put(SemanticRelationConstantType.MODAL_VERB_3_LEVEL, 1);
+        constantTagAnalyserExtSubjectIndexMap.put(SemanticRelationConstantType.MODAL_VERB_NOT_3_LEVEL, 1);
 
-        constantTagAnalyserExtPredicateIndexMap.put(SemanticRelationConstantType.IS_ISNT, 2);
-        constantTagAnalyserExtPredicateIndexMap.put(SemanticRelationConstantType.IS_NOT, 3);
-        constantTagAnalyserExtPredicateIndexMap.put(SemanticRelationConstantType.VERB, 2);
-        constantTagAnalyserExtPredicateIndexMap.put(SemanticRelationConstantType.VERB_DONT, 2);
-        constantTagAnalyserExtPredicateIndexMap.put(SemanticRelationConstantType.VERB_DO_NOT, 2);
-        constantTagAnalyserExtPredicateIndexMap.put(SemanticRelationConstantType.MODAL_VERB, 2);
-        constantTagAnalyserExtPredicateIndexMap.put(SemanticRelationConstantType.MODAL_VERB_NOT, 3);
+        constantTagAnalyserExtPredicateIndexMap.put(SemanticRelationConstantType.IS_ISNT_3_LEVEL, 2);
+        constantTagAnalyserExtPredicateIndexMap.put(SemanticRelationConstantType.IS_NOT_3_LEVEL, 3);
+        constantTagAnalyserExtPredicateIndexMap.put(SemanticRelationConstantType.VERB_3_LEVEL, 2);
+        constantTagAnalyserExtPredicateIndexMap.put(SemanticRelationConstantType.VERB_DONT_3_LEVEL, 2);
+        constantTagAnalyserExtPredicateIndexMap.put(SemanticRelationConstantType.VERB_DO_NOT_3_LEVEL, 2);
+        constantTagAnalyserExtPredicateIndexMap.put(SemanticRelationConstantType.MODAL_VERB_3_LEVEL, 2);
+        constantTagAnalyserExtPredicateIndexMap.put(SemanticRelationConstantType.MODAL_VERB_NOT_3_LEVEL, 3);
 
-        relationsExtractorAtomicSubjectIndexMap.put(SemanticRelationConstantType.IS_ISNT, 1);
-        relationsExtractorAtomicSubjectIndexMap.put(SemanticRelationConstantType.IS_NOT, 1);
-        relationsExtractorAtomicSubjectIndexMap.put(SemanticRelationConstantType.VERB, 1);
-        relationsExtractorAtomicSubjectIndexMap.put(SemanticRelationConstantType.VERB_DONT, 2);
-        relationsExtractorAtomicSubjectIndexMap.put(SemanticRelationConstantType.VERB_DO_NOT, 3);
-        relationsExtractorAtomicSubjectIndexMap.put(SemanticRelationConstantType.MODAL_VERB, 1);
-        relationsExtractorAtomicSubjectIndexMap.put(SemanticRelationConstantType.MODAL_VERB_NOT, 1);
+        relationsExtractorAtomicSubjectIndexMap.put(SemanticRelationConstantType.IS_ISNT_3_LEVEL, 1);
+        relationsExtractorAtomicSubjectIndexMap.put(SemanticRelationConstantType.IS_NOT_3_LEVEL, 1);
+        relationsExtractorAtomicSubjectIndexMap.put(SemanticRelationConstantType.VERB_3_LEVEL, 1);
+        relationsExtractorAtomicSubjectIndexMap.put(SemanticRelationConstantType.VERB_DONT_3_LEVEL, 2);
+        relationsExtractorAtomicSubjectIndexMap.put(SemanticRelationConstantType.VERB_DO_NOT_3_LEVEL, 3);
+        relationsExtractorAtomicSubjectIndexMap.put(SemanticRelationConstantType.MODAL_VERB_3_LEVEL, 1);
+        relationsExtractorAtomicSubjectIndexMap.put(SemanticRelationConstantType.MODAL_VERB_NOT_3_LEVEL, 1);
 
-        relationsExtractorExtSubjectIndexMap.put(SemanticRelationConstantType.IS_ISNT, 0);
-        relationsExtractorExtSubjectIndexMap.put(SemanticRelationConstantType.IS_NOT, 0);
-        relationsExtractorExtSubjectIndexMap.put(SemanticRelationConstantType.VERB, 0);
-        relationsExtractorExtSubjectIndexMap.put(SemanticRelationConstantType.VERB_DONT, 1);
-        relationsExtractorExtSubjectIndexMap.put(SemanticRelationConstantType.VERB_DO_NOT, 2);
-        relationsExtractorExtSubjectIndexMap.put(SemanticRelationConstantType.MODAL_VERB, 0);
-        relationsExtractorExtSubjectIndexMap.put(SemanticRelationConstantType.MODAL_VERB_NOT, 0);
+        relationsExtractorExtSubjectIndexMap.put(SemanticRelationConstantType.IS_ISNT_3_LEVEL, 0);
+        relationsExtractorExtSubjectIndexMap.put(SemanticRelationConstantType.IS_NOT_3_LEVEL, 0);
+        relationsExtractorExtSubjectIndexMap.put(SemanticRelationConstantType.VERB_3_LEVEL, 0);
+        relationsExtractorExtSubjectIndexMap.put(SemanticRelationConstantType.VERB_DONT_3_LEVEL, 1);
+        relationsExtractorExtSubjectIndexMap.put(SemanticRelationConstantType.VERB_DO_NOT_3_LEVEL, 2);
+        relationsExtractorExtSubjectIndexMap.put(SemanticRelationConstantType.MODAL_VERB_3_LEVEL, 0);
+        relationsExtractorExtSubjectIndexMap.put(SemanticRelationConstantType.MODAL_VERB_NOT_3_LEVEL, 0);
 
-        auxiliaryTypes.add(SemanticRelationConstantType.IS_NOT);
-        auxiliaryTypes.add(SemanticRelationConstantType.VERB_DONT);
-        auxiliaryTypes.add(SemanticRelationConstantType.VERB_DO_NOT);
-        auxiliaryTypes.add(SemanticRelationConstantType.MODAL_VERB_NOT);
+        auxiliaryTypes.add(SemanticRelationConstantType.IS_NOT_3_LEVEL);
+        auxiliaryTypes.add(SemanticRelationConstantType.VERB_DONT_3_LEVEL);
+        auxiliaryTypes.add(SemanticRelationConstantType.VERB_DO_NOT_3_LEVEL);
+        auxiliaryTypes.add(SemanticRelationConstantType.MODAL_VERB_NOT_3_LEVEL);
 
-        negativeTypes.add(SemanticRelationConstantType.IS_NOT);
-        negativeTypes.add(SemanticRelationConstantType.VERB_DO_NOT);
-        negativeTypes.add(SemanticRelationConstantType.VERB_DONT);
-        negativeTypes.add(SemanticRelationConstantType.MODAL_VERB_NOT);
+        nounVerbRelationTypes.add(SemanticRelationConstantType.VERB_2_LEVEL);
+        nounVerbRelationTypes.add(SemanticRelationConstantType.VERB_DONT_2_LEVEL);
+        nounVerbRelationTypes.add(SemanticRelationConstantType.VERB_DO_NOT_2_LEVEL);
+        nounVerbRelationTypes.add(SemanticRelationConstantType.MODAL_VERB_2_LEVEL);
+        nounVerbRelationTypes.add(SemanticRelationConstantType.MODAL_VERB_NOT_2_LEVEL);
+
+        negativeTypes.add(SemanticRelationConstantType.IS_NOT_3_LEVEL);
+        negativeTypes.add(SemanticRelationConstantType.VERB_DO_NOT_3_LEVEL);
+        negativeTypes.add(SemanticRelationConstantType.VERB_DONT_3_LEVEL);
+        negativeTypes.add(SemanticRelationConstantType.MODAL_VERB_NOT_3_LEVEL);
 
     }
 
