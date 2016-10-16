@@ -112,7 +112,7 @@ public final class RegexExpressions {
         patternsSemanticRelationConstantTypeMap.put(NOUN_VERB_DONT_RELATION_PATTERN, SemanticRelationConstantType.VERB_DONT_2_LEVEL);
         patternsSemanticRelationConstantTypeMap.put(NOUN_VERB_DO_NOT_RELATION_PATTERN, SemanticRelationConstantType.VERB_DO_NOT_2_LEVEL);
         patternsSemanticRelationConstantTypeMap.put(NOUN_MODAL_VERB_RELATION_PATTERN, SemanticRelationConstantType.MODAL_VERB_2_LEVEL);
-        patternsSemanticRelationConstantTypeMap.put(NOUN_MODAL_VERB_NOT_RELATION_PATTERN, SemanticRelationConstantType.MODAL_VERB_3_LEVEL);
+        patternsSemanticRelationConstantTypeMap.put(NOUN_MODAL_VERB_NOT_RELATION_PATTERN, SemanticRelationConstantType.MODAL_VERB_NOT_2_LEVEL);
 
     }
 }

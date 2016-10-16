@@ -19,7 +19,7 @@ public class RegexPatternIndexFinderForModalVerbTest {
     private RegexPatternIndexFinder regexPatternIndexFinder = new RegexPatternIndexFinderImpl();
 
     @Test
-    public void testFindNounModalVerbNounRelationWholePatternFound() {
+    public void testMODAL_VERB_3_LEVELWholePatternFound() {
         String sentence = "";
         List<RegexPatternIndexData> regexPatternIndexFinderList = null;
         String encodedPath = null;
@@ -51,7 +51,7 @@ public class RegexPatternIndexFinderForModalVerbTest {
     }
 
     @Test
-    public void testFindNounModalVerbNounNoPatternFound() {
+    public void testMODAL_VERB_3_LEVELNoPatternFound() {
         String sentence = "";
         List<RegexPatternIndexData> regexPatternIndexFinderList = null;
         String encodedPath = null;
@@ -74,7 +74,7 @@ public class RegexPatternIndexFinderForModalVerbTest {
 
 
     @Test
-    public void testFindNounModalNotVerbNounWholePatternFound() {
+    public void testMODAL_VERB_NOT_3_LEVELWholePatternFound() {
         String sentence = "";
         List<RegexPatternIndexData> regexPatternIndexFinderList = null;
         String encodedPath = null;
@@ -109,7 +109,7 @@ public class RegexPatternIndexFinderForModalVerbTest {
 
 
     @Test
-    public void testFindNounModalVerbRelationWholePatternFound() {
+    public void testMODAL_VERB_2_LEVELWholePatternFound() {
         String sentence = "";
         List<RegexPatternIndexData> regexPatternIndexFinderList = null;
         String encodedPath = null;
@@ -158,7 +158,7 @@ public class RegexPatternIndexFinderForModalVerbTest {
     }
 
     @Test
-    public void testFindNounModalVerbNotRelationWholePatternFound() {
+    public void testMODAL_VERB_NOT_2_LEVELWholePatternFound() {
         String sentence = "";
         List<RegexPatternIndexData> regexPatternIndexFinderList = null;
         String encodedPath = null;

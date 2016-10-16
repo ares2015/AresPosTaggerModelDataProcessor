@@ -18,7 +18,7 @@ public class RegexPatternIndexFinderForVerbTest {
     private RegexPatternIndexFinder regexPatternIndexFinder = new RegexPatternIndexFinderImpl();
 
     @Test
-    public void testFindNounVerbNounRelationWholePatternFound() {
+    public void testVERB_3_LEVELWholePatternFound() {
         String sentence = "";
         List<RegexPatternIndexData> regexPatternIndexFinderList = null;
         String encodedPath = null;
@@ -49,7 +49,7 @@ public class RegexPatternIndexFinderForVerbTest {
     }
 
     @Test
-    public void testFindNounVerbNounRelationPartialPatternFound() {
+    public void testVERB_3_LEVELPartialPatternFound() {
         String sentence = "";
         List<RegexPatternIndexData> regexPatternIndexFinderList = null;
         String encodedPath = null;
@@ -77,7 +77,7 @@ public class RegexPatternIndexFinderForVerbTest {
     }
 
     @Test
-    public void testFindNounVerbNounRelationNoPatternFound(){
+    public void testVERB_3_LEVELNoPatternFound(){
         String sentence = "";
         List<RegexPatternIndexData> regexPatternIndexFinderList = null;
         String encodedPath = null;
@@ -135,7 +135,7 @@ public class RegexPatternIndexFinderForVerbTest {
     }
 
     @Test
-    public void testFindNounVerbDontNounRelationWholePatternFound() {
+    public void testVERB_DONT_3_LEVELWholePatternFound() {
         String sentence = "";
         List<RegexPatternIndexData> regexPatternIndexFinderList = null;
         String encodedPath = null;
@@ -167,7 +167,7 @@ public class RegexPatternIndexFinderForVerbTest {
     }
 
     @Test
-    public void testFindNounVerbDontNounRelationNoPatternFound() {
+    public void testVERB_DONT_3_LEVELNoPatternFound() {
         String sentence = "";
         List<RegexPatternIndexData> regexPatternIndexFinderList = null;
         String encodedPath = null;
@@ -190,7 +190,7 @@ public class RegexPatternIndexFinderForVerbTest {
     }
 
     @Test
-    public void testFindNounVerbDoNotNounRelationWholePatternFound() {
+    public void testVERB_DO_NOT_3_LEVELWholePatternFound() {
         String sentence = "";
         List<RegexPatternIndexData> regexPatternIndexFinderList = null;
         String encodedPath = null;
@@ -221,7 +221,7 @@ public class RegexPatternIndexFinderForVerbTest {
     }
 
     @Test
-    public void testFindNounVerbRelationWholePatternFound() {
+    public void testVERB_2_LEVELWholePatternFound() {
         String sentence = "";
         List<RegexPatternIndexData> regexPatternIndexFinderList = null;
         String encodedPath = null;
@@ -256,7 +256,7 @@ public class RegexPatternIndexFinderForVerbTest {
     }
 
     @Test
-    public void testFindNounVerbDontRelationWholePatternFound() {
+    public void testVERB_DONT_2_LEVELWholePatternFound() {
         String sentence = "";
         List<RegexPatternIndexData> regexPatternIndexFinderList = null;
         String encodedPath = null;
@@ -284,7 +284,7 @@ public class RegexPatternIndexFinderForVerbTest {
     }
 
     @Test
-    public void testFindNounVerbDoNotRelationWholePatternFound() {
+    public void testVERB_DO_NOT_2_LEVELWholePatternFound() {
         String sentence = "";
         List<RegexPatternIndexData> regexPatternIndexFinderList = null;
         String encodedPath = null;

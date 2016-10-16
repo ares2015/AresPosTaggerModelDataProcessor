@@ -32,7 +32,7 @@ public class SemanticRelationsExtractorImplForModalTest {
 
 
     @Test
-    public void testModalVerbNotRelationship(){
+    public void testMODAL_VERB_NOT_3_LEVEL(){
         SemanticRelationsExtractorImpl relationshipsExtractorImpl = new SemanticRelationsExtractorImpl(semanticConstantTagAnalyser, subjectExtractor, predicateExtractor,
                 verbExtractor);
 
@@ -66,7 +66,7 @@ public class SemanticRelationsExtractorImplForModalTest {
     }
 
     @Test
-    public void testModalVerbNotRelationshipWithPreposition(){
+    public void testMODAL_VERB_NOT_3_LEVELWithPreposition(){
         SemanticRelationsExtractorImpl relationshipsExtractorImpl = new SemanticRelationsExtractorImpl(semanticConstantTagAnalyser, subjectExtractor, predicateExtractor, verbExtractor);
 
         List<String> encodedTags = new ArrayList<String>();

@@ -19,7 +19,7 @@ public class RegexPatternIndexFinderForISTest {
     private RegexPatternIndexFinder regexPatternIndexFinder = new RegexPatternIndexFinderImpl();
 
     @Test
-    public void testNounIsNounRelationWholePatternFound() {
+    public void testIS_ISNT_3_LEVELWholePatternFound() {
         String sentence = "";
 
         List<RegexPatternIndexData> regexPatternIndexFinderList = null;
@@ -139,7 +139,7 @@ public class RegexPatternIndexFinderForISTest {
     }
 
     @Test
-    public void testNounIsNounRelationPartialPatternFound() {
+    public void testIS_ISNT_3_LEVELPartialPatternFound() {
         String sentence = "";
 
         List<RegexPatternIndexData> regexPatternIndexFinderList = null;
@@ -172,7 +172,7 @@ public class RegexPatternIndexFinderForISTest {
     }
 
     @Test
-    public void testFindNounIsNounRelationNoPatternFound() {
+    public void testIS_ISNT_3_LEVELNoPatternFound() {
         List<RegexPatternIndexData> regexPatternIndexFinderList = null;
         String encodedPath = null;
 
@@ -182,7 +182,7 @@ public class RegexPatternIndexFinderForISTest {
     }
 
     @Test
-    public void testFindNounIsNotNounRelationpWholePatternFound() {
+    public void testIS_NOT_3_LEVELWholePatternFound() {
         String sentence = "";
 
         List<RegexPatternIndexData> regexPatternIndexFinderList = null;
@@ -214,7 +214,7 @@ public class RegexPatternIndexFinderForISTest {
     }
 
     @Test
-    public void testFindFindNounIsNotNounRelationpPartialPatternFound() {
+    public void testIS_NOT_3_LEVELPartialPatternFound() {
         String sentence = "";
 
         List<RegexPatternIndexData> regexPatternIndexFinderList = null;
@@ -247,7 +247,7 @@ public class RegexPatternIndexFinderForISTest {
     }
 
     @Test
-    public void testFindFindNounIsNotNounRelationpNoPatternFound() {
+    public void testIS_NOT_3_LEVELNoPatternFound() {
         String sentence = "";
 
         List<RegexPatternIndexData> regexPatternIndexFinderList = null;

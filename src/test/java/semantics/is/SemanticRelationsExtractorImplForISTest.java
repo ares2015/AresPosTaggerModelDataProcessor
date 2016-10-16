@@ -32,7 +32,7 @@ public class SemanticRelationsExtractorImplForISTest {
 
 
     @Test
-    public void testISrelationshipExtractNoPrepositions() {
+    public void testIS_ISNT_3_LEVELNoPrepositions() {
         SemanticRelationsExtractorImpl relationshipsExtractorImpl = new SemanticRelationsExtractorImpl(semanticConstantTagAnalyser, subjectExtractor,
                 predicateExtractor, verbExtractor);
 
@@ -57,7 +57,7 @@ public class SemanticRelationsExtractorImplForISTest {
         tokens.add("collective");
         tokens.add("sport");
 
-        RegexPatternIndexData regexPatternIndexData = new RegexPatternIndexData("NNIJJJN", 3, 9);
+        RegexPatternIndexData regexPatternIndexData = new RegexPatternIndexData("NNIJJJN", 3, "NNIJJJN".length());
 
         SemanticRelationData semanticRelationData =
                 relationshipsExtractorImpl.extract(EncodedTags.IS_ARE, regexPatternIndexData, tokens, encodedTags, SemanticRelationConstantType.IS_ISNT_3_LEVEL);
@@ -73,7 +73,7 @@ public class SemanticRelationsExtractorImplForISTest {
     }
 
     @Test
-    public void testISrelationshipExtractOnePreposition() {
+    public void testIS_ISNT_3_LEVELOnePreposition() {
         SemanticRelationsExtractorImpl relationshipsExtractorImpl = new SemanticRelationsExtractorImpl(semanticConstantTagAnalyser, subjectExtractor, predicateExtractor,
                 verbExtractor);
 
@@ -117,7 +117,7 @@ public class SemanticRelationsExtractorImplForISTest {
     }
 
     @Test
-    public void testISrelationshipExtractTwoPrepositions() {
+    public void testIS_ISNT_3_LEVELTwoPrepositions() {
         SemanticRelationsExtractorImpl relationshipsExtractorImpl = new SemanticRelationsExtractorImpl(semanticConstantTagAnalyser, subjectExtractor, predicateExtractor,
                 verbExtractor);
 
@@ -149,7 +149,7 @@ public class SemanticRelationsExtractorImplForISTest {
         tokens.add("in");
         tokens.add("California");
 
-        RegexPatternIndexData regexPatternIndexData = new RegexPatternIndexData("NNIJJJNPNNPN", 0, 11);
+        RegexPatternIndexData regexPatternIndexData = new RegexPatternIndexData("NNIJJJNPNNPN", 0, "NNIJJJNPNNPN".length());
 
         SemanticRelationData semanticRelationData = relationshipsExtractorImpl.extract(EncodedTags.IS_ARE, regexPatternIndexData,
                 tokens, encodedTags, SemanticRelationConstantType.IS_ISNT_3_LEVEL);
@@ -165,7 +165,7 @@ public class SemanticRelationsExtractorImplForISTest {
     }
 
     @Test
-    public void testISrelationshipExtractToVerbED() {
+    public void testIS_ISNT_3_LEVELToVerbED() {
         SemanticRelationsExtractorImpl relationshipsExtractorImpl = new SemanticRelationsExtractorImpl(semanticConstantTagAnalyser, subjectExtractor, predicateExtractor,
                 verbExtractor);
 
@@ -191,7 +191,7 @@ public class SemanticRelationsExtractorImplForISTest {
         tokens.add("his");
         tokens.add("father");
 
-        RegexPatternIndexData regexPatternIndexData = new RegexPatternIndexData("NI$TVNPYN", 0, 8);
+        RegexPatternIndexData regexPatternIndexData = new RegexPatternIndexData("NI$TVNPYN", 0, "NI$TVNPYN".length());
 
         SemanticRelationData semanticRelationData = relationshipsExtractorImpl.extract(EncodedTags.IS_ARE, regexPatternIndexData,
                 tokens, encodedTags, SemanticRelationConstantType.IS_ISNT_3_LEVEL);
@@ -205,7 +205,7 @@ public class SemanticRelationsExtractorImplForISTest {
     }
 
     @Test
-    public void testISrelationshipExtractExtendedPrepositionSubject() {
+    public void testIS_ISNT_3_LEVELExtendedPrepositionSubject() {
         SemanticRelationsExtractorImpl relationshipsExtractorImpl = new SemanticRelationsExtractorImpl(semanticConstantTagAnalyser, subjectExtractor, predicateExtractor,
                 verbExtractor);
 
@@ -227,7 +227,7 @@ public class SemanticRelationsExtractorImplForISTest {
         tokens.add("very");
         tokens.add("aggresive");
 
-        RegexPatternIndexData regexPatternIndexData = new RegexPatternIndexData("NPNNIJJ", 0, 6);
+        RegexPatternIndexData regexPatternIndexData = new RegexPatternIndexData("NPNNIJJ", 0, "NPNNIJJ".length());
 
         SemanticRelationData semanticRelationData = relationshipsExtractorImpl.extract(EncodedTags.IS_ARE, regexPatternIndexData,
                 tokens, encodedTags, SemanticRelationConstantType.IS_ISNT_3_LEVEL);
@@ -257,7 +257,7 @@ public class SemanticRelationsExtractorImplForISTest {
         String sentence = "Johannes Vermeer was a Dutch painter who specialized in domestic interior scenes of middle-class life";
         List<String> tokens = Arrays.asList(sentence.split("\\ "));
 
-        RegexPatternIndexData regexPatternIndexData = new RegexPatternIndexData("NNIDNN", 0, "NNIDNN".length() - 1);
+        RegexPatternIndexData regexPatternIndexData = new RegexPatternIndexData("NNIDNN", 0, "NNIDNN".length());
 
         SemanticRelationData semanticRelationData = relationshipsExtractorImpl.extract(EncodedTags.IS_ARE, regexPatternIndexData, tokens,
                 encodedTags, SemanticRelationConstantType.IS_ISNT_3_LEVEL);

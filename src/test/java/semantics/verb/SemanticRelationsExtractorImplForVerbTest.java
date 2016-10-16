@@ -31,7 +31,7 @@ public class SemanticRelationsExtractorImplForVerbTest {
     private VerbExtractor verbExtractor = new VerbExtractorImpl();
 
     @Test
-    public void testNounVerbNoun() {
+    public void testVERB_3_LEVEL() {
         SemanticRelationsExtractorImpl relationshipsExtractorImpl = new SemanticRelationsExtractorImpl(semanticConstantTagAnalyser, subjectExtractor, predicateExtractor,
                 verbExtractor);
 
@@ -46,7 +46,7 @@ public class SemanticRelationsExtractorImplForVerbTest {
         String sentence = "brave firemen fight forest fire";
         List<String> tokens = Arrays.asList(sentence.split("\\ "));
 
-        RegexPatternIndexData regexPatternIndexData = new RegexPatternIndexData("NNVNN", 0, "NNVNN".length() - 1);
+        RegexPatternIndexData regexPatternIndexData = new RegexPatternIndexData("NNVNN", 0, "NNVNN".length());
 
         SemanticRelationData semanticRelationData = relationshipsExtractorImpl.extract(EncodedTags.VERB, regexPatternIndexData, tokens, encodedTags,
                 SemanticRelationConstantType.VERB_3_LEVEL);
@@ -61,7 +61,7 @@ public class SemanticRelationsExtractorImplForVerbTest {
     }
 
     @Test
-    public void testNounVerbNounWithBeforeAndAfterPrepositions() {
+    public void testVERB_3_LEVELWithBeforeAndAfterPrepositions() {
         SemanticRelationsExtractorImpl relationshipsExtractorImpl = new SemanticRelationsExtractorImpl(semanticConstantTagAnalyser, subjectExtractor, predicateExtractor,
                 verbExtractor);
 
@@ -80,7 +80,7 @@ public class SemanticRelationsExtractorImplForVerbTest {
         String sentence = "Fans of Russia attacked English supporters at European Championships";
         List<String> tokens = Arrays.asList(sentence.split("\\ "));
 
-        RegexPatternIndexData regexPatternIndexData = new RegexPatternIndexData("NPN$NNPNN", 0, "NPN$NNPNN".length() - 1);
+        RegexPatternIndexData regexPatternIndexData = new RegexPatternIndexData("NPN$NNPNN", 0, "NPN$NNPNN".length());
 
         SemanticRelationData semanticRelationData = relationshipsExtractorImpl.extract(EncodedTags.VERB_ED, regexPatternIndexData,
                 tokens, encodedTags, SemanticRelationConstantType.VERB_3_LEVEL);
@@ -96,7 +96,7 @@ public class SemanticRelationsExtractorImplForVerbTest {
     }
 
     @Test
-    public void testNounVerbDontNoun() {
+    public void tesVERB_DONT_3_LEVEL() {
         SemanticRelationsExtractorImpl relationshipsExtractorImpl = new SemanticRelationsExtractorImpl(semanticConstantTagAnalyser, subjectExtractor, predicateExtractor, verbExtractor);
 
         List<String> encodedTags = new ArrayList<String>();
@@ -111,7 +111,7 @@ public class SemanticRelationsExtractorImplForVerbTest {
         String sentence = "drunken guys didn't catch Ryanair flight";
         List<String> tokens = Arrays.asList(sentence.split("\\ "));
 
-        RegexPatternIndexData regexPatternIndexData = new RegexPatternIndexData("JNLVNN", 0, "JNLVNN".length() - 1);
+        RegexPatternIndexData regexPatternIndexData = new RegexPatternIndexData("JNLVNN", 0, "JNLVNN".length());
 
         SemanticRelationData semanticRelationData = relationshipsExtractorImpl.extract(EncodedTags.VERB, regexPatternIndexData, tokens, encodedTags,
                 SemanticRelationConstantType.VERB_DONT_3_LEVEL);
@@ -127,7 +127,7 @@ public class SemanticRelationsExtractorImplForVerbTest {
     }
 
     @Test
-    public void testNounVerb() {
+    public void testVERB_2_LEVEL() {
         SemanticRelationsExtractorImpl relationshipsExtractorImpl = new SemanticRelationsExtractorImpl(semanticConstantTagAnalyser, subjectExtractor, predicateExtractor,
                 verbExtractor);
 
@@ -139,7 +139,7 @@ public class SemanticRelationsExtractorImplForVerbTest {
         String sentence = "brave soldiers fight";
         List<String> tokens = Arrays.asList(sentence.split("\\ "));
 
-        RegexPatternIndexData regexPatternIndexData = new RegexPatternIndexData("JNV", 0, "JNV".length() - 1);
+        RegexPatternIndexData regexPatternIndexData = new RegexPatternIndexData("JNV", 0, "JNV".length());
 
         SemanticRelationData semanticRelationData = relationshipsExtractorImpl.extract(EncodedTags.VERB, regexPatternIndexData, tokens, encodedTags,
                 SemanticRelationConstantType.VERB_2_LEVEL);
@@ -152,7 +152,7 @@ public class SemanticRelationsExtractorImplForVerbTest {
     }
 
     @Test
-    public void testNounVerbWithAfterPreposition() {
+    public void testVERB_2_LEVELWithAfterPreposition() {
         SemanticRelationsExtractorImpl relationshipsExtractorImpl = new SemanticRelationsExtractorImpl(semanticConstantTagAnalyser, subjectExtractor, predicateExtractor,
                 verbExtractor);
 
@@ -168,7 +168,7 @@ public class SemanticRelationsExtractorImplForVerbTest {
         String sentence = "brave soldiers fought in Vietnam war";
         List<String> tokens = Arrays.asList(sentence.split("\\ "));
 
-        RegexPatternIndexData regexPatternIndexData = new RegexPatternIndexData("JN$PNN", 0, "JN$PNN".length() - 1);
+        RegexPatternIndexData regexPatternIndexData = new RegexPatternIndexData("JN$PNN", 0, "JN$PNN".length());
 
         SemanticRelationData semanticRelationData = relationshipsExtractorImpl.extract(EncodedTags.VERB_ED, regexPatternIndexData, tokens, encodedTags,
                 SemanticRelationConstantType.VERB_2_LEVEL);
@@ -183,7 +183,7 @@ public class SemanticRelationsExtractorImplForVerbTest {
     }
 
     @Test
-    public void testNounVerbDont() {
+    public void testVERB_DONT_2_LEVEL() {
         SemanticRelationsExtractorImpl relationshipsExtractorImpl = new SemanticRelationsExtractorImpl(semanticConstantTagAnalyser, subjectExtractor, predicateExtractor,
                 verbExtractor);
 
@@ -196,7 +196,7 @@ public class SemanticRelationsExtractorImplForVerbTest {
         String sentence = "brave soldiers don't fight";
         List<String> tokens = Arrays.asList(sentence.split("\\ "));
 
-        RegexPatternIndexData regexPatternIndexData = new RegexPatternIndexData("JNLV", 0, "JNLV".length() - 1);
+        RegexPatternIndexData regexPatternIndexData = new RegexPatternIndexData("JNLV", 0, "JNLV".length());
 
         SemanticRelationData semanticRelationData = relationshipsExtractorImpl.extract(EncodedTags.VERB, regexPatternIndexData, tokens, encodedTags,
                 SemanticRelationConstantType.VERB_DONT_2_LEVEL);
@@ -209,7 +209,7 @@ public class SemanticRelationsExtractorImplForVerbTest {
     }
 
     @Test
-    public void testNounVerbDoNot() {
+    public void testVERB_DO_NOT_2_LEVEL() {
         SemanticRelationsExtractorImpl relationshipsExtractorImpl = new SemanticRelationsExtractorImpl(semanticConstantTagAnalyser, subjectExtractor, predicateExtractor,
                 verbExtractor);
 
@@ -223,7 +223,7 @@ public class SemanticRelationsExtractorImplForVerbTest {
         String sentence = "brave soldiers do not fight";
         List<String> tokens = Arrays.asList(sentence.split("\\ "));
 
-        RegexPatternIndexData regexPatternIndexData = new RegexPatternIndexData("JNLOV", 0, "JNLOV".length() - 1);
+        RegexPatternIndexData regexPatternIndexData = new RegexPatternIndexData("JNLOV", 0, "JNLOV".length());
 
         SemanticRelationData semanticRelationData = relationshipsExtractorImpl.extract(EncodedTags.VERB, regexPatternIndexData, tokens, encodedTags,
                 SemanticRelationConstantType.VERB_DO_NOT_2_LEVEL);
@@ -236,7 +236,7 @@ public class SemanticRelationsExtractorImplForVerbTest {
     }
 
     @Test
-    public void testNounModalVerb() {
+    public void testMODAL_VERB_2_LEVEL() {
         SemanticRelationsExtractorImpl relationshipsExtractorImpl = new SemanticRelationsExtractorImpl(semanticConstantTagAnalyser, subjectExtractor, predicateExtractor,
                 verbExtractor);
 
@@ -249,7 +249,7 @@ public class SemanticRelationsExtractorImplForVerbTest {
         String sentence = "brave soldiers can't fight";
         List<String> tokens = Arrays.asList(sentence.split("\\ "));
 
-        RegexPatternIndexData regexPatternIndexData = new RegexPatternIndexData("JNMV", 0, "JNMV".length() - 1);
+        RegexPatternIndexData regexPatternIndexData = new RegexPatternIndexData("JNMV", 0, "JNMV".length());
 
         SemanticRelationData semanticRelationData = relationshipsExtractorImpl.extract(EncodedTags.MODAL_VERB, regexPatternIndexData, tokens, encodedTags,
                 SemanticRelationConstantType.MODAL_VERB_2_LEVEL);
