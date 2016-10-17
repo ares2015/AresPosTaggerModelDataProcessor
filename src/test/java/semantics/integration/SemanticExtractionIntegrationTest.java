@@ -37,9 +37,9 @@ public class SemanticExtractionIntegrationTest {
             verbExtractor);
 
     @Test
-    public void testNounVerbNoun(){
+    public void testNounVerbNoun() {
         String sentence = "brave firemen fight furiously forest fire in California mountains";
-        List<String> tokens =  Arrays.asList(sentence.split("\\ "));
+        List<String> tokens = Arrays.asList(sentence.split("\\ "));
         String pattern = "JNVANNPNN";
 
         List<String> encodedTags = new ArrayList<>();
@@ -54,34 +54,24 @@ public class SemanticExtractionIntegrationTest {
         encodedTags.add(EncodedTags.NOUN);
 
         List<RegexPatternIndexData> regexPatternIndexDataList = null;
-        for(String regexPattern : RegexExpressions.regexPatterns){
-            regexPatternIndexDataList =  regexPatternIndexFinder.find(pattern, regexPattern);
-            if(regexPatternIndexDataList.size() > 0){
+        for (String regexPattern : RegexExpressions.regexPatterns) {
+            regexPatternIndexDataList = regexPatternIndexFinder.find(pattern, regexPattern);
+            if (regexPatternIndexDataList.size() > 0) {
                 RegexPatternIndexData regexPatternIndexData = regexPatternIndexDataList.get(0);
 
                 String constantTag = RegexExpressions.patternsConstantTagsMap.get(regexPattern);
                 SemanticRelationConstantType semanticRelationConstantType = RegexExpressions.patternsSemanticRelationConstantTypeMap.get(regexPattern);
                 SemanticRelationData semanticRelationData = relationsExtractor.extract(constantTag, regexPatternIndexData, tokens, encodedTags, semanticRelationConstantType);
-                if(regexPatternIndexData.getPattern() != null && "JNVANNPNN".equals(regexPatternIndexData.getPattern())){
+                if (regexPatternIndexData.getPattern() != null) {
                     assertEquals("JNVANNPNN", regexPatternIndexDataList.get(0).getPattern());
                     assertEquals("firemen", semanticRelationData.getAtomicSubject());
                     assertEquals("brave firemen", semanticRelationData.getExtendedSubject());
                     assertEquals("fight", semanticRelationData.getAtomicVerb());
                     assertEquals("furiously forest fire ", semanticRelationData.getExtendedPredicate());
                     assertEquals("fire", semanticRelationData.getAtomicPredicate());
-
-
-
-                }else if(regexPatternIndexData.getPattern() != null && "JNV".equals(regexPatternIndexData.getPattern())){
-                    assertEquals("JNV", regexPatternIndexDataList.get(0).getPattern());
-                    assertEquals("firemen", semanticRelationData.getAtomicSubject());
-                    assertEquals("brave firemen", semanticRelationData.getExtendedSubject());
+                    break;
                 }
             }
-
         }
-
     }
-
-
 }
