@@ -11,12 +11,6 @@ import java.util.*;
  */
 public final class SemanticConstantTagAnalyserImpl implements SemanticConstantTagAnalyser {
 
-    private ConstantWordsCache constantWordsCache;
-
-    public SemanticConstantTagAnalyserImpl(ConstantWordsCache constantWordsCache) {
-        this.constantWordsCache = constantWordsCache;
-    }
-
     @Override
     public SemanticalConstantTagAnalysisData analyse(String constantTag, List<String> subSentence, List<String> encodedTags,
                                                      SemanticRelationConstantType constantType) {
@@ -42,7 +36,13 @@ public final class SemanticConstantTagAnalyserImpl implements SemanticConstantTa
                 }
             }
             if (EncodedTags.ADVERB.equals(encodedTag)) {
-
+                if (isConstantFound) {
+                    analysisData.setContainsAfterConstantAdverb(true);
+                    analysisData.getAfterConstantTagAdverbsIndexes().add(index);
+                } else {
+                    analysisData.setContainsBeforeConstantAdverb(true);
+                    analysisData.getBeforeConstantTagAdverbsIndexes().add(index);
+                }
             }
         }
         if (isConstantFound) {

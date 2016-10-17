@@ -22,7 +22,7 @@ public class SemanticRelationsExtractorImplForVerbTest {
 
     private ConstantWordsCache constantWordsCache = new ConstantWordsCache();
 
-    private SemanticConstantTagAnalyser semanticConstantTagAnalyser = new SemanticConstantTagAnalyserImpl(constantWordsCache);
+    private SemanticConstantTagAnalyser semanticConstantTagAnalyser = new SemanticConstantTagAnalyserImpl();
 
     private SubjectExtractor subjectExtractor = new SubjectExtractorImpl();
 

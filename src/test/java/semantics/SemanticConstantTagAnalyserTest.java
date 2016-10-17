@@ -20,12 +20,10 @@ import static org.junit.Assert.assertTrue;
  */
 public class SemanticConstantTagAnalyserTest {
 
-    private ConstantWordsCache constantWordsCache = new ConstantWordsCache();
-
-    private SemanticConstantTagAnalyser semanticConstantTagAnalyser = new SemanticConstantTagAnalyserImpl(constantWordsCache);
+    private SemanticConstantTagAnalyser semanticConstantTagAnalyser = new SemanticConstantTagAnalyserImpl();
 
     @Test
-    public void testIS() {
+    public void testIS_ISNT_3_LEVEL() {
 
         List<String> encodedTags = new ArrayList<String>();
         encodedTags.add(EncodedTags.NOUN);
@@ -52,7 +50,7 @@ public class SemanticConstantTagAnalyserTest {
     }
 
     @Test
-    public void testIsNOT() {
+    public void testIS_NOT_3_LEVEL() {
 
         List<String> encodedTags = new ArrayList<String>();
         encodedTags.add(EncodedTags.NOUN);
@@ -81,7 +79,7 @@ public class SemanticConstantTagAnalyserTest {
     }
 
     @Test
-    public void testIsNOTwithAfterPreposition() {
+    public void testIS_NOT_3_LEVELwithAfterPreposition() {
 
         List<String> encodedTags = new ArrayList<String>();
         encodedTags.add(EncodedTags.NOUN);
@@ -121,7 +119,7 @@ public class SemanticConstantTagAnalyserTest {
 
 
     @Test
-    public void testModalNot() {
+    public void testMODAL_VERB_NOT_3_LEVEL() {
 
         List<String> encodedTags = new ArrayList<String>();
         encodedTags.add(EncodedTags.NOUN);
@@ -150,7 +148,7 @@ public class SemanticConstantTagAnalyserTest {
     }
 
     @Test
-    public void testModalNotWithAfterPreposition() {
+    public void testMODAL_VERB_NOT_3_LEVELWithAfterPreposition() {
 
         List<String> encodedTags = new ArrayList<String>();
         encodedTags.add(EncodedTags.NOUN);
@@ -189,7 +187,7 @@ public class SemanticConstantTagAnalyserTest {
     }
 
     @Test
-    public void testVerb() {
+    public void testVERB_3_LEVEL() {
 
         List<String> encodedTags = new ArrayList<String>();
         encodedTags.add(EncodedTags.NOUN);
@@ -211,7 +209,33 @@ public class SemanticConstantTagAnalyserTest {
     }
 
     @Test
-    public void testVerbDont() {
+    public void testVERB_3_LEVELWithAfterAdverb() {
+
+        List<String> encodedTags = new ArrayList<String>();
+        encodedTags.add(EncodedTags.NOUN);
+        encodedTags.add(EncodedTags.VERB);
+        encodedTags.add(EncodedTags.NOUN);
+        encodedTags.add(EncodedTags.ADVERB);
+
+
+        List<String> tokens = new ArrayList<>();
+        tokens.add("Johny");
+        tokens.add("speaks");
+        tokens.add("Spanish");
+        tokens.add("fluently");
+
+        SemanticalConstantTagAnalysisData semanticalConstantTagAnalysisData = semanticConstantTagAnalyser.analyse(EncodedTags.VERB,
+                tokens, encodedTags, SemanticRelationConstantType.VERB_3_LEVEL);
+        assertEquals(1, semanticalConstantTagAnalysisData.getConstantIndex());
+        assertEquals(EncodedTags.VERB, semanticalConstantTagAnalysisData.getConstantTag());
+        assertFalse(semanticalConstantTagAnalysisData.hasExtendedPredicate());
+        assertFalse(semanticalConstantTagAnalysisData.hasVerbAuxiliaryVerbPhrase());
+        assertTrue(semanticalConstantTagAnalysisData.containsAfterConstantAdverb());
+        assertEquals(java.util.Optional.of(3), semanticalConstantTagAnalysisData.getAfterConstantTagAdverbsIndexes().get(0));
+    }
+
+    @Test
+    public void testVERB_DONT_3_LEVEL() {
 
         List<String> encodedTags = new ArrayList<String>();
         encodedTags.add(EncodedTags.NOUN);
@@ -238,7 +262,7 @@ public class SemanticConstantTagAnalyserTest {
     }
 
     @Test
-    public void testVerbDoNot() {
+    public void testVERB_DO_NOT_3_LEVEL() {
 
         List<String> encodedTags = new ArrayList<String>();
         encodedTags.add(EncodedTags.NOUN);
@@ -263,7 +287,6 @@ public class SemanticConstantTagAnalyserTest {
         assertEquals(EncodedTags.VERB, semanticalConstantTagAnalysisData.getConstantTag());
         assertTrue(semanticalConstantTagAnalysisData.hasExtendedPredicate());
         assertTrue(semanticalConstantTagAnalysisData.hasVerbAuxiliaryVerbPhrase());
-
     }
 
 
