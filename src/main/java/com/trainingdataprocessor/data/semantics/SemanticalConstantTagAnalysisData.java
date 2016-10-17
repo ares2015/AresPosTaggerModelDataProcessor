@@ -18,9 +18,18 @@ public final class SemanticalConstantTagAnalysisData {
 
     private boolean containsAfterConstantPreposition;
 
+    private boolean containsBeforeConstantAdverb;
+
+    private boolean containsAfterConstantAdverb;
+
+    private List<Integer> beforeConstantTagAdverbsIndexes = new ArrayList<>();
+
+    private List<Integer> afterConstantTagAdverbsIndexes = new ArrayList<>();
+
     private List<Integer> beforeConstantTagPrepositionIndexes = new ArrayList<>();
 
     private List<Integer> afterConstantTagPrepositionIndexes = new ArrayList<>();
+
 
     public void setConstantIndex(int constantIndex) {
         this.constantIndex = constantIndex;
@@ -98,5 +107,29 @@ public final class SemanticalConstantTagAnalysisData {
 
     public boolean hasVerbAuxiliaryVerbPhrase() {
         return hasVerbAuxiliaryVerbPhrase;
+    }
+
+    public boolean containsBeforeConstantAdverb() {
+        return containsBeforeConstantAdverb;
+    }
+
+    public void setContainsBeforeConstantAdverb(boolean containsBeforeConstantAdverb) {
+        this.containsBeforeConstantAdverb = containsBeforeConstantAdverb;
+    }
+
+    public boolean containsAfterConstantAdverb() {
+        return containsAfterConstantAdverb;
+    }
+
+    public void setContainsAfterConstantAdverb(boolean containsAfterConstantAdverb) {
+        this.containsAfterConstantAdverb = containsAfterConstantAdverb;
+    }
+
+    public List<Integer> getBeforeConstantTagAdverbsIndexes() {
+        return beforeConstantTagAdverbsIndexes;
+    }
+
+    public List<Integer> getAfterConstantTagAdverbsIndexes() {
+        return afterConstantTagAdverbsIndexes;
     }
 }

@@ -3,7 +3,6 @@ package com.trainingdataprocessor.semantics;
 import com.trainingdataprocessor.cache.ConstantWordsCache;
 import com.trainingdataprocessor.data.semantics.SemanticalConstantTagAnalysisData;
 import com.trainingdataprocessor.tags.EncodedTags;
-import com.trainingdataprocessor.tags.Tags;
 
 import java.util.*;
 
@@ -25,14 +24,15 @@ public final class SemanticConstantTagAnalyserImpl implements SemanticConstantTa
         boolean isConstantFound = false;
         int constantIndex = -1;
         for (int index = 0; index <= encodedTags.size() - 1; index++) {
-            if (constantTag.equals(encodedTags.get(index))) {
+            String encodedTag = encodedTags.get(index);
+            if (constantTag.equals(encodedTag)) {
                 analysisData.setConstantIndex(index);
                 analysisData.setConstantTag(constantTag);
                 analysisData.setConstantToken(subSentence.get(index));
                 constantIndex = index;
                 isConstantFound = true;
             }
-            if (isTokenPreposition(index, subSentence)) {
+            if (isTagPreposition(encodedTag)) {
                 if (isConstantFound) {
                     analysisData.setContainsAfterConstantPreposition(true);
                     analysisData.getAfterConstantTagPrepositionIndexes().add(index);
@@ -40,6 +40,9 @@ public final class SemanticConstantTagAnalyserImpl implements SemanticConstantTa
                     analysisData.setContainsBeforeConstantPreposition(true);
                     analysisData.getBeforeConstantTagPrepositionIndexes().add(index);
                 }
+            }
+            if (EncodedTags.ADVERB.equals(encodedTag)) {
+
             }
         }
         if (isConstantFound) {
@@ -66,9 +69,8 @@ public final class SemanticConstantTagAnalyserImpl implements SemanticConstantTa
         return SemanticRelationConstantType.auxiliaryTypes.contains(constantType);
     }
 
-    private boolean isTokenPreposition(int index, List<String> subSentence){
-        return Tags.PREPOSITION.equals(constantWordsCache.getConstantWordsCache().get(subSentence.get(index))) ||
-                Tags.TO.equals(constantWordsCache.getConstantWordsCache().get(subSentence.get(index)));
+    private boolean isTagPreposition(String encodedTag) {
+        return EncodedTags.PREPOSITION.equals((encodedTag)) || EncodedTags.TO.equals(encodedTag);
     }
 
 }
