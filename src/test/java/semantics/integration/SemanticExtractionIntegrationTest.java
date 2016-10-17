@@ -1,11 +1,11 @@
 package semantics.integration;
 
 import com.trainingdataprocessor.cache.ConstantWordsCache;
-import com.trainingdataprocessor.data.RegexPatternIndexData;
+import com.trainingdataprocessor.data.RegexPatternData;
 import com.trainingdataprocessor.data.semantics.SemanticRelationData;
 import com.trainingdataprocessor.regex.RegexExpressions;
-import com.trainingdataprocessor.regex.RegexPatternIndexFinder;
-import com.trainingdataprocessor.regex.RegexPatternIndexFinderImpl;
+import com.trainingdataprocessor.regex.RegexPatternSearcher;
+import com.trainingdataprocessor.regex.RegexPatternSearcherImpl;
 import com.trainingdataprocessor.semantics.*;
 import com.trainingdataprocessor.tags.EncodedTags;
 import org.junit.Test;
@@ -21,7 +21,7 @@ import static org.junit.Assert.assertEquals;
  */
 public class SemanticExtractionIntegrationTest {
 
-    private RegexPatternIndexFinder regexPatternIndexFinder = new RegexPatternIndexFinderImpl();
+    private RegexPatternSearcher regexPatternSearcher = new RegexPatternSearcherImpl();
 
     private ConstantWordsCache constantWordsCache = new ConstantWordsCache();
 
@@ -53,17 +53,17 @@ public class SemanticExtractionIntegrationTest {
         encodedTags.add(EncodedTags.NOUN);
         encodedTags.add(EncodedTags.NOUN);
 
-        List<RegexPatternIndexData> regexPatternIndexDataList = null;
+        List<RegexPatternData> regexPatternDataList = null;
         for (String regexPattern : RegexExpressions.regexPatterns) {
-            regexPatternIndexDataList = regexPatternIndexFinder.find(pattern, regexPattern);
-            if (regexPatternIndexDataList.size() > 0) {
-                RegexPatternIndexData regexPatternIndexData = regexPatternIndexDataList.get(0);
+            regexPatternDataList = regexPatternSearcher.search(pattern, regexPattern);
+            if (regexPatternDataList.size() > 0) {
+                RegexPatternData regexPatternData = regexPatternDataList.get(0);
 
                 String constantTag = RegexExpressions.patternsConstantTagsMap.get(regexPattern);
                 SemanticRelationConstantType semanticRelationConstantType = RegexExpressions.patternsSemanticRelationConstantTypeMap.get(regexPattern);
-                SemanticRelationData semanticRelationData = relationsExtractor.extract(constantTag, regexPatternIndexData, tokens, encodedTags, semanticRelationConstantType);
-                if (regexPatternIndexData.getPattern() != null) {
-                    assertEquals("JNVANNPNN", regexPatternIndexDataList.get(0).getPattern());
+                SemanticRelationData semanticRelationData = relationsExtractor.extract(constantTag, regexPatternData, tokens, encodedTags, semanticRelationConstantType);
+                if (regexPatternData.getPattern() != null) {
+                    assertEquals("JNVANNPNN", regexPatternDataList.get(0).getPattern());
                     assertEquals("firemen", semanticRelationData.getAtomicSubject());
                     assertEquals("brave firemen", semanticRelationData.getExtendedSubject());
                     assertEquals("fight", semanticRelationData.getAtomicVerb());

@@ -1,7 +1,7 @@
 package com.trainingdataprocessor.semantics;
 
 import com.trainingdataprocessor.data.semantics.SemanticRelationData;
-import com.trainingdataprocessor.data.RegexPatternIndexData;
+import com.trainingdataprocessor.data.RegexPatternData;
 import com.trainingdataprocessor.data.semantics.SemanticalConstantTagAnalysisData;
 
 import java.util.List;
@@ -25,16 +25,16 @@ public class SemanticRelationsExtractorImpl implements SemanticRelationsExtracto
     }
 
     @Override
-    public SemanticRelationData extract(String constant, RegexPatternIndexData regexPatternIndexData, List<String> tokens, List<String> encodedTags,
+    public SemanticRelationData extract(String constant, RegexPatternData regexPatternData, List<String> tokens, List<String> encodedTags,
                                         SemanticRelationConstantType constantType) {
 
         SemanticRelationData semanticRelationData = new SemanticRelationData();
 
-        semanticRelationData.setStartIndex(regexPatternIndexData.getStartIndex());
-        semanticRelationData.setEndIndex(regexPatternIndexData.getEndIndex());
+        semanticRelationData.setStartIndex(regexPatternData.getStartIndex());
+        semanticRelationData.setEndIndex(regexPatternData.getEndIndex());
 
-        List<String> subSentence = tokens.subList(regexPatternIndexData.getStartIndex(), regexPatternIndexData.getEndIndex());
-        List<String> subPattern = encodedTags.subList(regexPatternIndexData.getStartIndex(), regexPatternIndexData.getEndIndex());
+        List<String> subSentence = tokens.subList(regexPatternData.getStartIndex(), regexPatternData.getEndIndex());
+        List<String> subPattern = encodedTags.subList(regexPatternData.getStartIndex(), regexPatternData.getEndIndex());
 
 
         SemanticalConstantTagAnalysisData semanticalConstantTagAnalysisData = semanticConstantTagAnalyser.analyse(constant, subSentence,

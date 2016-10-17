@@ -1,7 +1,7 @@
-package semantics.modal;
+package semantics.extraction.modal;
 
 import com.trainingdataprocessor.cache.ConstantWordsCache;
-import com.trainingdataprocessor.data.RegexPatternIndexData;
+import com.trainingdataprocessor.data.RegexPatternData;
 import com.trainingdataprocessor.data.semantics.SemanticRelationData;
 import com.trainingdataprocessor.semantics.*;
 import com.trainingdataprocessor.tags.EncodedTags;
@@ -49,10 +49,10 @@ public class SemanticRelationsExtractorImplForModalTest {
         String sentence = "brave firemen can not fight forest fire";
         List<String> tokens = Arrays.asList(sentence.split("\\ "));
 
-        RegexPatternIndexData regexPatternIndexData = new RegexPatternIndexData("JNMLVNN", 0, "JNMLVNN".length());
+        RegexPatternData regexPatternData = new RegexPatternData("JNMLVNN", 0, "JNMLVNN".length());
 
         SemanticRelationData semanticRelationData = relationshipsExtractorImpl.extract(EncodedTags.MODAL_VERB,
-                regexPatternIndexData, tokens, encodedTags, SemanticRelationConstantType.MODAL_VERB_NOT_3_LEVEL);
+                regexPatternData, tokens, encodedTags, SemanticRelationConstantType.MODAL_VERB_NOT_3_LEVEL);
 
         assertFalse(semanticRelationData.isPositiveVerb());
         assertTrue(semanticRelationData.isPresentTense());
@@ -84,9 +84,9 @@ public class SemanticRelationsExtractorImplForModalTest {
         String sentence = "brave firemen can not fight forest fire in California mountains";
         List<String> tokens = Arrays.asList(sentence.split("\\ "));
 
-        RegexPatternIndexData regexPatternIndexData = new RegexPatternIndexData("JNMLVNNPNN", 0, "JNMLVNNPNN".length());
+        RegexPatternData regexPatternData = new RegexPatternData("JNMLVNNPNN", 0, "JNMLVNNPNN".length());
 
-        SemanticRelationData semanticRelationData = relationshipsExtractorImpl.extract(EncodedTags.MODAL_VERB, regexPatternIndexData, tokens, encodedTags,
+        SemanticRelationData semanticRelationData = relationshipsExtractorImpl.extract(EncodedTags.MODAL_VERB, regexPatternData, tokens, encodedTags,
                 SemanticRelationConstantType.MODAL_VERB_NOT_3_LEVEL);
 
         assertFalse(semanticRelationData.isPositiveVerb());

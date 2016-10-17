@@ -1,7 +1,7 @@
-package semantics.verb;
+package semantics.extraction.verb;
 
 import com.trainingdataprocessor.cache.ConstantWordsCache;
-import com.trainingdataprocessor.data.RegexPatternIndexData;
+import com.trainingdataprocessor.data.RegexPatternData;
 import com.trainingdataprocessor.data.semantics.SemanticRelationData;
 import com.trainingdataprocessor.semantics.*;
 import com.trainingdataprocessor.tags.EncodedTags;
@@ -46,9 +46,9 @@ public class SemanticRelationsExtractorImplForVerbTest {
         String sentence = "brave firemen fight forest fire";
         List<String> tokens = Arrays.asList(sentence.split("\\ "));
 
-        RegexPatternIndexData regexPatternIndexData = new RegexPatternIndexData("NNVNN", 0, "NNVNN".length());
+        RegexPatternData regexPatternData = new RegexPatternData("NNVNN", 0, "NNVNN".length());
 
-        SemanticRelationData semanticRelationData = relationshipsExtractorImpl.extract(EncodedTags.VERB, regexPatternIndexData, tokens, encodedTags,
+        SemanticRelationData semanticRelationData = relationshipsExtractorImpl.extract(EncodedTags.VERB, regexPatternData, tokens, encodedTags,
                 SemanticRelationConstantType.VERB_3_LEVEL);
 
         assertTrue(semanticRelationData.isPositiveVerb());
@@ -80,9 +80,9 @@ public class SemanticRelationsExtractorImplForVerbTest {
         String sentence = "Fans of Russia attacked English supporters at European Championships";
         List<String> tokens = Arrays.asList(sentence.split("\\ "));
 
-        RegexPatternIndexData regexPatternIndexData = new RegexPatternIndexData("NPN$NNPNN", 0, "NPN$NNPNN".length());
+        RegexPatternData regexPatternData = new RegexPatternData("NPN$NNPNN", 0, "NPN$NNPNN".length());
 
-        SemanticRelationData semanticRelationData = relationshipsExtractorImpl.extract(EncodedTags.VERB_ED, regexPatternIndexData,
+        SemanticRelationData semanticRelationData = relationshipsExtractorImpl.extract(EncodedTags.VERB_ED, regexPatternData,
                 tokens, encodedTags, SemanticRelationConstantType.VERB_3_LEVEL);
 
         assertTrue(semanticRelationData.isPositiveVerb());
@@ -111,9 +111,9 @@ public class SemanticRelationsExtractorImplForVerbTest {
         String sentence = "drunken guys didn't catch Ryanair flight";
         List<String> tokens = Arrays.asList(sentence.split("\\ "));
 
-        RegexPatternIndexData regexPatternIndexData = new RegexPatternIndexData("JNLVNN", 0, "JNLVNN".length());
+        RegexPatternData regexPatternData = new RegexPatternData("JNLVNN", 0, "JNLVNN".length());
 
-        SemanticRelationData semanticRelationData = relationshipsExtractorImpl.extract(EncodedTags.VERB, regexPatternIndexData, tokens, encodedTags,
+        SemanticRelationData semanticRelationData = relationshipsExtractorImpl.extract(EncodedTags.VERB, regexPatternData, tokens, encodedTags,
                 SemanticRelationConstantType.VERB_DONT_3_LEVEL);
 
         assertFalse(semanticRelationData.isPositiveVerb());
@@ -139,9 +139,9 @@ public class SemanticRelationsExtractorImplForVerbTest {
         String sentence = "brave soldiers fight";
         List<String> tokens = Arrays.asList(sentence.split("\\ "));
 
-        RegexPatternIndexData regexPatternIndexData = new RegexPatternIndexData("JNV", 0, "JNV".length());
+        RegexPatternData regexPatternData = new RegexPatternData("JNV", 0, "JNV".length());
 
-        SemanticRelationData semanticRelationData = relationshipsExtractorImpl.extract(EncodedTags.VERB, regexPatternIndexData, tokens, encodedTags,
+        SemanticRelationData semanticRelationData = relationshipsExtractorImpl.extract(EncodedTags.VERB, regexPatternData, tokens, encodedTags,
                 SemanticRelationConstantType.VERB_2_LEVEL);
 
         assertTrue(semanticRelationData.isPositiveVerb());
@@ -168,9 +168,9 @@ public class SemanticRelationsExtractorImplForVerbTest {
         String sentence = "brave soldiers fought in Vietnam war";
         List<String> tokens = Arrays.asList(sentence.split("\\ "));
 
-        RegexPatternIndexData regexPatternIndexData = new RegexPatternIndexData("JN$PNN", 0, "JN$PNN".length());
+        RegexPatternData regexPatternData = new RegexPatternData("JN$PNN", 0, "JN$PNN".length());
 
-        SemanticRelationData semanticRelationData = relationshipsExtractorImpl.extract(EncodedTags.VERB_ED, regexPatternIndexData, tokens, encodedTags,
+        SemanticRelationData semanticRelationData = relationshipsExtractorImpl.extract(EncodedTags.VERB_ED, regexPatternData, tokens, encodedTags,
                 SemanticRelationConstantType.VERB_2_LEVEL);
 
         assertTrue(semanticRelationData.isPositiveVerb());
@@ -196,9 +196,9 @@ public class SemanticRelationsExtractorImplForVerbTest {
         String sentence = "brave soldiers don't fight";
         List<String> tokens = Arrays.asList(sentence.split("\\ "));
 
-        RegexPatternIndexData regexPatternIndexData = new RegexPatternIndexData("JNLV", 0, "JNLV".length());
+        RegexPatternData regexPatternData = new RegexPatternData("JNLV", 0, "JNLV".length());
 
-        SemanticRelationData semanticRelationData = relationshipsExtractorImpl.extract(EncodedTags.VERB, regexPatternIndexData, tokens, encodedTags,
+        SemanticRelationData semanticRelationData = relationshipsExtractorImpl.extract(EncodedTags.VERB, regexPatternData, tokens, encodedTags,
                 SemanticRelationConstantType.VERB_DONT_2_LEVEL);
 
         assertFalse(semanticRelationData.isPositiveVerb());
@@ -223,9 +223,9 @@ public class SemanticRelationsExtractorImplForVerbTest {
         String sentence = "brave soldiers do not fight";
         List<String> tokens = Arrays.asList(sentence.split("\\ "));
 
-        RegexPatternIndexData regexPatternIndexData = new RegexPatternIndexData("JNLOV", 0, "JNLOV".length());
+        RegexPatternData regexPatternData = new RegexPatternData("JNLOV", 0, "JNLOV".length());
 
-        SemanticRelationData semanticRelationData = relationshipsExtractorImpl.extract(EncodedTags.VERB, regexPatternIndexData, tokens, encodedTags,
+        SemanticRelationData semanticRelationData = relationshipsExtractorImpl.extract(EncodedTags.VERB, regexPatternData, tokens, encodedTags,
                 SemanticRelationConstantType.VERB_DO_NOT_2_LEVEL);
 
         assertFalse(semanticRelationData.isPositiveVerb());
@@ -249,9 +249,9 @@ public class SemanticRelationsExtractorImplForVerbTest {
         String sentence = "brave soldiers can't fight";
         List<String> tokens = Arrays.asList(sentence.split("\\ "));
 
-        RegexPatternIndexData regexPatternIndexData = new RegexPatternIndexData("JNMV", 0, "JNMV".length());
+        RegexPatternData regexPatternData = new RegexPatternData("JNMV", 0, "JNMV".length());
 
-        SemanticRelationData semanticRelationData = relationshipsExtractorImpl.extract(EncodedTags.MODAL_VERB, regexPatternIndexData, tokens, encodedTags,
+        SemanticRelationData semanticRelationData = relationshipsExtractorImpl.extract(EncodedTags.MODAL_VERB, regexPatternData, tokens, encodedTags,
                 SemanticRelationConstantType.MODAL_VERB_2_LEVEL);
 
         assertFalse(semanticRelationData.isPositiveVerb());

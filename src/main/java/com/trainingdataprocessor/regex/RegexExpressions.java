@@ -10,15 +10,15 @@ import java.util.*;
  */
 public final class RegexExpressions {
 
-    private static final String BEFORE_VERB_PREPOSITION_PHRASE = "[#NJD$@]?[PT]?";
+    public static final String BEFORE_VERB_PREPOSITION_PHRASE = "[#NJD$@]?[PT][#NJD$@]?[PT][#NJD$@]?";
 
-    private static final String BEFORE_VERB_NOUN_PHRASE = "[NJD]*N[A]*";
+    public static final String BEFORE_VERB_NOUN_PHRASE = "[NJD]*N[A]*";
 
-    private static final String AFTER_VERB_NOUN_PHRASE = "[#JD@AYN]*[$NJ]";
+    public static final String AFTER_VERB_NOUN_PHRASE = "[#JD@AYN]*[$NJ]";
 
-    private static final String AFTER_VERB_PREPOSITION_PHRASE = "[@]?[PT]?[Y#NJD$V]*";
+    public static final String AFTER_VERB_PREPOSITION_PHRASE = "[@]?[PT]?[Y#NJD$V]*";
 
-    private static final String ADVERB_SEQUENCE = "[A]*";
+    public static final String ADVERB_SEQUENCE = "[A]*";
 
     public static final String NOUN_IS_NOUN_RELATION_PATTERN = BEFORE_VERB_PREPOSITION_PHRASE + BEFORE_VERB_NOUN_PHRASE + EncodedTags.IS_ARE + AFTER_VERB_NOUN_PHRASE +
             AFTER_VERB_PREPOSITION_PHRASE + AFTER_VERB_PREPOSITION_PHRASE + AFTER_VERB_PREPOSITION_PHRASE + AFTER_VERB_PREPOSITION_PHRASE;

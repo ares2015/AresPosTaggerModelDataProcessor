@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * Created by Oliver on 8/17/2016.
  */
-public class RegexPatternIndexData {
+public class RegexPatternData {
 
     private String pattern;
 
@@ -14,7 +14,7 @@ public class RegexPatternIndexData {
 
     private int endIndex;
 
-    public RegexPatternIndexData(String pattern, int startIndex, int endIndex) {
+    public RegexPatternData(String pattern, int startIndex, int endIndex) {
         this.pattern = pattern;
         this.startIndex = startIndex;
         this.endIndex = endIndex;
