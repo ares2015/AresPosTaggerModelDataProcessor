@@ -10,6 +10,9 @@ import java.util.*;
  */
 public final class RegexExpressions {
 
+//    public static final String BEFORE_VERB_PREPOSITION_PHRASE = "[" +  EncodedTags.NUMBER + EncodedTags.DETERMINER + EncodedTags.NOUN + EncodedTags.ADJECTIVE + EncodedTags.VERB_ED + EncodedTags.VERB_ING  +"]" +
+//            "[" + EncodedTags.PREPOSITION +  EncodedTags.TO + "]"; /*"[#NJD$@]?[PT]";*/
+
     public static final String BEFORE_VERB_PREPOSITION_PHRASE = "[#NJD$@]?[PT][#NJD$@]?[PT][#NJD$@]?";
 
     public static final String BEFORE_VERB_NOUN_PHRASE = "[NJD]*N[A]*";
@@ -20,7 +23,7 @@ public final class RegexExpressions {
 
     public static final String ADVERB_SEQUENCE = "[A]*";
 
-    public static final String NOUN_IS_NOUN_RELATION_PATTERN = BEFORE_VERB_PREPOSITION_PHRASE + BEFORE_VERB_NOUN_PHRASE + EncodedTags.IS_ARE + AFTER_VERB_NOUN_PHRASE +
+    public static final String NOUN_IS_NOUN_RELATION_PATTERN = /*BEFORE_VERB_PREPOSITION_PHRASE + */BEFORE_VERB_NOUN_PHRASE + EncodedTags.IS_ARE + AFTER_VERB_NOUN_PHRASE +
             AFTER_VERB_PREPOSITION_PHRASE + AFTER_VERB_PREPOSITION_PHRASE + AFTER_VERB_PREPOSITION_PHRASE + AFTER_VERB_PREPOSITION_PHRASE;
 
     public static final String NOUN_IS_NOT_NOUN_RELATION_PATTERN = BEFORE_VERB_PREPOSITION_PHRASE + BEFORE_VERB_NOUN_PHRASE + EncodedTags.IS_ARE + EncodedTags.NOT + AFTER_VERB_NOUN_PHRASE +

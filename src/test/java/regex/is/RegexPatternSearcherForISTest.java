@@ -21,7 +21,7 @@ public class RegexPatternSearcherForISTest {
     @Test
     public void testIS_ISNT_3_LEVELWholePatternFound() {
         String sentence = "";
-
+        System.out.println("testIS_ISNT_3_LEVELWholePatternFound: " + NOUN_IS_NOUN_RELATION_PATTERN);
         List<RegexPatternData> regexPatternIndexFinderList = null;
         String encodedPath = null;
 
@@ -112,8 +112,8 @@ public class RegexPatternSearcherForISTest {
         assertEquals(sentence.split("\\ ").length, encodedPath.length());
         System.out.println(sentence + ": " + regexPatternIndexFinderList.get(0).getPattern());
 
-        sentence = "Fans of Spartak Trnava are very aggresive";
-        encodedPath = "NPNNIJJ";
+        sentence = "Fans of Spartak Trnava are aggresive";
+        encodedPath = "NPNNIJ";
         regexPatternIndexFinderList = regexPatternSearcher.search(encodedPath, NOUN_IS_NOUN_RELATION_PATTERN);
         assertEquals(1, regexPatternIndexFinderList.size());
         assertEquals(encodedPath, regexPatternIndexFinderList.get(0).getPattern());
