@@ -24,7 +24,7 @@ public class SemanticPreprocessorImpl implements SemanticPreprocessor {
         List<RegexPatternData> regexPatternDataList;
         SemanticPreprocessingData semanticPreprocessingData = new SemanticPreprocessingData();
 
-        regexPatternDataList = regexPatternSearcher.search(foundPattern, RegexExpressions.BEFORE_VERB_PREPOSITION_PHRASE);
+        regexPatternDataList = regexPatternSearcher.search(foundPattern, RegexExpressions.PREPOSITION_PHRASE);
         if (regexPatternDataList.size() > 0) {
             semanticPreprocessingData.setBeforeVerbPrepositionPhrase(regexPatternDataList.get(0));
             semanticPreprocessingData.setContainsBeforeVerbPrepositionPhrase(true);
@@ -32,7 +32,7 @@ public class SemanticPreprocessorImpl implements SemanticPreprocessor {
         }
 
         if(!(semanticPreprocessingData.isContainsBeforeVerbPrepositionPhrase())){
-            regexPatternDataList = regexPatternSearcher.search(foundPattern, RegexExpressions.BEFORE_VERB_NOUN_PHRASE);
+            regexPatternDataList = regexPatternSearcher.search(foundPattern, RegexExpressions.NOUN_PHRASE);
             if (regexPatternDataList.size() > 0) {
                 semanticPreprocessingData.setBeforeVerbNounPhrase(regexPatternDataList.get(0));
                 semanticPreprocessingData.setContainsBeforeVerbNounPhrase(true);
