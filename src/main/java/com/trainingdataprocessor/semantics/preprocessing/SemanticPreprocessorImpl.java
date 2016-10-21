@@ -1,11 +1,8 @@
 package com.trainingdataprocessor.semantics.preprocessing;
 
-import com.trainingdataprocessor.data.RegexPatternData;
 import com.trainingdataprocessor.data.semantics.SemanticPreprocessingData;
-import com.trainingdataprocessor.regex.RegexExpressions;
-import com.trainingdataprocessor.regex.RegexPatternSearcher;
-import com.trainingdataprocessor.semantics.SemanticRelationConstantType;
-import com.trainingdataprocessor.semantics.preprocessing.phrases.PrepositionPhraseAnalyser;
+import com.trainingdataprocessor.semantics.deprecated.SemanticRelationConstantType;
+import com.trainingdataprocessor.semantics.preprocessing.phrases.PhraseAnalyser;
 import com.trainingdataprocessor.tags.EncodedTags;
 
 import java.util.List;
@@ -15,7 +12,7 @@ import java.util.List;
  */
 public class SemanticPreprocessorImpl implements SemanticPreprocessor {
 
-    private PrepositionPhraseAnalyser prepositionPhraseAnalyser;
+    private PhraseAnalyser prepositionPhraseAnalyser;
 
 
     public SemanticPreprocessingData preprocess(String sentencePattern, List<String> subSentence, List<String> encodedTags,
@@ -27,23 +24,7 @@ public class SemanticPreprocessorImpl implements SemanticPreprocessor {
         prepositionPhraseAnalyser.analyse(sentencePattern, semanticPreprocessingData);
 
 
-//        List<RegexPatternData> regexPatternDataList;
-//        SemanticPreprocessingData semanticPreprocessingData = new SemanticPreprocessingData();
-//
-//        regexPatternDataList = regexPatternSearcher.search(foundPattern, RegexExpressions.PREPOSITION_PHRASE);
-//        if (regexPatternDataList.size() > 0) {
-//            semanticPreprocessingData.setBeforeVerbPrepositionPhrase(regexPatternDataList.get(0));
-//            semanticPreprocessingData.setContainsBeforeVerbPrepositionPhrase(true);
-//            semanticPreprocessingData.setContainsBeforeVerbNounPhrase(false);
-//        }
-//
-//        if(!(semanticPreprocessingData.isContainsBeforeVerbPrepositionPhrase())){
-//            regexPatternDataList = regexPatternSearcher.search(foundPattern, RegexExpressions.NOUN_PHRASE);
-//            if (regexPatternDataList.size() > 0) {
-//                semanticPreprocessingData.setBeforeVerbNounPhrase(regexPatternDataList.get(0));
-//                semanticPreprocessingData.setContainsBeforeVerbNounPhrase(true);
-//            }
-//        }
+
 
 
         return semanticPreprocessingData;

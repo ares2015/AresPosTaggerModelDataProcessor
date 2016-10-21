@@ -1,7 +1,7 @@
 package com.trainingdataprocessor.semantics.preprocessing;
 
 import com.trainingdataprocessor.data.semantics.SemanticPreprocessingData;
-import com.trainingdataprocessor.semantics.SemanticRelationConstantType;
+import com.trainingdataprocessor.semantics.deprecated.SemanticRelationConstantType;
 
 import java.util.List;
 

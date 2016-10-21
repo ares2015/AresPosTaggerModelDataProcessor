@@ -1,12 +1,10 @@
-package com.trainingdataprocessor.semantics;
+package com.trainingdataprocessor.semantics.deprecated;
 
 import com.trainingdataprocessor.tags.EncodedTags;
 
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
-import static com.trainingdataprocessor.semantics.SemanticExtractionUtils.getVerbIndex;
 
 /**
  * Created by Oliver on 10/15/2016.
@@ -44,7 +42,7 @@ public class VerbExtractorImpl implements VerbExtractor {
 
     public String extractExtendedVerb(List<String> subSentence, List<String> encodedTags, int constantIndex, SemanticRelationConstantType constantType) {
         String verbAuxiliaryVerbPhrase = "";
-        int verbIndex = getVerbIndex(encodedTags, constantIndex);
+        int verbIndex = SemanticExtractionUtils.getVerbIndex(encodedTags, constantIndex);
         if (SemanticRelationConstantType.MODAL_VERB_3_LEVEL == constantType || SemanticRelationConstantType.MODAL_VERB_NOT_3_LEVEL == constantType) {
             for (int i = constantIndex; i <= verbIndex; i++) {
                 if (i < verbIndex) {
@@ -64,7 +62,7 @@ public class VerbExtractorImpl implements VerbExtractor {
     }
 
     public String extractVerbFromModalVerbPhrase(List<String> subSentence, List<String> encodedTags, int constantIndex) {
-        int verbIndex = getVerbIndex(encodedTags, constantIndex);
+        int verbIndex = SemanticExtractionUtils.getVerbIndex(encodedTags, constantIndex);
         return subSentence.get(verbIndex);
     }
 

@@ -1,4 +1,4 @@
-package com.trainingdataprocessor.semantics;
+package com.trainingdataprocessor.semantics.deprecated;
 
 import java.util.HashMap;
 import java.util.HashSet;

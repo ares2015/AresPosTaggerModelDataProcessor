@@ -1,18 +1,5 @@
 package semantics.preprocessing;
 
-import com.trainingdataprocessor.data.semantics.SemanticPreprocessingData;
-import com.trainingdataprocessor.regex.RegexPatternSearcher;
-import com.trainingdataprocessor.regex.RegexPatternSearcherImpl;
-import com.trainingdataprocessor.semantics.SemanticRelationConstantType;
-import com.trainingdataprocessor.semantics.preprocessing.SemanticPreprocessor;
-import com.trainingdataprocessor.semantics.preprocessing.SemanticPreprocessorImpl;
-import com.trainingdataprocessor.tags.EncodedTags;
-import org.junit.Test;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;

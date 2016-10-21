@@ -1,10 +1,9 @@
 package semantics;
 
-import com.trainingdataprocessor.cache.ConstantWordsCache;
 import com.trainingdataprocessor.data.semantics.SemanticalConstantTagAnalysisData;
-import com.trainingdataprocessor.semantics.SemanticConstantTagAnalyser;
-import com.trainingdataprocessor.semantics.SemanticConstantTagAnalyserImpl;
-import com.trainingdataprocessor.semantics.SemanticRelationConstantType;
+import com.trainingdataprocessor.semantics.deprecated.SemanticConstantTagAnalyser;
+import com.trainingdataprocessor.semantics.deprecated.SemanticConstantTagAnalyserImpl;
+import com.trainingdataprocessor.semantics.deprecated.SemanticRelationConstantType;
 import com.trainingdataprocessor.tags.EncodedTags;
 import org.junit.Test;
 

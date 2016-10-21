@@ -1,4 +1,4 @@
-package com.trainingdataprocessor.semantics;
+package com.trainingdataprocessor.semantics.deprecated;
 
 import com.trainingdataprocessor.data.RegexPatternData;
 import com.trainingdataprocessor.data.semantics.SemanticRelationData;

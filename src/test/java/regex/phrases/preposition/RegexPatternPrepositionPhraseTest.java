@@ -39,6 +39,21 @@ public class RegexPatternPrepositionPhraseTest {
     }
 
     @Test
+    public void testPartiallyFound(){
+        List<RegexPatternData> regexPatternIndexFinderList = null;
+        String sentence = "";
+        String encodedPath = "";
+
+        sentence = "Aggressive stupid Russian fans and hooligans in Paris at Euro attack fans and supporters of English team";
+        encodedPath = "JJNN<NPNPNVN<NPNN";
+        regexPatternIndexFinderList = regexPatternSearcher.search(encodedPath, PREPOSITION_PHRASE);
+        assertTrue(regexPatternIndexFinderList.size() > 0);
+        System.out.println(sentence);
+        assertTrue(RegexUtils.containsRegex(regexPatternIndexFinderList, "NPNPN", regexType));
+        assertTrue(RegexUtils.containsRegex(regexPatternIndexFinderList, "NPNN", regexType));
+    }
+
+    @Test
     public void testNotFound(){
         List<RegexPatternData> regexPatternIndexFinderList = null;
         String sentence = "";

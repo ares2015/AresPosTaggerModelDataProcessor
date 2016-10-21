@@ -5,7 +5,7 @@ import com.trainingdataprocessor.data.semantics.SemanticPreprocessingData;
 /**
  * Created by Oliver on 10/21/2016.
  */
-public interface PrepositionPhraseAnalyser {
+public interface PhraseAnalyser {
 
     void analyse(String sentencePattern, SemanticPreprocessingData semanticPreprocessingData);
 }

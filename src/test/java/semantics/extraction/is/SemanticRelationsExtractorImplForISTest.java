@@ -3,7 +3,7 @@ package semantics.extraction.is;
 import com.trainingdataprocessor.cache.ConstantWordsCache;
 import com.trainingdataprocessor.data.RegexPatternData;
 import com.trainingdataprocessor.data.semantics.SemanticRelationData;
-import com.trainingdataprocessor.semantics.*;
+import com.trainingdataprocessor.semantics.deprecated.*;
 import com.trainingdataprocessor.tags.EncodedTags;
 import org.junit.Test;
 

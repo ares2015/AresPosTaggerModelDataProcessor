@@ -1,6 +1,7 @@
 package com.trainingdataprocessor.data.semantics;
 
 import com.trainingdataprocessor.data.RegexPatternData;
+import com.trainingdataprocessor.semantics.preprocessing.phrases.verb.VerbPhraseTypes;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,15 +11,19 @@ import java.util.List;
  */
 public final class SemanticPreprocessingData {
 
-    public int verbIndex;
+    private int verbIndex;
 
-    public RegexPatternData beforeVerbPrepositionPhrase;
+    private RegexPatternData beforeVerbPrepositionPhrase;
 
-    public RegexPatternData afterVerbPrepositionPhrase;
+    private RegexPatternData afterVerbPrepositionPhrase;
 
-    public boolean containsBeforeVerbPrepositionPhrase;
+    private boolean containsBeforeVerbPrepositionPhrase;
 
-    public boolean containsAfterVerbPrepositionPhrase;
+    private boolean containsAfterVerbPrepositionPhrase;
+
+    private RegexPatternData verbPhrase;
+
+    private VerbPhraseTypes verbPhraseTypes;
 
     public int getVerbIndex() {
         return verbIndex;
@@ -58,5 +63,21 @@ public final class SemanticPreprocessingData {
 
     public void setContainsAfterVerbPrepositionPhrase(boolean containsAfterVerbPrepositionPhrase) {
         this.containsAfterVerbPrepositionPhrase = containsAfterVerbPrepositionPhrase;
+    }
+
+    public RegexPatternData getVerbPhrase() {
+        return verbPhrase;
+    }
+
+    public void setVerbPhrase(RegexPatternData verbPhrase) {
+        this.verbPhrase = verbPhrase;
+    }
+
+    public VerbPhraseTypes getVerbPhraseTypes() {
+        return verbPhraseTypes;
+    }
+
+    public void setVerbPhraseTypes(VerbPhraseTypes verbPhraseTypes) {
+        this.verbPhraseTypes = verbPhraseTypes;
     }
 }
