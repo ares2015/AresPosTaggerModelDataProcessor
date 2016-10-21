@@ -18,6 +18,8 @@ public final class SemanticPreprocessingData {
 
     private int afterVerbFirstPrepositionIndex;
 
+    private boolean containsAfterVerbPreposition = true;
+
     private RegexPatternData beforeVerbPrepositionPhrase;
 
     private RegexPatternData afterVerbPrepositionPhrase;
@@ -68,6 +70,14 @@ public final class SemanticPreprocessingData {
 
     public void setAfterVerbFirstPrepositionIndex(int afterVerbFirstPrepositionIndex) {
         this.afterVerbFirstPrepositionIndex = afterVerbFirstPrepositionIndex;
+    }
+
+    public boolean containsAfterVerbPreposition() {
+        return containsAfterVerbPreposition;
+    }
+
+    public void setContainsAfterVerbPreposition(boolean containsAfterVerbPreposition) {
+        this.containsAfterVerbPreposition = containsAfterVerbPreposition;
     }
 
     public RegexPatternData getBeforeVerbPrepositionPhrase() {

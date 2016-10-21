@@ -28,7 +28,12 @@ public class SemanticPreprocessorImpl implements SemanticPreprocessor {
         SemanticPreprocessingData semanticPreprocessingData = new SemanticPreprocessingData();
         int verbIndex = getVerbIndex(encodedTags);
         semanticPreprocessingData.setVerbIndex(verbIndex);
-        semanticPreprocessingData.setAfterVerbFirstPrepositionIndex(getAfterVerbPrepositionIndex(encodedTags, verbIndex));
+
+        int afterVerbPrepositionIndex = getAfterVerbPrepositionIndex(encodedTags, verbIndex);
+        if(afterVerbPrepositionIndex == -1){
+            semanticPreprocessingData.setContainsAfterVerbPreposition(false);
+        }
+        semanticPreprocessingData.setAfterVerbFirstPrepositionIndex(afterVerbPrepositionIndex);
         semanticPreprocessingData.setTokens(subSentence);
         semanticPreprocessingData.setEncodedTags(encodedTags);
 

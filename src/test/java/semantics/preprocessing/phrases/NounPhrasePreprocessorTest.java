@@ -32,6 +32,7 @@ public class NounPhrasePreprocessorTest {
         sentencePattern = "JJNNPNPNAVNN";
         SemanticPreprocessingData semanticPreprocessingData = new SemanticPreprocessingData();
         semanticPreprocessingData.setVerbIndex(9);
+        semanticPreprocessingData.setContainsAfterVerbPreposition(false);
 
         nounPhrasePreprocessor.preprocess(sentencePattern, semanticPreprocessingData);
         assertTrue(semanticPreprocessingData.containsAfterVerbNounPhrase());
