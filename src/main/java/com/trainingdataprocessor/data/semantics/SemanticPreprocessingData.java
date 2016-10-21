@@ -12,9 +12,9 @@ public final class SemanticPreprocessingData {
 
     public int verbIndex;
 
-    public List<RegexPatternData> beforeVerbPrepositionPhrases = new ArrayList<>();
+    public RegexPatternData beforeVerbPrepositionPhrase;
 
-    public List<RegexPatternData> afterVerbPrepositionPhrases = new ArrayList<>();
+    public RegexPatternData afterVerbPrepositionPhrase;
 
     public boolean containsBeforeVerbPrepositionPhrase;
 
@@ -28,12 +28,20 @@ public final class SemanticPreprocessingData {
         this.verbIndex = verbIndex;
     }
 
-    public List<RegexPatternData> getBeforeVerbPrepositionPhrases() {
-        return beforeVerbPrepositionPhrases;
+    public RegexPatternData getBeforeVerbPrepositionPhrase() {
+        return beforeVerbPrepositionPhrase;
     }
 
-    public List<RegexPatternData> getAfterVerbPrepositionPhrases() {
-        return afterVerbPrepositionPhrases;
+    public void setBeforeVerbPrepositionPhrase(RegexPatternData beforeVerbPrepositionPhrase) {
+        this.beforeVerbPrepositionPhrase = beforeVerbPrepositionPhrase;
+    }
+
+    public RegexPatternData getAfterVerbPrepositionPhrase() {
+        return afterVerbPrepositionPhrase;
+    }
+
+    public void setAfterVerbPrepositionPhrase(RegexPatternData afterVerbPrepositionPhrase) {
+        this.afterVerbPrepositionPhrase = afterVerbPrepositionPhrase;
     }
 
     public boolean containsBeforeVerbPrepositionPhrase() {

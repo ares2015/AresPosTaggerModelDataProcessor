@@ -29,10 +29,10 @@ public class PrepositionPhraseAnalyserImpl implements PrepositionPhraseAnalyser 
             for (RegexPatternData regexPatternData : regexPatternDataList) {
                 if (regexPatternData.getEndIndex() <= verbIndex && regexPatternData.getPattern().contains(EncodedTags.PREPOSITION)) {
                     semanticPreprocessingData.setContainsBeforeVerbPrepositionPhrase(true);
-                    semanticPreprocessingData.getBeforeVerbPrepositionPhrases().add(regexPatternDataList.get(index));
+                    semanticPreprocessingData.setBeforeVerbPrepositionPhrase(regexPatternDataList.get(index));
                 } else if (regexPatternData.getEndIndex() >= verbIndex && regexPatternData.getPattern().contains(EncodedTags.PREPOSITION)) {
                     semanticPreprocessingData.setContainsAfterVerbPrepositionPhrase(true);
-                    semanticPreprocessingData.getAfterVerbPrepositionPhrases().add(regexPatternDataList.get(index));
+                    semanticPreprocessingData.setAfterVerbPrepositionPhrase(regexPatternDataList.get(index));
                 }
                 index++;
             }
