@@ -28,7 +28,7 @@ public final class RegexExpressions {
 
     public static final String MODAL_VERB_NOT_PHRASE = "[A]*[M][O][A]*[V][A]*";
 
-
+    public static final String AND_OR_PHRASE = "[AJN]*[JNV]<[AJN]*[JNV]";
 
 //    public static final String AFTER_VERB_NOUN_PHRASE = "[#JD@AYN]*[$NJ]";
 
