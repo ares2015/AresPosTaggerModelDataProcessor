@@ -10,16 +10,45 @@ import java.util.List;
  */
 public final class SemanticPreprocessingData {
 
-    public String constantTag;
+    public int verbIndex;
 
-    public int constantTagIndex;
+    public List<RegexPatternData> beforeVerbPrepositionPhrases = new ArrayList<>();
 
-    public RegexPatternData beforeVerbNounPhrase;
-
-    public RegexPatternData beforeVerbPrepositionPhrase;
-
-    public boolean containsBeforeVerbNounPhrase;
+    public List<RegexPatternData> afterVerbPrepositionPhrases = new ArrayList<>();
 
     public boolean containsBeforeVerbPrepositionPhrase;
 
+    public boolean containsAfterVerbPrepositionPhrase;
+
+    public int getVerbIndex() {
+        return verbIndex;
+    }
+
+    public void setVerbIndex(int verbIndex) {
+        this.verbIndex = verbIndex;
+    }
+
+    public List<RegexPatternData> getBeforeVerbPrepositionPhrases() {
+        return beforeVerbPrepositionPhrases;
+    }
+
+    public List<RegexPatternData> getAfterVerbPrepositionPhrases() {
+        return afterVerbPrepositionPhrases;
+    }
+
+    public boolean containsBeforeVerbPrepositionPhrase() {
+        return containsBeforeVerbPrepositionPhrase;
+    }
+
+    public void setContainsBeforeVerbPrepositionPhrase(boolean containsBeforeVerbPrepositionPhrase) {
+        this.containsBeforeVerbPrepositionPhrase = containsBeforeVerbPrepositionPhrase;
+    }
+
+    public boolean containsAfterVerbPrepositionPhrase() {
+        return containsAfterVerbPrepositionPhrase;
+    }
+
+    public void setContainsAfterVerbPrepositionPhrase(boolean containsAfterVerbPrepositionPhrase) {
+        this.containsAfterVerbPrepositionPhrase = containsAfterVerbPrepositionPhrase;
+    }
 }

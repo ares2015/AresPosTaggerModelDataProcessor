@@ -5,6 +5,8 @@ import com.trainingdataprocessor.data.semantics.SemanticPreprocessingData;
 import com.trainingdataprocessor.regex.RegexExpressions;
 import com.trainingdataprocessor.regex.RegexPatternSearcher;
 import com.trainingdataprocessor.semantics.SemanticRelationConstantType;
+import com.trainingdataprocessor.semantics.preprocessing.phrases.PrepositionPhraseAnalyser;
+import com.trainingdataprocessor.tags.EncodedTags;
 
 import java.util.List;
 
@@ -13,15 +15,18 @@ import java.util.List;
  */
 public class SemanticPreprocessorImpl implements SemanticPreprocessor {
 
-    private RegexPatternSearcher regexPatternSearcher;
+    private PrepositionPhraseAnalyser prepositionPhraseAnalyser;
 
-    public SemanticPreprocessorImpl(RegexPatternSearcher regexPatternSearcher) {
-        this.regexPatternSearcher = regexPatternSearcher;
-    }
 
-    public SemanticPreprocessingData preprocess(String foundPattern, String constantTag, List<String> subSentence, List<String> encodedTags,
+    public SemanticPreprocessingData preprocess(String sentencePattern, List<String> subSentence, List<String> encodedTags,
                                                 SemanticRelationConstantType constantType) {
+
         SemanticPreprocessingData semanticPreprocessingData = new SemanticPreprocessingData();
+        semanticPreprocessingData.setVerbIndex(getVerbIndex(encodedTags));
+
+        prepositionPhraseAnalyser.analyse(sentencePattern, semanticPreprocessingData);
+
+
 //        List<RegexPatternData> regexPatternDataList;
 //        SemanticPreprocessingData semanticPreprocessingData = new SemanticPreprocessingData();
 //
@@ -43,5 +48,16 @@ public class SemanticPreprocessorImpl implements SemanticPreprocessor {
 
         return semanticPreprocessingData;
     }
+
+    private int getVerbIndex(List<String> encodedTags) {
+        for (int i = 0; i <= encodedTags.size() - 1; i++) {
+            if (EncodedTags.VERB.equals(encodedTags.get(i)) || EncodedTags.IS_ARE.equals(encodedTags.get(i))
+                    || EncodedTags.VERB_ED.equals(encodedTags.get(i))) {
+                return i;
+            }
+        }
+        throw new IllegalStateException("Sentence does not contain verb !");
+    }
+
 
 }
