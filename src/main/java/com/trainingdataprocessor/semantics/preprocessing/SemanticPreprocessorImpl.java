@@ -26,13 +26,15 @@ public class SemanticPreprocessorImpl implements SemanticPreprocessor {
     public SemanticPreprocessingData preprocess(String sentencePattern, List<String> subSentence, List<String> encodedTags) {
 
         SemanticPreprocessingData semanticPreprocessingData = new SemanticPreprocessingData();
-        semanticPreprocessingData.setVerbIndex(getVerbIndex(encodedTags));
+        int verbIndex = getVerbIndex(encodedTags);
+        semanticPreprocessingData.setVerbIndex(verbIndex);
+        semanticPreprocessingData.setAfterVerbFirstPrepositionIndex(getAfterVerbPrepositionIndex(encodedTags, verbIndex));
         semanticPreprocessingData.setTokens(subSentence);
         semanticPreprocessingData.setEncodedTags(encodedTags);
 
-        prepositionPhrasePreprocessor.analyse(sentencePattern, semanticPreprocessingData);
-        nounPhrasePreprocessor.analyse(sentencePattern, semanticPreprocessingData);
-        verbPhrasePreprocessor.analyse(sentencePattern, semanticPreprocessingData);
+        prepositionPhrasePreprocessor.preprocess(sentencePattern, semanticPreprocessingData);
+        nounPhrasePreprocessor.preprocess(sentencePattern, semanticPreprocessingData);
+        verbPhrasePreprocessor.preprocess(sentencePattern, semanticPreprocessingData);
         return semanticPreprocessingData;
     }
 
@@ -44,6 +46,15 @@ public class SemanticPreprocessorImpl implements SemanticPreprocessor {
             }
         }
         throw new IllegalStateException("Sentence does not contain verb !");
+    }
+
+    private int getAfterVerbPrepositionIndex(List<String> encodedTags, int verbIndex){
+        for (int i = 0; i <= encodedTags.size() - 1; i++) {
+            if (EncodedTags.PREPOSITION.equals(encodedTags.get(i)) && i > verbIndex) {
+                return i;
+            }
+        }
+        return -1;
     }
 
 }

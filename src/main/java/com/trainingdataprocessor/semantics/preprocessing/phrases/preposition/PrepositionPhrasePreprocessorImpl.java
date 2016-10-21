@@ -20,8 +20,7 @@ public class PrepositionPhrasePreprocessorImpl implements PhrasePreprocessor {
         this.regexPatternSearcher = regexPatternSearcher;
     }
 
-    @Override
-    public void analyse(String sentencePattern, SemanticPreprocessingData semanticPreprocessingData) {
+    public void preprocess(String sentencePattern, SemanticPreprocessingData semanticPreprocessingData) {
         List<RegexPatternData> regexPatternDataList = regexPatternSearcher.search(sentencePattern, RegexExpressions.PREPOSITION_PHRASE);
         int verbIndex = semanticPreprocessingData.getVerbIndex();
         if (regexPatternDataList.size() > 0) {

@@ -3,7 +3,6 @@ package com.trainingdataprocessor.data.semantics;
 import com.trainingdataprocessor.data.RegexPatternData;
 import com.trainingdataprocessor.semantics.preprocessing.phrases.verb.VerbPhraseTypes;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -16,6 +15,8 @@ public final class SemanticPreprocessingData {
     private List<String> encodedTags;
 
     private int verbIndex;
+
+    private int afterVerbFirstPrepositionIndex;
 
     private RegexPatternData beforeVerbPrepositionPhrase;
 
@@ -59,6 +60,14 @@ public final class SemanticPreprocessingData {
 
     public void setVerbIndex(int verbIndex) {
         this.verbIndex = verbIndex;
+    }
+
+    public int getAfterVerbFirstPrepositionIndex() {
+        return afterVerbFirstPrepositionIndex;
+    }
+
+    public void setAfterVerbFirstPrepositionIndex(int afterVerbFirstPrepositionIndex) {
+        this.afterVerbFirstPrepositionIndex = afterVerbFirstPrepositionIndex;
     }
 
     public RegexPatternData getBeforeVerbPrepositionPhrase() {

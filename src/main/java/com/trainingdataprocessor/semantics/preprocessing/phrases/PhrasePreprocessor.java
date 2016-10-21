@@ -7,5 +7,5 @@ import com.trainingdataprocessor.data.semantics.SemanticPreprocessingData;
  */
 public interface PhrasePreprocessor {
 
-    void analyse(String sentencePattern, SemanticPreprocessingData semanticPreprocessingData);
+    void preprocess(String sentencePattern, SemanticPreprocessingData semanticPreprocessingData);
 }

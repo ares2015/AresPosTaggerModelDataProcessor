@@ -33,7 +33,7 @@ public class NounPhrasePreprocessorTest {
         SemanticPreprocessingData semanticPreprocessingData = new SemanticPreprocessingData();
         semanticPreprocessingData.setVerbIndex(9);
 
-        nounPhrasePreprocessor.analyse(sentencePattern, semanticPreprocessingData);
+        nounPhrasePreprocessor.preprocess(sentencePattern, semanticPreprocessingData);
         assertTrue(semanticPreprocessingData.containsAfterVerbNounPhrase());
         assertEquals("NN", semanticPreprocessingData.getAfterVerbNounPhrase().getPattern());
 

@@ -20,16 +20,16 @@ public class NounPhrasePreprocessorImpl implements PhrasePreprocessor {
     }
 
     @Override
-    public void analyse(String sentencePattern, SemanticPreprocessingData semanticPreprocessingData) {
+    public void preprocess(String sentencePattern, SemanticPreprocessingData semanticPreprocessingData) {
         List<RegexPatternData> regexPatternDataList = regexPatternSearcher.search(sentencePattern, RegexExpressions.NOUN_PHRASE);
         int verbIndex = semanticPreprocessingData.getVerbIndex();
         if (regexPatternDataList.size() > 0) {
-            int index = 0;
             for (RegexPatternData regexPatternData : regexPatternDataList) {
                 if (regexPatternData.getEndIndex() <= verbIndex) {
                     semanticPreprocessingData.setContainsBeforeVerbNounPhrase(true);
                     semanticPreprocessingData.setBeforeVerbNounPhrase(regexPatternData);
-                } else if (regexPatternData.getEndIndex() >= verbIndex) {
+                } else if (regexPatternData.getEndIndex() >= verbIndex &&
+                        regexPatternData.getEndIndex() <= semanticPreprocessingData.getAfterVerbFirstPrepositionIndex()) {
                     semanticPreprocessingData.setContainsAfterVerbNounPhrase(true);
                     semanticPreprocessingData.setAfterVerbNounPhrase(regexPatternData);
                 }

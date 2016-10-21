@@ -21,7 +21,7 @@ public class VerbPhrasePreprocessorImpl implements PhrasePreprocessor {
     }
 
     @Override
-    public void analyse(String sentencePattern, SemanticPreprocessingData semanticPreprocessingData) {
+    public void preprocess(String sentencePattern, SemanticPreprocessingData semanticPreprocessingData) {
         List<RegexPatternData> regexPatternDataList = new ArrayList<>();
         for (String verbPattern : RegexExpressions.verbPhrases) {
             regexPatternDataList = regexPatternSearcher.search(sentencePattern, verbPattern);

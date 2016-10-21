@@ -12,4 +12,6 @@ public class SemanticExtractorImpl implements SemanticExtractor {
     public SemanticExtractionData extract(SemanticPreprocessingData semanticPreprocessingData) {
         return null;
     }
+
+    
 }

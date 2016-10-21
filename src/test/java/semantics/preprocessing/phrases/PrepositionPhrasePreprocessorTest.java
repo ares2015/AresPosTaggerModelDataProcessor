@@ -33,7 +33,7 @@ public class PrepositionPhrasePreprocessorTest {
         SemanticPreprocessingData semanticPreprocessingData = new SemanticPreprocessingData();
         semanticPreprocessingData.setVerbIndex(8);
 
-        prepositionPhrasePreprocessor.analyse(sentencePattern, semanticPreprocessingData);
+        prepositionPhrasePreprocessor.preprocess(sentencePattern, semanticPreprocessingData);
         assertTrue(semanticPreprocessingData.containsBeforeVerbPrepositionPhrase());
         assertTrue(semanticPreprocessingData.containsAfterVerbPrepositionPhrase());
 
