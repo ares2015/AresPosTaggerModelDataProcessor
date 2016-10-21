@@ -11,6 +11,10 @@ import java.util.List;
  */
 public final class SemanticPreprocessingData {
 
+    private List<String> tokens;
+
+    private List<String> encodedTags;
+
     private int verbIndex;
 
     private RegexPatternData beforeVerbPrepositionPhrase;
@@ -21,9 +25,33 @@ public final class SemanticPreprocessingData {
 
     private boolean containsAfterVerbPrepositionPhrase;
 
+    private RegexPatternData beforeVerbNounPhrase;
+
+    private RegexPatternData afterVerbNounPhrase;
+
+    private boolean containsBeforeVerbNounPhrase;
+
+    private boolean containsAfterVerbNounPhrase;
+
     private RegexPatternData verbPhrase;
 
     private VerbPhraseTypes verbPhraseTypes;
+
+    public List<String> getTokens() {
+        return tokens;
+    }
+
+    public void setTokens(List<String> tokens) {
+        this.tokens = tokens;
+    }
+
+    public List<String> getEncodedTags() {
+        return encodedTags;
+    }
+
+    public void setEncodedTags(List<String> encodedTags) {
+        this.encodedTags = encodedTags;
+    }
 
     public int getVerbIndex() {
         return verbIndex;
@@ -63,6 +91,38 @@ public final class SemanticPreprocessingData {
 
     public void setContainsAfterVerbPrepositionPhrase(boolean containsAfterVerbPrepositionPhrase) {
         this.containsAfterVerbPrepositionPhrase = containsAfterVerbPrepositionPhrase;
+    }
+
+    public RegexPatternData getBeforeVerbNounPhrase() {
+        return beforeVerbNounPhrase;
+    }
+
+    public void setBeforeVerbNounPhrase(RegexPatternData beforeVerbNounPhrase) {
+        this.beforeVerbNounPhrase = beforeVerbNounPhrase;
+    }
+
+    public RegexPatternData getAfterVerbNounPhrase() {
+        return afterVerbNounPhrase;
+    }
+
+    public void setAfterVerbNounPhrase(RegexPatternData afterVerbNounPhrase) {
+        this.afterVerbNounPhrase = afterVerbNounPhrase;
+    }
+
+    public boolean containsBeforeVerbNounPhrase() {
+        return containsBeforeVerbNounPhrase;
+    }
+
+    public void setContainsBeforeVerbNounPhrase(boolean containsBeforeVerbNounPhrase) {
+        this.containsBeforeVerbNounPhrase = containsBeforeVerbNounPhrase;
+    }
+
+    public boolean containsAfterVerbNounPhrase() {
+        return containsAfterVerbNounPhrase;
+    }
+
+    public void setContainsAfterVerbNounPhrase(boolean containsAfterVerbNounPhrase) {
+        this.containsAfterVerbNounPhrase = containsAfterVerbNounPhrase;
     }
 
     public RegexPatternData getVerbPhrase() {

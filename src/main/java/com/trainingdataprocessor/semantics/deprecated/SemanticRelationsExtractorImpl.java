@@ -1,8 +1,8 @@
 package com.trainingdataprocessor.semantics.deprecated;
 
-import com.trainingdataprocessor.data.semantics.SemanticRelationData;
+import com.trainingdataprocessor.data.semantics.deprecated.SemanticRelationData;
 import com.trainingdataprocessor.data.RegexPatternData;
-import com.trainingdataprocessor.data.semantics.SemanticalConstantTagAnalysisData;
+import com.trainingdataprocessor.data.semantics.deprecated.SemanticalConstantTagAnalysisData;
 
 import java.util.List;
 

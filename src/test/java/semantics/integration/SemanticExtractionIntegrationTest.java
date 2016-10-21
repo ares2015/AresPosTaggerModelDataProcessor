@@ -1,19 +1,5 @@
 package semantics.integration;
 
-import com.trainingdataprocessor.cache.ConstantWordsCache;
-import com.trainingdataprocessor.data.RegexPatternData;
-import com.trainingdataprocessor.data.semantics.SemanticRelationData;
-import com.trainingdataprocessor.regex.RegexExpressions;
-import com.trainingdataprocessor.regex.RegexPatternSearcher;
-import com.trainingdataprocessor.regex.RegexPatternSearcherImpl;
-import com.trainingdataprocessor.semantics.*;
-import com.trainingdataprocessor.tags.EncodedTags;
-import org.junit.Test;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 import static org.junit.Assert.assertEquals;
 
 /**

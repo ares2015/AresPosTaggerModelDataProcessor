@@ -4,8 +4,8 @@ import com.trainingdataprocessor.data.RegexPatternData;
 import com.trainingdataprocessor.data.semantics.SemanticPreprocessingData;
 import com.trainingdataprocessor.regex.RegexPatternSearcher;
 import com.trainingdataprocessor.regex.RegexPatternSearcherImpl;
-import com.trainingdataprocessor.semantics.preprocessing.phrases.PhraseAnalyser;
-import com.trainingdataprocessor.semantics.preprocessing.phrases.preposition.PrepositionPhraseAnalyserImpl;
+import com.trainingdataprocessor.semantics.preprocessing.phrases.PhrasePreprocessor;
+import com.trainingdataprocessor.semantics.preprocessing.phrases.preposition.PrepositionPhrasePreprocessorImpl;
 import org.junit.Test;
 
 import java.util.List;
@@ -15,11 +15,11 @@ import static org.junit.Assert.assertTrue;
 /**
  * Created by Oliver on 10/21/2016.
  */
-public class PrepositionPhraseAnalyserTest {
+public class PrepositionPhrasePreprocessorTest {
 
     private RegexPatternSearcher regexPatternSearcher = new RegexPatternSearcherImpl();
 
-    private PhraseAnalyser prepositionPhraseAnalyser = new PrepositionPhraseAnalyserImpl(regexPatternSearcher);
+    private PhrasePreprocessor prepositionPhrasePreprocessor = new PrepositionPhrasePreprocessorImpl(regexPatternSearcher);
 
     @Test
     public void test() {
@@ -33,7 +33,7 @@ public class PrepositionPhraseAnalyserTest {
         SemanticPreprocessingData semanticPreprocessingData = new SemanticPreprocessingData();
         semanticPreprocessingData.setVerbIndex(8);
 
-        prepositionPhraseAnalyser.analyse(sentencePattern, semanticPreprocessingData);
+        prepositionPhrasePreprocessor.analyse(sentencePattern, semanticPreprocessingData);
         assertTrue(semanticPreprocessingData.containsBeforeVerbPrepositionPhrase());
         assertTrue(semanticPreprocessingData.containsAfterVerbPrepositionPhrase());
 

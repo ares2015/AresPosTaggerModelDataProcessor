@@ -65,6 +65,19 @@ public class TokenizerImpl implements Tokenizer {
         return newString;
     }
 
+    @Override
+    public String convertSubListToString(List<String> list, int startIndex, int endIndex) {
+        String s = "";
+        for (int i = startIndex; i <= endIndex - 1; i++) {
+            if (i < endIndex) {
+                s += list.get(i) + " ";
+            } else {
+                s += list.get(i);
+            }
+        }
+        return s;
+    }
+
     /**
      * Removes empty String that is located in sentences with index > 0
      * that is created by empty space behind each sentence (space between

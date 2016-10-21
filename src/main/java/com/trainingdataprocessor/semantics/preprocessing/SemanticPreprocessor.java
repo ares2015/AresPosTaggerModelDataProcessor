@@ -10,6 +10,5 @@ import java.util.List;
  */
 public interface SemanticPreprocessor {
 
-    SemanticPreprocessingData preprocess(String sentencePattern, List<String> subSentence, List<String> encodedTags,
-                                         SemanticRelationConstantType constantType);
+    SemanticPreprocessingData preprocess(String sentencePattern, List<String> subSentence, List<String> encodedTags);
 }

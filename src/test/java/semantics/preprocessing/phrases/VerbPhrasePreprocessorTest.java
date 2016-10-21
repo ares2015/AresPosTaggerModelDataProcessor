@@ -4,9 +4,8 @@ import com.trainingdataprocessor.data.RegexPatternData;
 import com.trainingdataprocessor.data.semantics.SemanticPreprocessingData;
 import com.trainingdataprocessor.regex.RegexPatternSearcher;
 import com.trainingdataprocessor.regex.RegexPatternSearcherImpl;
-import com.trainingdataprocessor.semantics.preprocessing.phrases.PhraseAnalyser;
-import com.trainingdataprocessor.semantics.preprocessing.phrases.preposition.PrepositionPhraseAnalyserImpl;
-import com.trainingdataprocessor.semantics.preprocessing.phrases.verb.VerbPhraseAnalyserImpl;
+import com.trainingdataprocessor.semantics.preprocessing.phrases.PhrasePreprocessor;
+import com.trainingdataprocessor.semantics.preprocessing.phrases.verb.VerbPhrasePreprocessorImpl;
 import com.trainingdataprocessor.semantics.preprocessing.phrases.verb.VerbPhraseTypes;
 import org.junit.Test;
 
@@ -18,11 +17,11 @@ import static org.junit.Assert.assertTrue;
 /**
  * Created by Oliver on 10/21/2016.
  */
-public class VerbPhraseAnalyserTest {
+public class VerbPhrasePreprocessorTest {
 
     private RegexPatternSearcher regexPatternSearcher = new RegexPatternSearcherImpl();
 
-    private PhraseAnalyser verbPhraseAnalyser = new VerbPhraseAnalyserImpl(regexPatternSearcher);
+    private PhrasePreprocessor verbPhrasePreprocessor = new VerbPhrasePreprocessorImpl(regexPatternSearcher);
 
     @Test
     public void testVerbPhrase() {
@@ -36,7 +35,7 @@ public class VerbPhraseAnalyserTest {
         SemanticPreprocessingData semanticPreprocessingData = new SemanticPreprocessingData();
         semanticPreprocessingData.setVerbIndex(9);
 
-        verbPhraseAnalyser.analyse(sentencePattern, semanticPreprocessingData);
+        verbPhrasePreprocessor.analyse(sentencePattern, semanticPreprocessingData);
         assertEquals("AV", semanticPreprocessingData.getVerbPhrase().getPattern());
         assertEquals(VerbPhraseTypes.VERB_PHRASE, VerbPhraseTypes.VERB_PHRASE);
 
@@ -53,7 +52,7 @@ public class VerbPhraseAnalyserTest {
         sentencePattern = "N<NMVN";
         SemanticPreprocessingData semanticPreprocessingData = new SemanticPreprocessingData();
 
-        verbPhraseAnalyser.analyse(sentencePattern, semanticPreprocessingData);
+        verbPhrasePreprocessor.analyse(sentencePattern, semanticPreprocessingData);
         assertEquals("MV", semanticPreprocessingData.getVerbPhrase().getPattern());
         assertEquals(VerbPhraseTypes.MODAL_VERB_PHRASE, VerbPhraseTypes.MODAL_VERB_PHRASE);
 
@@ -70,7 +69,7 @@ public class VerbPhraseAnalyserTest {
         sentencePattern = "N<NMOVN";
         SemanticPreprocessingData semanticPreprocessingData = new SemanticPreprocessingData();
 
-        verbPhraseAnalyser.analyse(sentencePattern, semanticPreprocessingData);
+        verbPhrasePreprocessor.analyse(sentencePattern, semanticPreprocessingData);
         assertEquals("MOV", semanticPreprocessingData.getVerbPhrase().getPattern());
         assertEquals(VerbPhraseTypes.MODAL_VERB_NOT_PHRASE, VerbPhraseTypes.MODAL_VERB_NOT_PHRASE);
 

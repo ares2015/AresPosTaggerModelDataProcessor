@@ -1,6 +1,6 @@
 package semantics;
 
-import com.trainingdataprocessor.data.semantics.SemanticalConstantTagAnalysisData;
+import com.trainingdataprocessor.data.semantics.deprecated.SemanticalConstantTagAnalysisData;
 import com.trainingdataprocessor.semantics.deprecated.SemanticConstantTagAnalyser;
 import com.trainingdataprocessor.semantics.deprecated.SemanticConstantTagAnalyserImpl;
 import com.trainingdataprocessor.semantics.deprecated.SemanticRelationConstantType;

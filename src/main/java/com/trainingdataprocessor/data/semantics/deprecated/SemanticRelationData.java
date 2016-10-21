@@ -1,4 +1,4 @@
-package com.trainingdataprocessor.data.semantics;
+package com.trainingdataprocessor.data.semantics.deprecated;
 
 /**
  * Created by Oliver on 8/31/2016.

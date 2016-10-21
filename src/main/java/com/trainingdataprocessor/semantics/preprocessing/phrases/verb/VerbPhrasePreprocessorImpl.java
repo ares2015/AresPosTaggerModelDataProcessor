@@ -4,8 +4,7 @@ import com.trainingdataprocessor.data.RegexPatternData;
 import com.trainingdataprocessor.data.semantics.SemanticPreprocessingData;
 import com.trainingdataprocessor.regex.RegexExpressions;
 import com.trainingdataprocessor.regex.RegexPatternSearcher;
-import com.trainingdataprocessor.regex.RegexUtils;
-import com.trainingdataprocessor.semantics.preprocessing.phrases.PhraseAnalyser;
+import com.trainingdataprocessor.semantics.preprocessing.phrases.PhrasePreprocessor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,11 +12,11 @@ import java.util.List;
 /**
  * Created by Oliver on 10/21/2016.
  */
-public class VerbPhraseAnalyserImpl implements PhraseAnalyser {
+public class VerbPhrasePreprocessorImpl implements PhrasePreprocessor {
 
     private RegexPatternSearcher regexPatternSearcher;
 
-    public VerbPhraseAnalyserImpl(RegexPatternSearcher regexPatternSearcher) {
+    public VerbPhrasePreprocessorImpl(RegexPatternSearcher regexPatternSearcher) {
         this.regexPatternSearcher = regexPatternSearcher;
     }
 

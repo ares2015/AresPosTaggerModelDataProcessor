@@ -2,7 +2,7 @@ package semantics.extraction.verb;
 
 import com.trainingdataprocessor.cache.ConstantWordsCache;
 import com.trainingdataprocessor.data.RegexPatternData;
-import com.trainingdataprocessor.data.semantics.SemanticRelationData;
+import com.trainingdataprocessor.data.semantics.deprecated.SemanticRelationData;
 import com.trainingdataprocessor.semantics.deprecated.*;
 import com.trainingdataprocessor.tags.EncodedTags;
 import org.junit.Test;

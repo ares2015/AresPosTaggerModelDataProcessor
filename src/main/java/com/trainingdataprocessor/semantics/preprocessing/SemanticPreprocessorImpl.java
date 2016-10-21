@@ -1,8 +1,7 @@
 package com.trainingdataprocessor.semantics.preprocessing;
 
 import com.trainingdataprocessor.data.semantics.SemanticPreprocessingData;
-import com.trainingdataprocessor.semantics.deprecated.SemanticRelationConstantType;
-import com.trainingdataprocessor.semantics.preprocessing.phrases.PhraseAnalyser;
+import com.trainingdataprocessor.semantics.preprocessing.phrases.PhrasePreprocessor;
 import com.trainingdataprocessor.tags.EncodedTags;
 
 import java.util.List;
@@ -12,21 +11,28 @@ import java.util.List;
  */
 public class SemanticPreprocessorImpl implements SemanticPreprocessor {
 
-    private PhraseAnalyser prepositionPhraseAnalyser;
+    private PhrasePreprocessor prepositionPhrasePreprocessor;
 
+    private PhrasePreprocessor nounPhrasePreprocessor;
 
-    public SemanticPreprocessingData preprocess(String sentencePattern, List<String> subSentence, List<String> encodedTags,
-                                                SemanticRelationConstantType constantType) {
+    private PhrasePreprocessor verbPhrasePreprocessor;
+
+    public SemanticPreprocessorImpl(PhrasePreprocessor prepositionPhrasePreprocessor, PhrasePreprocessor nounPhrasePreprocessor, PhrasePreprocessor verbPhrasePreprocessor) {
+        this.prepositionPhrasePreprocessor = prepositionPhrasePreprocessor;
+        this.nounPhrasePreprocessor = nounPhrasePreprocessor;
+        this.verbPhrasePreprocessor = verbPhrasePreprocessor;
+    }
+
+    public SemanticPreprocessingData preprocess(String sentencePattern, List<String> subSentence, List<String> encodedTags) {
 
         SemanticPreprocessingData semanticPreprocessingData = new SemanticPreprocessingData();
         semanticPreprocessingData.setVerbIndex(getVerbIndex(encodedTags));
+        semanticPreprocessingData.setTokens(subSentence);
+        semanticPreprocessingData.setEncodedTags(encodedTags);
 
-        prepositionPhraseAnalyser.analyse(sentencePattern, semanticPreprocessingData);
-
-
-
-
-
+        prepositionPhrasePreprocessor.analyse(sentencePattern, semanticPreprocessingData);
+        nounPhrasePreprocessor.analyse(sentencePattern, semanticPreprocessingData);
+        verbPhrasePreprocessor.analyse(sentencePattern, semanticPreprocessingData);
         return semanticPreprocessingData;
     }
 
@@ -39,6 +45,5 @@ public class SemanticPreprocessorImpl implements SemanticPreprocessor {
         }
         throw new IllegalStateException("Sentence does not contain verb !");
     }
-
 
 }

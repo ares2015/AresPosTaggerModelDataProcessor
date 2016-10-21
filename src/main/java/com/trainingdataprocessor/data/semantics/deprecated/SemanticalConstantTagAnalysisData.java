@@ -1,4 +1,4 @@
-package com.trainingdataprocessor.data.semantics;
+package com.trainingdataprocessor.data.semantics.deprecated;
 
 import java.util.ArrayList;
 import java.util.List;

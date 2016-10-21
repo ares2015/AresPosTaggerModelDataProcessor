@@ -15,4 +15,6 @@ public interface Tokenizer {
 
     String convertListToString(List<String> list);
 
+    String convertSubListToString(List<String> list, int startIndex, int endIndex);
+
 }
