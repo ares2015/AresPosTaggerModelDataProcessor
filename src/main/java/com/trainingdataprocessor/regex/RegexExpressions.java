@@ -14,10 +14,19 @@ public final class RegexExpressions {
 
     public static final String NOUN_PHRASE = "[#$@NJD]*N";
 
-    public static final String VERB_PHRASE = "[A]*[IV$][A]*";
+    public static final String IS_PHRASE = "[A]*[I][A]*";
+
+    public static final String IS_NOT_PHRASE = "[A]*[I][O][A]*";
+
+    public static final String VERB_PHRASE = "[A]*[V$][A]*";
+
+    public static final String VERB_PHRASE_DONT = "[L][A]*[V$][A]*";
+
+    public static final String VERB_PHRASE_DO_NOT = "[L][O][A]*[V$][A]*";
 
     public static final String MODAL_VERB_PHRASE = "[A]*[M][A]*[V][A]*";
 
+    public static final String MODAL_VERB_NOT_PHRASE = "[A]*[M][O][A]*[V][A]*";
 
 
 

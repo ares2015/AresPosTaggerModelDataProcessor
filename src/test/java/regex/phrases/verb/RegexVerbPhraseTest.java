@@ -34,13 +34,6 @@ public class RegexVerbPhraseTest {
         System.out.println(sentence);
         assertTrue(RegexUtils.containsRegex(regexPatternIndexFinderList, "AV", regexType));
 
-        sentence = "dog is best friend of man";
-        encodedPath = "NIJNPN";
-        regexPatternIndexFinderList = regexPatternSearcher.search(encodedPath, VERB_PHRASE);
-        assertTrue(regexPatternIndexFinderList.size() > 0);
-        System.out.println(sentence);
-        assertTrue(RegexUtils.containsRegex(regexPatternIndexFinderList, "I", regexType));
-
     }
 
 
