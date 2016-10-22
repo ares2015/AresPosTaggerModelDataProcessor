@@ -6,11 +6,13 @@ import com.trainingdataprocessor.regex.RegexPatternSearcher;
 import com.trainingdataprocessor.regex.RegexPatternSearcherImpl;
 import com.trainingdataprocessor.semantics.preprocessing.phrases.PhrasePreprocessor;
 import com.trainingdataprocessor.semantics.preprocessing.phrases.noun.NounPhrasePreprocessorImpl;
+import com.trainingdataprocessor.semantics.preprocessing.phrases.preposition.PrepositionPhrasePreprocessorImpl;
 import org.junit.Test;
 
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -21,6 +23,8 @@ public class NounPhrasePreprocessorTest {
     private RegexPatternSearcher regexPatternSearcher = new RegexPatternSearcherImpl();
 
     private PhrasePreprocessor nounPhrasePreprocessor = new NounPhrasePreprocessorImpl(regexPatternSearcher);
+
+    private PhrasePreprocessor prepositionPhrasePreprocessor = new PrepositionPhrasePreprocessorImpl(regexPatternSearcher);
 
     @Test
     public void test(){
@@ -34,7 +38,10 @@ public class NounPhrasePreprocessorTest {
         semanticPreprocessingData.setVerbIndex(9);
         semanticPreprocessingData.setContainsAfterVerbPreposition(false);
 
+        prepositionPhrasePreprocessor.preprocess(sentencePattern, semanticPreprocessingData);
         nounPhrasePreprocessor.preprocess(sentencePattern, semanticPreprocessingData);
+        assertTrue(semanticPreprocessingData.containsBeforeVerbPrepositionPhrase());
+        assertFalse(semanticPreprocessingData.containsBeforeVerbNounPhrase());
         assertTrue(semanticPreprocessingData.containsAfterVerbNounPhrase());
         assertEquals("NN", semanticPreprocessingData.getAfterVerbNounPhrase().getPattern());
 
