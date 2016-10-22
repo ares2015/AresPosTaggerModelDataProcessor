@@ -41,7 +41,7 @@ public class NounPhraseExtractorTest {
     @Test
     public void testBeforeAndAfterPrepositionPhrases(){
         SemanticPreprocessingData semanticPreprocessingData = new SemanticPreprocessingData();
-        String sentencePattern = "NPNPNVANNPNN";
+        String sentencePattern = "NPNPNVANNPNNPN";
 
         List<String> encodedTags = new ArrayList<String>();
         encodedTags.add(EncodedTags.NOUN);
@@ -56,8 +56,10 @@ public class NounPhraseExtractorTest {
         encodedTags.add(EncodedTags.PREPOSITION);
         encodedTags.add(EncodedTags.NOUN);
         encodedTags.add(EncodedTags.NOUN);
+        encodedTags.add(EncodedTags.PREPOSITION);
+        encodedTags.add(EncodedTags.NOUN);
 
-        String sentence = "Fans of Russia in Paris attack furiosly English supporters at European Championships";
+        String sentence = "Fans of Russia in Paris attack furiosly English supporters at European Championships in France";
         List<String> tokens = Arrays.asList(sentence.split("\\ "));
 
         semanticPreprocessingData.setTokens(tokens);
@@ -75,7 +77,7 @@ public class NounPhraseExtractorTest {
 
 
         assertEquals("Fans of Russia in Paris ", semanticExtractionData.getExtendedSubject());
-        assertEquals("English supporters at European Championships ", semanticExtractionData.getExtendedNounPredicate());
+        assertEquals("English supporters at European Championships in France ", semanticExtractionData.getExtendedNounPredicate());
         assertEquals("supporters", semanticExtractionData.getAtomicNounPredicate());
 
     }

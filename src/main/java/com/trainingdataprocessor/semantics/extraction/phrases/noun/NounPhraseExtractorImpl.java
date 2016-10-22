@@ -21,14 +21,14 @@ public class NounPhraseExtractorImpl implements PhraseExtractor {
         if ((!semanticPreprocessingData.containsBeforeVerbPrepositionPhrase() && semanticPreprocessingData.containsBeforeVerbNounPhrase())) {
             int startIndex = semanticPreprocessingData.getBeforeVerbNounPhrase().getStartIndex();
             int endIndex = semanticPreprocessingData.getBeforeVerbNounPhrase().getEndIndex();
-            String extendedSubject = tokenizer.convertSubListToString(semanticPreprocessingData.getTokens(), startIndex, endIndex - 1);
+            String extendedSubject = tokenizer.convertSubListToString(semanticPreprocessingData.getTokens(), startIndex, endIndex);
             semanticExtractionData.setExtendedSubject(extendedSubject);
             semanticExtractionData.setAtomicSubject(semanticPreprocessingData.getTokens().get(endIndex - 1));
         }
         if (semanticPreprocessingData.containsAfterVerbNounPhrase() && semanticExtractionData.getExtendedNounPredicate() == null) {
             int startIndex = semanticPreprocessingData.getAfterVerbNounPhrase().getStartIndex();
             int endIndex = semanticPreprocessingData.getAfterVerbNounPhrase().getEndIndex();
-            String extendedSubject = tokenizer.convertSubListToString(semanticPreprocessingData.getTokens(), startIndex, endIndex - 1);
+            String extendedSubject = tokenizer.convertSubListToString(semanticPreprocessingData.getTokens(), startIndex, endIndex);
             semanticExtractionData.setExtendedNounPredicate(extendedSubject);
             semanticExtractionData.setAtomicNounPredicate(semanticPreprocessingData.getTokens().get(endIndex - 1));
         }else if(semanticPreprocessingData.containsAfterVerbNounPhrase() && semanticExtractionData.getExtendedNounPredicate() != null){
