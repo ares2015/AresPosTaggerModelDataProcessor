@@ -1,4 +1,4 @@
-package com.trainingdataprocessor.semantics.preprocessing.phrases.verb;
+package com.trainingdataprocessor.semantics.preprocessing.phrases;
 
 import com.trainingdataprocessor.data.RegexPatternData;
 import com.trainingdataprocessor.data.semantics.SemanticPreprocessingData;

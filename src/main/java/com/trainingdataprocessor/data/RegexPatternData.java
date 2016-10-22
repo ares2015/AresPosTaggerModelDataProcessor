@@ -32,4 +32,15 @@ public class RegexPatternData {
         return endIndex;
     }
 
+    public void setPattern(String pattern) {
+        this.pattern = pattern;
+    }
+
+    public void setStartIndex(int startIndex) {
+        this.startIndex = startIndex;
+    }
+
+    public void setEndIndex(int endIndex) {
+        this.endIndex = endIndex;
+    }
 }

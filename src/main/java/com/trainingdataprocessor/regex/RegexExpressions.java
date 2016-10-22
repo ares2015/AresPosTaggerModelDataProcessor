@@ -1,6 +1,6 @@
 package com.trainingdataprocessor.regex;
 
-import com.trainingdataprocessor.semantics.preprocessing.phrases.verb.VerbPhraseTypes;
+import com.trainingdataprocessor.semantics.preprocessing.phrases.VerbPhraseTypes;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -14,17 +14,17 @@ public final class RegexExpressions {
 
     public static final String PREPOSITION_PHRASE = "[PT]?[#NJD$@]*[PT]?[#NJD$@]*[PT]?[#NJD$@]*";
 
-    public static final String NOUN_PHRASE = "[#$@NJD]*N";
+    public static final String NOUN_PHRASE = "[#$@NJD]*[JN]";
 
     public static final String IS_PHRASE = "[A]*[I][A]*";
 
     public static final String IS_NOT_PHRASE = "[A]*[I][O][A]*";
 
-    public static final String VERB_PHRASE = "[A]*[V$][A]*";
+    public static final String VERB_PHRASE = "[A]*[V][A]*";
 
-    public static final String VERB_PHRASE_DONT = "[L][A]*[V$][A]*";
+    public static final String VERB_PHRASE_DONT = "[L][A]*[V][A]*";
 
-    public static final String VERB_PHRASE_DO_NOT = "[L][O][A]*[V$][A]*";
+    public static final String VERB_PHRASE_DO_NOT = "[L][O][A]*[V][A]*";
 
     public static final String MODAL_VERB_PHRASE = "[A]*[M][A]*[V][A]*";
 
@@ -37,13 +37,14 @@ public final class RegexExpressions {
     public static Map<String, VerbPhraseTypes> verbRegexAndTypeMap = new HashMap<String, VerbPhraseTypes>();
 
     static {
-        verbPhrases.add(IS_NOT_PHRASE);
         verbPhrases.add(IS_PHRASE);
-        verbPhrases.add(VERB_PHRASE_DO_NOT);
-        verbPhrases.add(VERB_PHRASE_DONT);
+        verbPhrases.add(IS_NOT_PHRASE);
         verbPhrases.add(VERB_PHRASE);
-        verbPhrases.add(MODAL_VERB_NOT_PHRASE);
+        verbPhrases.add(VERB_PHRASE_DONT);
+        verbPhrases.add(VERB_PHRASE_DO_NOT);
         verbPhrases.add(MODAL_VERB_PHRASE);
+        verbPhrases.add(MODAL_VERB_NOT_PHRASE);
+
 
         verbRegexAndTypeMap.put(IS_NOT_PHRASE, VerbPhraseTypes.IS_NOT_PHRASE);
         verbRegexAndTypeMap.put(IS_PHRASE, VerbPhraseTypes.IS_PHRASE);

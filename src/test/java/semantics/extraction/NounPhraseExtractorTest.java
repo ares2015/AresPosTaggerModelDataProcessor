@@ -1,4 +1,4 @@
-package semantics.extraction.phrases;
+package semantics.extraction;
 
 import com.trainingdataprocessor.data.semantics.SemanticExtractionData;
 import com.trainingdataprocessor.data.semantics.SemanticPreprocessingData;

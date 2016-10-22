@@ -1,4 +1,4 @@
-package com.trainingdataprocessor.semantics.preprocessing.phrases.preposition;
+package com.trainingdataprocessor.semantics.preprocessing.phrases;
 
 import com.trainingdataprocessor.data.RegexPatternData;
 import com.trainingdataprocessor.data.semantics.SemanticPreprocessingData;
@@ -24,16 +24,14 @@ public class PrepositionPhrasePreprocessorImpl implements PhrasePreprocessor {
         List<RegexPatternData> regexPatternDataList = regexPatternSearcher.search(sentencePattern, RegexExpressions.PREPOSITION_PHRASE);
         int verbIndex = semanticPreprocessingData.getVerbIndex();
         if (regexPatternDataList.size() > 0) {
-            int index = 0;
             for (RegexPatternData regexPatternData : regexPatternDataList) {
                 if (regexPatternData.getEndIndex() <= verbIndex && regexPatternData.getPattern().contains(EncodedTags.PREPOSITION)) {
                     semanticPreprocessingData.setContainsBeforeVerbPrepositionPhrase(true);
-                    semanticPreprocessingData.setBeforeVerbPrepositionPhrase(regexPatternDataList.get(index));
+                    semanticPreprocessingData.setBeforeVerbPrepositionPhrase(regexPatternData);
                 } else if (regexPatternData.getEndIndex() >= verbIndex && regexPatternData.getPattern().contains(EncodedTags.PREPOSITION)) {
                     semanticPreprocessingData.setContainsAfterVerbPrepositionPhrase(true);
-                    semanticPreprocessingData.setAfterVerbPrepositionPhrase(regexPatternDataList.get(index));
+                    semanticPreprocessingData.setAfterVerbPrepositionPhrase(regexPatternData);
                 }
-                index++;
             }
         }
     }

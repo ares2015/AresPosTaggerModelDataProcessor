@@ -6,9 +6,9 @@ import com.trainingdataprocessor.regex.RegexPatternSearcherImpl;
 import com.trainingdataprocessor.semantics.preprocessing.SemanticPreprocessor;
 import com.trainingdataprocessor.semantics.preprocessing.SemanticPreprocessorImpl;
 import com.trainingdataprocessor.semantics.preprocessing.phrases.PhrasePreprocessor;
-import com.trainingdataprocessor.semantics.preprocessing.phrases.noun.NounPhrasePreprocessorImpl;
-import com.trainingdataprocessor.semantics.preprocessing.phrases.preposition.PrepositionPhrasePreprocessorImpl;
-import com.trainingdataprocessor.semantics.preprocessing.phrases.verb.VerbPhrasePreprocessorImpl;
+import com.trainingdataprocessor.semantics.preprocessing.phrases.NounPhrasePreprocessorImpl;
+import com.trainingdataprocessor.semantics.preprocessing.phrases.PrepositionPhrasePreprocessorImpl;
+import com.trainingdataprocessor.semantics.preprocessing.phrases.VerbPhrasePreprocessorImpl;
 import com.trainingdataprocessor.tags.EncodedTags;
 import org.junit.Test;
 

@@ -5,8 +5,8 @@ import com.trainingdataprocessor.data.semantics.SemanticPreprocessingData;
 import com.trainingdataprocessor.regex.RegexPatternSearcher;
 import com.trainingdataprocessor.regex.RegexPatternSearcherImpl;
 import com.trainingdataprocessor.semantics.preprocessing.phrases.PhrasePreprocessor;
-import com.trainingdataprocessor.semantics.preprocessing.phrases.noun.NounPhrasePreprocessorImpl;
-import com.trainingdataprocessor.semantics.preprocessing.phrases.preposition.PrepositionPhrasePreprocessorImpl;
+import com.trainingdataprocessor.semantics.preprocessing.phrases.NounPhrasePreprocessorImpl;
+import com.trainingdataprocessor.semantics.preprocessing.phrases.PrepositionPhrasePreprocessorImpl;
 import org.junit.Test;
 
 import java.util.List;

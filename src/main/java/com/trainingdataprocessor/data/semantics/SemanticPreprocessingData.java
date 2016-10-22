@@ -1,7 +1,7 @@
 package com.trainingdataprocessor.data.semantics;
 
 import com.trainingdataprocessor.data.RegexPatternData;
-import com.trainingdataprocessor.semantics.preprocessing.phrases.verb.VerbPhraseTypes;
+import com.trainingdataprocessor.semantics.preprocessing.phrases.VerbPhraseTypes;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package com.trainingdataprocessor.semantics.preprocessing.phrases.verb;
+package com.trainingdataprocessor.semantics.preprocessing.phrases;
 
 /**
  * Created by Oliver on 10/21/2016.

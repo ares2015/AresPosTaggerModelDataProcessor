@@ -17,7 +17,8 @@ public class SemanticPreprocessorImpl implements SemanticPreprocessor {
 
     private PhrasePreprocessor verbPhrasePreprocessor;
 
-    public SemanticPreprocessorImpl(PhrasePreprocessor prepositionPhrasePreprocessor, PhrasePreprocessor nounPhrasePreprocessor, PhrasePreprocessor verbPhrasePreprocessor) {
+    public SemanticPreprocessorImpl(PhrasePreprocessor prepositionPhrasePreprocessor, PhrasePreprocessor nounPhrasePreprocessor,
+                                    PhrasePreprocessor verbPhrasePreprocessor) {
         this.prepositionPhrasePreprocessor = prepositionPhrasePreprocessor;
         this.nounPhrasePreprocessor = nounPhrasePreprocessor;
         this.verbPhrasePreprocessor = verbPhrasePreprocessor;
@@ -30,7 +31,7 @@ public class SemanticPreprocessorImpl implements SemanticPreprocessor {
         semanticPreprocessingData.setVerbIndex(verbIndex);
 
         int afterVerbPrepositionIndex = getAfterVerbPrepositionIndex(encodedTags, verbIndex);
-        if(afterVerbPrepositionIndex == -1){
+        if (afterVerbPrepositionIndex == -1) {
             semanticPreprocessingData.setContainsAfterVerbPreposition(false);
         }
         semanticPreprocessingData.setAfterVerbFirstPrepositionIndex(afterVerbPrepositionIndex);
@@ -45,15 +46,14 @@ public class SemanticPreprocessorImpl implements SemanticPreprocessor {
 
     private int getVerbIndex(List<String> encodedTags) {
         for (int i = 0; i <= encodedTags.size() - 1; i++) {
-            if (EncodedTags.VERB.equals(encodedTags.get(i)) || EncodedTags.IS_ARE.equals(encodedTags.get(i))
-                    || EncodedTags.VERB_ED.equals(encodedTags.get(i))) {
+            if (EncodedTags.VERB.equals(encodedTags.get(i)) || EncodedTags.IS_ARE.equals(encodedTags.get(i))) {
                 return i;
             }
         }
         throw new IllegalStateException("Sentence does not contain verb !");
     }
 
-    private int getAfterVerbPrepositionIndex(List<String> encodedTags, int verbIndex){
+    private int getAfterVerbPrepositionIndex(List<String> encodedTags, int verbIndex) {
         for (int i = 0; i <= encodedTags.size() - 1; i++) {
             if (EncodedTags.PREPOSITION.equals(encodedTags.get(i)) && i > verbIndex) {
                 return i;
