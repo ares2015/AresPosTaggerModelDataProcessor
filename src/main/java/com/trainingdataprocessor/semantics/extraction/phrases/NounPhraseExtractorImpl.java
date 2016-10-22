@@ -1,8 +1,7 @@
-package com.trainingdataprocessor.semantics.extraction.phrases.noun;
+package com.trainingdataprocessor.semantics.extraction.phrases;
 
 import com.trainingdataprocessor.data.semantics.SemanticExtractionData;
 import com.trainingdataprocessor.data.semantics.SemanticPreprocessingData;
-import com.trainingdataprocessor.semantics.extraction.phrases.PhraseExtractor;
 import com.trainingdataprocessor.tokenizing.Tokenizer;
 
 /**

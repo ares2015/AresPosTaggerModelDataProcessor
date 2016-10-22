@@ -1,4 +1,4 @@
-package com.trainingdataprocessor.semantics.extraction.phrases.preposition;
+package com.trainingdataprocessor.semantics.extraction.phrases;
 
 import com.trainingdataprocessor.data.semantics.SemanticExtractionData;
 import com.trainingdataprocessor.data.semantics.SemanticPreprocessingData;
