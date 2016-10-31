@@ -5,7 +5,6 @@ import com.trainingdataprocessor.encoding.TagsEncoder;
 import com.trainingdataprocessor.tokenizing.Tokenizer;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -34,42 +33,37 @@ public class TestDataRowListFactoryImpl implements TestDataRowListFactory {
         LOGGER.info("*********************************************************************");
 
         List<TestDataRow> testDataRowList = new ArrayList<>();
-        String sentenceAsString;
-        String tagsAsString;
-        String encodedTagsAsString;
-        List<String> tokensList;
-        List<String> tagsList;
-        List<List<String>> tagSubPaths;
-        List<List<String>> subSentences;
-        String[] sentenceAndTagsTwoItemsArray;
 
         for (String testDataRowString : testDataRowStringList) {
-            sentenceAndTagsTwoItemsArray = testDataRowString.split("#");
-            sentenceAsString = sentenceAndTagsTwoItemsArray[0];
-            tagsAsString = sentenceAndTagsTwoItemsArray[1];
+            String[] sentenceAndTagsTwoItemsArray = testDataRowString.split("#");
+            String sentenceAsString = sentenceAndTagsTwoItemsArray[0];
+            String tagsAsString = sentenceAndTagsTwoItemsArray[1];
             LOGGER.info("Processing sentence < " + sentenceAsString + " > and tags < " +
                     tagsAsString + " > ");
 
-            tokensList = tokenizer.splitStringIntoList(sentenceAsString);
-            tagsList = tokenizer.splitStringIntoList(tagsAsString);
+            List<String> tokensList = tokenizer.splitStringIntoList(sentenceAsString);
+            List<String> tagsList = tokenizer.splitStringIntoList(tagsAsString);
 
             if (sentenceAndTagsTwoItemsArray[0].contains(", ")) {
-                subSentences = subPathsListFactory.create(tokensList);
-                tagSubPaths = subPathsListFactory.create(tagsList);
+                List<List<String>> subSentences = subPathsListFactory.create(tokensList);
+                List<List<String>> tagsListOfLists = subPathsListFactory.create(tagsList);
                 LOGGER.info("Sentence contains " + subSentences.size() + " subSentences.");
                 tokensList = removeCommasAndDots(tokensList);
                 tagsList = removeCommasAndDots(tagsList);
                 tagsAsString = tokenizer.convertListToString(tagsList);
-                encodedTagsAsString = tagsEncoder.encode(tagsList);
-                LOGGER.info("Tags were encoded as:" + encodedTagsAsString);
-                TestDataRow testDataRow = new TestDataRow(sentenceAsString, tagsAsString,
-                        encodedTagsAsString, tokensList, tagsList, subSentences, tagSubPaths);
+                String encodedTagsSubPathAsString = tagsEncoder.encodeTagSubPath(tagsList);
+                LOGGER.info("Tags were encoded as:" + encodedTagsSubPathAsString);
+                List<List<String>> encodedTagsListOfLists = tagsEncoder.encodeTagsAsListOfLists(tagsListOfLists);
+                List<String> encodedTagSubPathsList = tagsEncoder.encodeTagSubPathList(tagsListOfLists);
+                TestDataRow testDataRow = new TestDataRow(true, sentenceAsString, tagsAsString,
+                        encodedTagsSubPathAsString, tokensList, tagsList, subSentences, tagsListOfLists, encodedTagsListOfLists, encodedTagSubPathsList);
                 testDataRowList.add(testDataRow);
             } else {
                 LOGGER.info("Sentence does not contain any subSentences.");
-                encodedTagsAsString = tagsEncoder.encode(tagsList);
+                String encodedTagsAsString = tagsEncoder.encodeTagSubPath(tagsList);
+                List<String> encodedTagSubPathsAsSingleList = tokenizer.splitStringWithoutEmptySpaceToList(encodedTagsAsString);
 
-                TestDataRow testDataRow = new TestDataRow(sentenceAsString, tagsAsString, encodedTagsAsString, tokensList, tagsList);
+                TestDataRow testDataRow = new TestDataRow(false, sentenceAsString, tagsAsString, encodedTagsAsString, tokensList, tagsList, encodedTagSubPathsAsSingleList);
                 testDataRowList.add(testDataRow);
             }
         }

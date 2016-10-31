@@ -18,6 +18,17 @@ public class TokenizerImpl implements Tokenizer {
     }
 
     @Override
+    public List<String> splitStringWithoutEmptySpaceToList(String token) {
+        List<String> list = new ArrayList<>();
+        char[] chars = token.toCharArray();
+        for (char c : chars) {
+            String s = String.valueOf(c);
+            list.add(s);
+        }
+        return list;
+    }
+
+    @Override
     public List<Integer> getCommaIndexes(final List<String> tokens) {
         final List<Integer> commaIndexes = new ArrayList<Integer>();
         int index = 0;

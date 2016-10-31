@@ -9,6 +9,8 @@ public interface Tokenizer {
 
     List<String> splitStringIntoList(String sentence);
 
+    List<String> splitStringWithoutEmptySpaceToList(String token);
+
     List<Integer> getCommaIndexes(List<String> tokens);
 
     String removeCommaAndDot(final String token);

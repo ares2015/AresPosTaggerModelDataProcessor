@@ -7,37 +7,54 @@ import java.util.List;
  */
 public final class TestDataRow {
 
+    private boolean containsSubSentences;
+
     private String sentence;
 
     private String tagsAsString;
 
-    private String encodedTagsAsString;
+    private String encodedTagsSubPathAsString;
 
     private List<String> tokensList;
 
     private List<String> tagsList;
 
+    private List<String> encodedTagsAsSingleList;
+
+    private List<List<String>> encodedTagsListOfLists;
+
     private List<List<String>> subSentences;
 
-    private List<List<String>> tagSubPaths;
+    private List<List<String>> tagsListOfLists;
 
-    public TestDataRow(String sentence, String tagsAsString, String encodedTagsAsString, List<String> tokensList, List<String> tagsList) {
+    private List<String> encodedTagSubPathsList;
+
+    public TestDataRow(boolean containsSubSentences, String sentence, String tagsAsString, String encodedTagsSubPathAsString, List<String> tokensList, List<String> tagsList, List<String> encodedTagsAsSingleList) {
+        this.containsSubSentences = containsSubSentences;
         this.sentence = sentence;
         this.tagsAsString = tagsAsString;
-        this.encodedTagsAsString = encodedTagsAsString;
+        this.encodedTagsSubPathAsString = encodedTagsSubPathAsString;
         this.tokensList = tokensList;
         this.tagsList = tagsList;
+        this.encodedTagsAsSingleList = encodedTagsAsSingleList;
     }
 
-    public TestDataRow(String sentence, String tagsAsString, String encodedTagsAsString, List<String> tokensList,
-                       List<String> tagsList, List<List<String>> subSentences, List<List<String>> tagSubPaths) {
+    public TestDataRow(boolean containsSubSentences, String sentence, String tagsAsString, String encodedTagsSubPathAsString, List<String> tokensList,
+                       List<String> tagsList, List<List<String>> subSentences, List<List<String>> tagsListOfLists, List<List<String>> encodedTagsListOfLists, List<String> encodedTagSubPathsList) {
+        this.containsSubSentences = containsSubSentences;
         this.sentence = sentence;
         this.tagsAsString = tagsAsString;
-        this.encodedTagsAsString = encodedTagsAsString;
+        this.encodedTagsSubPathAsString = encodedTagsSubPathAsString;
         this.tokensList = tokensList;
         this.tagsList = tagsList;
         this.subSentences = subSentences;
-        this.tagSubPaths = tagSubPaths;
+        this.tagsListOfLists = tagsListOfLists;
+        this.encodedTagsListOfLists = encodedTagsListOfLists;
+        this.encodedTagSubPathsList = encodedTagSubPathsList;
+    }
+
+    public boolean containsSubSentences() {
+        return containsSubSentences;
     }
 
     public String getSentence() {
@@ -48,8 +65,8 @@ public final class TestDataRow {
         return tagsAsString;
     }
 
-    public String getEncodedTagsAsString() {
-        return encodedTagsAsString;
+    public String getEncodedTagsSubPathAsString() {
+        return encodedTagsSubPathAsString;
     }
 
     public List<String> getTokensList() {
@@ -60,12 +77,24 @@ public final class TestDataRow {
         return tagsList;
     }
 
+    public List<String> getEncodedTagsAsSingleList() {
+        return encodedTagsAsSingleList;
+    }
+
     public List<List<String>> getSubSentences() {
         return subSentences;
     }
 
-    public List<List<String>> getTagSubPaths() {
-        return tagSubPaths;
+    public List<List<String>> getTagsListOfLists() {
+        return tagsListOfLists;
+    }
+
+    public List<List<String>> getEncodedTagsListOfLists() {
+        return encodedTagsListOfLists;
+    }
+
+    public List<String> getEncodedTagSubPathsList() {
+        return encodedTagSubPathsList;
     }
 
 }

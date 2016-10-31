@@ -29,7 +29,69 @@ public class TagsEncoderTest {
         tags.add(Tags.VERB);
         tags.add(Tags.ADJECTIVE);
         tags.add(Tags.NOUN);
-        String encodedTagPattern = tagsEncoder.encode(tags);
+        String encodedTagPattern = tagsEncoder.encodeTagSubPath(tags);
         assertEquals("NNAVJN", encodedTagPattern);
     }
+
+    @Test
+    public void testEncodeList(){
+        List<String> tags1 = new ArrayList<>();
+        tags1.add(Tags.NOUN);
+        tags1.add(Tags.NOUN);
+
+        List<String> tags2 = new ArrayList<>();
+        tags2.add(Tags.ADVERB);
+        tags2.add(Tags.VERB);
+
+        List<String> tags3 = new ArrayList<>();
+
+        tags3.add(Tags.ADJECTIVE);
+        tags3.add(Tags.NOUN);
+
+        List<List<String>> listOfLists = new ArrayList<List<String>>();
+        listOfLists.add(tags1);
+        listOfLists.add(tags2);
+        listOfLists.add(tags3);
+
+        List<String> encodedTagsList = tagsEncoder.encodeTagSubPathList(listOfLists);
+        assertEquals("NN", encodedTagsList.get(0));
+        assertEquals("AV", encodedTagsList.get(1));
+        assertEquals("JN", encodedTagsList.get(2));
+
+    }
+
+    @Test
+    public void testEncodeListOfLists(){
+        List<String> tags1 = new ArrayList<>();
+        tags1.add(Tags.NOUN);
+        tags1.add(Tags.NOUN);
+
+        List<String> tags2 = new ArrayList<>();
+        tags2.add(Tags.ADVERB);
+        tags2.add(Tags.VERB);
+
+        List<String> tags3 = new ArrayList<>();
+
+        tags3.add(Tags.ADJECTIVE);
+        tags3.add(Tags.NOUN);
+
+        List<List<String>> listOfLists = new ArrayList<List<String>>();
+        listOfLists.add(tags1);
+        listOfLists.add(tags2);
+        listOfLists.add(tags3);
+
+        List<List<String>> encodedTagsList = tagsEncoder.encodeTagsAsListOfLists(listOfLists);
+        assertEquals("N", encodedTagsList.get(0).get(0));
+        assertEquals("N", encodedTagsList.get(0).get(1));
+        assertEquals("A", encodedTagsList.get(1).get(0));
+        assertEquals("V", encodedTagsList.get(1).get(1));
+        assertEquals("J", encodedTagsList.get(2).get(0));
+        assertEquals("N", encodedTagsList.get(2).get(1));
+
+
+//        assertEquals("JN", encodedTagsList.get(0));
+
+    }
+
+
 }

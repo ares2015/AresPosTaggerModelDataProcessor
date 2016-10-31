@@ -26,6 +26,14 @@ public class TokenizerTest {
     }
 
     @Test
+    public void testSplitStringWithoutEmptySpaceToList(){
+        String s = "JNVN";
+        List<String> list = tokenizer.splitStringWithoutEmptySpaceToList(s);
+        assertEquals(4, list.size());
+    }
+
+
+    @Test
     public void testGetCommaIndexes() {
         List<String> tokens = new ArrayList<>();
         tokens.add("bob,");
