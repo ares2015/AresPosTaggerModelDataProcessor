@@ -1,7 +1,7 @@
 package factories;
 
-import com.trainingdataprocessor.factories.SubPathsListFactory;
-import com.trainingdataprocessor.factories.SubPathsListFactoryImpl;
+import com.trainingdataprocessor.factories.MultiListFactory;
+import com.trainingdataprocessor.factories.MultiListFactoryImpl;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -12,9 +12,9 @@ import static org.junit.Assert.assertEquals;
 /**
  * Created by Oliver on 8/6/2016.
  */
-public class SubPathsListFactoryTest {
+public class MultiListFactoryTest {
 
-    private SubPathsListFactory subPathsListFactory = new SubPathsListFactoryImpl();
+    private MultiListFactory multiListFactory = new MultiListFactoryImpl();
 
     @Test
     public void testCreateTagSubPaths() {
@@ -26,7 +26,7 @@ public class SubPathsListFactoryTest {
         tags.add("AJ");
         tags.add("N");
 
-        List<List<String>> tagSubPaths = subPathsListFactory.create(tags);
+        List<List<String>> tagSubPaths = multiListFactory.create(tags);
         assertEquals(3, tagSubPaths.size());
     }
 
@@ -44,7 +44,7 @@ public class SubPathsListFactoryTest {
         tokens.add("and");
         tokens.add("cigarettes");
 
-        List<List<String>> subSentences = subPathsListFactory.create(tokens);
+        List<List<String>> subSentences = multiListFactory.create(tokens);
         assertEquals(4, subSentences.size());
     }
 

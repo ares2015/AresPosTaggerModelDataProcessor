@@ -32,11 +32,11 @@ public class SemanticAnalyserImpl implements SemanticAnalyser {
 
         for (TestDataRow testDataRow : testDataRowList) {
             if (testDataRow.containsSubSentences()) {
-                for (int i = 0; i <= testDataRow.getSubSentences().size() - 1; i++) {
-                    analyseSentence(testDataRow.getEncodedTagSubPathsList().get(i), testDataRow.getSubSentences().get(i), testDataRow.getEncodedTagsListOfLists().get(i));
+                for (int i = 0; i <= testDataRow.getTokensMultiList().size() - 1; i++) {
+                    analyseSentence(testDataRow.getEncodedSubPathsList().get(i), testDataRow.getTokensMultiList().get(i), testDataRow.getEncodedTagsMultiList().get(i));
                 }
             } else {
-                analyseSentence(testDataRow.getEncodedTagsSubPathAsString(), testDataRow.getTokensList(), testDataRow.getEncodedTagsAsSingleList());
+                analyseSentence(testDataRow.getEncodedSubPath(), testDataRow.getTokensList(), testDataRow.getEncodedTagsList());
             }
         }
     }

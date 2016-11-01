@@ -7,16 +7,16 @@ import java.util.logging.Logger;
 /**
  * Created by Oliver on 8/6/2016.
  */
-public class SubPathsListFactoryImpl implements SubPathsListFactory {
+public class MultiListFactoryImpl implements MultiListFactory {
 
-    private final static Logger LOGGER = Logger.getLogger(SubPathsListFactoryImpl.class.getName());
+    private final static Logger LOGGER = Logger.getLogger(MultiListFactoryImpl.class.getName());
 
     @Override
     public List<List<String>> create(List<String> words) {
-        LOGGER.info("ENTERING create method of SubPathsListFactoryImpl... ");
+        LOGGER.info("ENTERING create method of MultiListFactoryImpl... ");
         LOGGER.info("*********************************************************************");
 
-        List<List<String>> subPathsList = new ArrayList<List<String>>();
+        List<List<String>> multiList = new ArrayList<List<String>>();
         List<String> subPath = new ArrayList<>();
         int index = 0;
         for (String word : words) {
@@ -26,24 +26,25 @@ public class SubPathsListFactoryImpl implements SubPathsListFactory {
             } else {
                 //ADD THE ACTUAL TOKEN AND ADD ACTUAL SUBPATH TO THE SUBPATHS LIST.
                 //AND CREATE NEW EMPTY SUBPATH, INTO WHICH NEXT TOKENS WILL BE INSERTED
-                subPath.add(word);
-                subPathsList.add(subPath);
-                LOGGER.info("Created subPath with size " + subPath.size() + " and added into subPathsList.");
+                String wordWithoutComma = word.substring(0, word.length() - 1);
+                subPath.add(wordWithoutComma);
+                multiList.add(subPath);
+                LOGGER.info("Created subPath with size " + subPath.size() + " and added into multiList.");
                 subPath = new ArrayList<>();
             }
             //ALWAYS ADD SUBPATH STARTING WITH THE LAST COMMA IN SENTENCE AND ENDING WITH THE
             //LAST TOKEN IN SENTENCE
             if (index == words.size() - 1) {
-                subPathsList.add(subPath);
-                LOGGER.info("Created subPath with size " + subPath.size() + " and added into subPathsList.");
+                multiList.add(subPath);
+                LOGGER.info("Created subPath with size " + subPath.size() + " and added into multiList.");
             }
             index++;
         }
-        LOGGER.info("LEAVING create method of SubPathsListFactoryImpl with  " + subPathsList.size() + " " +
+        LOGGER.info("LEAVING create method of MultiListFactoryImpl with  " + multiList.size() + " " +
                 " subPaths created.");
         LOGGER.info("*********************************************************************");
 
-        return subPathsList;
+        return multiList;
     }
 
 }

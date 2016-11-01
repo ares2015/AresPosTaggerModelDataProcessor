@@ -24,23 +24,23 @@ public class SemanticPreprocessorImpl implements SemanticPreprocessor {
         this.verbPhrasePreprocessor = verbPhrasePreprocessor;
     }
 
-    public SemanticPreprocessingData preprocess(String sentencePattern, List<String> subSentence, List<String> encodedTags) {
+    public SemanticPreprocessingData preprocess(String encodedSubPath, List<String> tokensList, List<String> encodedTagsList) {
 
         SemanticPreprocessingData semanticPreprocessingData = new SemanticPreprocessingData();
-        int verbIndex = getVerbIndex(encodedTags);
+        int verbIndex = getVerbIndex(encodedTagsList);
         semanticPreprocessingData.setVerbIndex(verbIndex);
 
-        int afterVerbPrepositionIndex = getAfterVerbPrepositionIndex(encodedTags, verbIndex);
+        int afterVerbPrepositionIndex = getAfterVerbPrepositionIndex(encodedTagsList, verbIndex);
         if (afterVerbPrepositionIndex == -1) {
             semanticPreprocessingData.setContainsAfterVerbPreposition(false);
         }
         semanticPreprocessingData.setAfterVerbFirstPrepositionIndex(afterVerbPrepositionIndex);
-        semanticPreprocessingData.setTokens(subSentence);
-        semanticPreprocessingData.setEncodedTags(encodedTags);
+        semanticPreprocessingData.setTokens(tokensList);
+        semanticPreprocessingData.setEncodedTags(encodedTagsList);
 
-        prepositionPhrasePreprocessor.preprocess(sentencePattern, semanticPreprocessingData);
-        nounPhrasePreprocessor.preprocess(sentencePattern, semanticPreprocessingData);
-        verbPhrasePreprocessor.preprocess(sentencePattern, semanticPreprocessingData);
+        prepositionPhrasePreprocessor.preprocess(encodedSubPath, semanticPreprocessingData);
+        nounPhrasePreprocessor.preprocess(encodedSubPath, semanticPreprocessingData);
+        verbPhrasePreprocessor.preprocess(encodedSubPath, semanticPreprocessingData);
         return semanticPreprocessingData;
     }
 

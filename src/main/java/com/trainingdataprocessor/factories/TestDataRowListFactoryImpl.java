@@ -19,12 +19,12 @@ public class TestDataRowListFactoryImpl implements TestDataRowListFactory {
 
     private TagsEncoder tagsEncoder;
 
-    private SubPathsListFactory subPathsListFactory;
+    private MultiListFactory multiListFactory;
 
-    public TestDataRowListFactoryImpl(Tokenizer tokenizer, TagsEncoder tagsEncoder, SubPathsListFactory subPathsListFactory) {
+    public TestDataRowListFactoryImpl(Tokenizer tokenizer, TagsEncoder tagsEncoder, MultiListFactory multiListFactory) {
         this.tokenizer = tokenizer;
         this.tagsEncoder = tagsEncoder;
-        this.subPathsListFactory = subPathsListFactory;
+        this.multiListFactory = multiListFactory;
     }
 
     @Override
@@ -35,35 +35,68 @@ public class TestDataRowListFactoryImpl implements TestDataRowListFactory {
         List<TestDataRow> testDataRowList = new ArrayList<>();
 
         for (String testDataRowString : testDataRowStringList) {
+            TestDataRow testDataRow = new TestDataRow();
             String[] sentenceAndTagsTwoItemsArray = testDataRowString.split("#");
-            String sentenceAsString = sentenceAndTagsTwoItemsArray[0];
-            String tagsAsString = sentenceAndTagsTwoItemsArray[1];
-            LOGGER.info("Processing sentence < " + sentenceAsString + " > and tags < " +
-                    tagsAsString + " > ");
 
-            List<String> tokensList = tokenizer.splitStringIntoList(sentenceAsString);
-            List<String> tagsList = tokenizer.splitStringIntoList(tagsAsString);
+            String sentence = sentenceAndTagsTwoItemsArray[0];
+            String subPath = sentenceAndTagsTwoItemsArray[1];
+
+            LOGGER.info("Processing sentence < " + sentence + " > and tags < " +
+                    subPath + " > ");
+
+            List<String> tokensList = tokenizer.splitStringIntoList(sentence);
+            List<String> tagsList = tokenizer.splitStringIntoList(subPath);
+
 
             if (sentenceAndTagsTwoItemsArray[0].contains(", ")) {
-                List<List<String>> subSentences = subPathsListFactory.create(tokensList);
-                List<List<String>> tagsListOfLists = subPathsListFactory.create(tagsList);
-                LOGGER.info("Sentence contains " + subSentences.size() + " subSentences.");
+                testDataRow.setContainsSubSentences(true);
+                //MULTILISTS ARE CREATED FIRST BEFORE COMMAS ARE REMOVED FROM TOKENS LIST AND TAGS LIST
+                //SUB SENTENCES MULTILIST
+                List<List<String>> subSentencesMultiList = multiListFactory.create(tokensList);
+                testDataRow.setTokensMultiList(subSentencesMultiList);
+
+                //TAGS MULTILIST
+                List<List<String>> tagsMultiList = multiListFactory.create(tagsList);
+                testDataRow.setTagsMultiList(tagsMultiList);
+
+                LOGGER.info("Sentence contains " + subSentencesMultiList.size() + " subSentences.");
+
                 tokensList = removeCommasAndDots(tokensList);
                 tagsList = removeCommasAndDots(tagsList);
-                tagsAsString = tokenizer.convertListToString(tagsList);
-                String encodedTagsSubPathAsString = tagsEncoder.encodeTagSubPath(tagsList);
-                LOGGER.info("Tags were encoded as:" + encodedTagsSubPathAsString);
-                List<List<String>> encodedTagsListOfLists = tagsEncoder.encodeTagsAsListOfLists(tagsListOfLists);
-                List<String> encodedTagSubPathsList = tagsEncoder.encodeTagSubPathList(tagsListOfLists);
-                TestDataRow testDataRow = new TestDataRow(true, sentenceAsString, tagsAsString,
-                        encodedTagsSubPathAsString, tokensList, tagsList, subSentences, tagsListOfLists, encodedTagsListOfLists, encodedTagSubPathsList);
+
+                //TOKENS LIST, TAGS LIST
+                testDataRow.setTokensList(tokensList);
+                testDataRow.setTagsList(tagsList);
+
+                //SENTENCE, SUBPATH AND ENCODED SUBPATH
+                testDataRow.setSentence(sentence);
+                testDataRow.setSubPath(subPath);
+                testDataRow.setEncodedSubPath(tagsEncoder.encodeTagsListToEncodedSubPath(tagsList));
+
+                //ENCODED TAGS MULTILIST
+                List<List<String>> encodedTagsMultiList = tagsEncoder.encodeTagsMultiListToEncodedTagsMultiList(tagsMultiList);
+                testDataRow.setEncodedTagsMultiList(encodedTagsMultiList);
+
+                //ENCODED SUBPATHS LIST
+                List<String> encodedSubPathsList = tagsEncoder.encodeTagMultiListToEncodedSubPathsList(tagsMultiList);
+                testDataRow.setEncodedSubPathsList(encodedSubPathsList);
+
                 testDataRowList.add(testDataRow);
             } else {
+                testDataRow.setContainsSubSentences(false);
                 LOGGER.info("Sentence does not contain any subSentences.");
-                String encodedTagsAsString = tagsEncoder.encodeTagSubPath(tagsList);
-                List<String> encodedTagSubPathsAsSingleList = tokenizer.splitStringWithoutEmptySpaceToList(encodedTagsAsString);
 
-                TestDataRow testDataRow = new TestDataRow(false, sentenceAsString, tagsAsString, encodedTagsAsString, tokensList, tagsList, encodedTagSubPathsAsSingleList);
+                //SENTENCE, SUBPATH AND ENCODED SUBPATH
+                testDataRow.setSentence(sentence);
+                testDataRow.setSubPath(subPath);
+                String encodedSubPath = tagsEncoder.encodeTagsListToEncodedSubPath(tagsList);
+                testDataRow.setEncodedSubPath(encodedSubPath);
+
+                //TOKENS LIST, TAGS LIST, ENCODED TAGS LIST
+                testDataRow.setTokensList(tokensList);
+                testDataRow.setTagsList(tagsList);
+                testDataRow.setEncodedTagsList(tagsEncoder.encodeTagsListToEncodedTagsList(tagsList));
+
                 testDataRowList.add(testDataRow);
             }
         }

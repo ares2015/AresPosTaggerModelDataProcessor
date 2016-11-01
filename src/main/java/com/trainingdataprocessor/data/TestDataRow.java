@@ -11,90 +11,109 @@ public final class TestDataRow {
 
     private String sentence;
 
-    private String tagsAsString;
+    private String subPath;
 
-    private String encodedTagsSubPathAsString;
+    private String encodedSubPath;
 
     private List<String> tokensList;
 
     private List<String> tagsList;
 
-    private List<String> encodedTagsAsSingleList;
+    private List<String> encodedTagsList;
 
-    private List<List<String>> encodedTagsListOfLists;
+    private List<String> encodedSubPathsList;
 
-    private List<List<String>> subSentences;
+    private List<List<String>> encodedTagsMultiList;
 
-    private List<List<String>> tagsListOfLists;
+    private List<List<String>> tokensMultiList;
 
-    private List<String> encodedTagSubPathsList;
-
-    public TestDataRow(boolean containsSubSentences, String sentence, String tagsAsString, String encodedTagsSubPathAsString, List<String> tokensList, List<String> tagsList, List<String> encodedTagsAsSingleList) {
-        this.containsSubSentences = containsSubSentences;
-        this.sentence = sentence;
-        this.tagsAsString = tagsAsString;
-        this.encodedTagsSubPathAsString = encodedTagsSubPathAsString;
-        this.tokensList = tokensList;
-        this.tagsList = tagsList;
-        this.encodedTagsAsSingleList = encodedTagsAsSingleList;
-    }
-
-    public TestDataRow(boolean containsSubSentences, String sentence, String tagsAsString, String encodedTagsSubPathAsString, List<String> tokensList,
-                       List<String> tagsList, List<List<String>> subSentences, List<List<String>> tagsListOfLists, List<List<String>> encodedTagsListOfLists, List<String> encodedTagSubPathsList) {
-        this.containsSubSentences = containsSubSentences;
-        this.sentence = sentence;
-        this.tagsAsString = tagsAsString;
-        this.encodedTagsSubPathAsString = encodedTagsSubPathAsString;
-        this.tokensList = tokensList;
-        this.tagsList = tagsList;
-        this.subSentences = subSentences;
-        this.tagsListOfLists = tagsListOfLists;
-        this.encodedTagsListOfLists = encodedTagsListOfLists;
-        this.encodedTagSubPathsList = encodedTagSubPathsList;
-    }
+    private List<List<String>> tagsMultiList;
 
     public boolean containsSubSentences() {
         return containsSubSentences;
+    }
+
+    public void setContainsSubSentences(boolean containsSubSentences) {
+        this.containsSubSentences = containsSubSentences;
     }
 
     public String getSentence() {
         return sentence;
     }
 
-    public String getTagsAsString() {
-        return tagsAsString;
+    public void setSentence(String sentence) {
+        this.sentence = sentence;
     }
 
-    public String getEncodedTagsSubPathAsString() {
-        return encodedTagsSubPathAsString;
+    public String getSubPath() {
+        return subPath;
+    }
+
+    public void setSubPath(String subPath) {
+        this.subPath = subPath;
+    }
+
+    public String getEncodedSubPath() {
+        return encodedSubPath;
+    }
+
+    public void setEncodedSubPath(String encodedSubPath) {
+        this.encodedSubPath = encodedSubPath;
     }
 
     public List<String> getTokensList() {
         return tokensList;
     }
 
+    public void setTokensList(List<String> tokensList) {
+        this.tokensList = tokensList;
+    }
+
     public List<String> getTagsList() {
         return tagsList;
     }
 
-    public List<String> getEncodedTagsAsSingleList() {
-        return encodedTagsAsSingleList;
+    public void setTagsList(List<String> tagsList) {
+        this.tagsList = tagsList;
     }
 
-    public List<List<String>> getSubSentences() {
-        return subSentences;
+    public List<String> getEncodedTagsList() {
+        return encodedTagsList;
     }
 
-    public List<List<String>> getTagsListOfLists() {
-        return tagsListOfLists;
+    public void setEncodedTagsList(List<String> encodedTagsList) {
+        this.encodedTagsList = encodedTagsList;
     }
 
-    public List<List<String>> getEncodedTagsListOfLists() {
-        return encodedTagsListOfLists;
+    public List<String> getEncodedSubPathsList() {
+        return encodedSubPathsList;
     }
 
-    public List<String> getEncodedTagSubPathsList() {
-        return encodedTagSubPathsList;
+    public void setEncodedSubPathsList(List<String> encodedSubPathsList) {
+        this.encodedSubPathsList = encodedSubPathsList;
     }
 
+    public List<List<String>> getEncodedTagsMultiList() {
+        return encodedTagsMultiList;
+    }
+
+    public void setEncodedTagsMultiList(List<List<String>> encodedTagsMultiList) {
+        this.encodedTagsMultiList = encodedTagsMultiList;
+    }
+
+    public List<List<String>> getTokensMultiList() {
+        return tokensMultiList;
+    }
+
+    public void setTokensMultiList(List<List<String>> tokensMultiList) {
+        this.tokensMultiList = tokensMultiList;
+    }
+
+    public List<List<String>> getTagsMultiList() {
+        return tagsMultiList;
+    }
+
+    public void setTagsMultiList(List<List<String>> tagsMultiList) {
+        this.tagsMultiList = tagsMultiList;
+    }
 }
