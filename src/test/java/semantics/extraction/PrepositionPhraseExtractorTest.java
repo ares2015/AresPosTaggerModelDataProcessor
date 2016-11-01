@@ -75,4 +75,42 @@ public class PrepositionPhraseExtractorTest {
     }
 
 
+    @Test
+    public void testWithNot(){
+        SemanticPreprocessingData semanticPreprocessingData = new SemanticPreprocessingData();
+        String sentencePattern = "NNNP#I$OPN";
+
+
+        List<String> encodedTags = new ArrayList<String>();
+        encodedTags.add(EncodedTags.NOUN);
+        encodedTags.add(EncodedTags.NOUN);
+        encodedTags.add(EncodedTags.NOUN);
+        encodedTags.add(EncodedTags.PREPOSITION);
+        encodedTags.add(EncodedTags.NUMBER);
+        encodedTags.add(EncodedTags.IS_ARE);
+        encodedTags.add(EncodedTags.VERB_ED);
+        encodedTags.add(EncodedTags.NOT);
+        encodedTags.add(EncodedTags.PREPOSITION);
+        encodedTags.add(EncodedTags.NOUN);
+
+        String sentence = "English Peasant Revolt of 1381 was led not by peasants";
+        List<String> tokens = Arrays.asList(sentence.split("\\ "));
+
+        semanticPreprocessingData.setTokens(tokens);
+        semanticPreprocessingData.setEncodedTags(encodedTags);
+        semanticPreprocessingData.setVerbIndex(5);
+        semanticPreprocessingData.setAfterVerbFirstPrepositionIndex(8);
+
+        prepositionPhrasePreprocessor.preprocess(sentencePattern, semanticPreprocessingData);
+        nounPhrasePreprocessor.preprocess(sentencePattern, semanticPreprocessingData);
+
+        SemanticExtractionData semanticExtractionData = new SemanticExtractionData();
+
+        prepositionPhraseExtractor.extract(semanticPreprocessingData, semanticExtractionData);
+
+        assertEquals("English Peasant Revolt of 1381 ", semanticExtractionData.getExtendedSubject());
+        assertEquals("led not by peasants ", semanticExtractionData.getExtendedNounPredicate());
+
+    }
+
 }

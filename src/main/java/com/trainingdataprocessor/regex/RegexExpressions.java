@@ -12,7 +12,7 @@ import java.util.Map;
  */
 public final class RegexExpressions {
 
-    public static final String PREPOSITION_PHRASE = "[PT]?[#NJD$@]*[PT]?[#NJD$@]*[PT]?[#NJD$@]*";
+    public static final String PREPOSITION_PHRASE = "[O]*[PT]?[#NJD$@]*[O]*[PT]?[#NJD$@]*[O]*[PT]?[#NJD$@]*";
 
     public static final String NOUN_PHRASE = "[#$@NJD]*[JN]";
 

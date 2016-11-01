@@ -39,6 +39,19 @@ public class RegexPatternPrepositionPhraseTest {
     }
 
     @Test
+    public void testFoundWitNot(){
+        List<RegexPatternData> regexPatternIndexFinderList = null;
+        String sentence = "";
+        String encodedPath = "";
+
+        sentence = "the English Peasant Revolt was led not by peasants";
+        encodedPath = "DNNNI$OPN";
+        regexPatternIndexFinderList = regexPatternSearcher.search(encodedPath, PREPOSITION_PHRASE);
+        System.out.println(sentence);
+        assertTrue(RegexUtils.containsRegex(regexPatternIndexFinderList, "$OPN", regexType));
+    }
+
+    @Test
     public void testPartiallyFound(){
         List<RegexPatternData> regexPatternIndexFinderList = null;
         String sentence = "";
