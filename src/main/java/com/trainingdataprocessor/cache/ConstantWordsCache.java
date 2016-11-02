@@ -628,7 +628,7 @@ public class ConstantWordsCache {
         constantWordsCache.put("does", Tags.DO);
         constantWordsCache.put("don't", Tags.DO);
         constantWordsCache.put("doesn't", Tags.DO);
-        constantWordsCache.put("did",Tags.VERB_ED);
+        constantWordsCache.put("did",Tags.DO);
         constantWordsCache.put("didn't ",Tags.DO);
         constantWordsCache.put("done",Tags.DO);
 

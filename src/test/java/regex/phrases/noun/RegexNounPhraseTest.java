@@ -18,7 +18,7 @@ public class RegexNounPhraseTest {
 
     private RegexPatternSearcher regexPatternSearcher = new RegexPatternSearcherImpl();
 
-    private static final String regexType = "Preposition phrase";
+    private static final String regexType = "Noun phrase";
 
     @Test
     public void testFound(){
@@ -34,6 +34,22 @@ public class RegexNounPhraseTest {
         assertTrue(RegexUtils.containsRegex(regexPatternIndexFinderList, "JJNN", regexType));
         assertTrue(RegexUtils.containsRegex(regexPatternIndexFinderList, "N", regexType));
         assertTrue(RegexUtils.containsRegex(regexPatternIndexFinderList, "NN", regexType));
+
+        sentence = "Aggressive stupid Russian fans attack my team";
+        encodedPath = "JJNNVSN";
+        regexPatternIndexFinderList = regexPatternSearcher.search(encodedPath, NOUN_PHRASE);
+        assertTrue(regexPatternIndexFinderList.size() > 0);
+        System.out.println(sentence);
+        assertTrue(RegexUtils.containsRegex(regexPatternIndexFinderList, "JJNN", regexType));
+        assertTrue(RegexUtils.containsRegex(regexPatternIndexFinderList, "SN", regexType));
+
+        sentence = "All men are mortal";
+        encodedPath = "QNIJ";
+        regexPatternIndexFinderList = regexPatternSearcher.search(encodedPath, NOUN_PHRASE);
+        assertTrue(regexPatternIndexFinderList.size() > 0);
+        System.out.println(sentence);
+        assertTrue(RegexUtils.containsRegex(regexPatternIndexFinderList, "QN", regexType));
+        assertTrue(RegexUtils.containsRegex(regexPatternIndexFinderList, "J", regexType));
 
     }
 }

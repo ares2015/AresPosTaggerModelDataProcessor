@@ -3,14 +3,13 @@ package regex.phrases.preposition;
 import com.trainingdataprocessor.data.RegexPatternData;
 import com.trainingdataprocessor.regex.RegexPatternSearcher;
 import com.trainingdataprocessor.regex.RegexPatternSearcherImpl;
+import com.trainingdataprocessor.regex.RegexUtils;
 import com.trainingdataprocessor.tags.EncodedTags;
 import org.junit.Test;
-import com.trainingdataprocessor.regex.RegexUtils;
 
 import java.util.List;
 
 import static com.trainingdataprocessor.regex.RegexExpressions.PREPOSITION_PHRASE;
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -36,6 +35,13 @@ public class RegexPatternPrepositionPhraseTest {
         System.out.println(sentence);
         assertTrue(RegexUtils.containsRegex(regexPatternIndexFinderList, "JJNNPNPN", regexType));
         assertTrue(RegexUtils.containsRegex(regexPatternIndexFinderList, "NPNN", regexType));
+
+        sentence = "John works at his flat";
+        encodedPath = "NVPSN";
+        regexPatternIndexFinderList = regexPatternSearcher.search(encodedPath, PREPOSITION_PHRASE);
+        assertTrue(regexPatternIndexFinderList.size() > 0);
+        System.out.println(sentence);
+        assertTrue(RegexUtils.containsRegex(regexPatternIndexFinderList, "PSN", regexType));
     }
 
     @Test

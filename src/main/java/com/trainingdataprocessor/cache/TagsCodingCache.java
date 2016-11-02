@@ -12,6 +12,7 @@ import java.util.Map;
 public class TagsCodingCache {
 
     private Map<String,String> encodingMap = new HashMap<String,String>();
+
     private  Map<String,String> decodingMap = new HashMap<String,String>();
 
     public Map<String, String> getEncodingMap() {

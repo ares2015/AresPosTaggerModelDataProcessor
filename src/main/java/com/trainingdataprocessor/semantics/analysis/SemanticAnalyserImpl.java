@@ -1,5 +1,6 @@
 package com.trainingdataprocessor.semantics.analysis;
 
+import com.trainingdataprocessor.cache.SemanticAnalysisFilterCache;
 import com.trainingdataprocessor.data.TestDataRow;
 import com.trainingdataprocessor.data.semantics.SemanticExtractionData;
 import com.trainingdataprocessor.data.semantics.SemanticPreprocessingData;
@@ -20,11 +21,14 @@ public class SemanticAnalyserImpl implements SemanticAnalyser {
 
     private TrainingDataAccessor trainingDataAccessor;
 
+    private SemanticAnalysisFilterCache semanticAnalysisFilterCache;
+
     public SemanticAnalyserImpl(SemanticPreprocessor semanticPreprocessor, SemanticExtractor semanticExtractor,
-                                TrainingDataAccessor trainingDataAccessor) {
+                                TrainingDataAccessor trainingDataAccessor, SemanticAnalysisFilterCache semanticAnalysisFilterCache) {
         this.semanticPreprocessor = semanticPreprocessor;
         this.semanticExtractor = semanticExtractor;
         this.trainingDataAccessor = trainingDataAccessor;
+        this.semanticAnalysisFilterCache = semanticAnalysisFilterCache;
     }
 
     @Override
@@ -33,10 +37,15 @@ public class SemanticAnalyserImpl implements SemanticAnalyser {
         for (TestDataRow testDataRow : testDataRowList) {
             if (testDataRow.containsSubSentences()) {
                 for (int i = 0; i <= testDataRow.getTokensMultiList().size() - 1; i++) {
-                    analyseSentence(testDataRow.getEncodedSubPathsList().get(i), testDataRow.getTokensMultiList().get(i), testDataRow.getEncodedTagsMultiList().get(i));
+                    if (canGoToSemanticAnalysis(testDataRow.getEncodedTagsMultiList().get(i))) {
+                        analyseSentence(testDataRow.getEncodedSubPathsList().get(i), testDataRow.getTokensMultiList().get(i),
+                                testDataRow.getEncodedTagsMultiList().get(i));
+                    }
                 }
             } else {
-                analyseSentence(testDataRow.getEncodedSubPath(), testDataRow.getTokensList(), testDataRow.getEncodedTagsList());
+                if (canGoToSemanticAnalysis(testDataRow.getEncodedTagsList())) {
+                    analyseSentence(testDataRow.getEncodedSubPath(), testDataRow.getTokensList(), testDataRow.getEncodedTagsList());
+                }
             }
         }
     }
@@ -46,4 +55,15 @@ public class SemanticAnalyserImpl implements SemanticAnalyser {
         SemanticExtractionData semanticExtractionData = semanticExtractor.extract(semanticPreprocessingData);
 
     }
+
+    private boolean canGoToSemanticAnalysis(List<String> encodedTags) {
+        for (String tag : encodedTags) {
+            if (semanticAnalysisFilterCache.getStopTagsCache().contains(tag)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+
 }
