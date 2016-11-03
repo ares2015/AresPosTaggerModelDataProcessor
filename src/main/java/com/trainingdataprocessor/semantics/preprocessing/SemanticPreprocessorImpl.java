@@ -11,14 +11,17 @@ import java.util.List;
  */
 public class SemanticPreprocessorImpl implements SemanticPreprocessor {
 
+    private SemanticPreprocessingFilter semanticPreprocessingFilter;
+
     private PhrasePreprocessor prepositionPhrasePreprocessor;
 
     private PhrasePreprocessor nounPhrasePreprocessor;
 
     private PhrasePreprocessor verbPhrasePreprocessor;
 
-    public SemanticPreprocessorImpl(PhrasePreprocessor prepositionPhrasePreprocessor, PhrasePreprocessor nounPhrasePreprocessor,
-                                    PhrasePreprocessor verbPhrasePreprocessor) {
+    public SemanticPreprocessorImpl(SemanticPreprocessingFilter semanticPreprocessingFilter, PhrasePreprocessor prepositionPhrasePreprocessor,
+                                    PhrasePreprocessor nounPhrasePreprocessor, PhrasePreprocessor verbPhrasePreprocessor) {
+        this.semanticPreprocessingFilter = semanticPreprocessingFilter;
         this.prepositionPhrasePreprocessor = prepositionPhrasePreprocessor;
         this.nounPhrasePreprocessor = nounPhrasePreprocessor;
         this.verbPhrasePreprocessor = verbPhrasePreprocessor;
@@ -26,21 +29,25 @@ public class SemanticPreprocessorImpl implements SemanticPreprocessor {
 
     public SemanticPreprocessingData preprocess(String encodedSubPath, List<String> tokensList, List<String> encodedTagsList) {
 
+        String filteredEncodedSubpath = semanticPreprocessingFilter.filterToString(encodedTagsList);
+        List<String> filteredTokensList = semanticPreprocessingFilter.filterToList(tokensList);
+        List<String> filteredEncodedTagsList = semanticPreprocessingFilter.filterToList(encodedTagsList);
+
         SemanticPreprocessingData semanticPreprocessingData = new SemanticPreprocessingData();
-        int verbIndex = getVerbIndex(encodedTagsList);
+        int verbIndex = getVerbIndex(filteredEncodedTagsList);
         semanticPreprocessingData.setVerbIndex(verbIndex);
 
-        int afterVerbPrepositionIndex = getAfterVerbPrepositionIndex(encodedTagsList, verbIndex);
+        int afterVerbPrepositionIndex = getAfterVerbPrepositionIndex(filteredEncodedTagsList, verbIndex);
         if (afterVerbPrepositionIndex == -1) {
             semanticPreprocessingData.setContainsAfterVerbPreposition(false);
         }
         semanticPreprocessingData.setAfterVerbFirstPrepositionIndex(afterVerbPrepositionIndex);
-        semanticPreprocessingData.setTokens(tokensList);
-        semanticPreprocessingData.setEncodedTags(encodedTagsList);
+        semanticPreprocessingData.setTokens(filteredTokensList);
+        semanticPreprocessingData.setEncodedTags(filteredEncodedTagsList);
 
-        prepositionPhrasePreprocessor.preprocess(encodedSubPath, semanticPreprocessingData);
-        nounPhrasePreprocessor.preprocess(encodedSubPath, semanticPreprocessingData);
-        verbPhrasePreprocessor.preprocess(encodedSubPath, semanticPreprocessingData);
+        prepositionPhrasePreprocessor.preprocess(filteredEncodedSubpath, semanticPreprocessingData);
+        nounPhrasePreprocessor.preprocess(filteredEncodedSubpath, semanticPreprocessingData);
+        verbPhrasePreprocessor.preprocess(filteredEncodedSubpath, semanticPreprocessingData);
         return semanticPreprocessingData;
     }
 

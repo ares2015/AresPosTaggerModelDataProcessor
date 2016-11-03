@@ -11,9 +11,9 @@ public final class TestDataRow {
 
     private String sentence;
 
-    private String subPath;
+    private String path;
 
-    private String encodedSubPath;
+    private String encodedPath;
 
     private List<String> tokensList;
 
@@ -45,20 +45,20 @@ public final class TestDataRow {
         this.sentence = sentence;
     }
 
-    public String getSubPath() {
-        return subPath;
+    public String getPath() {
+        return path;
     }
 
-    public void setSubPath(String subPath) {
-        this.subPath = subPath;
+    public void setPath(String path) {
+        this.path = path;
     }
 
-    public String getEncodedSubPath() {
-        return encodedSubPath;
+    public String getEncodedPath() {
+        return encodedPath;
     }
 
-    public void setEncodedSubPath(String encodedSubPath) {
-        this.encodedSubPath = encodedSubPath;
+    public void setEncodedPath(String encodedPath) {
+        this.encodedPath = encodedPath;
     }
 
     public List<String> getTokensList() {

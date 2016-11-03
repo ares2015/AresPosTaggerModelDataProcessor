@@ -44,7 +44,7 @@ public class SemanticAnalyserImpl implements SemanticAnalyser {
                 }
             } else {
                 if (canGoToSemanticAnalysis(testDataRow.getEncodedTagsList())) {
-                    analyseSentence(testDataRow.getEncodedSubPath(), testDataRow.getTokensList(), testDataRow.getEncodedTagsList());
+                    analyseSentence(testDataRow.getEncodedPath(), testDataRow.getTokensList(), testDataRow.getEncodedTagsList());
                 }
             }
         }
@@ -58,7 +58,7 @@ public class SemanticAnalyserImpl implements SemanticAnalyser {
 
     private boolean canGoToSemanticAnalysis(List<String> encodedTags) {
         for (String tag : encodedTags) {
-            if (semanticAnalysisFilterCache.getStopTagsCache().contains(tag)) {
+            if (semanticAnalysisFilterCache.getTagsToFilterCache().contains(tag)) {
                 return false;
             }
         }

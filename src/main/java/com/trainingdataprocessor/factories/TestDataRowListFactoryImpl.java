@@ -70,8 +70,8 @@ public class TestDataRowListFactoryImpl implements TestDataRowListFactory {
 
                 //SENTENCE, SUBPATH AND ENCODED SUBPATH
                 testDataRow.setSentence(sentence);
-                testDataRow.setSubPath(subPath);
-                testDataRow.setEncodedSubPath(tagsEncoder.encodeTagsListToEncodedSubPath(tagsList));
+                testDataRow.setPath(subPath);
+                testDataRow.setEncodedPath(tagsEncoder.encodeTagsListToEncodedSubPath(tagsList));
 
                 //ENCODED TAGS MULTILIST
                 List<List<String>> encodedTagsMultiList = tagsEncoder.encodeTagsMultiListToEncodedTagsMultiList(tagsMultiList);
@@ -88,9 +88,9 @@ public class TestDataRowListFactoryImpl implements TestDataRowListFactory {
 
                 //SENTENCE, SUBPATH AND ENCODED SUBPATH
                 testDataRow.setSentence(sentence);
-                testDataRow.setSubPath(subPath);
+                testDataRow.setPath(subPath);
                 String encodedSubPath = tagsEncoder.encodeTagsListToEncodedSubPath(tagsList);
-                testDataRow.setEncodedSubPath(encodedSubPath);
+                testDataRow.setEncodedPath(encodedSubPath);
 
                 //TOKENS LIST, TAGS LIST, ENCODED TAGS LIST
                 testDataRow.setTokensList(tokensList);

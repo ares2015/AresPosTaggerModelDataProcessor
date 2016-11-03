@@ -2,12 +2,12 @@ package factories;
 
 import com.trainingdataprocessor.cache.TagsCodingCache;
 import com.trainingdataprocessor.data.TestDataRow;
+import com.trainingdataprocessor.encoding.TagsEncoder;
+import com.trainingdataprocessor.encoding.TagsEncoderImpl;
 import com.trainingdataprocessor.factories.MultiListFactory;
 import com.trainingdataprocessor.factories.MultiListFactoryImpl;
 import com.trainingdataprocessor.factories.TestDataRowListFactory;
 import com.trainingdataprocessor.factories.TestDataRowListFactoryImpl;
-import com.trainingdataprocessor.encoding.TagsEncoder;
-import com.trainingdataprocessor.encoding.TagsEncoderImpl;
 import com.trainingdataprocessor.tokenizing.Tokenizer;
 import com.trainingdataprocessor.tokenizing.TokenizerImpl;
 import org.junit.Test;
@@ -15,9 +15,7 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 /**
  * Created by Oliver on 8/5/2016.
@@ -47,9 +45,9 @@ public class TestDataRowListFactoryTest {
         assertEquals(5, testDataRow.getTagsList().size());
 
         assertEquals("boys drink beer in pub", testDataRow.getSentence());
-        assertEquals("N V N PR N", testDataRow.getSubPath());
+        assertEquals("N V N PR N", testDataRow.getPath());
 
-        assertEquals("NVNPN", testDataRow.getEncodedSubPath());
+        assertEquals("NVNPN", testDataRow.getEncodedPath());
 
         assertEquals("boys", testDataRow.getTokensList().get(0));
         assertEquals("drink", testDataRow.getTokensList().get(1));
@@ -83,8 +81,8 @@ public class TestDataRowListFactoryTest {
 
         assertTrue(testDataRow.containsSubSentences());
         assertEquals("john, harry, mike and bob drink beer in pub", testDataRow.getSentence());
-        assertEquals("N, N, N AO N V N PR N", testDataRow.getSubPath());
-        assertEquals("NNN>NVNPN", testDataRow.getEncodedSubPath());
+        assertEquals("N, N, N AO N V N PR N", testDataRow.getPath());
+        assertEquals("NNN>NVNPN", testDataRow.getEncodedPath());
 
         assertEquals(9, testDataRow.getTokensList().size());
         assertEquals(9, testDataRow.getTagsList().size());

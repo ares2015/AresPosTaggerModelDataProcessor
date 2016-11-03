@@ -1,5 +1,6 @@
 package semantics;
 
+import com.trainingdataprocessor.cache.SemanticAnalysisFilterCache;
 import com.trainingdataprocessor.data.semantics.SemanticExtractionData;
 import com.trainingdataprocessor.data.semantics.SemanticPreprocessingData;
 import com.trainingdataprocessor.regex.RegexPatternSearcher;
@@ -10,6 +11,8 @@ import com.trainingdataprocessor.semantics.extraction.phrases.NounPhraseExtracto
 import com.trainingdataprocessor.semantics.extraction.phrases.PhraseExtractor;
 import com.trainingdataprocessor.semantics.extraction.phrases.PrepositionPhraseExtractorImpl;
 import com.trainingdataprocessor.semantics.extraction.phrases.VerbPhraseExtractorImpl;
+import com.trainingdataprocessor.semantics.preprocessing.SemanticPreprocessingFilter;
+import com.trainingdataprocessor.semantics.preprocessing.SemanticPreprocessingFilterImpl;
 import com.trainingdataprocessor.semantics.preprocessing.SemanticPreprocessor;
 import com.trainingdataprocessor.semantics.preprocessing.SemanticPreprocessorImpl;
 import com.trainingdataprocessor.semantics.preprocessing.phrases.NounPhrasePreprocessorImpl;
@@ -31,12 +34,14 @@ import static org.junit.Assert.assertEquals;
  * Created by Oliver on 10/16/2016.
  */
 public class SemanticPreprocessingAndExtractionIntegrationTest {
+    private Tokenizer tokenizer = new TokenizerImpl();
+    private SemanticAnalysisFilterCache semanticAnalysisFilterCache = new SemanticAnalysisFilterCache();
+    private SemanticPreprocessingFilter semanticPreprocessingFilter = new SemanticPreprocessingFilterImpl(semanticAnalysisFilterCache, tokenizer);
     private RegexPatternSearcher regexPatternSearcher = new RegexPatternSearcherImpl();
     private PhrasePreprocessor prepositionPhrasePreprocessor = new PrepositionPhrasePreprocessorImpl(regexPatternSearcher);
     private PhrasePreprocessor nounPhrasePreprocessor = new NounPhrasePreprocessorImpl(regexPatternSearcher);
     private PhrasePreprocessor verbPhrasePreprocessor = new VerbPhrasePreprocessorImpl(regexPatternSearcher);
-    private SemanticPreprocessor semanticPreprocessor = new SemanticPreprocessorImpl(prepositionPhrasePreprocessor, nounPhrasePreprocessor, verbPhrasePreprocessor);
-    private Tokenizer tokenizer = new TokenizerImpl();
+    private SemanticPreprocessor semanticPreprocessor = new SemanticPreprocessorImpl(semanticPreprocessingFilter, prepositionPhrasePreprocessor, nounPhrasePreprocessor, verbPhrasePreprocessor);
     private PhraseExtractor prepositionPhraseExtractor = new PrepositionPhraseExtractorImpl(tokenizer);
     private PhraseExtractor nounPhraseExtractor = new NounPhraseExtractorImpl(tokenizer);
     private PhraseExtractor verbPhraseExtractor = new VerbPhraseExtractorImpl(tokenizer);

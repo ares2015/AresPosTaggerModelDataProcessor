@@ -10,32 +10,32 @@ import java.util.Set;
  */
 public final class SemanticAnalysisFilterCache {
 
-    private final Set<String> stopTagsCache = new HashSet<>();
+    private final Set<String> tagsToFilterCache = new HashSet<>();
 
-    private final Set<String> databaseFilterWordsCache = new HashSet<>();
+    private final Set<String> wordsToFilterCache = new HashSet<>();
 
     {
-        stopTagsCache.add(EncodedTags.AND_OR);
-        stopTagsCache.add(EncodedTags.HAVE);
-        stopTagsCache.add(EncodedTags.CONJUNCTION);
-        stopTagsCache.add(EncodedTags.PRONOUN_PERSONAL);
-        stopTagsCache.add(EncodedTags.WH_DETERMINER);
-        stopTagsCache.add(EncodedTags.WH_PRONOUN);
-        stopTagsCache.add(EncodedTags.WH_ADVERB);
-        stopTagsCache.add(EncodedTags.THERE);
-        stopTagsCache.add(EncodedTags.HERE);
+        tagsToFilterCache.add(EncodedTags.AND_OR);
+        tagsToFilterCache.add(EncodedTags.HAVE);
+        tagsToFilterCache.add(EncodedTags.CONJUNCTION);
+        tagsToFilterCache.add(EncodedTags.PRONOUN_PERSONAL);
+        tagsToFilterCache.add(EncodedTags.WH_DETERMINER);
+        tagsToFilterCache.add(EncodedTags.WH_PRONOUN);
+        tagsToFilterCache.add(EncodedTags.WH_ADVERB);
+        tagsToFilterCache.add(EncodedTags.THERE);
+        tagsToFilterCache.add(EncodedTags.HERE);
 
-        databaseFilterWordsCache.add("the");
-        databaseFilterWordsCache.add("a");
-        databaseFilterWordsCache.add("an");
+        wordsToFilterCache.add("the");
+        wordsToFilterCache.add("a");
+        wordsToFilterCache.add("an");
 
     }
 
-    public Set<String> getStopTagsCache() {
-        return stopTagsCache;
+    public Set<String> getTagsToFilterCache() {
+        return tagsToFilterCache;
     }
 
-    public Set<String> getDatabaseFilterWordsCache() {
-        return databaseFilterWordsCache;
+    public Set<String> getWordsToFilterCache() {
+        return wordsToFilterCache;
     }
 }

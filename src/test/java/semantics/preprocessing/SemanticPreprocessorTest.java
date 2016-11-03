@@ -1,15 +1,20 @@
 package semantics.preprocessing;
 
+import com.trainingdataprocessor.cache.SemanticAnalysisFilterCache;
 import com.trainingdataprocessor.data.semantics.SemanticPreprocessingData;
 import com.trainingdataprocessor.regex.RegexPatternSearcher;
 import com.trainingdataprocessor.regex.RegexPatternSearcherImpl;
+import com.trainingdataprocessor.semantics.preprocessing.SemanticPreprocessingFilter;
+import com.trainingdataprocessor.semantics.preprocessing.SemanticPreprocessingFilterImpl;
 import com.trainingdataprocessor.semantics.preprocessing.SemanticPreprocessor;
 import com.trainingdataprocessor.semantics.preprocessing.SemanticPreprocessorImpl;
-import com.trainingdataprocessor.semantics.preprocessing.phrases.PhrasePreprocessor;
 import com.trainingdataprocessor.semantics.preprocessing.phrases.NounPhrasePreprocessorImpl;
+import com.trainingdataprocessor.semantics.preprocessing.phrases.PhrasePreprocessor;
 import com.trainingdataprocessor.semantics.preprocessing.phrases.PrepositionPhrasePreprocessorImpl;
 import com.trainingdataprocessor.semantics.preprocessing.phrases.VerbPhrasePreprocessorImpl;
 import com.trainingdataprocessor.tags.EncodedTags;
+import com.trainingdataprocessor.tokenizing.Tokenizer;
+import com.trainingdataprocessor.tokenizing.TokenizerImpl;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -17,13 +22,16 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 /**
  * Created by Oliver on 10/17/2016.
  */
 public class SemanticPreprocessorTest {
+
+    private Tokenizer tokenizer = new TokenizerImpl();
+    private SemanticAnalysisFilterCache semanticAnalysisFilterCache = new SemanticAnalysisFilterCache();
+    private SemanticPreprocessingFilter semanticPreprocessingFilter = new SemanticPreprocessingFilterImpl(semanticAnalysisFilterCache, tokenizer);
 
     private RegexPatternSearcher regexPatternSearcher = new RegexPatternSearcherImpl();
 
@@ -33,22 +41,24 @@ public class SemanticPreprocessorTest {
 
     private PhrasePreprocessor verbPhrasePreprocessor = new VerbPhrasePreprocessorImpl(regexPatternSearcher);
 
-    private SemanticPreprocessor semanticPreprocessor = new SemanticPreprocessorImpl(prepositionPhrasePreprocessor, nounPhrasePreprocessor, verbPhrasePreprocessor);
+    private SemanticPreprocessor semanticPreprocessor = new SemanticPreprocessorImpl(semanticPreprocessingFilter, prepositionPhrasePreprocessor,
+            nounPhrasePreprocessor, verbPhrasePreprocessor);
 
 
     @Test
-    public void testNoPrepositionPhrases(){
-        String sentencePattern = "JNVANN";
+    public void testNoPrepositionPhrases() {
+        String sentencePattern = "JNVADNN";
 
         List<String> encodedTags = new ArrayList<String>();
         encodedTags.add(EncodedTags.ADJECTIVE);
         encodedTags.add(EncodedTags.NOUN);
         encodedTags.add(EncodedTags.VERB);
         encodedTags.add(EncodedTags.ADVERB);
+        encodedTags.add(EncodedTags.DETERMINER);
         encodedTags.add(EncodedTags.NOUN);
         encodedTags.add(EncodedTags.NOUN);
 
-        String sentence = "brave firemen fight furiously forest fire";
+        String sentence = "brave firemen fight furiously the forest fire";
         List<String> tokens = Arrays.asList(sentence.split("\\ "));
 
         SemanticPreprocessingData semanticPreprocessingData = semanticPreprocessor.preprocess(sentencePattern, tokens, encodedTags);
@@ -58,7 +68,7 @@ public class SemanticPreprocessorTest {
     }
 
     @Test
-    public void testBeforeAndAfterPrepositionPhrases(){
+    public void testBeforeAndAfterPrepositionPhrases() {
         String sentencePattern = "NPNPNVANNPNN";
 
         List<String> encodedTags = new ArrayList<String>();
