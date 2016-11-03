@@ -10,6 +10,14 @@ import java.util.List;
  */
 public final class SemanticPreprocessingData {
 
+    private boolean containsBeforeVerbNounPhrase;
+
+    private boolean containsAfterVerbNounPhrase;
+
+    private boolean containsBeforeVerbPrepositionPhrase;
+
+    private boolean containsAfterVerbPrepositionPhrase;
+
     private List<String> tokens;
 
     private List<String> encodedTags;
@@ -24,17 +32,9 @@ public final class SemanticPreprocessingData {
 
     private RegexPatternData afterVerbPrepositionPhrase;
 
-    private boolean containsBeforeVerbPrepositionPhrase;
-
-    private boolean containsAfterVerbPrepositionPhrase;
-
     private RegexPatternData beforeVerbNounPhrase;
 
     private RegexPatternData afterVerbNounPhrase;
-
-    private boolean containsBeforeVerbNounPhrase;
-
-    private boolean containsAfterVerbNounPhrase;
 
     private RegexPatternData verbPhrase;
 

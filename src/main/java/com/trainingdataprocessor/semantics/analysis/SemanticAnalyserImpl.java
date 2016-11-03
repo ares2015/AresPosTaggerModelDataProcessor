@@ -7,6 +7,7 @@ import com.trainingdataprocessor.data.semantics.SemanticPreprocessingData;
 import com.trainingdataprocessor.database.TrainingDataAccessor;
 import com.trainingdataprocessor.semantics.extraction.SemanticExtractor;
 import com.trainingdataprocessor.semantics.preprocessing.SemanticPreprocessor;
+import com.trainingdataprocessor.tags.EncodedTags;
 
 import java.util.List;
 
@@ -52,17 +53,26 @@ public class SemanticAnalyserImpl implements SemanticAnalyser {
 
     private void analyseSentence(String sentencePattern, List<String> tokens, List<String> encodedTags) {
         SemanticPreprocessingData semanticPreprocessingData = semanticPreprocessor.preprocess(sentencePattern, tokens, encodedTags);
-        SemanticExtractionData semanticExtractionData = semanticExtractor.extract(semanticPreprocessingData);
-
+        if (canGoToSemanticExtraction(semanticPreprocessingData)) {
+            SemanticExtractionData semanticExtractionData = semanticExtractor.extract(semanticPreprocessingData);
+        }
     }
 
     private boolean canGoToSemanticAnalysis(List<String> encodedTags) {
+        boolean containsVerb = false;
         for (String tag : encodedTags) {
             if (semanticAnalysisFilterCache.getTagsToFilterCache().contains(tag)) {
                 return false;
             }
+            if (EncodedTags.VERB.equals(tag)) {
+                containsVerb = true;
+            }
         }
-        return true;
+        return containsVerb;
+    }
+
+    private boolean canGoToSemanticExtraction(SemanticPreprocessingData semanticPreprocessingData) {
+        return semanticPreprocessingData.containsBeforeVerbNounPhrase() || semanticPreprocessingData.containsBeforeVerbPrepositionPhrase();
     }
 
 
