@@ -14,7 +14,7 @@ import java.util.List;
 /**
  * Created by Oliver on 10/31/2016.
  */
-public class SemanticAnalyserImpl implements SemanticAnalyser {
+public class SemanticAnalyserImpl implements SemanticAnalyser, Runnable {
 
     private SemanticPreprocessor semanticPreprocessor;
 
@@ -24,16 +24,24 @@ public class SemanticAnalyserImpl implements SemanticAnalyser {
 
     private SemanticAnalysisFilterCache semanticAnalysisFilterCache;
 
+    private List<TestDataRow> testDataRowList;
+
     public SemanticAnalyserImpl(SemanticPreprocessor semanticPreprocessor, SemanticExtractor semanticExtractor,
-                                TrainingDataAccessor trainingDataAccessor, SemanticAnalysisFilterCache semanticAnalysisFilterCache) {
+                                TrainingDataAccessor trainingDataAccessor, SemanticAnalysisFilterCache semanticAnalysisFilterCache, List<TestDataRow> testDataRowList) {
         this.semanticPreprocessor = semanticPreprocessor;
         this.semanticExtractor = semanticExtractor;
         this.trainingDataAccessor = trainingDataAccessor;
         this.semanticAnalysisFilterCache = semanticAnalysisFilterCache;
+        this.testDataRowList = testDataRowList;
     }
 
     @Override
-    public void analyse(List<TestDataRow> testDataRowList) {
+    public void run() {
+        analyse();
+    }
+
+    @Override
+    public void analyse() {
 
         for (TestDataRow testDataRow : testDataRowList) {
             if (testDataRow.containsSubSentences()) {
@@ -74,6 +82,4 @@ public class SemanticAnalyserImpl implements SemanticAnalyser {
     private boolean canGoToSemanticExtraction(SemanticPreprocessingData semanticPreprocessingData) {
         return semanticPreprocessingData.containsBeforeVerbNounPhrase() || semanticPreprocessingData.containsBeforeVerbPrepositionPhrase();
     }
-
-
 }
