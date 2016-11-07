@@ -4,15 +4,16 @@ import com.trainingdataprocessor.data.RegexPatternData;
 import com.trainingdataprocessor.data.semantics.SemanticPreprocessingData;
 import com.trainingdataprocessor.regex.RegexExpressions;
 import com.trainingdataprocessor.regex.RegexPatternSearcher;
-import com.trainingdataprocessor.semantics.preprocessing.phrases.PhrasePreprocessor;
-import com.trainingdataprocessor.tags.EncodedTags;
 
 import java.util.List;
+import java.util.logging.Logger;
 
 /**
  * Created by Oliver on 10/21/2016.
  */
 public class NounPhrasePreprocessorImpl implements PhrasePreprocessor {
+
+    private final static Logger LOGGER = Logger.getLogger(NounPhrasePreprocessorImpl.class.getName());
 
     private RegexPatternSearcher regexPatternSearcher;
 
@@ -27,6 +28,7 @@ public class NounPhrasePreprocessorImpl implements PhrasePreprocessor {
         if (regexPatternDataList.size() > 0) {
             for (RegexPatternData regexPatternData : regexPatternDataList) {
                 if (regexPatternData.getEndIndex() <= verbIndex && (!semanticPreprocessingData.containsBeforeVerbPrepositionPhrase())) {
+                  LOGGER.info("Sentence pattern: " + sentencePattern + " contains beforeVerbNounPhrase: " + regexPatternData);
                     semanticPreprocessingData.setContainsBeforeVerbNounPhrase(true);
                     semanticPreprocessingData.setBeforeVerbNounPhrase(regexPatternData);
                 } else if (regexPatternData.getEndIndex() >= verbIndex && (!semanticPreprocessingData.containsAfterVerbPreposition())) {

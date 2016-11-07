@@ -5,11 +5,14 @@ import com.trainingdataprocessor.semantics.preprocessing.phrases.PhrasePreproces
 import com.trainingdataprocessor.tags.EncodedTags;
 
 import java.util.List;
+import java.util.logging.Logger;
 
 /**
  * Created by Oliver on 10/17/2016.
  */
 public class SemanticPreprocessorImpl implements SemanticPreprocessor {
+
+    private final static Logger LOGGER = Logger.getLogger(SemanticPreprocessorImpl.class.getName());
 
     private SemanticPreprocessingFilter semanticPreprocessingFilter;
 
@@ -28,6 +31,8 @@ public class SemanticPreprocessorImpl implements SemanticPreprocessor {
     }
 
     public SemanticPreprocessingData preprocess(String encodedSubPath, List<String> tokensList, List<String> encodedTagsList) {
+        LOGGER.info("ENTERING preprocess method of SemanticPreprocessorImpl....");
+        LOGGER.info("*********************************************************************");
 
         String filteredEncodedSubpath = semanticPreprocessingFilter.filterToString(encodedTagsList);
         List<String> filteredTokensList = semanticPreprocessingFilter.filterToList(tokensList);
@@ -48,6 +53,10 @@ public class SemanticPreprocessorImpl implements SemanticPreprocessor {
         prepositionPhrasePreprocessor.preprocess(filteredEncodedSubpath, semanticPreprocessingData);
         nounPhrasePreprocessor.preprocess(filteredEncodedSubpath, semanticPreprocessingData);
         verbPhrasePreprocessor.preprocess(filteredEncodedSubpath, semanticPreprocessingData);
+
+        LOGGER.info("LEAVING preprocess method of SemanticPreprocessorImpl....");
+        LOGGER.info("*********************************************************************");
+
         return semanticPreprocessingData;
     }
 
