@@ -28,7 +28,7 @@ public class NounPhrasePreprocessorImpl implements PhrasePreprocessor {
         if (regexPatternDataList.size() > 0) {
             for (RegexPatternData regexPatternData : regexPatternDataList) {
                 if (regexPatternData.getEndIndex() <= verbIndex && (!semanticPreprocessingData.containsBeforeVerbPrepositionPhrase())) {
-                  LOGGER.info("Sentence pattern: " + sentencePattern + " contains beforeVerbNounPhrase: " + regexPatternData);
+                  LOGGER.info("Sentence pattern: " + sentencePattern + " contains beforeVerbNounPhrase: " + regexPatternData.getPattern());
                     semanticPreprocessingData.setContainsBeforeVerbNounPhrase(true);
                     semanticPreprocessingData.setBeforeVerbNounPhrase(regexPatternData);
                 } else if (regexPatternData.getEndIndex() >= verbIndex && (!semanticPreprocessingData.containsAfterVerbPreposition())) {

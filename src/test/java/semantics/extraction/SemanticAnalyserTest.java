@@ -53,7 +53,7 @@ public class SemanticAnalyserTest {
 
 
     @Test
-    public void test(){
+    public void test() throws InterruptedException {
         String encodedPath = "NNVNAPNPN#";
         String sentence = "King George visited Hanover again from May to November 1719";
         List<String> encodedTags = new ArrayList<String>();
@@ -78,9 +78,9 @@ public class SemanticAnalyserTest {
         testDataRowList.add(testDataRow);
 
         Runnable semanticAnalyser = new SemanticAnalyserImpl(semanticPreprocessor, semanticExtractor, trainingDataAccessor, new SemanticAnalysisFilterCache(), testDataRowList);
-        ExecutorService executor = Executors.newFixedThreadPool(2);
+        ExecutorService executor = Executors.newFixedThreadPool(1);
         executor.execute(semanticAnalyser);
-        executor.shutdown();
+        Thread.sleep(2000);
     }
 
 }
