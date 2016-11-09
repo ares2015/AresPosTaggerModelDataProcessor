@@ -1,4 +1,4 @@
-package semantics.extraction;
+package semantics.analysis;
 
 import com.trainingdataprocessor.cache.SemanticAnalysisFilterCache;
 import com.trainingdataprocessor.data.TestDataRow;
@@ -26,6 +26,7 @@ import com.trainingdataprocessor.tokenizing.TokenizerImpl;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.jdbc.core.JdbcTemplate;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -39,6 +40,7 @@ import java.util.concurrent.Executors;
 public class SemanticAnalyserTest {
 
     ApplicationContext context = new ClassPathXmlApplicationContext("beans.xml");
+    JdbcTemplate jdbcTemplate = (JdbcTemplate) context.getBean("jdbcTemplate");
     TrainingDataAccessor trainingDataAccessor = (TrainingDataAccessor) context.getBean("trainingDataAccessor");
 
     private Tokenizer tokenizer = new TokenizerImpl();
@@ -84,6 +86,13 @@ public class SemanticAnalyserTest {
         Runnable semanticAnalyser = new SemanticAnalyserImpl(semanticPreprocessor, semanticExtractor, trainingDataAccessor, new SemanticAnalysisFilterCache(), testDataRowList);
         ExecutorService executor = Executors.newFixedThreadPool(1);
         executor.execute(semanticAnalyser);
+
+        String sql = "select max(id) from jos_nlp_semantic_data";
+        int id = jdbcTemplate.queryForInt(sql);
+
+        sql = "delete from jos_nlp_semantic_data where id = ?";
+        jdbcTemplate.update(sql,  new Object[]{id});
+
         Thread.sleep(5000);
     }
 

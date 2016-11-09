@@ -26,10 +26,10 @@ public class TrainingDataAccessorTest {
         semanticExtractionData.setExtendedNounPredicate("ice hockey player");
         trainingDataAccessor.insertSemanticData(semanticExtractionData);
 
-//        String sql = "select max(id) from jos_nlp_semantic_data";
-//        int id = jdbcTemplate.queryForInt(sql);
-//
-//        sql = "delete from jos_nlp_semantic_data where id = ?";
-//        jdbcTemplate.update(sql,  new Object[]{id});
+        String sql = "select max(id) from jos_nlp_semantic_data";
+        int id = jdbcTemplate.queryForInt(sql);
+
+        sql = "delete from jos_nlp_semantic_data where id = ?";
+        jdbcTemplate.update(sql,  new Object[]{id});
     }
 }
