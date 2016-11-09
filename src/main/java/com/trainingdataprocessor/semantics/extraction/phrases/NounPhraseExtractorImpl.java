@@ -24,7 +24,7 @@ public class NounPhraseExtractorImpl implements PhraseExtractor {
             semanticExtractionData.setExtendedSubject(extendedSubject);
             semanticExtractionData.setAtomicSubject(semanticPreprocessingData.getTokens().get(endIndex - 1));
         }
-        if (semanticPreprocessingData.containsAfterVerbNounPhrase() && semanticExtractionData.getExtendedNounPredicate() == null) {
+        if (semanticPreprocessingData.containsAfterVerbNounPhrase() && "".equals(semanticExtractionData.getExtendedNounPredicate())) {
             int startIndex = semanticPreprocessingData.getAfterVerbNounPhrase().getStartIndex();
             int endIndex = semanticPreprocessingData.getAfterVerbNounPhrase().getEndIndex();
             String extendedSubject = tokenizer.convertSubListToString(semanticPreprocessingData.getTokens(), startIndex, endIndex);

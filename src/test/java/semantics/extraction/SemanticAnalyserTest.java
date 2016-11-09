@@ -84,7 +84,7 @@ public class SemanticAnalyserTest {
         Runnable semanticAnalyser = new SemanticAnalyserImpl(semanticPreprocessor, semanticExtractor, trainingDataAccessor, new SemanticAnalysisFilterCache(), testDataRowList);
         ExecutorService executor = Executors.newFixedThreadPool(1);
         executor.execute(semanticAnalyser);
-        Thread.sleep(2000);
+        Thread.sleep(5000);
     }
 
 }

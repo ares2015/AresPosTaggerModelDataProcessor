@@ -19,8 +19,10 @@ public class VerbPhraseExtractorImpl implements PhraseExtractor {
     public void extract(SemanticPreprocessingData semanticPreprocessingData, SemanticExtractionData semanticExtractionData) {
         int startIndex = semanticPreprocessingData.getVerbPhrase().getStartIndex();
         int endIndex = semanticPreprocessingData.getVerbPhrase().getEndIndex();
-        String extendedSubject = tokenizer.convertSubListToString(semanticPreprocessingData.getTokens(), startIndex, endIndex);
-        semanticExtractionData.setExtendedVerbPredicate(extendedSubject);
+//        if (endIndex - startIndex > 1) {
+            String extendedSubject = tokenizer.convertSubListToString(semanticPreprocessingData.getTokens(), startIndex, endIndex);
+            semanticExtractionData.setExtendedVerbPredicate(extendedSubject);
+//        }
         int verbIndex = semanticPreprocessingData.getVerbIndex();
         semanticExtractionData.setAtomicVerbPredicate(semanticPreprocessingData.getTokens().get(verbIndex));
     }

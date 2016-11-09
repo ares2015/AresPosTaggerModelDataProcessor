@@ -5,17 +5,17 @@ package com.trainingdataprocessor.data.semantics;
  */
 public class SemanticExtractionData {
 
-    private String atomicSubject;
+    private String atomicSubject = "";
 
-    private String extendedSubject;
+    private String extendedSubject = "";
 
-    private String atomicVerbPredicate;
+    private String atomicVerbPredicate = "";
 
-    private String extendedVerbPredicate;
+    private String extendedVerbPredicate = "";
 
-    private String atomicNounPredicate;
+    private String atomicNounPredicate = "";
 
-    private String extendedNounPredicate;
+    private String extendedNounPredicate = "";
 
     public String getAtomicSubject() {
         return atomicSubject;

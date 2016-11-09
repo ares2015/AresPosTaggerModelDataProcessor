@@ -212,7 +212,7 @@ public class SemanticPreprocessingAndExtractionIntegrationTest {
         assertEquals("sing", semanticExtractionData.getAtomicVerbPredicate());
         assertEquals("can sing absolutely perfectly ", semanticExtractionData.getExtendedVerbPredicate());
         assertEquals("before audience ", semanticExtractionData.getExtendedNounPredicate());
-        assertEquals(null, semanticExtractionData.getAtomicNounPredicate());
+        assertEquals("", semanticExtractionData.getAtomicNounPredicate());
 
         /*********************************************************************************************/
         sentencePattern = "NIJPN";

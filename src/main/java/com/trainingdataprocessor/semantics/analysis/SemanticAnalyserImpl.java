@@ -63,6 +63,7 @@ public class SemanticAnalyserImpl implements SemanticAnalyser, Runnable {
         SemanticPreprocessingData semanticPreprocessingData = semanticPreprocessor.preprocess(sentencePattern, tokens, encodedTags);
         if (canGoToSemanticExtraction(semanticPreprocessingData)) {
             SemanticExtractionData semanticExtractionData = semanticExtractor.extract(semanticPreprocessingData);
+            trainingDataAccessor.insertSemanticData(semanticExtractionData);
         }
     }
 
