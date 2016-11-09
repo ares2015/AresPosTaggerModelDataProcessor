@@ -23,8 +23,9 @@ import com.trainingdataprocessor.semantics.preprocessing.phrases.VerbPhrasePrepr
 import com.trainingdataprocessor.tags.EncodedTags;
 import com.trainingdataprocessor.tokenizing.Tokenizer;
 import com.trainingdataprocessor.tokenizing.TokenizerImpl;
-import mocks.TrainingDataAccessorMock;
 import org.junit.Test;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -36,6 +37,9 @@ import java.util.concurrent.Executors;
  * Created by Oliver on 11/7/2016.
  */
 public class SemanticAnalyserTest {
+
+    ApplicationContext context = new ClassPathXmlApplicationContext("beans.xml");
+    TrainingDataAccessor trainingDataAccessor = (TrainingDataAccessor) context.getBean("trainingDataAccessor");
 
     private Tokenizer tokenizer = new TokenizerImpl();
     private SemanticAnalysisFilterCache semanticAnalysisFilterCache = new SemanticAnalysisFilterCache();
@@ -49,7 +53,7 @@ public class SemanticAnalyserTest {
     private PhraseExtractor nounPhraseExtractor = new NounPhraseExtractorImpl(tokenizer);
     private PhraseExtractor verbPhraseExtractor = new VerbPhraseExtractorImpl(tokenizer);
     private SemanticExtractor semanticExtractor = new SemanticExtractorImpl(prepositionPhraseExtractor, nounPhraseExtractor, verbPhraseExtractor);
-    private TrainingDataAccessor trainingDataAccessor = new TrainingDataAccessorMock();
+//    private TrainingDataAccessor trainingDataAccessor = new TrainingDataAccessorMock();
 
 
     @Test
