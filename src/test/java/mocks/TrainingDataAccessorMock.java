@@ -1,6 +1,7 @@
 package mocks;
 
 import com.trainingdataprocessor.data.BigramData;
+import com.trainingdataprocessor.data.StartTagEndTagPair;
 import com.trainingdataprocessor.data.semantics.SemanticExtractionData;
 import com.trainingdataprocessor.database.TrainingDataAccessor;
 
@@ -10,7 +11,12 @@ import com.trainingdataprocessor.database.TrainingDataAccessor;
 public class TrainingDataAccessorMock implements TrainingDataAccessor {
 
     @Override
-    public void insertSemanticData(SemanticExtractionData semanticExtractionData) {
+    public void insertBigramData(BigramData bigramData) {
+
+    }
+
+    @Override
+    public void insertStartTagEndTagPair(StartTagEndTagPair startTagEndTagPair) {
 
     }
 
@@ -21,6 +27,11 @@ public class TrainingDataAccessorMock implements TrainingDataAccessor {
 
     public void populateBigramTag1FrequencyData(BigramData bigramData) {
         bigramData.setTag1Frequency(450);
+    }
+
+    @Override
+    public void insertSemanticData(SemanticExtractionData semanticExtractionData) {
+
     }
 
 }
