@@ -1,6 +1,7 @@
 package com.trainingdataprocessor.database;
 
 import com.trainingdataprocessor.data.BigramData;
+import com.trainingdataprocessor.data.StartTagEndTagPair;
 import com.trainingdataprocessor.data.semantics.SemanticExtractionData;
 
 /**
@@ -8,9 +9,14 @@ import com.trainingdataprocessor.data.semantics.SemanticExtractionData;
  */
 public interface TrainingDataAccessor {
 
-    void insertSemanticData(SemanticExtractionData semanticExtractionData);
+    void insertBigramData(BigramData bigramData);
+
+    void insertStartTagEndTagPair(StartTagEndTagPair startTagEndTagPair);
 
     void populateBigramFrequencyData(BigramData bigramData);
 
     void populateBigramTag1FrequencyData(BigramData bigramData);
+
+    void insertSemanticData(SemanticExtractionData semanticExtractionData);
+
 }
