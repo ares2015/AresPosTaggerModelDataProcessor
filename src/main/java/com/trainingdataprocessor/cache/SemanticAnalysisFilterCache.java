@@ -10,11 +10,11 @@ import java.util.Set;
  */
 public final class SemanticAnalysisFilterCache {
 
-    private final Set<String> tagsToFilterCache = new HashSet<>();
+    public static final Set<String> tagsToFilterCache = new HashSet<>();
 
-    private final Set<String> wordsToFilterCache = new HashSet<>();
+    public static final Set<String> wordsToFilterCache = new HashSet<>();
 
-    {
+    static {
         tagsToFilterCache.add(EncodedTags.AND_OR);
         tagsToFilterCache.add(EncodedTags.HAVE);
         tagsToFilterCache.add(EncodedTags.CONJUNCTION);
@@ -28,14 +28,6 @@ public final class SemanticAnalysisFilterCache {
         wordsToFilterCache.add("the");
         wordsToFilterCache.add("a");
         wordsToFilterCache.add("an");
-
     }
 
-    public Set<String> getTagsToFilterCache() {
-        return tagsToFilterCache;
-    }
-
-    public Set<String> getWordsToFilterCache() {
-        return wordsToFilterCache;
-    }
 }

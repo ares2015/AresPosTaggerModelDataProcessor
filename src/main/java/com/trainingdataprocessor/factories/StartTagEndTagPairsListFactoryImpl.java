@@ -1,23 +1,18 @@
 package com.trainingdataprocessor.factories;
 
 
+import com.trainingdataprocessor.data.StartTagEndTagPair;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
-import com.trainingdataprocessor.cache.ConstantTagsCache;
-import com.trainingdataprocessor.data.StartTagEndTagPair;
+import static com.trainingdataprocessor.cache.ConstantTagsCache.constantTagsCache;
 
 
 public class StartTagEndTagPairsListFactoryImpl implements StartTagEndTagPairsListFactory {
 
     private final static Logger LOGGER = Logger.getLogger(StartTagEndTagPairsListFactoryImpl.class.getName());
-
-    private ConstantTagsCache constantTagsCache;
-
-    public StartTagEndTagPairsListFactoryImpl(ConstantTagsCache constantTagsCache) {
-        this.constantTagsCache = constantTagsCache;
-    }
 
     public List<StartTagEndTagPair> create(List<String> tags) {
         List<StartTagEndTagPair> startTagEndTagPairList = new ArrayList<StartTagEndTagPair>();
@@ -62,7 +57,7 @@ public class StartTagEndTagPairsListFactoryImpl implements StartTagEndTagPairsLi
                 subPathAsString += subPath.get(i);
             }
             if (i > 0 && i < tags.size() - 1) {
-                containsConstant = constantTagsCache.getConstantTagsCache().contains(subPath.get(i));
+                containsConstant = constantTagsCache.contains(subPath.get(i));
             }
         }
         return new SubPathTemporaryObject(subPathAsString, containsConstant);

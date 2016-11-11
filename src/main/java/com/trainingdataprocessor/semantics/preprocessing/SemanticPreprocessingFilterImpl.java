@@ -12,12 +12,9 @@ import java.util.List;
  */
 public class SemanticPreprocessingFilterImpl implements SemanticPreprocessingFilter {
 
-    private SemanticAnalysisFilterCache semanticAnalysisFilterCache;
-
     private Tokenizer tokenizer;
 
-    public SemanticPreprocessingFilterImpl(SemanticAnalysisFilterCache semanticAnalysisFilterCache, Tokenizer tokenizer) {
-        this.semanticAnalysisFilterCache = semanticAnalysisFilterCache;
+    public SemanticPreprocessingFilterImpl(Tokenizer tokenizer) {
         this.tokenizer = tokenizer;
     }
 
@@ -44,7 +41,7 @@ public class SemanticPreprocessingFilterImpl implements SemanticPreprocessingFil
     }
 
     private boolean isStopItem(String item) {
-        return (semanticAnalysisFilterCache.getWordsToFilterCache().contains(item))
+        return (SemanticAnalysisFilterCache.wordsToFilterCache.contains(item))
                 || (EncodedTags.DETERMINER.equals(item));
     }
 }

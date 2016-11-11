@@ -1,7 +1,6 @@
 package reader;
 
 import com.trainingdataprocessor.cache.TagsCache;
-import com.trainingdataprocessor.data.TestDataRow;
 import com.trainingdataprocessor.reader.TestDataFileReaderImpl;
 import com.trainingdataprocessor.reader.TestDataReader;
 import com.trainingdataprocessor.tokenizing.Tokenizer;
@@ -24,7 +23,7 @@ public class TestDataFileReaderTest {
     private TagsCache tagsCache = new TagsCache();
     private Tokenizer tokenizer = new TokenizerImpl();
     private ListComparator listComparator = new ListComparatorImpl();
-    private TestDataValidator testDataValidator = new TestDataValidatorImpl(tagsCache, tokenizer, listComparator);
+    private TestDataValidator testDataValidator = new TestDataValidatorImpl(tokenizer, listComparator);
     private TestDataReader testDataReader = new TestDataFileReaderImpl(testDataValidator);
 
 

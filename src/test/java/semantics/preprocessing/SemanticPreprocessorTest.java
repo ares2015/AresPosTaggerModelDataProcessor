@@ -30,8 +30,10 @@ import static org.junit.Assert.assertTrue;
 public class SemanticPreprocessorTest {
 
     private Tokenizer tokenizer = new TokenizerImpl();
+
     private SemanticAnalysisFilterCache semanticAnalysisFilterCache = new SemanticAnalysisFilterCache();
-    private SemanticPreprocessingFilter semanticPreprocessingFilter = new SemanticPreprocessingFilterImpl(semanticAnalysisFilterCache, tokenizer);
+
+    private SemanticPreprocessingFilter semanticPreprocessingFilter = new SemanticPreprocessingFilterImpl(tokenizer);
 
     private RegexPatternSearcher regexPatternSearcher = new RegexPatternSearcherImpl();
 

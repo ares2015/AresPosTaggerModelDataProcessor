@@ -18,7 +18,7 @@ public class TagsEncoderTest {
 
     private TagsCodingCache tagsCodingCache = new TagsCodingCache();
 
-    private TagsEncoder tagsEncoder = new TagsEncoderImpl(tagsCodingCache);
+    private TagsEncoder tagsEncoder = new TagsEncoderImpl();
 
     @Test
     public void testEncode(){

@@ -11,24 +11,11 @@ import java.util.Map;
  */
 public class TagsCodingCache {
 
-    private Map<String,String> encodingMap = new HashMap<String,String>();
+    public static Map<String,String> encodingMap = new HashMap<String,String>();
 
-    private  Map<String,String> decodingMap = new HashMap<String,String>();
+    public static Map<String,String> decodingMap = new HashMap<String,String>();
 
-    public Map<String, String> getEncodingMap() {
-        return encodingMap;
-    }
-
-    public Map<String, String> getDecodingMap() {
-        return decodingMap;
-    }
-
-    public TagsCodingCache(){
-        initializeEncoding();
-        initializeDecoding();
-    }
-
-    private void initializeEncoding(){
+    static {
         encodingMap.put(Tags.ADJECTIVE, EncodedTags.ADJECTIVE);
         encodingMap.put(Tags.ADVERB, EncodedTags.ADVERB);
         encodingMap.put(Tags.CONJUNCTION, EncodedTags.CONJUNCTION);
@@ -54,9 +41,7 @@ public class TagsCodingCache {
         encodingMap.put(Tags.WH_PRONOUN, EncodedTags.WH_PRONOUN);
         encodingMap.put(Tags.WH_PRONOUN_POSSESSIVE, EncodedTags.WH_PRONOUN_POSSESSIVE);
         encodingMap.put(Tags.AND_OR, EncodedTags.AND_OR);
-    }
 
-    private void initializeDecoding(){
         decodingMap.put(EncodedTags.ADJECTIVE, Tags.ADJECTIVE);
         decodingMap.put(EncodedTags.ADVERB, Tags.ADVERB);
         decodingMap.put(EncodedTags.CONJUNCTION, Tags.CONJUNCTION);

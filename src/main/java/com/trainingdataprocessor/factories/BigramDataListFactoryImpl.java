@@ -1,7 +1,6 @@
 package com.trainingdataprocessor.factories;
 
 import com.trainingdataprocessor.calculator.BigramProbabilityCalculator;
-import com.trainingdataprocessor.cache.ConstantTagsCache;
 import com.trainingdataprocessor.data.BigramData;
 import com.trainingdataprocessor.database.TrainingDataAccessor;
 
@@ -9,18 +8,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
+import static com.trainingdataprocessor.cache.ConstantTagsCache.constantTagsCache;
+
 public class BigramDataListFactoryImpl implements BigramDataListFactory {
 
     private final static Logger LOGGER = Logger.getLogger(BigramDataListFactoryImpl.class.getName());
-
-    private ConstantTagsCache constantTagsCache;
 
     private TrainingDataAccessor trainingDataAccessor;
 
     private BigramProbabilityCalculator bigramProbabilityCalculator;
 
-    public BigramDataListFactoryImpl(ConstantTagsCache constantTagsCache, TrainingDataAccessor trainingDataAccessor, BigramProbabilityCalculator bigramProbabilityCalculator) {
-        this.constantTagsCache = constantTagsCache;
+    public BigramDataListFactoryImpl(TrainingDataAccessor trainingDataAccessor, BigramProbabilityCalculator bigramProbabilityCalculator) {
         this.trainingDataAccessor = trainingDataAccessor;
         this.bigramProbabilityCalculator = bigramProbabilityCalculator;
     }
@@ -33,8 +31,8 @@ public class BigramDataListFactoryImpl implements BigramDataListFactory {
         for (int i = 0; i < tags.size() - 1; i++) {
             String tag1 = tags.get(i);
             String tag2 = tags.get(i + 1);
-            boolean isTag1Constant = constantTagsCache.getConstantTagsCache().contains(tag1);
-            boolean isTag2Constant = constantTagsCache.getConstantTagsCache().contains(tag2);
+            boolean isTag1Constant = constantTagsCache.contains(tag1);
+            boolean isTag2Constant = constantTagsCache.contains(tag2);
             BigramData bigramData = new BigramData(tag1, tag2, isTag1Constant, isTag2Constant);
             trainingDataAccessor.populateBigramFrequencyData(bigramData);
             trainingDataAccessor.populateBigramTag1FrequencyData(bigramData);

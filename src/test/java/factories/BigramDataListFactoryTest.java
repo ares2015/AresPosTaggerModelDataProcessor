@@ -1,12 +1,12 @@
 package factories;
 
-import com.trainingdataprocessor.factories.BigramDataListFactory;
-import com.trainingdataprocessor.factories.BigramDataListFactoryImpl;
+import com.trainingdataprocessor.cache.ConstantTagsCache;
 import com.trainingdataprocessor.calculator.BigramProbabilityCalculator;
 import com.trainingdataprocessor.calculator.BigramProbabilityCalculatorImpl;
-import com.trainingdataprocessor.cache.ConstantTagsCache;
 import com.trainingdataprocessor.data.BigramData;
 import com.trainingdataprocessor.database.TrainingDataAccessor;
+import com.trainingdataprocessor.factories.BigramDataListFactory;
+import com.trainingdataprocessor.factories.BigramDataListFactoryImpl;
 import com.trainingdataprocessor.tags.Tags;
 import mocks.TrainingDataAccessorMock;
 import org.junit.Test;
@@ -26,7 +26,7 @@ public class BigramDataListFactoryTest {
     ConstantTagsCache constantTagsCache = new ConstantTagsCache();
     TrainingDataAccessor trainingDataAccessor = new TrainingDataAccessorMock();
     BigramProbabilityCalculator bigramProbabilityCalculator = new BigramProbabilityCalculatorImpl();
-    BigramDataListFactory bigramDataListFactory = new BigramDataListFactoryImpl(constantTagsCache, trainingDataAccessor, bigramProbabilityCalculator);
+    BigramDataListFactory bigramDataListFactory = new BigramDataListFactoryImpl(trainingDataAccessor, bigramProbabilityCalculator);
 
     @Test
     public void testCreate(){

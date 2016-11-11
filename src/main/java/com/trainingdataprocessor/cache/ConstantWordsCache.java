@@ -8,13 +8,13 @@ import java.util.Map;
 
 public class ConstantWordsCache {
 
-    private Map<String,String> constantWordsCache = new HashMap<String,String>();
+    public static Map<String,String> constantWordsCache = new HashMap<String,String>();
 
-    public Map<String, String> getConstantWordsCache() {
+    public static Map<String, String> getConstantWordsCache() {
         return constantWordsCache;
     }
 
-    public ConstantWordsCache(){
+    static {
         constantWordsCache.put("with", Tags.PREPOSITION);
         constantWordsCache.put("from",Tags.PREPOSITION);
         constantWordsCache.put("without", Tags.PREPOSITION);

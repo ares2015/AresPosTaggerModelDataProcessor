@@ -8,13 +8,9 @@ import java.util.Set;
 
 public final class ConstantTagsCache {
 
-    private Set<String> constantTagsCache = new HashSet<String>();
+    public static Set<String> constantTagsCache = new HashSet<String>();
 
-    public Set<String> getConstantTagsCache() {
-        return constantTagsCache;
-    }
-
-    public ConstantTagsCache() {
+    static  {
         constantTagsCache.add(Tags.AND_OR);
         constantTagsCache.add(Tags.CONJUNCTION);
         constantTagsCache.add(Tags.DETERMINER);

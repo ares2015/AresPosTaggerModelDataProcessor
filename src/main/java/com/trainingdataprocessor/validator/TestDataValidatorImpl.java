@@ -1,11 +1,12 @@
 package com.trainingdataprocessor.validator;
 
-import com.trainingdataprocessor.cache.TagsCache;
 import com.trainingdataprocessor.tokenizing.Tokenizer;
 
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import static com.trainingdataprocessor.cache.TagsCache.tagsCache;
 
 /**
  * Created by Oliver on 8/5/2016.
@@ -14,14 +15,11 @@ public class TestDataValidatorImpl implements TestDataValidator {
 
     private final static Logger LOGGER = Logger.getLogger(TestDataValidatorImpl.class.getName());
 
-    private TagsCache tagsCache;
-
     private Tokenizer tokenizer;
 
     private ListComparator listComparator;
 
-    public TestDataValidatorImpl(TagsCache tagsCache, Tokenizer tokenizer, ListComparator listComparator) {
-        this.tagsCache = tagsCache;
+    public TestDataValidatorImpl(Tokenizer tokenizer, ListComparator listComparator) {
         this.tokenizer = tokenizer;
         this.listComparator = listComparator;
     }
@@ -69,7 +67,7 @@ public class TestDataValidatorImpl implements TestDataValidator {
                     " -> number of words in sentence is not equal to number of tags.");
         }
         for (String tag : tagsList) {
-            if (!(tagsCache.getTagsCache().contains(tag))) {
+            if (!(tagsCache.contains(tag))) {
                 LOGGER.log(Level.SEVERE, "EXCEPTION: Test data row < " + testDataRow + " > on line " + lineNumber + " " +
                         " -> contains an invalid tag: " + tag);
                 throw new IllegalStateException("Test data row < " + testDataRow + " > on line " + lineNumber + " " +

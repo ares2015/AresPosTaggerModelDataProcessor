@@ -26,7 +26,7 @@ public class TestDataRowListFactoryTest {
 
     private Tokenizer tokenizer = new TokenizerImpl();
 
-    private TagsEncoder tagsEncoder = new TagsEncoderImpl(tagsCodingCache);
+    private TagsEncoder tagsEncoder = new TagsEncoderImpl();
 
     private MultiListFactory multiListFactory = new MultiListFactoryImpl();
 

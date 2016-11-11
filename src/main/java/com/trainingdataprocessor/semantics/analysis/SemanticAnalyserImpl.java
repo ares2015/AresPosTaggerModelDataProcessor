@@ -22,16 +22,13 @@ public class SemanticAnalyserImpl implements SemanticAnalyser, Runnable {
 
     private TrainingDataAccessor trainingDataAccessor;
 
-    private SemanticAnalysisFilterCache semanticAnalysisFilterCache;
-
     private List<TestDataRow> testDataRowList;
 
     public SemanticAnalyserImpl(SemanticPreprocessor semanticPreprocessor, SemanticExtractor semanticExtractor,
-                                TrainingDataAccessor trainingDataAccessor, SemanticAnalysisFilterCache semanticAnalysisFilterCache, List<TestDataRow> testDataRowList) {
+                                TrainingDataAccessor trainingDataAccessor, List<TestDataRow> testDataRowList) {
         this.semanticPreprocessor = semanticPreprocessor;
         this.semanticExtractor = semanticExtractor;
         this.trainingDataAccessor = trainingDataAccessor;
-        this.semanticAnalysisFilterCache = semanticAnalysisFilterCache;
         this.testDataRowList = testDataRowList;
     }
 
@@ -70,7 +67,7 @@ public class SemanticAnalyserImpl implements SemanticAnalyser, Runnable {
     private boolean canGoToSemanticAnalysis(List<String> encodedTags) {
         boolean containsVerb = false;
         for (String tag : encodedTags) {
-            if (semanticAnalysisFilterCache.getTagsToFilterCache().contains(tag)) {
+            if (SemanticAnalysisFilterCache.tagsToFilterCache.contains(tag)) {
                 return false;
             }
             if (EncodedTags.VERB.equals(tag)) {

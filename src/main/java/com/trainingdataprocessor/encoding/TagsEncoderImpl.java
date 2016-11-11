@@ -10,17 +10,11 @@ import java.util.List;
  */
 public class TagsEncoderImpl implements TagsEncoder {
 
-    private TagsCodingCache tagsCodingCache;
-
-    public TagsEncoderImpl(TagsCodingCache tagsCodingCache) {
-        this.tagsCodingCache = tagsCodingCache;
-    }
-
     @Override
     public String encodeTagsListToEncodedSubPath(List<String> tags) {
         String encodedSubPath = "";
         for (String tag : tags) {
-            String encodedTag = tagsCodingCache.getEncodingMap().get(tag);
+            String encodedTag = TagsCodingCache.encodingMap.get(tag);
             encodedSubPath += encodedTag;
         }
         return encodedSubPath;
@@ -30,7 +24,7 @@ public class TagsEncoderImpl implements TagsEncoder {
     public List<String> encodeTagsListToEncodedTagsList(List<String> tags) {
         List<String> encodedTagsList = new ArrayList<>();
         for (String tag : tags) {
-            encodedTagsList.add(tagsCodingCache.getEncodingMap().get(tag));
+            encodedTagsList.add(TagsCodingCache.encodingMap.get(tag));
         }
         return encodedTagsList;
     }
@@ -51,7 +45,7 @@ public class TagsEncoderImpl implements TagsEncoder {
         List<String> encodedTagsList = new ArrayList<>();
         for (List<String> tagList : tags) {
             for (String tag : tagList) {
-                String encodedTag = tagsCodingCache.getEncodingMap().get(tag);
+                String encodedTag = TagsCodingCache.encodingMap.get(tag);
                 encodedTagsList.add(encodedTag);
             }
             List<String> list = new ArrayList<>(encodedTagsList);

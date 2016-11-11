@@ -9,8 +9,6 @@ import com.trainingdataprocessor.validator.TestDataValidator;
 import com.trainingdataprocessor.validator.TestDataValidatorImpl;
 import org.junit.Test;
 
-import java.util.List;
-
 /**
  * Created by Oliver on 8/5/2016.
  */
@@ -19,7 +17,7 @@ public class TestDataValidatorTest {
     private TagsCache tagsCache = new TagsCache();
     private Tokenizer tokenizer = new TokenizerImpl();
     private ListComparator listComparator = new ListComparatorImpl();
-    private TestDataValidator testDataValidator = new TestDataValidatorImpl(tagsCache, tokenizer, listComparator);
+    private TestDataValidator testDataValidator = new TestDataValidatorImpl( tokenizer, listComparator);
 
     @Test
     public void testValidateOK(){

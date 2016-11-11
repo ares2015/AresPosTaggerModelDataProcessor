@@ -15,7 +15,7 @@ import static org.junit.Assert.assertEquals;
 public class StartTagEndTagPairsListFactoryTest {
 
     ConstantTagsCache constantTagsCache = new ConstantTagsCache();
-    StartTagEndTagPairsListFactory startTagEndTagPairsListFactory = new StartTagEndTagPairsListFactoryImpl(constantTagsCache);
+    StartTagEndTagPairsListFactory startTagEndTagPairsListFactory = new StartTagEndTagPairsListFactoryImpl();
 
     @Test
     public void testCreate(){

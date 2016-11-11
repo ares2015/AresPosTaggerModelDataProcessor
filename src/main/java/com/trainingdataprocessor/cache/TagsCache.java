@@ -10,13 +10,9 @@ import java.util.Set;
  */
 public final class TagsCache {
 
-    private Set<String> tagsCache = new HashSet<String>();
+    public static Set<String> tagsCache = new HashSet<String>();
 
-    public Set<String> getTagsCache() {
-        return tagsCache;
-    }
-
-    public TagsCache() {
+    static  {
         tagsCache.add(Tags.ADJECTIVE);
         tagsCache.add(Tags.ADVERB);
         tagsCache.add(Tags.AND_OR);
