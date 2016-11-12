@@ -37,21 +37,35 @@ public class SyntaxAnalyserImpl implements SyntaxAnalyser, Runnable {
 
     @Override
     public void analyse() {
-        for(TestDataRow testDataRow : testDataRowList){
-            List<String> tagsList = testDataRow.getTagsList();
-            List<BigramData> bigramDataList = bigramDataListFactory.create(tagsList);
-            List<StartTagEndTagPair> startTagEndTagPairList = startTagEndTagPairsListFactory.create(tagsList);
+        for (TestDataRow testDataRow : testDataRowList) {
+            if (testDataRow.containsSubSentences()) {
+                for (int i = 0; i <= testDataRow.getTagsMultiList().size() - 1; i++) {
+                    List<String> tagsList = testDataRow.getTagsMultiList().get(i);
+                    analyseSentence(tagsList);
+                }
+            } else {
+                List<String> tagsList = testDataRow.getTagsList();
+                analyseSentence(tagsList);
+            }
         }
     }
 
-    private void insertBigramDataList(List<BigramData> bigramDataList){
-        for(BigramData bigramData : bigramDataList){
+    private void analyseSentence(List<String> tagsList) {
+        List<BigramData> bigramDataList = bigramDataListFactory.create(tagsList);
+        List<StartTagEndTagPair> startTagEndTagPairList = startTagEndTagPairsListFactory.create(tagsList);
+        insertBigramDataList(bigramDataList);
+        insertStartTagEndPairsList(startTagEndTagPairList);
+    }
+
+
+    private void insertBigramDataList(List<BigramData> bigramDataList) {
+        for (BigramData bigramData : bigramDataList) {
             trainingDataAccessor.insertBigramData(bigramData);
         }
     }
 
-    private void insertStartTagEndPairsList(List<StartTagEndTagPair> startTagEndTagPairList){
-        for(StartTagEndTagPair startTagEndTagPair : startTagEndTagPairList){
+    private void insertStartTagEndPairsList(List<StartTagEndTagPair> startTagEndTagPairList) {
+        for (StartTagEndTagPair startTagEndTagPair : startTagEndTagPairList) {
             trainingDataAccessor.insertStartTagEndTagPair(startTagEndTagPair);
         }
     }

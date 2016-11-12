@@ -1,6 +1,5 @@
 package tokenizer;
 
-import com.trainingdataprocessor.tags.Tags;
 import com.trainingdataprocessor.tokenizing.Tokenizer;
 import com.trainingdataprocessor.tokenizing.TokenizerImpl;
 import org.junit.Test;

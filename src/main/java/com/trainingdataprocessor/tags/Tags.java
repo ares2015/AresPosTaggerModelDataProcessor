@@ -1,7 +1,7 @@
 package com.trainingdataprocessor.tags;
 
 
-public class Tags {
+public final class Tags {
 
     public static final String NUMBER = "NR";
 

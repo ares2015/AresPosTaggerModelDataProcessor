@@ -3,7 +3,7 @@ package com.trainingdataprocessor.tags;
 /**
  * Created by Oliver on 8/6/2016.
  */
-public class EncodedTags {
+public final class EncodedTags {
 
     public static final String NUMBER = "#";
 

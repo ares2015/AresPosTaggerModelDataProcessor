@@ -4,7 +4,6 @@ import com.trainingdataprocessor.data.RegexPatternData;
 import com.trainingdataprocessor.data.semantics.SemanticPreprocessingData;
 import com.trainingdataprocessor.regex.RegexExpressions;
 import com.trainingdataprocessor.regex.RegexPatternSearcher;
-import com.trainingdataprocessor.semantics.preprocessing.phrases.PhrasePreprocessor;
 import com.trainingdataprocessor.tags.EncodedTags;
 
 import java.util.List;

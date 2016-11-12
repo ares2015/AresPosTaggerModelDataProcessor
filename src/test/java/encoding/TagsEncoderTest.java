@@ -53,10 +53,10 @@ public class TagsEncoderTest {
         listOfLists.add(tags2);
         listOfLists.add(tags3);
 
-        List<String> encodedTagsList = tagsEncoder.encodeTagMultiListToEncodedSubPathsList(listOfLists);
-        assertEquals("NN", encodedTagsList.get(0));
-        assertEquals("AV", encodedTagsList.get(1));
-        assertEquals("JN", encodedTagsList.get(2));
+        List<String> TagsList = tagsEncoder.encodeTagMultiListToEncodedSubPathsList(listOfLists);
+        assertEquals("NN", TagsList.get(0));
+        assertEquals("AV", TagsList.get(1));
+        assertEquals("JN", TagsList.get(2));
 
     }
 
@@ -80,16 +80,16 @@ public class TagsEncoderTest {
         listOfLists.add(tags2);
         listOfLists.add(tags3);
 
-        List<List<String>> encodedTagsList = tagsEncoder.encodeTagsMultiListToEncodedTagsMultiList(listOfLists);
-        assertEquals("N", encodedTagsList.get(0).get(0));
-        assertEquals("N", encodedTagsList.get(0).get(1));
-        assertEquals("A", encodedTagsList.get(1).get(0));
-        assertEquals("V", encodedTagsList.get(1).get(1));
-        assertEquals("J", encodedTagsList.get(2).get(0));
-        assertEquals("N", encodedTagsList.get(2).get(1));
+        List<List<String>> TagsList = tagsEncoder.encodeTagsMultiListToEncodedTagsMultiList(listOfLists);
+        assertEquals("N", TagsList.get(0).get(0));
+        assertEquals("N", TagsList.get(0).get(1));
+        assertEquals("A", TagsList.get(1).get(0));
+        assertEquals("V", TagsList.get(1).get(1));
+        assertEquals("J", TagsList.get(2).get(0));
+        assertEquals("N", TagsList.get(2).get(1));
 
 
-//        assertEquals("JN", encodedTagsList.get(0));
+//        assertEquals("JN", TagsList.get(0));
 
     }
 

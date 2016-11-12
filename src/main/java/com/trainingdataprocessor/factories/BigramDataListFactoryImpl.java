@@ -16,11 +16,8 @@ public class BigramDataListFactoryImpl implements BigramDataListFactory {
 
     private TrainingDataAccessor trainingDataAccessor;
 
-    private BigramProbabilityCalculator bigramProbabilityCalculator;
-
-    public BigramDataListFactoryImpl(TrainingDataAccessor trainingDataAccessor, BigramProbabilityCalculator bigramProbabilityCalculator) {
+    public BigramDataListFactoryImpl(TrainingDataAccessor trainingDataAccessor) {
         this.trainingDataAccessor = trainingDataAccessor;
-        this.bigramProbabilityCalculator = bigramProbabilityCalculator;
     }
 
     public List<BigramData> create(List<String> tags) {
@@ -36,7 +33,7 @@ public class BigramDataListFactoryImpl implements BigramDataListFactory {
             BigramData bigramData = new BigramData(tag1, tag2, isTag1Constant, isTag2Constant);
             trainingDataAccessor.populateBigramFrequencyData(bigramData);
             trainingDataAccessor.populateBigramTag1FrequencyData(bigramData);
-            double bigramProbability = bigramProbabilityCalculator.calculate(bigramData.getBigramFrequency(), bigramData.getTag1Frequency());
+            double bigramProbability = BigramProbabilityCalculator.calculate(bigramData.getBigramFrequency(), bigramData.getTag1Frequency());
             bigramData.setBigramProbability(bigramProbability);
 
             LOGGER.info("Processing bigram -> tag1: " + tag1 + ", tag2: " + tag2 + ", " + "isTag1Constant: " + isTag1Constant +
