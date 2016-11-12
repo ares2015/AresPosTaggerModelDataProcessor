@@ -160,7 +160,7 @@ public class SemanticPreprocessingAndExtractionIntegrationTest {
         assertEquals("George", semanticExtractionData.getAtomicSubject());
         assertEquals("King George ", semanticExtractionData.getExtendedSubject());
         assertEquals("visited", semanticExtractionData.getAtomicVerbPredicate());
-        assertEquals("visited ", semanticExtractionData.getExtendedVerbPredicate());
+        assertEquals("", semanticExtractionData.getExtendedVerbPredicate());
         assertEquals("Hanover again from May to November 1719 ", semanticExtractionData.getExtendedNounPredicate());
         assertEquals("Hanover", semanticExtractionData.getAtomicNounPredicate());
         /*********************************************************************************************/
@@ -230,7 +230,7 @@ public class SemanticPreprocessingAndExtractionIntegrationTest {
         semanticExtractionData = semanticExtractor.extract(semanticPreprocessingData);
         assertEquals("Bob ", semanticExtractionData.getExtendedSubject());
         assertEquals("is", semanticExtractionData.getAtomicVerbPredicate());
-        assertEquals("is ", semanticExtractionData.getExtendedVerbPredicate());
+        assertEquals("", semanticExtractionData.getExtendedVerbPredicate());
         assertEquals("alone at home ", semanticExtractionData.getExtendedNounPredicate());
         assertEquals("alone", semanticExtractionData.getAtomicNounPredicate());
 

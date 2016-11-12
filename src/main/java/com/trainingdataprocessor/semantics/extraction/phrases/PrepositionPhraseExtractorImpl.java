@@ -2,13 +2,16 @@ package com.trainingdataprocessor.semantics.extraction.phrases;
 
 import com.trainingdataprocessor.data.semantics.SemanticExtractionData;
 import com.trainingdataprocessor.data.semantics.SemanticPreprocessingData;
-import com.trainingdataprocessor.semantics.extraction.phrases.PhraseExtractor;
 import com.trainingdataprocessor.tokenizing.Tokenizer;
+
+import java.util.logging.Logger;
 
 /**
  * Created by Oliver on 10/21/2016.
  */
 public class PrepositionPhraseExtractorImpl implements PhraseExtractor {
+
+    private final static Logger LOGGER = Logger.getLogger(PrepositionPhraseExtractorImpl.class.getName());
 
     private Tokenizer tokenizer;
 
@@ -23,6 +26,7 @@ public class PrepositionPhraseExtractorImpl implements PhraseExtractor {
             int endIndex = semanticPreprocessingData.getBeforeVerbPrepositionPhrase().getEndIndex();
             String extendedSubject = tokenizer.convertSubListToString(semanticPreprocessingData.getTokens(), startIndex, endIndex);
             semanticExtractionData.setExtendedSubject(extendedSubject);
+            LOGGER.info("ExtendedSubject found: " + extendedSubject);
         }
         if(semanticPreprocessingData.containsAfterVerbPrepositionPhrase()){
             int startIndex = 0;
@@ -34,6 +38,7 @@ public class PrepositionPhraseExtractorImpl implements PhraseExtractor {
             int endIndex = semanticPreprocessingData.getAfterVerbPrepositionPhrase().getEndIndex();
             String extendedNounPredicate = tokenizer.convertSubListToString(semanticPreprocessingData.getTokens(), startIndex, endIndex);
             semanticExtractionData.setExtendedNounPredicate(extendedNounPredicate);
+            LOGGER.info("ExtendedNounPredicate found: " + extendedNounPredicate);
         }
     }
 

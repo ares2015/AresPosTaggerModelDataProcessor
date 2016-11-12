@@ -27,20 +27,37 @@ public class NounPhrasePreprocessorImpl implements PhrasePreprocessor {
         int verbIndex = semanticPreprocessingData.getVerbIndex();
         if (regexPatternDataList.size() > 0) {
             for (RegexPatternData regexPatternData : regexPatternDataList) {
-                if (regexPatternData.getEndIndex() <= verbIndex && (!semanticPreprocessingData.containsBeforeVerbPrepositionPhrase())) {
-                  LOGGER.info("Sentence pattern: " + sentencePattern + " contains beforeVerbNounPhrase: " + regexPatternData.getPattern());
+                if (containsBeforeVerbNounPhraseWithoutPrepositionPhrase(regexPatternData, verbIndex, semanticPreprocessingData)) {
+                    LOGGER.info("Sentence pattern: " + sentencePattern + " contains beforeVerbNounPhrase: " + regexPatternData.getPattern());
                     semanticPreprocessingData.setContainsBeforeVerbNounPhrase(true);
                     semanticPreprocessingData.setBeforeVerbNounPhrase(regexPatternData);
-                } else if (regexPatternData.getEndIndex() >= verbIndex && (!semanticPreprocessingData.containsAfterVerbPreposition())) {
+                } else if (containsAfterVerbNounPhraseWithoutPrepositionPhrase(regexPatternData, verbIndex, semanticPreprocessingData)) {
+                    LOGGER.info("Sentence pattern: " + sentencePattern + " contains afterVerbNounPhrase: " + regexPatternData.getPattern());
                     semanticPreprocessingData.setContainsAfterVerbNounPhrase(true);
                     semanticPreprocessingData.setAfterVerbNounPhrase(regexPatternData);
-                } else if (regexPatternData.getEndIndex() >= verbIndex && semanticPreprocessingData.containsAfterVerbPreposition() &&
-                        regexPatternData.getEndIndex() <= semanticPreprocessingData.getAfterVerbFirstPrepositionIndex()) {
+                } else if (containsAfterVerbNounPhraseWithPrepositionPhrase(regexPatternData, verbIndex, semanticPreprocessingData)) {
+                    LOGGER.info("Sentence pattern: " + sentencePattern + " contains afterVerbNounPhrase: " + regexPatternData.getPattern());
                     semanticPreprocessingData.setContainsAfterVerbNounPhrase(true);
                     semanticPreprocessingData.setAfterVerbNounPhrase(regexPatternData);
                 }
             }
         }
+    }
+
+    private boolean containsBeforeVerbNounPhraseWithoutPrepositionPhrase(RegexPatternData regexPatternData, int verbIndex,
+                                                                         SemanticPreprocessingData semanticPreprocessingData) {
+        return regexPatternData.getEndIndex() <= verbIndex && (!semanticPreprocessingData.containsBeforeVerbPrepositionPhrase());
+    }
+
+    private boolean containsAfterVerbNounPhraseWithoutPrepositionPhrase(RegexPatternData regexPatternData, int verbIndex,
+                                                                        SemanticPreprocessingData semanticPreprocessingData) {
+        return regexPatternData.getEndIndex() >= verbIndex && (!semanticPreprocessingData.containsAfterVerbPreposition());
+    }
+
+    private boolean containsAfterVerbNounPhraseWithPrepositionPhrase(RegexPatternData regexPatternData, int verbIndex,
+                                                                     SemanticPreprocessingData semanticPreprocessingData) {
+        return regexPatternData.getEndIndex() >= verbIndex && semanticPreprocessingData.containsAfterVerbPreposition() &&
+                regexPatternData.getEndIndex() <= semanticPreprocessingData.getAfterVerbFirstPrepositionIndex();
     }
 
 }

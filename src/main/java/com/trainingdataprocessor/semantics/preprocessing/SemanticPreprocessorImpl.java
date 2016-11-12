@@ -41,11 +41,13 @@ public class SemanticPreprocessorImpl implements SemanticPreprocessor {
         SemanticPreprocessingData semanticPreprocessingData = new SemanticPreprocessingData();
         int verbIndex = getVerbIndex(filteredEncodedTagsList);
         semanticPreprocessingData.setVerbIndex(verbIndex);
+        LOGGER.info("Verb index in: " + encodedSubPath + " is on index: " + verbIndex);
 
         int afterVerbPrepositionIndex = getAfterVerbPrepositionIndex(filteredEncodedTagsList, verbIndex);
         if (afterVerbPrepositionIndex == -1) {
             semanticPreprocessingData.setContainsAfterVerbPreposition(false);
         }
+
         semanticPreprocessingData.setAfterVerbFirstPrepositionIndex(afterVerbPrepositionIndex);
         semanticPreprocessingData.setTokens(filteredTokensList);
         semanticPreprocessingData.setEncodedTags(filteredEncodedTagsList);
@@ -66,7 +68,7 @@ public class SemanticPreprocessorImpl implements SemanticPreprocessor {
                 return i;
             }
         }
-        throw new IllegalStateException("Sentence does not contain verb !");
+        throw new IllegalStateException("Sentence does not contain verb!");
     }
 
     private int getAfterVerbPrepositionIndex(List<String> encodedTags, int verbIndex) {
