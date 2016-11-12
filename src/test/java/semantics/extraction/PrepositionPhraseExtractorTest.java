@@ -61,6 +61,7 @@ public class PrepositionPhraseExtractorTest {
         semanticPreprocessingData.setEncodedTags(encodedTags);
         semanticPreprocessingData.setVerbIndex(5);
         semanticPreprocessingData.setAfterVerbFirstPrepositionIndex(9);
+        semanticPreprocessingData.setContainsAfterVerbPreposition(true);
 
         prepositionPhrasePreprocessor.preprocess(sentencePattern, semanticPreprocessingData);
         nounPhrasePreprocessor.preprocess(sentencePattern, semanticPreprocessingData);
@@ -100,6 +101,7 @@ public class PrepositionPhraseExtractorTest {
         semanticPreprocessingData.setEncodedTags(encodedTags);
         semanticPreprocessingData.setVerbIndex(5);
         semanticPreprocessingData.setAfterVerbFirstPrepositionIndex(8);
+        semanticPreprocessingData.setContainsAfterVerbPreposition(true);
 
         prepositionPhrasePreprocessor.preprocess(sentencePattern, semanticPreprocessingData);
         nounPhrasePreprocessor.preprocess(sentencePattern, semanticPreprocessingData);

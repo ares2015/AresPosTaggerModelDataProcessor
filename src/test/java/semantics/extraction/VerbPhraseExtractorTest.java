@@ -32,6 +32,7 @@ public class VerbPhraseExtractorTest {
 
     private PhraseExtractor verbPhraseExtractor = new VerbPhraseExtractorImpl(tokenizer);
 
+
     @Test
     public void testBasicVerbPhrase(){
         SemanticPreprocessingData semanticPreprocessingData = new SemanticPreprocessingData();

@@ -39,6 +39,37 @@ public class NounPhraseExtractorTest {
     private PhraseExtractor nounPhraseExtractor = new NounPhraseExtractorImpl(tokenizer);
 
     @Test
+    public void testSimpleNounVerbNoun(){
+        SemanticPreprocessingData semanticPreprocessingData = new SemanticPreprocessingData();
+        String sentencePattern = "NVN";
+
+        List<String> encodedTags = new ArrayList<String>();
+        encodedTags.add(EncodedTags.NOUN);
+        encodedTags.add(EncodedTags.VERB);
+        encodedTags.add(EncodedTags.NOUN);
+
+        String sentence = "boys drink beer";
+        List<String> tokens = Arrays.asList(sentence.split("\\ "));
+
+        semanticPreprocessingData.setTokens(tokens);
+        semanticPreprocessingData.setEncodedTags(encodedTags);
+        semanticPreprocessingData.setVerbIndex(1);
+
+        nounPhrasePreprocessor.preprocess(sentencePattern, semanticPreprocessingData);
+
+        SemanticExtractionData semanticExtractionData = new SemanticExtractionData();
+
+        nounPhraseExtractor.extract(semanticPreprocessingData, semanticExtractionData);
+
+        assertEquals("", semanticExtractionData.getExtendedVerbPredicate());
+        assertEquals("boys", semanticExtractionData.getAtomicSubject());
+        assertEquals("", semanticExtractionData.getExtendedSubject());
+        assertEquals("beer", semanticExtractionData.getAtomicNounPredicate());
+        assertEquals("", semanticExtractionData.getExtendedNounPredicate());
+
+    }
+
+    @Test
     public void testBeforeAndAfterPrepositionPhrases(){
         SemanticPreprocessingData semanticPreprocessingData = new SemanticPreprocessingData();
         String sentencePattern = "NPNPNVANNPNNPN";
@@ -66,6 +97,7 @@ public class NounPhraseExtractorTest {
         semanticPreprocessingData.setEncodedTags(encodedTags);
         semanticPreprocessingData.setVerbIndex(5);
         semanticPreprocessingData.setAfterVerbFirstPrepositionIndex(9);
+        semanticPreprocessingData.setContainsAfterVerbPreposition(true);
 
         prepositionPhrasePreprocessor.preprocess(sentencePattern, semanticPreprocessingData);
         nounPhrasePreprocessor.preprocess(sentencePattern, semanticPreprocessingData);

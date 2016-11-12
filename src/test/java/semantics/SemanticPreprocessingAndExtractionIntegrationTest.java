@@ -89,7 +89,7 @@ public class SemanticPreprocessingAndExtractionIntegrationTest {
         tokens = Arrays.asList(sentence.split("\\ "));
         semanticPreprocessingData = semanticPreprocessor.preprocess(sentencePattern, tokens, encodedTags);
         semanticExtractionData = semanticExtractor.extract(semanticPreprocessingData);
-        assertEquals("firemen ", semanticExtractionData.getExtendedSubject());
+        assertEquals("", semanticExtractionData.getExtendedSubject());
         assertEquals("firemen", semanticExtractionData.getAtomicSubject());
         assertEquals("fight", semanticExtractionData.getAtomicVerbPredicate());
         assertEquals("fight furiously ", semanticExtractionData.getExtendedVerbPredicate());
@@ -135,7 +135,7 @@ public class SemanticPreprocessingAndExtractionIntegrationTest {
         semanticPreprocessingData = semanticPreprocessor.preprocess(sentencePattern, tokens, encodedTags);
         semanticExtractionData = semanticExtractor.extract(semanticPreprocessingData);
         assertEquals("George", semanticExtractionData.getAtomicSubject());
-        assertEquals("George ", semanticExtractionData.getExtendedSubject());
+        assertEquals("", semanticExtractionData.getExtendedSubject());
         assertEquals("exercised", semanticExtractionData.getAtomicVerbPredicate());
         assertEquals("exercised little ", semanticExtractionData.getExtendedVerbPredicate());
         assertEquals("control over British domestic policy ", semanticExtractionData.getExtendedNounPredicate());
@@ -228,7 +228,8 @@ public class SemanticPreprocessingAndExtractionIntegrationTest {
         tokens = Arrays.asList(sentence.split("\\ "));
         semanticPreprocessingData = semanticPreprocessor.preprocess(sentencePattern, tokens, encodedTags);
         semanticExtractionData = semanticExtractor.extract(semanticPreprocessingData);
-        assertEquals("Bob ", semanticExtractionData.getExtendedSubject());
+        assertEquals("", semanticExtractionData.getExtendedSubject());
+        assertEquals("Bob", semanticExtractionData.getAtomicSubject());
         assertEquals("is", semanticExtractionData.getAtomicVerbPredicate());
         assertEquals("", semanticExtractionData.getExtendedVerbPredicate());
         assertEquals("alone at home ", semanticExtractionData.getExtendedNounPredicate());

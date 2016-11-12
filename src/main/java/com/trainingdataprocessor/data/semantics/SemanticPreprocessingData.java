@@ -26,7 +26,7 @@ public final class SemanticPreprocessingData {
 
     private int afterVerbFirstPrepositionIndex;
 
-    private boolean containsAfterVerbPreposition = true;
+    private boolean containsAfterVerbPreposition;
 
     private RegexPatternData beforeVerbPrepositionPhrase;
 

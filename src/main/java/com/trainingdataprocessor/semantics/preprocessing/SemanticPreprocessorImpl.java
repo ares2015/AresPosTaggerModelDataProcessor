@@ -44,8 +44,8 @@ public class SemanticPreprocessorImpl implements SemanticPreprocessor {
         LOGGER.info("Verb index in: " + encodedSubPath + " is on index: " + verbIndex);
 
         int afterVerbPrepositionIndex = getAfterVerbPrepositionIndex(filteredEncodedTagsList, verbIndex);
-        if (afterVerbPrepositionIndex == -1) {
-            semanticPreprocessingData.setContainsAfterVerbPreposition(false);
+        if (afterVerbPrepositionIndex > -1) {
+            semanticPreprocessingData.setContainsAfterVerbPreposition(true);
         }
 
         semanticPreprocessingData.setAfterVerbFirstPrepositionIndex(afterVerbPrepositionIndex);
