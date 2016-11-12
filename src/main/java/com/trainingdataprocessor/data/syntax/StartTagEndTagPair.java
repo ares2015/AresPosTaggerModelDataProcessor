@@ -1,4 +1,4 @@
-package com.trainingdataprocessor.data;
+package com.trainingdataprocessor.data.syntax;
 
 /**
  * Created by Oliver on 7/25/2016.

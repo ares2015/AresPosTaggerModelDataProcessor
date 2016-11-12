@@ -1,11 +1,11 @@
-package com.trainingdataprocessor.data;
+package com.trainingdataprocessor.data.preprocessing;
 
 import java.util.List;
 
 /**
  * Created by Oliver on 8/5/2016.
  */
-public final class TestDataRow {
+public final class TrainingDataRow {
 
     private boolean containsSubSentences;
 

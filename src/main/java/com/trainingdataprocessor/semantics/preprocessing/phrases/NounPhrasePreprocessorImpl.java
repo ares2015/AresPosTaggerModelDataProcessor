@@ -1,6 +1,6 @@
 package com.trainingdataprocessor.semantics.preprocessing.phrases;
 
-import com.trainingdataprocessor.data.RegexPatternData;
+import com.trainingdataprocessor.data.regex.RegexPatternData;
 import com.trainingdataprocessor.data.semantics.SemanticPreprocessingData;
 import com.trainingdataprocessor.regex.RegexExpressions;
 import com.trainingdataprocessor.regex.RegexPatternSearcher;

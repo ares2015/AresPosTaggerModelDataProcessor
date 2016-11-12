@@ -1,8 +1,8 @@
 package runnables;
 
 import com.trainingdataprocessor.cache.SemanticAnalysisFilterCache;
-import com.trainingdataprocessor.data.TestDataRow;
-import com.trainingdataprocessor.database.TrainingDataAccessor;
+import com.trainingdataprocessor.data.preprocessing.TrainingDataRow;
+import com.trainingdataprocessor.database.TrainingDataDatabaseAccessor;
 import com.trainingdataprocessor.factories.BigramDataListFactory;
 import com.trainingdataprocessor.factories.BigramDataListFactoryImpl;
 import com.trainingdataprocessor.factories.StartTagEndTagPairsListFactory;
@@ -27,8 +27,8 @@ import com.trainingdataprocessor.semantics.preprocessing.phrases.VerbPhrasePrepr
 import com.trainingdataprocessor.syntax.SyntaxAnalyserImpl;
 import com.trainingdataprocessor.tags.EncodedTags;
 import com.trainingdataprocessor.tags.Tags;
-import com.trainingdataprocessor.tokenizing.Tokenizer;
-import com.trainingdataprocessor.tokenizing.TokenizerImpl;
+import com.trainingdataprocessor.tokens.Tokenizer;
+import com.trainingdataprocessor.tokens.TokenizerImpl;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -47,16 +47,16 @@ public class SyntaxAndSemanticAnalysersTest {
 
     ApplicationContext context = new ClassPathXmlApplicationContext("beans.xml");
     JdbcTemplate jdbcTemplate = (JdbcTemplate) context.getBean("jdbcTemplate");
-    TrainingDataAccessor trainingDataAccessor = (TrainingDataAccessor) context.getBean("trainingDataAccessor");
+    TrainingDataDatabaseAccessor trainingDataDatabaseAccessor = (TrainingDataDatabaseAccessor) context.getBean("trainingDataDatabaseAccessor");
 
-    BigramDataListFactory bigramDataListFactory = new BigramDataListFactoryImpl(trainingDataAccessor);
+    BigramDataListFactory bigramDataListFactory = new BigramDataListFactoryImpl(trainingDataDatabaseAccessor);
 
     StartTagEndTagPairsListFactory startTagEndTagPairsListFactory = new StartTagEndTagPairsListFactoryImpl();
 
 
     private Tokenizer tokenizer = new TokenizerImpl();
     private SemanticAnalysisFilterCache semanticAnalysisFilterCache = new SemanticAnalysisFilterCache();
-    private SemanticPreprocessingFilter semanticPreprocessingFilter = new SemanticPreprocessingFilterImpl(tokenizer);
+    private SemanticPreprocessingFilter semanticPreprocessingFilter = new SemanticPreprocessingFilterImpl();
     private RegexPatternSearcher regexPatternSearcher = new RegexPatternSearcherImpl();
     private PhrasePreprocessor prepositionPhrasePreprocessor = new PrepositionPhrasePreprocessorImpl(regexPatternSearcher);
     private PhrasePreprocessor nounPhrasePreprocessor = new NounPhrasePreprocessorImpl(regexPatternSearcher);
@@ -98,19 +98,19 @@ public class SyntaxAndSemanticAnalysersTest {
         List<String> tokensList = Arrays.asList(sentence.split("\\ "));
 
 
-        List<TestDataRow> testDataRowList = new ArrayList<>();
-        TestDataRow testDataRow = new TestDataRow();
-        testDataRow.setTagsList(tagsList);
-        testDataRow.setEncodedPath(encodedPath);
-        testDataRow.setEncodedTagsList(encodedTags);
-        testDataRow.setTokensList(tokensList);
+        List<TrainingDataRow> trainingDataRowList = new ArrayList<>();
+        TrainingDataRow trainingDataRow = new TrainingDataRow();
+        trainingDataRow.setTagsList(tagsList);
+        trainingDataRow.setEncodedPath(encodedPath);
+        trainingDataRow.setEncodedTagsList(encodedTags);
+        trainingDataRow.setTokensList(tokensList);
 
 
-        testDataRowList.add(testDataRow);
+        trainingDataRowList.add(trainingDataRow);
 
         ExecutorService executor = Executors.newFixedThreadPool(2);
-        Runnable syntaxAnalyser = new SyntaxAnalyserImpl(trainingDataAccessor, bigramDataListFactory, startTagEndTagPairsListFactory, testDataRowList);
-        Runnable semanticAnalyser = new SemanticAnalyserImpl(semanticPreprocessor, semanticExtractor, trainingDataAccessor, testDataRowList);
+        Runnable syntaxAnalyser = new SyntaxAnalyserImpl(trainingDataDatabaseAccessor, bigramDataListFactory, startTagEndTagPairsListFactory, trainingDataRowList);
+        Runnable semanticAnalyser = new SemanticAnalyserImpl(semanticPreprocessor, semanticExtractor, trainingDataDatabaseAccessor, trainingDataRowList);
 
         executor.execute(syntaxAnalyser);
         executor.execute(semanticAnalyser);

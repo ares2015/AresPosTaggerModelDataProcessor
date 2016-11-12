@@ -1,7 +1,5 @@
 package com.trainingdataprocessor.reader;
 
-import com.trainingdataprocessor.data.TestDataRow;
-
 import java.util.List;
 
 /**

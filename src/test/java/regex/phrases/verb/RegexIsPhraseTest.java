@@ -1,6 +1,6 @@
 package regex.phrases.verb;
 
-import com.trainingdataprocessor.data.RegexPatternData;
+import com.trainingdataprocessor.data.regex.RegexPatternData;
 import com.trainingdataprocessor.regex.RegexPatternSearcher;
 import com.trainingdataprocessor.regex.RegexPatternSearcherImpl;
 import com.trainingdataprocessor.regex.RegexUtils;
@@ -8,9 +8,7 @@ import org.junit.Test;
 
 import java.util.List;
 
-import static com.trainingdataprocessor.regex.RegexExpressions.IS_NOT_PHRASE;
 import static com.trainingdataprocessor.regex.RegexExpressions.IS_PHRASE;
-import static com.trainingdataprocessor.regex.RegexExpressions.VERB_PHRASE;
 import static org.junit.Assert.assertTrue;
 
 /**

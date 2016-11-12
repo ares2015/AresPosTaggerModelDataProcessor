@@ -1,9 +1,9 @@
 package com.trainingdataprocessor.syntax;
 
-import com.trainingdataprocessor.data.BigramData;
-import com.trainingdataprocessor.data.StartTagEndTagPair;
-import com.trainingdataprocessor.data.TestDataRow;
-import com.trainingdataprocessor.database.TrainingDataAccessor;
+import com.trainingdataprocessor.data.preprocessing.TrainingDataRow;
+import com.trainingdataprocessor.data.syntax.BigramData;
+import com.trainingdataprocessor.data.syntax.StartTagEndTagPair;
+import com.trainingdataprocessor.database.TrainingDataDatabaseAccessor;
 import com.trainingdataprocessor.factories.BigramDataListFactory;
 import com.trainingdataprocessor.factories.StartTagEndTagPairsListFactory;
 
@@ -14,20 +14,20 @@ import java.util.List;
  */
 public class SyntaxAnalyserImpl implements SyntaxAnalyser, Runnable {
 
-    private TrainingDataAccessor trainingDataAccessor;
+    private TrainingDataDatabaseAccessor trainingDataDatabaseAccessor;
 
     private BigramDataListFactory bigramDataListFactory;
 
     private StartTagEndTagPairsListFactory startTagEndTagPairsListFactory;
 
-    private List<TestDataRow> testDataRowList;
+    private List<TrainingDataRow> trainingDataRowList;
 
-    public SyntaxAnalyserImpl(TrainingDataAccessor trainingDataAccessor, BigramDataListFactory bigramDataListFactory,
-                              StartTagEndTagPairsListFactory startTagEndTagPairsListFactory, List<TestDataRow> testDataRowList) {
-        this.trainingDataAccessor = trainingDataAccessor;
+    public SyntaxAnalyserImpl(TrainingDataDatabaseAccessor trainingDataDatabaseAccessor, BigramDataListFactory bigramDataListFactory,
+                              StartTagEndTagPairsListFactory startTagEndTagPairsListFactory, List<TrainingDataRow> trainingDataRowList) {
+        this.trainingDataDatabaseAccessor = trainingDataDatabaseAccessor;
         this.bigramDataListFactory = bigramDataListFactory;
         this.startTagEndTagPairsListFactory = startTagEndTagPairsListFactory;
-        this.testDataRowList = testDataRowList;
+        this.trainingDataRowList = trainingDataRowList;
     }
 
     @Override
@@ -37,14 +37,14 @@ public class SyntaxAnalyserImpl implements SyntaxAnalyser, Runnable {
 
     @Override
     public void analyse() {
-        for (TestDataRow testDataRow : testDataRowList) {
-            if (testDataRow.containsSubSentences()) {
-                for (int i = 0; i <= testDataRow.getTagsMultiList().size() - 1; i++) {
-                    List<String> tagsList = testDataRow.getTagsMultiList().get(i);
+        for (TrainingDataRow trainingDataRow : trainingDataRowList) {
+            if (trainingDataRow.containsSubSentences()) {
+                for (int i = 0; i <= trainingDataRow.getTagsMultiList().size() - 1; i++) {
+                    List<String> tagsList = trainingDataRow.getTagsMultiList().get(i);
                     analyseSentence(tagsList);
                 }
             } else {
-                List<String> tagsList = testDataRow.getTagsList();
+                List<String> tagsList = trainingDataRow.getTagsList();
                 analyseSentence(tagsList);
             }
         }
@@ -60,13 +60,13 @@ public class SyntaxAnalyserImpl implements SyntaxAnalyser, Runnable {
 
     private void insertBigramDataList(List<BigramData> bigramDataList) {
         for (BigramData bigramData : bigramDataList) {
-            trainingDataAccessor.insertBigramData(bigramData);
+            trainingDataDatabaseAccessor.insertBigramData(bigramData);
         }
     }
 
     private void insertStartTagEndPairsList(List<StartTagEndTagPair> startTagEndTagPairList) {
         for (StartTagEndTagPair startTagEndTagPair : startTagEndTagPairList) {
-            trainingDataAccessor.insertStartTagEndTagPair(startTagEndTagPair);
+            trainingDataDatabaseAccessor.insertStartTagEndTagPair(startTagEndTagPair);
         }
     }
 

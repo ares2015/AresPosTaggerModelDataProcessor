@@ -1,8 +1,8 @@
 package semantics.analysis;
 
 import com.trainingdataprocessor.cache.SemanticAnalysisFilterCache;
-import com.trainingdataprocessor.data.TestDataRow;
-import com.trainingdataprocessor.database.TrainingDataAccessor;
+import com.trainingdataprocessor.data.preprocessing.TrainingDataRow;
+import com.trainingdataprocessor.database.TrainingDataDatabaseAccessor;
 import com.trainingdataprocessor.regex.RegexPatternSearcher;
 import com.trainingdataprocessor.regex.RegexPatternSearcherImpl;
 import com.trainingdataprocessor.semantics.analysis.SemanticAnalyserImpl;
@@ -21,8 +21,8 @@ import com.trainingdataprocessor.semantics.preprocessing.phrases.PhrasePreproces
 import com.trainingdataprocessor.semantics.preprocessing.phrases.PrepositionPhrasePreprocessorImpl;
 import com.trainingdataprocessor.semantics.preprocessing.phrases.VerbPhrasePreprocessorImpl;
 import com.trainingdataprocessor.tags.EncodedTags;
-import com.trainingdataprocessor.tokenizing.Tokenizer;
-import com.trainingdataprocessor.tokenizing.TokenizerImpl;
+import com.trainingdataprocessor.tokens.Tokenizer;
+import com.trainingdataprocessor.tokens.TokenizerImpl;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -41,11 +41,11 @@ public class SemanticAnalyserTest {
 
     ApplicationContext context = new ClassPathXmlApplicationContext("beans.xml");
     JdbcTemplate jdbcTemplate = (JdbcTemplate) context.getBean("jdbcTemplate");
-    TrainingDataAccessor trainingDataAccessor = (TrainingDataAccessor) context.getBean("trainingDataAccessor");
+    TrainingDataDatabaseAccessor trainingDataDatabaseAccessor = (TrainingDataDatabaseAccessor) context.getBean("trainingDataDatabaseAccessor");
 
     private Tokenizer tokenizer = new TokenizerImpl();
     private SemanticAnalysisFilterCache semanticAnalysisFilterCache = new SemanticAnalysisFilterCache();
-    private SemanticPreprocessingFilter semanticPreprocessingFilter = new SemanticPreprocessingFilterImpl(tokenizer);
+    private SemanticPreprocessingFilter semanticPreprocessingFilter = new SemanticPreprocessingFilterImpl();
     private RegexPatternSearcher regexPatternSearcher = new RegexPatternSearcherImpl();
     private PhrasePreprocessor prepositionPhrasePreprocessor = new PrepositionPhrasePreprocessorImpl(regexPatternSearcher);
     private PhrasePreprocessor nounPhrasePreprocessor = new NounPhrasePreprocessorImpl(regexPatternSearcher);
@@ -55,7 +55,7 @@ public class SemanticAnalyserTest {
     private PhraseExtractor nounPhraseExtractor = new NounPhraseExtractorImpl(tokenizer);
     private PhraseExtractor verbPhraseExtractor = new VerbPhraseExtractorImpl(tokenizer);
     private SemanticExtractor semanticExtractor = new SemanticExtractorImpl(prepositionPhraseExtractor, nounPhraseExtractor, verbPhraseExtractor);
-//    private TrainingDataAccessor trainingDataAccessor = new TrainingDataAccessorMock();
+//    private TrainingDataDatabaseAccessor trainingDataDatabaseAccessor = new TrainingDataDatabaseAccessorMock();
 
 
     @Test
@@ -75,15 +75,15 @@ public class SemanticAnalyserTest {
         encodedTags.add(EncodedTags.NUMBER);
         List<String> tokens = Arrays.asList(sentence.split("\\ "));
 
-        List<TestDataRow> testDataRowList = new ArrayList<>();
-        TestDataRow testDataRow = new TestDataRow();
-        testDataRow.setEncodedPath(encodedPath);
-        testDataRow.setEncodedTagsList(encodedTags);
-        testDataRow.setTokensList(tokens);
+        List<TrainingDataRow> trainingDataRowList = new ArrayList<>();
+        TrainingDataRow trainingDataRow = new TrainingDataRow();
+        trainingDataRow.setEncodedPath(encodedPath);
+        trainingDataRow.setEncodedTagsList(encodedTags);
+        trainingDataRow.setTokensList(tokens);
 
-        testDataRowList.add(testDataRow);
+        trainingDataRowList.add(trainingDataRow);
 
-        Runnable semanticAnalyser = new SemanticAnalyserImpl(semanticPreprocessor, semanticExtractor, trainingDataAccessor, testDataRowList);
+        Runnable semanticAnalyser = new SemanticAnalyserImpl(semanticPreprocessor, semanticExtractor, trainingDataDatabaseAccessor, trainingDataRowList);
         ExecutorService executor = Executors.newFixedThreadPool(1);
         executor.execute(semanticAnalyser);
 

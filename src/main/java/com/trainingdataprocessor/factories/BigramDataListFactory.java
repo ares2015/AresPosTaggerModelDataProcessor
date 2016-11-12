@@ -1,6 +1,6 @@
 package com.trainingdataprocessor.factories;
 
-import com.trainingdataprocessor.data.BigramData;
+import com.trainingdataprocessor.data.syntax.BigramData;
 
 import java.util.List;
 

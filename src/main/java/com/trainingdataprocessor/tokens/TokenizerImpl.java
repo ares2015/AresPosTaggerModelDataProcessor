@@ -1,4 +1,4 @@
-package com.trainingdataprocessor.tokenizing;
+package com.trainingdataprocessor.tokens;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,14 +1,15 @@
 package mocks;
 
-import com.trainingdataprocessor.data.BigramData;
-import com.trainingdataprocessor.data.StartTagEndTagPair;
 import com.trainingdataprocessor.data.semantics.SemanticExtractionData;
-import com.trainingdataprocessor.database.TrainingDataAccessor;
+import com.trainingdataprocessor.data.syntax.BigramData;
+import com.trainingdataprocessor.data.syntax.StartTagEndTagPair;
+import com.trainingdataprocessor.data.token.TokenTagData;
+import com.trainingdataprocessor.database.TrainingDataDatabaseAccessor;
 
 /**
  * Created by Oliver on 8/1/2016.
  */
-public class TrainingDataAccessorMock implements TrainingDataAccessor {
+public class TrainingDataDatabaseAccessorMock implements TrainingDataDatabaseAccessor {
 
     @Override
     public void insertBigramData(BigramData bigramData) {
@@ -31,6 +32,11 @@ public class TrainingDataAccessorMock implements TrainingDataAccessor {
 
     @Override
     public void insertSemanticData(SemanticExtractionData semanticExtractionData) {
+
+    }
+
+    @Override
+    public void insertTokenTagData(TokenTagData tokenTagData) {
 
     }
 

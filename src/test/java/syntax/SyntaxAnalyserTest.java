@@ -1,7 +1,7 @@
 package syntax;
 
-import com.trainingdataprocessor.data.TestDataRow;
-import com.trainingdataprocessor.database.TrainingDataAccessor;
+import com.trainingdataprocessor.data.preprocessing.TrainingDataRow;
+import com.trainingdataprocessor.database.TrainingDataDatabaseAccessor;
 import com.trainingdataprocessor.factories.BigramDataListFactory;
 import com.trainingdataprocessor.factories.BigramDataListFactoryImpl;
 import com.trainingdataprocessor.factories.StartTagEndTagPairsListFactory;
@@ -25,9 +25,9 @@ public class SyntaxAnalyserTest {
 
     ApplicationContext context = new ClassPathXmlApplicationContext("beans.xml");
     JdbcTemplate jdbcTemplate = (JdbcTemplate) context.getBean("jdbcTemplate");
-    TrainingDataAccessor trainingDataAccessor = (TrainingDataAccessor) context.getBean("trainingDataAccessor");
+    TrainingDataDatabaseAccessor trainingDataDatabaseAccessor = (TrainingDataDatabaseAccessor) context.getBean("trainingDataDatabaseAccessor");
 
-    BigramDataListFactory bigramDataListFactory = new BigramDataListFactoryImpl(trainingDataAccessor);
+    BigramDataListFactory bigramDataListFactory = new BigramDataListFactoryImpl(trainingDataDatabaseAccessor);
 
     StartTagEndTagPairsListFactory startTagEndTagPairsListFactory = new StartTagEndTagPairsListFactoryImpl();
 
@@ -47,14 +47,14 @@ public class SyntaxAnalyserTest {
         tagsList.add(Tags.NOUN);
         tagsList.add(Tags.NUMBER);
 
-        List<TestDataRow> testDataRowList = new ArrayList<>();
-        TestDataRow testDataRow = new TestDataRow();
-        testDataRow.setTagsList(tagsList);
+        List<TrainingDataRow> trainingDataRowList = new ArrayList<>();
+        TrainingDataRow trainingDataRow = new TrainingDataRow();
+        trainingDataRow.setTagsList(tagsList);
 
-        testDataRowList.add(testDataRow);
+        trainingDataRowList.add(trainingDataRow);
 
         ExecutorService executor = Executors.newFixedThreadPool(1);
-        Runnable syntaxAnalyser = new SyntaxAnalyserImpl(trainingDataAccessor, bigramDataListFactory, startTagEndTagPairsListFactory, testDataRowList);
+        Runnable syntaxAnalyser = new SyntaxAnalyserImpl(trainingDataDatabaseAccessor, bigramDataListFactory, startTagEndTagPairsListFactory, trainingDataRowList);
 
         executor.execute(syntaxAnalyser);
 

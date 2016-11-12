@@ -1,6 +1,6 @@
 package com.trainingdataprocessor.regex;
 
-import com.trainingdataprocessor.data.RegexPatternData;
+import com.trainingdataprocessor.data.regex.RegexPatternData;
 
 import java.util.ArrayList;
 import java.util.List;

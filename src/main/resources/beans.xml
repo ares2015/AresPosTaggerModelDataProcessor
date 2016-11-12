@@ -5,19 +5,115 @@
 
     <bean id="dataSource"
           class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-        <property name="driverClassName" value="com.mysql.jdbc.Driver" />
+        <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
         <property name="url"
-                  value="jdbc:mysql://mysql15.hostmaster.sk/do784507db" />
-        <property name="username" value="do784500" />
-        <property name="password" value="glavoika" />
+                  value="jdbc:mysql://mysql15.hostmaster.sk/do784507db"/>
+        <property name="username" value="do784500"/>
+        <property name="password" value="glavoika"/>
     </bean>
 
     <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
-        <property name="dataSource" ref="dataSource" />
+        <property name="dataSource" ref="dataSource"/>
     </bean>
 
-    <bean id="trainingDataAccessor" class="com.trainingdataprocessor.database.TrainingDataAccessorImpl">
-        <constructor-arg ref="jdbcTemplate" />
+    <bean id="trainingDataDatabaseAccessor" class="com.trainingdataprocessor.database.TrainingDataDatabaseAccessorImpl">
+        <constructor-arg ref="jdbcTemplate"/>
     </bean>
+
+    <bean id="tokenizer" class="com.trainingdataprocessor.tokens.TokenizerImpl"/>
+
+    <bean id="tagsEncoder" class="com.trainingdataprocessor.encoding.TagsEncoderImpl"/>
+
+    <bean id="listComparator" class="com.trainingdataprocessor.validator.ListComparatorImpl"/>
+
+    <bean id="regexPatternSearcher" class="com.trainingdataprocessor.regex.RegexPatternSearcherImpl"/>
+
+    <bean id="bigramDataListFactory" class="com.trainingdataprocessor.factories.BigramDataListFactoryImpl">
+        <constructor-arg ref="trainingDataDatabaseAccessor"/>
+    </bean>
+
+    <bean id="multiListFactory" class="com.trainingdataprocessor.factories.MultiListFactoryImpl"/>
+
+    <bean id="startTagEndTagPairsListFactory"
+          class="com.trainingdataprocessor.factories.StartTagEndTagPairsListFactoryImpl"/>
+
+    <bean id="trainingDataRowListFactory"
+          class="com.trainingdataprocessor.factories.TrainingDataRowListFactoryImpl">
+        <constructor-arg ref="tokenizer"/>
+        <constructor-arg ref="tagsEncoder"/>
+        <constructor-arg ref="multiListFactory"/>
+    </bean>
+
+    <bean id="testDataValidator" class="com.trainingdataprocessor.validator.TestDataValidatorImpl">
+        <constructor-arg ref="tokenizer"/>
+        <constructor-arg ref="listComparator"/>
+    </bean>
+
+    <bean id="testDataReader" class="com.trainingdataprocessor.reader.TestDataFileReaderImpl">
+        <constructor-arg ref="testDataValidator"/>
+    </bean>
+
+    <bean id="trainingDataPreprocessor" class="com.trainingdataprocessor.preprocessing.TrainingDataPreprocessorImpl">
+        <constructor-arg ref="testDataReader"/>
+        <constructor-arg ref="trainingDataRowListFactory"/>
+    </bean>
+
+    <bean id="prepositionPhrasePreprocessor"
+          class="com.trainingdataprocessor.semantics.preprocessing.phrases.PrepositionPhrasePreprocessorImpl">
+        <constructor-arg ref="regexPatternSearcher"/>
+    </bean>
+
+    <bean id="nounPhrasePreprocessor"
+          class="com.trainingdataprocessor.semantics.preprocessing.phrases.NounPhrasePreprocessorImpl">
+        <constructor-arg ref="regexPatternSearcher"/>
+    </bean>
+
+    <bean id="verbPhrasePreprocessor"
+          class="com.trainingdataprocessor.semantics.preprocessing.phrases.VerbPhrasePreprocessorImpl">
+        <constructor-arg ref="regexPatternSearcher"/>
+    </bean>
+
+    <bean id="semanticPreprocessingFilter"
+          class="com.trainingdataprocessor.semantics.preprocessing.SemanticPreprocessingFilterImpl"/>
+
+    <bean id="semanticPreprocessor" class="com.trainingdataprocessor.semantics.preprocessing.SemanticPreprocessorImpl">
+        <constructor-arg ref="semanticPreprocessingFilter"/>
+        <constructor-arg ref="prepositionPhrasePreprocessor"/>
+        <constructor-arg ref="nounPhrasePreprocessor"/>
+        <constructor-arg ref="verbPhrasePreprocessor"/>
+    </bean>
+
+    <bean id="prepositionPhraseExtractor"
+          class="com.trainingdataprocessor.semantics.extraction.phrases.PrepositionPhraseExtractorImpl">
+        <constructor-arg ref="tokenizer"/>
+    </bean>
+
+    <bean id="nounPhraseExtractor"
+          class="com.trainingdataprocessor.semantics.extraction.phrases.NounPhraseExtractorImpl">
+        <constructor-arg ref="tokenizer"/>
+    </bean>
+
+    <bean id="verbPhraseExtractor"
+          class="com.trainingdataprocessor.semantics.extraction.phrases.VerbPhraseExtractorImpl">
+        <constructor-arg ref="tokenizer"/>
+    </bean>
+
+    <bean id="semanticExtractor"
+          class="com.trainingdataprocessor.semantics.extraction.SemanticExtractorImpl">
+        <constructor-arg ref="prepositionPhraseExtractor"/>
+        <constructor-arg ref="nounPhraseExtractor"/>
+        <constructor-arg ref="verbPhraseExtractor"/>
+    </bean>
+
+    <bean id="nlpTrainingDataProcessor"
+          class="com.trainingdataprocessor.main.NlpTrainingDataProcessor">
+        <constructor-arg ref="trainingDataPreprocessor"/>
+        <constructor-arg ref="trainingDataDatabaseAccessor"/>
+        <constructor-arg ref="bigramDataListFactory"/>
+        <constructor-arg ref="startTagEndTagPairsListFactory"/>
+        <constructor-arg ref="semanticPreprocessor"/>
+        <constructor-arg ref="semanticExtractor"/>
+    </bean>
+
 
 </beans>

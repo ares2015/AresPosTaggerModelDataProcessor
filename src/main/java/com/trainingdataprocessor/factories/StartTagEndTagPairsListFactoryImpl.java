@@ -1,7 +1,7 @@
 package com.trainingdataprocessor.factories;
 
 
-import com.trainingdataprocessor.data.StartTagEndTagPair;
+import com.trainingdataprocessor.data.syntax.StartTagEndTagPair;
 
 import java.util.ArrayList;
 import java.util.List;

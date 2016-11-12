@@ -2,7 +2,6 @@ package com.trainingdataprocessor.semantics.preprocessing;
 
 import com.trainingdataprocessor.cache.SemanticAnalysisFilterCache;
 import com.trainingdataprocessor.tags.EncodedTags;
-import com.trainingdataprocessor.tokenizing.Tokenizer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,12 +10,6 @@ import java.util.List;
  * Created by Oliver on 11/3/2016.
  */
 public class SemanticPreprocessingFilterImpl implements SemanticPreprocessingFilter {
-
-    private Tokenizer tokenizer;
-
-    public SemanticPreprocessingFilterImpl(Tokenizer tokenizer) {
-        this.tokenizer = tokenizer;
-    }
 
     @Override
     public String filterToString(List<String> list) {

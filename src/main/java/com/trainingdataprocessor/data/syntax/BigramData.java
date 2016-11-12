@@ -1,4 +1,4 @@
-package com.trainingdataprocessor.data;
+package com.trainingdataprocessor.data.syntax;
 
 public class BigramData {
 

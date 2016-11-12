@@ -1,7 +1,4 @@
-package com.trainingdataprocessor.data;
-
-import java.util.ArrayList;
-import java.util.List;
+package com.trainingdataprocessor.data.regex;
 
 /**
  * Created by Oliver on 8/17/2016.

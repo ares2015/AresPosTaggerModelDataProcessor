@@ -1,10 +1,9 @@
 package reader;
 
-import com.trainingdataprocessor.cache.TagsCache;
 import com.trainingdataprocessor.reader.TestDataFileReaderImpl;
 import com.trainingdataprocessor.reader.TestDataReader;
-import com.trainingdataprocessor.tokenizing.Tokenizer;
-import com.trainingdataprocessor.tokenizing.TokenizerImpl;
+import com.trainingdataprocessor.tokens.Tokenizer;
+import com.trainingdataprocessor.tokens.TokenizerImpl;
 import com.trainingdataprocessor.validator.ListComparator;
 import com.trainingdataprocessor.validator.ListComparatorImpl;
 import com.trainingdataprocessor.validator.TestDataValidator;
@@ -20,7 +19,6 @@ import static org.junit.Assert.assertTrue;
  */
 public class TestDataFileReaderTest {
 
-    private TagsCache tagsCache = new TagsCache();
     private Tokenizer tokenizer = new TokenizerImpl();
     private ListComparator listComparator = new ListComparatorImpl();
     private TestDataValidator testDataValidator = new TestDataValidatorImpl(tokenizer, listComparator);

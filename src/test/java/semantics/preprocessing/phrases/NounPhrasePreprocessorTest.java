@@ -1,19 +1,17 @@
 package semantics.preprocessing.phrases;
 
-import com.trainingdataprocessor.data.RegexPatternData;
+import com.trainingdataprocessor.data.regex.RegexPatternData;
 import com.trainingdataprocessor.data.semantics.SemanticPreprocessingData;
 import com.trainingdataprocessor.regex.RegexPatternSearcher;
 import com.trainingdataprocessor.regex.RegexPatternSearcherImpl;
-import com.trainingdataprocessor.semantics.preprocessing.phrases.PhrasePreprocessor;
 import com.trainingdataprocessor.semantics.preprocessing.phrases.NounPhrasePreprocessorImpl;
+import com.trainingdataprocessor.semantics.preprocessing.phrases.PhrasePreprocessor;
 import com.trainingdataprocessor.semantics.preprocessing.phrases.PrepositionPhrasePreprocessorImpl;
 import org.junit.Test;
 
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 /**
  * Created by Oliver on 10/21/2016.

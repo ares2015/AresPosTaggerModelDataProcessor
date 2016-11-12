@@ -1,6 +1,6 @@
 package com.trainingdataprocessor.validator;
 
-import com.trainingdataprocessor.tokenizing.Tokenizer;
+import com.trainingdataprocessor.tokens.Tokenizer;
 
 import java.util.List;
 import java.util.logging.Level;

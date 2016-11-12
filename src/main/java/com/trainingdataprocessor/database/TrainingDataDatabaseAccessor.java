@@ -1,13 +1,14 @@
 package com.trainingdataprocessor.database;
 
-import com.trainingdataprocessor.data.BigramData;
-import com.trainingdataprocessor.data.StartTagEndTagPair;
 import com.trainingdataprocessor.data.semantics.SemanticExtractionData;
+import com.trainingdataprocessor.data.syntax.BigramData;
+import com.trainingdataprocessor.data.syntax.StartTagEndTagPair;
+import com.trainingdataprocessor.data.token.TokenTagData;
 
 /**
  * Created by Oliver on 8/1/2016.
  */
-public interface TrainingDataAccessor {
+public interface TrainingDataDatabaseAccessor {
 
     void insertBigramData(BigramData bigramData);
 
@@ -18,5 +19,7 @@ public interface TrainingDataAccessor {
     void populateBigramTag1FrequencyData(BigramData bigramData);
 
     void insertSemanticData(SemanticExtractionData semanticExtractionData);
+
+    void insertTokenTagData(TokenTagData tokenTagData);
 
 }

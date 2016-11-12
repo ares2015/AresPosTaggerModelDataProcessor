@@ -7,12 +7,12 @@ import com.trainingdataprocessor.regex.RegexPatternSearcherImpl;
 import com.trainingdataprocessor.semantics.extraction.phrases.NounPhraseExtractorImpl;
 import com.trainingdataprocessor.semantics.extraction.phrases.PhraseExtractor;
 import com.trainingdataprocessor.semantics.extraction.phrases.PrepositionPhraseExtractorImpl;
-import com.trainingdataprocessor.semantics.preprocessing.phrases.PhrasePreprocessor;
 import com.trainingdataprocessor.semantics.preprocessing.phrases.NounPhrasePreprocessorImpl;
+import com.trainingdataprocessor.semantics.preprocessing.phrases.PhrasePreprocessor;
 import com.trainingdataprocessor.semantics.preprocessing.phrases.PrepositionPhrasePreprocessorImpl;
 import com.trainingdataprocessor.tags.EncodedTags;
-import com.trainingdataprocessor.tokenizing.Tokenizer;
-import com.trainingdataprocessor.tokenizing.TokenizerImpl;
+import com.trainingdataprocessor.tokens.Tokenizer;
+import com.trainingdataprocessor.tokens.TokenizerImpl;
 import org.junit.Test;
 
 import java.util.ArrayList;

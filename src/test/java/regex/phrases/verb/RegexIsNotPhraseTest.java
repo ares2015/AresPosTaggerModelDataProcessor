@@ -1,6 +1,6 @@
 package regex.phrases.verb;
 
-import com.trainingdataprocessor.data.RegexPatternData;
+import com.trainingdataprocessor.data.regex.RegexPatternData;
 import com.trainingdataprocessor.regex.RegexPatternSearcher;
 import com.trainingdataprocessor.regex.RegexPatternSearcherImpl;
 import com.trainingdataprocessor.regex.RegexUtils;

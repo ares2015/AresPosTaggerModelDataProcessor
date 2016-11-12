@@ -1,8 +1,8 @@
 package com.trainingdataprocessor.factories;
 
 import com.trainingdataprocessor.calculator.BigramProbabilityCalculator;
-import com.trainingdataprocessor.data.BigramData;
-import com.trainingdataprocessor.database.TrainingDataAccessor;
+import com.trainingdataprocessor.data.syntax.BigramData;
+import com.trainingdataprocessor.database.TrainingDataDatabaseAccessor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,10 +14,10 @@ public class BigramDataListFactoryImpl implements BigramDataListFactory {
 
     private final static Logger LOGGER = Logger.getLogger(BigramDataListFactoryImpl.class.getName());
 
-    private TrainingDataAccessor trainingDataAccessor;
+    private TrainingDataDatabaseAccessor trainingDataDatabaseAccessor;
 
-    public BigramDataListFactoryImpl(TrainingDataAccessor trainingDataAccessor) {
-        this.trainingDataAccessor = trainingDataAccessor;
+    public BigramDataListFactoryImpl(TrainingDataDatabaseAccessor trainingDataDatabaseAccessor) {
+        this.trainingDataDatabaseAccessor = trainingDataDatabaseAccessor;
     }
 
     public List<BigramData> create(List<String> tags) {
@@ -31,8 +31,8 @@ public class BigramDataListFactoryImpl implements BigramDataListFactory {
             boolean isTag1Constant = constantTagsCache.contains(tag1);
             boolean isTag2Constant = constantTagsCache.contains(tag2);
             BigramData bigramData = new BigramData(tag1, tag2, isTag1Constant, isTag2Constant);
-            trainingDataAccessor.populateBigramFrequencyData(bigramData);
-            trainingDataAccessor.populateBigramTag1FrequencyData(bigramData);
+            trainingDataDatabaseAccessor.populateBigramFrequencyData(bigramData);
+            trainingDataDatabaseAccessor.populateBigramTag1FrequencyData(bigramData);
             double bigramProbability = BigramProbabilityCalculator.calculate(bigramData.getBigramFrequency(), bigramData.getTag1Frequency());
             bigramData.setBigramProbability(bigramProbability);
 

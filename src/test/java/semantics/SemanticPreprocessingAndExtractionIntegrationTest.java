@@ -20,8 +20,8 @@ import com.trainingdataprocessor.semantics.preprocessing.phrases.PhrasePreproces
 import com.trainingdataprocessor.semantics.preprocessing.phrases.PrepositionPhrasePreprocessorImpl;
 import com.trainingdataprocessor.semantics.preprocessing.phrases.VerbPhrasePreprocessorImpl;
 import com.trainingdataprocessor.tags.EncodedTags;
-import com.trainingdataprocessor.tokenizing.Tokenizer;
-import com.trainingdataprocessor.tokenizing.TokenizerImpl;
+import com.trainingdataprocessor.tokens.Tokenizer;
+import com.trainingdataprocessor.tokens.TokenizerImpl;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -36,7 +36,7 @@ import static org.junit.Assert.assertEquals;
 public class SemanticPreprocessingAndExtractionIntegrationTest {
     private Tokenizer tokenizer = new TokenizerImpl();
     private SemanticAnalysisFilterCache semanticAnalysisFilterCache = new SemanticAnalysisFilterCache();
-    private SemanticPreprocessingFilter semanticPreprocessingFilter = new SemanticPreprocessingFilterImpl(tokenizer);
+    private SemanticPreprocessingFilter semanticPreprocessingFilter = new SemanticPreprocessingFilterImpl();
     private RegexPatternSearcher regexPatternSearcher = new RegexPatternSearcherImpl();
     private PhrasePreprocessor prepositionPhrasePreprocessor = new PrepositionPhrasePreprocessorImpl(regexPatternSearcher);
     private PhrasePreprocessor nounPhrasePreprocessor = new NounPhrasePreprocessorImpl(regexPatternSearcher);

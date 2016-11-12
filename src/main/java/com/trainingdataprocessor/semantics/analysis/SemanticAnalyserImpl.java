@@ -1,10 +1,10 @@
 package com.trainingdataprocessor.semantics.analysis;
 
 import com.trainingdataprocessor.cache.SemanticAnalysisFilterCache;
-import com.trainingdataprocessor.data.TestDataRow;
+import com.trainingdataprocessor.data.preprocessing.TrainingDataRow;
 import com.trainingdataprocessor.data.semantics.SemanticExtractionData;
 import com.trainingdataprocessor.data.semantics.SemanticPreprocessingData;
-import com.trainingdataprocessor.database.TrainingDataAccessor;
+import com.trainingdataprocessor.database.TrainingDataDatabaseAccessor;
 import com.trainingdataprocessor.semantics.extraction.SemanticExtractor;
 import com.trainingdataprocessor.semantics.preprocessing.SemanticPreprocessor;
 import com.trainingdataprocessor.tags.EncodedTags;
@@ -20,16 +20,16 @@ public class SemanticAnalyserImpl implements SemanticAnalyser, Runnable {
 
     private SemanticExtractor semanticExtractor;
 
-    private TrainingDataAccessor trainingDataAccessor;
+    private TrainingDataDatabaseAccessor trainingDataDatabaseAccessor;
 
-    private List<TestDataRow> testDataRowList;
+    private List<TrainingDataRow> trainingDataRowList;
 
     public SemanticAnalyserImpl(SemanticPreprocessor semanticPreprocessor, SemanticExtractor semanticExtractor,
-                                TrainingDataAccessor trainingDataAccessor, List<TestDataRow> testDataRowList) {
+                                TrainingDataDatabaseAccessor trainingDataDatabaseAccessor, List<TrainingDataRow> trainingDataRowList) {
         this.semanticPreprocessor = semanticPreprocessor;
         this.semanticExtractor = semanticExtractor;
-        this.trainingDataAccessor = trainingDataAccessor;
-        this.testDataRowList = testDataRowList;
+        this.trainingDataDatabaseAccessor = trainingDataDatabaseAccessor;
+        this.trainingDataRowList = trainingDataRowList;
     }
 
     @Override
@@ -40,17 +40,17 @@ public class SemanticAnalyserImpl implements SemanticAnalyser, Runnable {
     @Override
     public void analyse() {
 
-        for (TestDataRow testDataRow : testDataRowList) {
-            if (testDataRow.containsSubSentences()) {
-                for (int i = 0; i <= testDataRow.getTokensMultiList().size() - 1; i++) {
-                    if (canGoToSemanticAnalysis(testDataRow.getEncodedTagsMultiList().get(i))) {
-                        analyseSentence(testDataRow.getEncodedSubPathsList().get(i), testDataRow.getTokensMultiList().get(i),
-                                testDataRow.getEncodedTagsMultiList().get(i));
+        for (TrainingDataRow trainingDataRow : trainingDataRowList) {
+            if (trainingDataRow.containsSubSentences()) {
+                for (int i = 0; i <= trainingDataRow.getTokensMultiList().size() - 1; i++) {
+                    if (canGoToSemanticAnalysis(trainingDataRow.getEncodedTagsMultiList().get(i))) {
+                        analyseSentence(trainingDataRow.getEncodedSubPathsList().get(i), trainingDataRow.getTokensMultiList().get(i),
+                                trainingDataRow.getEncodedTagsMultiList().get(i));
                     }
                 }
             } else {
-                if (canGoToSemanticAnalysis(testDataRow.getEncodedTagsList())) {
-                    analyseSentence(testDataRow.getEncodedPath(), testDataRow.getTokensList(), testDataRow.getEncodedTagsList());
+                if (canGoToSemanticAnalysis(trainingDataRow.getEncodedTagsList())) {
+                    analyseSentence(trainingDataRow.getEncodedPath(), trainingDataRow.getTokensList(), trainingDataRow.getEncodedTagsList());
                 }
             }
         }
@@ -60,7 +60,7 @@ public class SemanticAnalyserImpl implements SemanticAnalyser, Runnable {
         SemanticPreprocessingData semanticPreprocessingData = semanticPreprocessor.preprocess(sentencePattern, tokens, encodedTags);
         if (canGoToSemanticExtraction(semanticPreprocessingData)) {
             SemanticExtractionData semanticExtractionData = semanticExtractor.extract(semanticPreprocessingData);
-            trainingDataAccessor.insertSemanticData(semanticExtractionData);
+            trainingDataDatabaseAccessor.insertSemanticData(semanticExtractionData);
         }
     }
 

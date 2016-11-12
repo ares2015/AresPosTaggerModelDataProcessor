@@ -2,12 +2,12 @@ package factories;
 
 import com.trainingdataprocessor.cache.ConstantTagsCache;
 import com.trainingdataprocessor.calculator.BigramProbabilityCalculator;
-import com.trainingdataprocessor.data.BigramData;
-import com.trainingdataprocessor.database.TrainingDataAccessor;
+import com.trainingdataprocessor.data.syntax.BigramData;
+import com.trainingdataprocessor.database.TrainingDataDatabaseAccessor;
 import com.trainingdataprocessor.factories.BigramDataListFactory;
 import com.trainingdataprocessor.factories.BigramDataListFactoryImpl;
 import com.trainingdataprocessor.tags.EncodedTags;
-import mocks.TrainingDataAccessorMock;
+import mocks.TrainingDataDatabaseAccessorMock;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -23,9 +23,9 @@ public class BigramDataListFactoryTest {
     ApplicationContext context = new ClassPathXmlApplicationContext("beans.xml");
 
     ConstantTagsCache constantTagsCache = new ConstantTagsCache();
-    TrainingDataAccessor trainingDataAccessor = new TrainingDataAccessorMock();
+    TrainingDataDatabaseAccessor trainingDataDatabaseAccessor = new TrainingDataDatabaseAccessorMock();
     BigramProbabilityCalculator bigramProbabilityCalculator = new BigramProbabilityCalculator();
-    BigramDataListFactory bigramDataListFactory = new BigramDataListFactoryImpl(trainingDataAccessor);
+    BigramDataListFactory bigramDataListFactory = new BigramDataListFactoryImpl(trainingDataDatabaseAccessor);
 
     @Test
     public void testCreate(){

@@ -3,8 +3,8 @@ package semantics.preprocessing;
 import com.trainingdataprocessor.cache.SemanticAnalysisFilterCache;
 import com.trainingdataprocessor.semantics.preprocessing.SemanticPreprocessingFilter;
 import com.trainingdataprocessor.semantics.preprocessing.SemanticPreprocessingFilterImpl;
-import com.trainingdataprocessor.tokenizing.Tokenizer;
-import com.trainingdataprocessor.tokenizing.TokenizerImpl;
+import com.trainingdataprocessor.tokens.Tokenizer;
+import com.trainingdataprocessor.tokens.TokenizerImpl;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -21,7 +21,7 @@ public class SemanticPreprocessingFilterTest {
 
     private SemanticAnalysisFilterCache semanticAnalysisFilterCache = new SemanticAnalysisFilterCache();
 
-    private SemanticPreprocessingFilter semanticPreprocessingFilter = new SemanticPreprocessingFilterImpl(tokenizer);
+    private SemanticPreprocessingFilter semanticPreprocessingFilter = new SemanticPreprocessingFilterImpl();
 
     @Test
     public void testFilter(){

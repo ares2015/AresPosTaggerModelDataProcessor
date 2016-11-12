@@ -1,18 +1,19 @@
 package com.trainingdataprocessor.database;
 
-import com.trainingdataprocessor.data.BigramData;
-import com.trainingdataprocessor.data.StartTagEndTagPair;
 import com.trainingdataprocessor.data.semantics.SemanticExtractionData;
+import com.trainingdataprocessor.data.syntax.BigramData;
+import com.trainingdataprocessor.data.syntax.StartTagEndTagPair;
+import com.trainingdataprocessor.data.token.TokenTagData;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 /**
  * Created by Oliver on 11/7/2016.
  */
-public class TrainingDataAccessorImpl implements TrainingDataAccessor {
+public class TrainingDataDatabaseAccessorImpl implements TrainingDataDatabaseAccessor {
 
     private JdbcTemplate jdbcTemplate;
 
-    public TrainingDataAccessorImpl(final JdbcTemplate jdbcTemplate) {
+    public TrainingDataDatabaseAccessorImpl(final JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 
@@ -44,6 +45,11 @@ public class TrainingDataAccessorImpl implements TrainingDataAccessor {
                 semanticExtractionData.getAtomicVerbPredicate(),
                 semanticExtractionData.getExtendedVerbPredicate(), semanticExtractionData.getAtomicNounPredicate(),
                 semanticExtractionData.getExtendedNounPredicate()});
+    }
+
+    @Override
+    public void insertTokenTagData(TokenTagData tokenTagData) {
+
     }
 
 

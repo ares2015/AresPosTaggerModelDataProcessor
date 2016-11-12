@@ -2,7 +2,7 @@ package factories;
 
 
 import com.trainingdataprocessor.cache.ConstantTagsCache;
-import com.trainingdataprocessor.data.StartTagEndTagPair;
+import com.trainingdataprocessor.data.syntax.StartTagEndTagPair;
 import com.trainingdataprocessor.factories.StartTagEndTagPairsListFactory;
 import com.trainingdataprocessor.factories.StartTagEndTagPairsListFactoryImpl;
 import org.junit.Test;

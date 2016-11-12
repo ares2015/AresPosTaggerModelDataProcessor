@@ -1,8 +1,8 @@
 package validator;
 
 import com.trainingdataprocessor.cache.TagsCache;
-import com.trainingdataprocessor.tokenizing.Tokenizer;
-import com.trainingdataprocessor.tokenizing.TokenizerImpl;
+import com.trainingdataprocessor.tokens.Tokenizer;
+import com.trainingdataprocessor.tokens.TokenizerImpl;
 import com.trainingdataprocessor.validator.ListComparator;
 import com.trainingdataprocessor.validator.ListComparatorImpl;
 import com.trainingdataprocessor.validator.TestDataValidator;

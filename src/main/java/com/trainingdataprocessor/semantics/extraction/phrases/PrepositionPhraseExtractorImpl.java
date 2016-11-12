@@ -2,7 +2,7 @@ package com.trainingdataprocessor.semantics.extraction.phrases;
 
 import com.trainingdataprocessor.data.semantics.SemanticExtractionData;
 import com.trainingdataprocessor.data.semantics.SemanticPreprocessingData;
-import com.trainingdataprocessor.tokenizing.Tokenizer;
+import com.trainingdataprocessor.tokens.Tokenizer;
 
 import java.util.logging.Logger;
 
