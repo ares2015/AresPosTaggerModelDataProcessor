@@ -45,7 +45,7 @@ public final class StartTagEndTagPair {
         return length;
     }
 
-    public boolean isContainsConstant() {
+    public boolean containsConstant() {
         return containsConstant;
     }
 

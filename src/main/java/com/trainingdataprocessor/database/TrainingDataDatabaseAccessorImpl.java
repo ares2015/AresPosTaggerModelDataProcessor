@@ -58,7 +58,19 @@ public class TrainingDataDatabaseAccessorImpl implements TrainingDataDatabaseAcc
 
     @Override
     public void insertStartTagEndTagPair(StartTagEndTagPair startTagEndTagPair) {
-
+        String subPath = startTagEndTagPair.getSubPath();
+        int subPathFrequency = findSubPathFrequencyForStartTagEndTagPair(subPath);
+        boolean subPathExistsInDB = subPathFrequency > 0;
+        subPathFrequency ++;
+        String sql = "";
+        if(subPathExistsInDB){
+            sql = "update jos_nlp_start_tag_end_tag_pairs set frequency = ? where subpath = ?";
+            jdbcTemplate.update(sql, new Object[]{subPathFrequency, subPath});
+        }else {
+            sql = "insert into jos_nlp_start_tag_end_tag_pairs (start_tag, end_tag, subpath, length, frequency, contains_constant) values (?,?,?,?,?,?)";
+            jdbcTemplate.update(sql, new Object[]{startTagEndTagPair.getStartTag(), startTagEndTagPair.getEndTag(),
+                    subPath, startTagEndTagPair.getLength(), subPathFrequency, startTagEndTagPair.containsConstant()});
+        }
     }
 
     @Override
@@ -73,6 +85,31 @@ public class TrainingDataDatabaseAccessorImpl implements TrainingDataDatabaseAcc
 
     @Override
     public void insertTokenTagData(TokenTagData tokenTagData) {
+
+    }
+
+    @Override
+    public void insertEncodedPath(String encodedPath) {
+
+    }
+
+    @Override
+    public void insertEncodedSubPath(String encodedSubPath) {
+
+    }
+
+    @Override
+    public void insertPath(String path) {
+
+    }
+
+    @Override
+    public void insertSubPath(String subPath) {
+
+    }
+
+    @Override
+    public void insertSentence(String sentence) {
 
     }
 

@@ -27,7 +27,7 @@ public class SyntaxAnalyserTest {
     JdbcTemplate jdbcTemplate = (JdbcTemplate) context.getBean("jdbcTemplate");
     TrainingDataDatabaseAccessor trainingDataDatabaseAccessor = (TrainingDataDatabaseAccessor) context.getBean("trainingDataDatabaseAccessor");
 
-    BigramDataListFactory bigramDataListFactory = new BigramDataListFactoryImpl(trainingDataDatabaseAccessor);
+    BigramDataListFactory bigramDataListFactory = new BigramDataListFactoryImpl();
 
     StartTagEndTagPairsListFactory startTagEndTagPairsListFactory = new StartTagEndTagPairsListFactoryImpl();
 

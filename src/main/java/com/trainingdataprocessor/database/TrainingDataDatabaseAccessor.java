@@ -20,4 +20,14 @@ public interface TrainingDataDatabaseAccessor {
 
     void insertTokenTagData(TokenTagData tokenTagData);
 
+    void insertEncodedPath(String encodedPath);
+
+    void insertEncodedSubPath(String encodedSubPath);
+
+    void insertPath(String path);
+
+    void insertSubPath(String subPath);
+
+    void insertSentence(String sentence);
+
 }

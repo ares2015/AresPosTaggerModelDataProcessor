@@ -2,6 +2,7 @@ package database;
 
 import com.trainingdataprocessor.data.semantics.SemanticExtractionData;
 import com.trainingdataprocessor.data.syntax.BigramData;
+import com.trainingdataprocessor.data.syntax.StartTagEndTagPair;
 import com.trainingdataprocessor.database.TrainingDataDatabaseAccessor;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -47,6 +48,20 @@ public class TrainingDataDatabaseAccessorTest {
     public void testUpdateBigramData(){
         BigramData bigramData = new BigramData("V", "N", false, false);
         trainingDataDatabaseAccessor.insertBigramData(bigramData);
+    }
+
+    @Test
+    @Ignore
+    public void testInsertStartTagEndTagPair(){
+        StartTagEndTagPair startTagEndTagPair = new StartTagEndTagPair("N", "AJ", "N AJ AJ N", 4, 3, 7, false);
+        trainingDataDatabaseAccessor.insertStartTagEndTagPair(startTagEndTagPair);
+    }
+
+    @Test
+    @Ignore
+    public void testUpdateStartTagEndTagPair(){
+        StartTagEndTagPair startTagEndTagPair = new StartTagEndTagPair("V", "N", "V AJ AJ N", 4, 3, 7, false);
+        trainingDataDatabaseAccessor.insertStartTagEndTagPair(startTagEndTagPair);
     }
 
 

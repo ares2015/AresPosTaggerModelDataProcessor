@@ -26,15 +26,6 @@ public class TrainingDataDatabaseAccessorMock implements TrainingDataDatabaseAcc
 
     }
 
-    public void populateBigramFrequencyData(BigramData bigramData) {
-        bigramData.setBigramFrequency(275);
-        bigramData.setExistsInDatabase(true);
-    }
-
-    public void populateBigramTag1FrequencyData(BigramData bigramData) {
-        bigramData.setTag1Frequency(450);
-    }
-
     @Override
     public void insertSemanticData(SemanticExtractionData semanticExtractionData) {
 
@@ -42,6 +33,31 @@ public class TrainingDataDatabaseAccessorMock implements TrainingDataDatabaseAcc
 
     @Override
     public void insertTokenTagData(TokenTagData tokenTagData) {
+
+    }
+
+    @Override
+    public void insertEncodedPath(String encodedPath) {
+
+    }
+
+    @Override
+    public void insertEncodedSubPath(String encodedSubPath) {
+
+    }
+
+    @Override
+    public void insertPath(String path) {
+
+    }
+
+    @Override
+    public void insertSubPath(String subPath) {
+
+    }
+
+    @Override
+    public void insertSentence(String sentence) {
 
     }
 
