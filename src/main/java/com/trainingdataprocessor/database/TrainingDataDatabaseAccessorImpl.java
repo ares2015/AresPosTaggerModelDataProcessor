@@ -21,7 +21,17 @@ public class TrainingDataDatabaseAccessorImpl implements TrainingDataDatabaseAcc
 
     @Override
     public void insertTag(String tag) {
-
+        int tagFrequency = findTagFrequency(tag);
+        boolean tagExistsInDB = tagFrequency > 0;
+        tagFrequency ++;
+        String sql = "";
+        if(tagExistsInDB){
+            sql = "update jos_nlp_tags set frequency = ? where tag = ?";
+            jdbcTemplate.update(sql, new Object[]{tagFrequency, tag});
+        }else {
+            sql = "insert into jos_nlp_tags (tag, frequency) values(?,?)";
+            jdbcTemplate.update(sql, new Object[]{tag, tagFrequency});
+        }
     }
 
     @Override
@@ -48,16 +58,6 @@ public class TrainingDataDatabaseAccessorImpl implements TrainingDataDatabaseAcc
 
     @Override
     public void insertStartTagEndTagPair(StartTagEndTagPair startTagEndTagPair) {
-
-    }
-
-    @Override
-    public void populateBigramFrequencyData(BigramData bigramData) {
-
-    }
-
-    @Override
-    public void populateBigramTag1FrequencyData(BigramData bigramData) {
 
     }
 
@@ -97,6 +97,17 @@ public class TrainingDataDatabaseAccessorImpl implements TrainingDataDatabaseAcc
             return 0;
         }
         return tagFrequency;
+    }
+
+    private int findSubPathFrequencyForStartTagEndTagPair(String subPath){
+        int startTagEndTagPairFrequency = 0;
+        String sql = "select frequency from jos_nlp_start_tag_end_tag_pairs where subpath = ?";
+        try {
+            startTagEndTagPairFrequency = jdbcTemplate.queryForInt(sql, new Object[]{subPath});
+        } catch (final EmptyResultDataAccessException e) {
+            return 0;
+        }
+        return startTagEndTagPairFrequency;
     }
 
 

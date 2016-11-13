@@ -16,10 +16,6 @@ public interface TrainingDataDatabaseAccessor {
 
     void insertStartTagEndTagPair(StartTagEndTagPair startTagEndTagPair);
 
-    void populateBigramFrequencyData(BigramData bigramData);
-
-    void populateBigramTag1FrequencyData(BigramData bigramData);
-
     void insertSemanticData(SemanticExtractionData semanticExtractionData);
 
     void insertTokenTagData(TokenTagData tokenTagData);

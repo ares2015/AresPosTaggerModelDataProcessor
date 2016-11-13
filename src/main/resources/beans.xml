@@ -32,9 +32,7 @@
 
     <bean id="regexPatternSearcher" class="com.trainingdataprocessor.regex.RegexPatternSearcherImpl"/>
 
-    <bean id="bigramDataListFactory" class="com.trainingdataprocessor.factories.BigramDataListFactoryImpl">
-        <constructor-arg ref="trainingDataDatabaseAccessor"/>
-    </bean>
+    <bean id="bigramDataListFactory" class="com.trainingdataprocessor.factories.BigramDataListFactoryImpl"/>
 
     <bean id="multiListFactory" class="com.trainingdataprocessor.factories.MultiListFactoryImpl"/>
 
@@ -119,6 +117,5 @@
         <constructor-arg ref="semanticPreprocessor"/>
         <constructor-arg ref="semanticExtractor"/>
     </bean>
-
 
 </beans>

@@ -1,8 +1,6 @@
 package com.trainingdataprocessor.factories;
 
-import com.trainingdataprocessor.calculator.BigramProbabilityCalculator;
 import com.trainingdataprocessor.data.syntax.BigramData;
-import com.trainingdataprocessor.database.TrainingDataDatabaseAccessor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,12 +11,6 @@ import static com.trainingdataprocessor.cache.ConstantTagsCache.constantTagsCach
 public class BigramDataListFactoryImpl implements BigramDataListFactory {
 
     private final static Logger LOGGER = Logger.getLogger(BigramDataListFactoryImpl.class.getName());
-
-    private TrainingDataDatabaseAccessor trainingDataDatabaseAccessor;
-
-    public BigramDataListFactoryImpl(TrainingDataDatabaseAccessor trainingDataDatabaseAccessor) {
-        this.trainingDataDatabaseAccessor = trainingDataDatabaseAccessor;
-    }
 
     public List<BigramData> create(List<String> tags) {
         LOGGER.info("ENTERING create method of BigramDataListFactoryImpl... ");
@@ -31,15 +23,8 @@ public class BigramDataListFactoryImpl implements BigramDataListFactory {
             boolean isTag1Constant = constantTagsCache.contains(tag1);
             boolean isTag2Constant = constantTagsCache.contains(tag2);
             BigramData bigramData = new BigramData(tag1, tag2, isTag1Constant, isTag2Constant);
-            trainingDataDatabaseAccessor.populateBigramFrequencyData(bigramData);
-            trainingDataDatabaseAccessor.populateBigramTag1FrequencyData(bigramData);
-            double bigramProbability = BigramProbabilityCalculator.calculate(bigramData.getBigramFrequency(), bigramData.getTag1Frequency());
-            bigramData.setBigramProbability(bigramProbability);
-
             LOGGER.info("Processing bigram -> tag1: " + tag1 + ", tag2: " + tag2 + ", " + "isTag1Constant: " + isTag1Constant +
-                    ", isTag2Constant: " + isTag2Constant + ", bigramProbability: " + bigramProbability + ", bigramFrequency: " +
-                    bigramData.getBigramFrequency() + ", tag1Frequency: " + bigramData.getTag1Frequency());
-
+                    ", isTag2Constant: " + isTag2Constant);
             bigramDataList.add(bigramData);
         }
         long stopTime = System.currentTimeMillis();
