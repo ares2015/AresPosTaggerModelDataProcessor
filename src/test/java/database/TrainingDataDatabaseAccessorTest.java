@@ -1,7 +1,9 @@
 package database;
 
 import com.trainingdataprocessor.data.semantics.SemanticExtractionData;
+import com.trainingdataprocessor.data.syntax.BigramData;
 import com.trainingdataprocessor.database.TrainingDataDatabaseAccessor;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -32,4 +34,20 @@ public class TrainingDataDatabaseAccessorTest {
         sql = "delete from jos_nlp_semantic_data where id = ?";
         jdbcTemplate.update(sql,  new Object[]{id});
     }
+
+    @Test
+    @Ignore
+    public void testInsertBigramData(){
+        BigramData bigramData = new BigramData("N", "V", false, false);
+        trainingDataDatabaseAccessor.insertBigramData(bigramData);
+    }
+
+    @Test
+    @Ignore
+    public void testUpdateBigramData(){
+        BigramData bigramData = new BigramData("V", "N", false, false);
+        trainingDataDatabaseAccessor.insertBigramData(bigramData);
+    }
+
+
 }
