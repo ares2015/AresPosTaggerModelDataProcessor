@@ -10,6 +10,8 @@ import com.trainingdataprocessor.data.token.TokenTagData;
  */
 public interface TrainingDataDatabaseAccessor {
 
+    void insertTag(String tag);
+
     void insertBigramData(BigramData bigramData);
 
     void insertStartTagEndTagPair(StartTagEndTagPair startTagEndTagPair);

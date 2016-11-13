@@ -20,6 +20,10 @@
         <constructor-arg ref="jdbcTemplate"/>
     </bean>
 
+    <bean id="tagsProcessor" class="com.trainingdataprocessor.tags.TagsProcessorImpl">
+        <constructor-arg ref="trainingDataDatabaseAccessor"/>
+    </bean>
+
     <bean id="tokenizer" class="com.trainingdataprocessor.tokens.TokenizerImpl"/>
 
     <bean id="tagsEncoder" class="com.trainingdataprocessor.encoding.TagsEncoderImpl"/>
@@ -109,6 +113,7 @@
           class="com.trainingdataprocessor.main.NlpTrainingDataProcessor">
         <constructor-arg ref="trainingDataPreprocessor"/>
         <constructor-arg ref="trainingDataDatabaseAccessor"/>
+        <constructor-arg ref="tagsProcessor"/>
         <constructor-arg ref="bigramDataListFactory"/>
         <constructor-arg ref="startTagEndTagPairsListFactory"/>
         <constructor-arg ref="semanticPreprocessor"/>

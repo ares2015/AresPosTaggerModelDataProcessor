@@ -12,6 +12,11 @@ import com.trainingdataprocessor.database.TrainingDataDatabaseAccessor;
 public class TrainingDataDatabaseAccessorMock implements TrainingDataDatabaseAccessor {
 
     @Override
+    public void insertTag(String tag) {
+
+    }
+
+    @Override
     public void insertBigramData(BigramData bigramData) {
 
     }

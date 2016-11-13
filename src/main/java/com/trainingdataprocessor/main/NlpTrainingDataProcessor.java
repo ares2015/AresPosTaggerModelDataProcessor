@@ -9,6 +9,7 @@ import com.trainingdataprocessor.semantics.analysis.SemanticAnalyserImpl;
 import com.trainingdataprocessor.semantics.extraction.SemanticExtractor;
 import com.trainingdataprocessor.semantics.preprocessing.SemanticPreprocessor;
 import com.trainingdataprocessor.syntax.SyntaxAnalyserImpl;
+import com.trainingdataprocessor.tags.TagsProcessor;
 import com.trainingdataprocessor.tokens.TokenTagDataProcessorImpl;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -26,6 +27,8 @@ public class NlpTrainingDataProcessor {
 
     private TrainingDataDatabaseAccessor trainingDataDatabaseAccessor;
 
+    private TagsProcessor tagsProcessor;
+
     private BigramDataListFactory bigramDataListFactory;
 
     private StartTagEndTagPairsListFactory startTagEndTagPairsListFactory;
@@ -35,10 +38,12 @@ public class NlpTrainingDataProcessor {
     private SemanticExtractor semanticExtractor;
 
     public NlpTrainingDataProcessor(TrainingDataPreprocessor trainingDataPreprocessor, TrainingDataDatabaseAccessor trainingDataDatabaseAccessor,
+                                    TagsProcessor tagsProcessor,
                                     BigramDataListFactory bigramDataListFactory, StartTagEndTagPairsListFactory startTagEndTagPairsListFactory,
                                     SemanticPreprocessor semanticPreprocessor, SemanticExtractor semanticExtractor) {
         this.trainingDataPreprocessor = trainingDataPreprocessor;
         this.trainingDataDatabaseAccessor = trainingDataDatabaseAccessor;
+        this.tagsProcessor = tagsProcessor;
         this.bigramDataListFactory = bigramDataListFactory;
         this.startTagEndTagPairsListFactory = startTagEndTagPairsListFactory;
         this.semanticPreprocessor = semanticPreprocessor;
@@ -54,6 +59,7 @@ public class NlpTrainingDataProcessor {
 
     public void process() {
         List<TrainingDataRow> trainingDataRowList = trainingDataPreprocessor.preprocess();
+        tagsProcessor.process(trainingDataRowList);
         ExecutorService executor = Executors.newFixedThreadPool(3);
         Runnable syntaxAnalyser = new SyntaxAnalyserImpl(trainingDataDatabaseAccessor, bigramDataListFactory, startTagEndTagPairsListFactory, trainingDataRowList);
         Runnable semanticAnalyser = new SemanticAnalyserImpl(semanticPreprocessor, semanticExtractor, trainingDataDatabaseAccessor, trainingDataRowList);
@@ -61,7 +67,6 @@ public class NlpTrainingDataProcessor {
         executor.execute(syntaxAnalyser);
         executor.execute(semanticAnalyser);
         executor.execute(tokenTagDataProcessor);
-
     }
 
 }
