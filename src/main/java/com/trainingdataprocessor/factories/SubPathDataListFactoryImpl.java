@@ -1,7 +1,7 @@
 package com.trainingdataprocessor.factories;
 
 
-import com.trainingdataprocessor.data.syntax.StartTagEndTagPair;
+import com.trainingdataprocessor.data.syntax.SubPathData;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,13 +10,13 @@ import java.util.logging.Logger;
 import static com.trainingdataprocessor.cache.ConstantTagsCache.constantTagsCache;
 
 
-public class StartTagEndTagPairsListFactoryImpl implements StartTagEndTagPairsListFactory {
+public class SubPathDataListFactoryImpl implements SubPathDataListFactory {
 
-    private final static Logger LOGGER = Logger.getLogger(StartTagEndTagPairsListFactoryImpl.class.getName());
+    private final static Logger LOGGER = Logger.getLogger(SubPathDataListFactoryImpl.class.getName());
 
-    public List<StartTagEndTagPair> create(List<String> tags) {
-        List<StartTagEndTagPair> startTagEndTagPairList = new ArrayList<StartTagEndTagPair>();
-        LOGGER.info("ENTERING create method of StartTagEndTagPairsListFactoryImpl... ");
+    public List<SubPathData> create(List<String> tags) {
+        List<SubPathData> subPathDataList = new ArrayList<SubPathData>();
+        LOGGER.info("ENTERING create method of SubPathDataListFactoryImpl... ");
         LOGGER.info("*********************************************************************");
 
         long startTime = System.currentTimeMillis();
@@ -34,16 +34,16 @@ public class StartTagEndTagPairsListFactoryImpl implements StartTagEndTagPairsLi
                 LOGGER.info("Created new StartTagEndTag pair -> startIndex: " + startIndex + ", endIndex: " + endIndex +
                         ", startTag: " + startTag + ", endTag: " + endTag + ", containsConstant: " + containsConstant +
                         ", subPath: " + subPathTemporaryObject.subPath);
-                startTagEndTagPairList.add(new StartTagEndTagPair(startTag, endTag, subPath, subPathLength, startIndex, endIndex, containsConstant));
+                subPathDataList.add(new SubPathData(startTag, endTag, subPath, subPathLength, startIndex, endIndex, containsConstant));
             }
         }
         long stopTime = System.currentTimeMillis();
         long elapsedTime = stopTime - startTime;
-        LOGGER.info(startTagEndTagPairList.size() + " StarTagEndTag pairs were created in " + elapsedTime + " miliseconds.");
-        LOGGER.info("LEAVING create method of StartTagEndTagPairsListFactoryImpl... ");
+        LOGGER.info(subPathDataList.size() + " StarTagEndTag pairs were created in " + elapsedTime + " miliseconds.");
+        LOGGER.info("LEAVING create method of SubPathDataListFactoryImpl... ");
         LOGGER.info("*********************************************************************");
 
-        return startTagEndTagPairList;
+        return subPathDataList;
     }
 
     private SubPathTemporaryObject getSubPathFromTagsList(int startIndex, int endIndex, List<String> tags) {

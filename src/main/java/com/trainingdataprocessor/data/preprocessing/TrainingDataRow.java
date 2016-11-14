@@ -9,11 +9,7 @@ public final class TrainingDataRow {
 
     private boolean containsSubSentences;
 
-    private String sentence;
-
-    private String path;
-
-    private String encodedPath;
+    private String encodedPathAsString;
 
     private List<String> tokensList;
 
@@ -21,7 +17,7 @@ public final class TrainingDataRow {
 
     private List<String> encodedTagsList;
 
-    private List<String> encodedSubPathsList;
+    private List<String> encodedSubPathsAsStringList;
 
     private List<List<String>> encodedTagsMultiList;
 
@@ -37,28 +33,12 @@ public final class TrainingDataRow {
         this.containsSubSentences = containsSubSentences;
     }
 
-    public String getSentence() {
-        return sentence;
+    public String getEncodedPathAsString() {
+        return encodedPathAsString;
     }
 
-    public void setSentence(String sentence) {
-        this.sentence = sentence;
-    }
-
-    public String getPath() {
-        return path;
-    }
-
-    public void setPath(String path) {
-        this.path = path;
-    }
-
-    public String getEncodedPath() {
-        return encodedPath;
-    }
-
-    public void setEncodedPath(String encodedPath) {
-        this.encodedPath = encodedPath;
+    public void setEncodedPathAsString(String encodedPathAsString) {
+        this.encodedPathAsString = encodedPathAsString;
     }
 
     public List<String> getTokensList() {
@@ -85,12 +65,12 @@ public final class TrainingDataRow {
         this.encodedTagsList = encodedTagsList;
     }
 
-    public List<String> getEncodedSubPathsList() {
-        return encodedSubPathsList;
+    public List<String> getEncodedSubPathsAsStringList() {
+        return encodedSubPathsAsStringList;
     }
 
-    public void setEncodedSubPathsList(List<String> encodedSubPathsList) {
-        this.encodedSubPathsList = encodedSubPathsList;
+    public void setEncodedSubPathsAsStringList(List<String> encodedSubPathsAsStringList) {
+        this.encodedSubPathsAsStringList = encodedSubPathsAsStringList;
     }
 
     public List<List<String>> getEncodedTagsMultiList() {

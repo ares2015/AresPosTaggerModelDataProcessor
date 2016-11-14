@@ -2,7 +2,7 @@ package mocks;
 
 import com.trainingdataprocessor.data.semantics.SemanticExtractionData;
 import com.trainingdataprocessor.data.syntax.BigramData;
-import com.trainingdataprocessor.data.syntax.StartTagEndTagPair;
+import com.trainingdataprocessor.data.syntax.SubPathData;
 import com.trainingdataprocessor.data.token.TokenTagData;
 import com.trainingdataprocessor.database.TrainingDataDatabaseAccessor;
 
@@ -22,7 +22,7 @@ public class TrainingDataDatabaseAccessorMock implements TrainingDataDatabaseAcc
     }
 
     @Override
-    public void insertStartTagEndTagPair(StartTagEndTagPair startTagEndTagPair) {
+    public void insertSubPathData(SubPathData subPathData) {
 
     }
 
@@ -38,26 +38,6 @@ public class TrainingDataDatabaseAccessorMock implements TrainingDataDatabaseAcc
 
     @Override
     public void insertEncodedPath(String encodedPath) {
-
-    }
-
-    @Override
-    public void insertEncodedSubPath(String encodedSubPath) {
-
-    }
-
-    @Override
-    public void insertPath(String path) {
-
-    }
-
-    @Override
-    public void insertSubPath(String subPath) {
-
-    }
-
-    @Override
-    public void insertSentence(String sentence) {
 
     }
 

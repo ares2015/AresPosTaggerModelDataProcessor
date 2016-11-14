@@ -3,7 +3,7 @@ package com.trainingdataprocessor.database;
 import com.trainingdataprocessor.calculator.BigramProbabilityCalculator;
 import com.trainingdataprocessor.data.semantics.SemanticExtractionData;
 import com.trainingdataprocessor.data.syntax.BigramData;
-import com.trainingdataprocessor.data.syntax.StartTagEndTagPair;
+import com.trainingdataprocessor.data.syntax.SubPathData;
 import com.trainingdataprocessor.data.token.TokenTagData;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -57,19 +57,19 @@ public class TrainingDataDatabaseAccessorImpl implements TrainingDataDatabaseAcc
     }
 
     @Override
-    public void insertStartTagEndTagPair(StartTagEndTagPair startTagEndTagPair) {
-        String subPath = startTagEndTagPair.getSubPath();
-        int subPathFrequency = findSubPathFrequencyForStartTagEndTagPair(subPath);
+    public void insertSubPathData(SubPathData subPathData) {
+        String subPathAsString = subPathData.getSubPath();
+        int subPathFrequency = findSubPathFrequency(subPathAsString);
         boolean subPathExistsInDB = subPathFrequency > 0;
         subPathFrequency ++;
         String sql = "";
         if(subPathExistsInDB){
-            sql = "update jos_nlp_start_tag_end_tag_pairs set frequency = ? where subpath = ?";
-            jdbcTemplate.update(sql, new Object[]{subPathFrequency, subPath});
+            sql = "update jos_nlp_subpaths set frequency = ? where subpath = ?";
+            jdbcTemplate.update(sql, new Object[]{subPathFrequency, subPathAsString});
         }else {
-            sql = "insert into jos_nlp_start_tag_end_tag_pairs (start_tag, end_tag, subpath, length, frequency, contains_constant) values (?,?,?,?,?,?)";
-            jdbcTemplate.update(sql, new Object[]{startTagEndTagPair.getStartTag(), startTagEndTagPair.getEndTag(),
-                    subPath, startTagEndTagPair.getLength(), subPathFrequency, startTagEndTagPair.containsConstant()});
+            sql = "insert into jos_nlp_subpaths (start_tag, end_tag, subpath, length, frequency, contains_constant) values (?,?,?,?,?,?)";
+            jdbcTemplate.update(sql, new Object[]{subPathData.getStartTag(), subPathData.getEndTag(),
+                    subPathAsString, subPathData.getLength(), subPathFrequency, subPathData.containsConstant()});
         }
     }
 
@@ -90,26 +90,6 @@ public class TrainingDataDatabaseAccessorImpl implements TrainingDataDatabaseAcc
 
     @Override
     public void insertEncodedPath(String encodedPath) {
-
-    }
-
-    @Override
-    public void insertEncodedSubPath(String encodedSubPath) {
-
-    }
-
-    @Override
-    public void insertPath(String path) {
-
-    }
-
-    @Override
-    public void insertSubPath(String subPath) {
-
-    }
-
-    @Override
-    public void insertSentence(String sentence) {
 
     }
 
@@ -136,9 +116,9 @@ public class TrainingDataDatabaseAccessorImpl implements TrainingDataDatabaseAcc
         return tagFrequency;
     }
 
-    private int findSubPathFrequencyForStartTagEndTagPair(String subPath){
+    private int findSubPathFrequency(String subPath){
         int startTagEndTagPairFrequency = 0;
-        String sql = "select frequency from jos_nlp_start_tag_end_tag_pairs where subpath = ?";
+        String sql = "select frequency from jos_nlp_subpaths where subpath = ?";
         try {
             startTagEndTagPairFrequency = jdbcTemplate.queryForInt(sql, new Object[]{subPath});
         } catch (final EmptyResultDataAccessException e) {

@@ -44,13 +44,13 @@ public class SemanticAnalyserImpl implements SemanticAnalyser, Runnable {
             if (trainingDataRow.containsSubSentences()) {
                 for (int i = 0; i <= trainingDataRow.getTokensMultiList().size() - 1; i++) {
                     if (canGoToSemanticAnalysis(trainingDataRow.getEncodedTagsMultiList().get(i))) {
-                        analyseSentence(trainingDataRow.getEncodedSubPathsList().get(i), trainingDataRow.getTokensMultiList().get(i),
+                        analyseSentence(trainingDataRow.getEncodedSubPathsAsStringList().get(i), trainingDataRow.getTokensMultiList().get(i),
                                 trainingDataRow.getEncodedTagsMultiList().get(i));
                     }
                 }
             } else {
                 if (canGoToSemanticAnalysis(trainingDataRow.getEncodedTagsList())) {
-                    analyseSentence(trainingDataRow.getEncodedPath(), trainingDataRow.getTokensList(), trainingDataRow.getEncodedTagsList());
+                    analyseSentence(trainingDataRow.getEncodedPathAsString(), trainingDataRow.getTokensList(), trainingDataRow.getEncodedTagsList());
                 }
             }
         }

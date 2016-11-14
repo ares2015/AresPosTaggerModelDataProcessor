@@ -68,10 +68,7 @@ public class TrainingDataRowListFactoryImpl implements TrainingDataRowListFactor
                 trainingDataRow.setTokensList(tokensList);
                 trainingDataRow.setTagsList(tagsList);
 
-                //SENTENCE, SUBPATH AND ENCODED SUBPATH
-                trainingDataRow.setSentence(sentence);
-                trainingDataRow.setPath(subPath);
-                trainingDataRow.setEncodedPath(tagsEncoder.encodeTagsListToEncodedSubPath(tagsList));
+                trainingDataRow.setEncodedPathAsString(tagsEncoder.encodeTagsListToEncodedSubPath(tagsList));
 
                 //ENCODED TAGS MULTILIST
                 List<List<String>> encodedTagsMultiList = tagsEncoder.encodeTagsMultiListToEncodedTagsMultiList(tagsMultiList);
@@ -79,18 +76,15 @@ public class TrainingDataRowListFactoryImpl implements TrainingDataRowListFactor
 
                 //ENCODED SUBPATHS LIST
                 List<String> encodedSubPathsList = tagsEncoder.encodeTagMultiListToEncodedSubPathsList(tagsMultiList);
-                trainingDataRow.setEncodedSubPathsList(encodedSubPathsList);
+                trainingDataRow.setEncodedSubPathsAsStringList(encodedSubPathsList);
 
                 trainingDataRowList.add(trainingDataRow);
             } else {
                 trainingDataRow.setContainsSubSentences(false);
                 LOGGER.info("Sentence does not contain any subSentences.");
 
-                //SENTENCE, SUBPATH AND ENCODED SUBPATH
-                trainingDataRow.setSentence(sentence);
-                trainingDataRow.setPath(subPath);
                 String encodedSubPath = tagsEncoder.encodeTagsListToEncodedSubPath(tagsList);
-                trainingDataRow.setEncodedPath(encodedSubPath);
+                trainingDataRow.setEncodedPathAsString(encodedSubPath);
 
                 //TOKENS LIST, TAGS LIST, ENCODED TAGS LIST
                 trainingDataRow.setTokensList(tokensList);
@@ -100,7 +94,7 @@ public class TrainingDataRowListFactoryImpl implements TrainingDataRowListFactor
                 trainingDataRowList.add(trainingDataRow);
             }
         }
-        LOGGER.info("LEAVING create method of StartTagEndTagPairsListFactoryImpl... ");
+        LOGGER.info("LEAVING create method of SubPathDataListFactoryImpl... ");
         LOGGER.info("*********************************************************************");
 
         return trainingDataRowList;

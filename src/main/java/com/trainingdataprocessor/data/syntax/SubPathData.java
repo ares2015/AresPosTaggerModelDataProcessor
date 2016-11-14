@@ -3,7 +3,7 @@ package com.trainingdataprocessor.data.syntax;
 /**
  * Created by Oliver on 7/25/2016.
  */
-public final class StartTagEndTagPair {
+public final class SubPathData {
 
     private String startTag;
 
@@ -19,7 +19,7 @@ public final class StartTagEndTagPair {
 
     private boolean containsConstant = false;
 
-    public StartTagEndTagPair(String startTag, String endTag, String subPath, int length, int startIndex, int endIndex, boolean containsConstant) {
+    public SubPathData(String startTag, String endTag, String subPath, int length, int startIndex, int endIndex, boolean containsConstant) {
         this.startTag = startTag;
         this.endTag = endTag;
         this.subPath = subPath;

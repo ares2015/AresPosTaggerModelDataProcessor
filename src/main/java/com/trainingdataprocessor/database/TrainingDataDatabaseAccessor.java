@@ -2,7 +2,7 @@ package com.trainingdataprocessor.database;
 
 import com.trainingdataprocessor.data.semantics.SemanticExtractionData;
 import com.trainingdataprocessor.data.syntax.BigramData;
-import com.trainingdataprocessor.data.syntax.StartTagEndTagPair;
+import com.trainingdataprocessor.data.syntax.SubPathData;
 import com.trainingdataprocessor.data.token.TokenTagData;
 
 /**
@@ -14,20 +14,12 @@ public interface TrainingDataDatabaseAccessor {
 
     void insertBigramData(BigramData bigramData);
 
-    void insertStartTagEndTagPair(StartTagEndTagPair startTagEndTagPair);
+    void insertSubPathData(SubPathData subPathData);
 
     void insertSemanticData(SemanticExtractionData semanticExtractionData);
 
     void insertTokenTagData(TokenTagData tokenTagData);
 
     void insertEncodedPath(String encodedPath);
-
-    void insertEncodedSubPath(String encodedSubPath);
-
-    void insertPath(String path);
-
-    void insertSubPath(String subPath);
-
-    void insertSentence(String sentence);
 
 }

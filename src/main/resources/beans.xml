@@ -36,8 +36,8 @@
 
     <bean id="multiListFactory" class="com.trainingdataprocessor.factories.MultiListFactoryImpl"/>
 
-    <bean id="startTagEndTagPairsListFactory"
-          class="com.trainingdataprocessor.factories.StartTagEndTagPairsListFactoryImpl"/>
+    <bean id="subPathDataListFactory"
+          class="com.trainingdataprocessor.factories.SubPathDataListFactoryImpl"/>
 
     <bean id="trainingDataRowListFactory"
           class="com.trainingdataprocessor.factories.TrainingDataRowListFactoryImpl">
@@ -113,7 +113,7 @@
         <constructor-arg ref="trainingDataDatabaseAccessor"/>
         <constructor-arg ref="tagsProcessor"/>
         <constructor-arg ref="bigramDataListFactory"/>
-        <constructor-arg ref="startTagEndTagPairsListFactory"/>
+        <constructor-arg ref="subPathDataListFactory"/>
         <constructor-arg ref="semanticPreprocessor"/>
         <constructor-arg ref="semanticExtractor"/>
     </bean>

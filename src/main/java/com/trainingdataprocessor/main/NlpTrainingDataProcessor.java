@@ -3,7 +3,7 @@ package com.trainingdataprocessor.main;
 import com.trainingdataprocessor.data.preprocessing.TrainingDataRow;
 import com.trainingdataprocessor.database.TrainingDataDatabaseAccessor;
 import com.trainingdataprocessor.factories.BigramDataListFactory;
-import com.trainingdataprocessor.factories.StartTagEndTagPairsListFactory;
+import com.trainingdataprocessor.factories.SubPathDataListFactory;
 import com.trainingdataprocessor.preprocessing.TrainingDataPreprocessor;
 import com.trainingdataprocessor.semantics.analysis.SemanticAnalyserImpl;
 import com.trainingdataprocessor.semantics.extraction.SemanticExtractor;
@@ -31,7 +31,7 @@ public class NlpTrainingDataProcessor {
 
     private BigramDataListFactory bigramDataListFactory;
 
-    private StartTagEndTagPairsListFactory startTagEndTagPairsListFactory;
+    private SubPathDataListFactory subPathDataListFactory;
 
     private SemanticPreprocessor semanticPreprocessor;
 
@@ -39,13 +39,13 @@ public class NlpTrainingDataProcessor {
 
     public NlpTrainingDataProcessor(TrainingDataPreprocessor trainingDataPreprocessor, TrainingDataDatabaseAccessor trainingDataDatabaseAccessor,
                                     TagsProcessor tagsProcessor,
-                                    BigramDataListFactory bigramDataListFactory, StartTagEndTagPairsListFactory startTagEndTagPairsListFactory,
+                                    BigramDataListFactory bigramDataListFactory, SubPathDataListFactory subPathDataListFactory,
                                     SemanticPreprocessor semanticPreprocessor, SemanticExtractor semanticExtractor) {
         this.trainingDataPreprocessor = trainingDataPreprocessor;
         this.trainingDataDatabaseAccessor = trainingDataDatabaseAccessor;
         this.tagsProcessor = tagsProcessor;
         this.bigramDataListFactory = bigramDataListFactory;
-        this.startTagEndTagPairsListFactory = startTagEndTagPairsListFactory;
+        this.subPathDataListFactory = subPathDataListFactory;
         this.semanticPreprocessor = semanticPreprocessor;
         this.semanticExtractor = semanticExtractor;
     }
@@ -61,7 +61,7 @@ public class NlpTrainingDataProcessor {
         List<TrainingDataRow> trainingDataRowList = trainingDataPreprocessor.preprocess();
         tagsProcessor.process(trainingDataRowList);
         ExecutorService executor = Executors.newFixedThreadPool(3);
-        Runnable syntaxAnalyser = new SyntaxAnalyserImpl(trainingDataDatabaseAccessor, bigramDataListFactory, startTagEndTagPairsListFactory, trainingDataRowList);
+        Runnable syntaxAnalyser = new SyntaxAnalyserImpl(trainingDataDatabaseAccessor, bigramDataListFactory, subPathDataListFactory, trainingDataRowList);
         Runnable semanticAnalyser = new SemanticAnalyserImpl(semanticPreprocessor, semanticExtractor, trainingDataDatabaseAccessor, trainingDataRowList);
         Runnable tokenTagDataProcessor = new TokenTagDataProcessorImpl(trainingDataDatabaseAccessor, trainingDataRowList);
         executor.execute(syntaxAnalyser);

@@ -2,7 +2,7 @@ package database;
 
 import com.trainingdataprocessor.data.semantics.SemanticExtractionData;
 import com.trainingdataprocessor.data.syntax.BigramData;
-import com.trainingdataprocessor.data.syntax.StartTagEndTagPair;
+import com.trainingdataprocessor.data.syntax.SubPathData;
 import com.trainingdataprocessor.database.TrainingDataDatabaseAccessor;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -53,15 +53,15 @@ public class TrainingDataDatabaseAccessorTest {
     @Test
     @Ignore
     public void testInsertStartTagEndTagPair(){
-        StartTagEndTagPair startTagEndTagPair = new StartTagEndTagPair("N", "AJ", "N AJ AJ N", 4, 3, 7, false);
-        trainingDataDatabaseAccessor.insertStartTagEndTagPair(startTagEndTagPair);
+        SubPathData subPathData = new SubPathData("N", "AJ", "N AJ AJ N", 4, 3, 7, false);
+        trainingDataDatabaseAccessor.insertSubPathData(subPathData);
     }
 
     @Test
     @Ignore
     public void testUpdateStartTagEndTagPair(){
-        StartTagEndTagPair startTagEndTagPair = new StartTagEndTagPair("V", "N", "V AJ AJ N", 4, 3, 7, false);
-        trainingDataDatabaseAccessor.insertStartTagEndTagPair(startTagEndTagPair);
+        SubPathData subPathData = new SubPathData("V", "N", "V AJ AJ N", 4, 3, 7, false);
+        trainingDataDatabaseAccessor.insertSubPathData(subPathData);
     }
 
 

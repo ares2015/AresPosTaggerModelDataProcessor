@@ -77,7 +77,7 @@ public class SemanticAnalyserTest {
 
         List<TrainingDataRow> trainingDataRowList = new ArrayList<>();
         TrainingDataRow trainingDataRow = new TrainingDataRow();
-        trainingDataRow.setEncodedPath(encodedPath);
+        trainingDataRow.setEncodedPathAsString(encodedPath);
         trainingDataRow.setEncodedTagsList(encodedTags);
         trainingDataRow.setTokensList(tokens);
 

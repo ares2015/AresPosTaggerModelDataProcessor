@@ -5,8 +5,8 @@ import com.trainingdataprocessor.data.preprocessing.TrainingDataRow;
 import com.trainingdataprocessor.database.TrainingDataDatabaseAccessor;
 import com.trainingdataprocessor.factories.BigramDataListFactory;
 import com.trainingdataprocessor.factories.BigramDataListFactoryImpl;
-import com.trainingdataprocessor.factories.StartTagEndTagPairsListFactory;
-import com.trainingdataprocessor.factories.StartTagEndTagPairsListFactoryImpl;
+import com.trainingdataprocessor.factories.SubPathDataListFactory;
+import com.trainingdataprocessor.factories.SubPathDataListFactoryImpl;
 import com.trainingdataprocessor.regex.RegexPatternSearcher;
 import com.trainingdataprocessor.regex.RegexPatternSearcherImpl;
 import com.trainingdataprocessor.semantics.analysis.SemanticAnalyserImpl;
@@ -51,7 +51,7 @@ public class SyntaxAndSemanticAnalysersTest {
 
     BigramDataListFactory bigramDataListFactory = new BigramDataListFactoryImpl();
 
-    StartTagEndTagPairsListFactory startTagEndTagPairsListFactory = new StartTagEndTagPairsListFactoryImpl();
+    SubPathDataListFactory subPathDataListFactory = new SubPathDataListFactoryImpl();
 
 
     private Tokenizer tokenizer = new TokenizerImpl();
@@ -101,7 +101,7 @@ public class SyntaxAndSemanticAnalysersTest {
         List<TrainingDataRow> trainingDataRowList = new ArrayList<>();
         TrainingDataRow trainingDataRow = new TrainingDataRow();
         trainingDataRow.setTagsList(tagsList);
-        trainingDataRow.setEncodedPath(encodedPath);
+        trainingDataRow.setEncodedPathAsString(encodedPath);
         trainingDataRow.setEncodedTagsList(encodedTags);
         trainingDataRow.setTokensList(tokensList);
 
@@ -109,7 +109,7 @@ public class SyntaxAndSemanticAnalysersTest {
         trainingDataRowList.add(trainingDataRow);
 
         ExecutorService executor = Executors.newFixedThreadPool(2);
-        Runnable syntaxAnalyser = new SyntaxAnalyserImpl(trainingDataDatabaseAccessor, bigramDataListFactory, startTagEndTagPairsListFactory, trainingDataRowList);
+        Runnable syntaxAnalyser = new SyntaxAnalyserImpl(trainingDataDatabaseAccessor, bigramDataListFactory, subPathDataListFactory, trainingDataRowList);
         Runnable semanticAnalyser = new SemanticAnalyserImpl(semanticPreprocessor, semanticExtractor, trainingDataDatabaseAccessor, trainingDataRowList);
 
         executor.execute(syntaxAnalyser);

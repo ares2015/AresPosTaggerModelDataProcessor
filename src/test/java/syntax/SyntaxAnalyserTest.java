@@ -4,8 +4,8 @@ import com.trainingdataprocessor.data.preprocessing.TrainingDataRow;
 import com.trainingdataprocessor.database.TrainingDataDatabaseAccessor;
 import com.trainingdataprocessor.factories.BigramDataListFactory;
 import com.trainingdataprocessor.factories.BigramDataListFactoryImpl;
-import com.trainingdataprocessor.factories.StartTagEndTagPairsListFactory;
-import com.trainingdataprocessor.factories.StartTagEndTagPairsListFactoryImpl;
+import com.trainingdataprocessor.factories.SubPathDataListFactory;
+import com.trainingdataprocessor.factories.SubPathDataListFactoryImpl;
 import com.trainingdataprocessor.syntax.SyntaxAnalyserImpl;
 import com.trainingdataprocessor.tags.Tags;
 import org.junit.Test;
@@ -29,7 +29,7 @@ public class SyntaxAnalyserTest {
 
     BigramDataListFactory bigramDataListFactory = new BigramDataListFactoryImpl();
 
-    StartTagEndTagPairsListFactory startTagEndTagPairsListFactory = new StartTagEndTagPairsListFactoryImpl();
+    SubPathDataListFactory subPathDataListFactory = new SubPathDataListFactoryImpl();
 
 
     @Test
@@ -54,7 +54,7 @@ public class SyntaxAnalyserTest {
         trainingDataRowList.add(trainingDataRow);
 
         ExecutorService executor = Executors.newFixedThreadPool(1);
-        Runnable syntaxAnalyser = new SyntaxAnalyserImpl(trainingDataDatabaseAccessor, bigramDataListFactory, startTagEndTagPairsListFactory, trainingDataRowList);
+        Runnable syntaxAnalyser = new SyntaxAnalyserImpl(trainingDataDatabaseAccessor, bigramDataListFactory, subPathDataListFactory, trainingDataRowList);
 
         executor.execute(syntaxAnalyser);
 
