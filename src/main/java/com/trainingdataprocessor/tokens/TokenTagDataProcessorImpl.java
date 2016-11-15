@@ -62,18 +62,15 @@ public class TokenTagDataProcessorImpl implements TokenTagDataProcessor, Runnabl
 
     private void populateIsNounAttributes(TokenTagData tokenTagData, String tag, Optional<TokenDatabaseData> tokenDatabaseData) {
         if (tokenDatabaseData.isPresent()) {
-            int isNounFrequency = tokenDatabaseData.get().getIsNounFrequency();
             if (Tags.NOUN.equals(tag)) {
+                int isNounFrequency = tokenDatabaseData.get().getIsNounFrequency();
                 isNounFrequency++;
                 tokenTagData.setIsNounFrequency(isNounFrequency);
                 tokenTagData.setNoun(true);
-            }else {
+            } else {
                 tokenTagData.setNoun(tokenDatabaseData.get().isNoun());
                 tokenTagData.setIsNounFrequency(tokenDatabaseData.get().getIsNounFrequency());
             }
-
-        } else {
-            tokenTagData.setIsNounFrequency(1);
         }
     }
 
