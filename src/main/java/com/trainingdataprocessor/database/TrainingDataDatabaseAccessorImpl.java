@@ -91,12 +91,22 @@ public class TrainingDataDatabaseAccessorImpl implements TrainingDataDatabaseAcc
     @Override
     public void insertTokenTagData(TokenTagData tokenTagData) {
         String sql = "";
-        if(tokenTagData.tokenExistsInDB()){
-            sql = "update jos_nlp_tokens set is_noun_frequency = ?, is_adjective_frequency = ?, is_verb_frequency = ?, is_verbEd_frequency = ?, " +
-                    "is_verbIng_frequency = ?, is_adverb_frequency = ?, " + "total_frequency = ? where token = ? ";
-        }else {
-//            sql = "insert into jos_nlp_tokens ("
+        if (tokenTagData.tokenExistsInDB()) {
+            sql = "update jos_nlp_tokens set is_noun = ?, is_noun_frequency = ?, is_adjective = ?, is_adjective_frequency = ?," +
+                    "is_verb = ?, is_verb_frequency = ?, is_verbEd = ?, is_verbEd_frequency = ?, " +
+                    "is_verbIng = ?, is_verbIng_frequency = ?, is_adverb = ?, is_adverb_frequency = ?, " + "total_frequency = ? where token = ? ";
+            jdbcTemplate.update(sql, new Object[]{tokenTagData.isNoun(), tokenTagData.getIsNounFrequency(), tokenTagData.isAdjective(), tokenTagData.getIsAdjectiveFrequency(),
+                    tokenTagData.isVerb(), tokenTagData.getIsVerbFrequency(), tokenTagData.isVerbEd(), tokenTagData.getIsVerbEdFrequency(), tokenTagData.isVerbIng(),
+                    tokenTagData.getIsVerbIngFrequency(), tokenTagData.isAdverb(), tokenTagData.getIsAdverbFrequency(), tokenTagData.getTotalFrequency(),
+                    tokenTagData.getToken()});
+        } else {
+            sql = "insert into jos_nlp_tokens (is_noun, is_noun_frequency, is_adjective, is_adjective_frequency, is_verb, is_verb_frequency, " +
+                    "is_verbEd, is_verbEd_frequency, is_verbIng, is_verbIng_frequency, is_adverb, is_adverb_frequency, total_frequency";
+            jdbcTemplate.update(sql, new Object[]{tokenTagData.isNoun(), tokenTagData.getIsNounFrequency(), tokenTagData.isAdjective(), tokenTagData.getIsAdjectiveFrequency(),
+                    tokenTagData.isVerb(), tokenTagData.getIsVerbFrequency(), tokenTagData.isVerbEd(), tokenTagData.getIsVerbEdFrequency(), tokenTagData.isVerbIng(),
+                    tokenTagData.getIsVerbIngFrequency(), tokenTagData.isAdverb(), tokenTagData.getIsAdverbFrequency(), tokenTagData.getTotalFrequency()});
         }
+
     }
 
     @Override

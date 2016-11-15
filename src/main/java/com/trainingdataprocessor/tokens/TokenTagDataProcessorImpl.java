@@ -47,9 +47,12 @@ public class TokenTagDataProcessorImpl implements TokenTagDataProcessor, Runnabl
     }
 
     private void populateTokenTagDataAttributes(TokenTagData tokenTagData, String tag, String token) {
+        tokenTagData.setToken(token);
         Optional<TokenDatabaseData> tokenDatabaseData = trainingDataDatabaseAccessor.getTokenDatabaseData(token);
         if (tokenDatabaseData.isPresent()) {
-            tokenTagData.setTotalFrequency(tokenDatabaseData.get().getTotalFrequency());
+            int totalFrequency = tokenDatabaseData.get().getTotalFrequency();
+            totalFrequency++;
+            tokenTagData.setTotalFrequency(totalFrequency);
             tokenTagData.setTokenExistsInDB(true);
         }
         populateIsNounAttributes(tokenTagData, tag, tokenDatabaseData);
@@ -76,68 +79,71 @@ public class TokenTagDataProcessorImpl implements TokenTagDataProcessor, Runnabl
 
     private void populateIsAdjectiveAttributes(TokenTagData tokenTagData, String tag, Optional<TokenDatabaseData> tokenDatabaseData) {
         if (tokenDatabaseData.isPresent()) {
-            int isAdjectiveFrequency = tokenDatabaseData.get().getIsAdjectiveFrequency();
             if (Tags.ADJECTIVE.equals(tag)) {
+                int isAdjectiveFrequency = tokenDatabaseData.get().getIsAdjectiveFrequency();
                 isAdjectiveFrequency++;
+                tokenTagData.setIsAdjectiveFrequency(isAdjectiveFrequency);
                 tokenTagData.setAdjective(true);
             }
-            tokenTagData.setIsAdjectiveFrequency(isAdjectiveFrequency);
         } else {
-            tokenTagData.setIsAdjectiveFrequency(1);
+            tokenTagData.setAdjective(tokenDatabaseData.get().isAdjective());
+            tokenTagData.setIsAdjectiveFrequency(tokenDatabaseData.get().getIsAdjectiveFrequency());
         }
     }
 
     private void populateIsVerbAttributes(TokenTagData tokenTagData, String tag, Optional<TokenDatabaseData> tokenDatabaseData) {
         if (tokenDatabaseData.isPresent()) {
-            int isVerbFrequency = tokenDatabaseData.get().getIsVerbFrequency();
             if (Tags.VERB.equals(tag)) {
+                int isVerbFrequency = tokenDatabaseData.get().getIsVerbFrequency();
                 isVerbFrequency++;
+                tokenTagData.setIsVerbFrequency(isVerbFrequency);
                 tokenTagData.setVerb(true);
+            } else {
+                tokenTagData.setVerb(tokenDatabaseData.get().isVerb());
+                tokenTagData.setIsVerbFrequency(tokenDatabaseData.get().getIsVerbFrequency());
             }
-            tokenTagData.setIsVerbFrequency(isVerbFrequency);
-        } else {
-            tokenTagData.setIsVerbFrequency(1);
         }
     }
 
     private void populateIsVerbEdAttributes(TokenTagData tokenTagData, String tag, Optional<TokenDatabaseData> tokenDatabaseData) {
         if (tokenDatabaseData.isPresent()) {
-            int isVerbEdFrequency = tokenDatabaseData.get().getIsVerbEdFrequency();
             if (Tags.VERB_ED.equals(tag)) {
+                int isVerbEdFrequency = tokenDatabaseData.get().getIsVerbEdFrequency();
                 isVerbEdFrequency++;
+                tokenTagData.setIsVerbEdFrequency(isVerbEdFrequency);
                 tokenTagData.setVerbEd(true);
+            } else {
+                tokenTagData.setVerbEd(tokenDatabaseData.get().isVerbEd());
+                tokenTagData.setIsVerbEdFrequency(tokenDatabaseData.get().getIsVerbEdFrequency());
             }
-            tokenTagData.setIsVerbEdFrequency(isVerbEdFrequency);
-        } else {
-            tokenTagData.setIsVerbEdFrequency(1);
         }
     }
 
     private void populateIsVerbIngAttributes(TokenTagData tokenTagData, String tag, Optional<TokenDatabaseData> tokenDatabaseData) {
         if (tokenDatabaseData.isPresent()) {
-            int isVerbIngFrequency = tokenDatabaseData.get().getIsVerbIngFrequency();
             if (Tags.VERB_ING.equals(tag)) {
+                int isVerbIngFrequency = tokenDatabaseData.get().getIsVerbIngFrequency();
                 isVerbIngFrequency++;
+                tokenTagData.setIsVerbIngFrequency(isVerbIngFrequency);
                 tokenTagData.setVerbIng(true);
+            } else {
+                tokenTagData.setVerbIng(tokenDatabaseData.get().isVerbIng());
+                tokenTagData.setIsVerbIngFrequency(tokenDatabaseData.get().getIsVerbIngFrequency());
             }
-            tokenTagData.setIsVerbIngFrequency(isVerbIngFrequency);
-        } else {
-            tokenTagData.setIsVerbIngFrequency(1);
         }
     }
 
     private void populateIsAdverbAttributes(TokenTagData tokenTagData, String tag, Optional<TokenDatabaseData> tokenDatabaseData) {
         if (tokenDatabaseData.isPresent()) {
-            int isAdverbFrequency = tokenDatabaseData.get().getIsAdverbFrequency();
             if (Tags.ADVERB.equals(tag)) {
+                int isAdverbFrequency = tokenDatabaseData.get().getIsAdverbFrequency();
                 isAdverbFrequency++;
+                tokenTagData.setIsAdverbFrequency(isAdverbFrequency);
                 tokenTagData.setAdverb(true);
+            } else {
+                tokenTagData.setAdverb(tokenDatabaseData.get().isAdverb());
+                tokenTagData.setIsAdverbFrequency(tokenDatabaseData.get().getIsAdverbFrequency());
             }
-            tokenTagData.setIsAdverbFrequency(isAdverbFrequency);
-        } else {
-            tokenTagData.setIsAdverbFrequency(1);
         }
     }
-
-
 }
