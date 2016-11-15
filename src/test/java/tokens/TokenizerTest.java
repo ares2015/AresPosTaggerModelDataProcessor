@@ -1,4 +1,4 @@
-package tokenizer;
+package tokens;
 
 import com.trainingdataprocessor.tokens.Tokenizer;
 import com.trainingdataprocessor.tokens.TokenizerImpl;

@@ -3,8 +3,11 @@ package mocks;
 import com.trainingdataprocessor.data.semantics.SemanticExtractionData;
 import com.trainingdataprocessor.data.syntax.BigramData;
 import com.trainingdataprocessor.data.syntax.SubPathData;
+import com.trainingdataprocessor.data.token.TokenDatabaseData;
 import com.trainingdataprocessor.data.token.TokenTagData;
 import com.trainingdataprocessor.database.TrainingDataDatabaseAccessor;
+
+import java.util.Optional;
 
 /**
  * Created by Oliver on 8/1/2016.
@@ -39,6 +42,11 @@ public class TrainingDataDatabaseAccessorMock implements TrainingDataDatabaseAcc
     @Override
     public void insertEncodedPath(String encodedPath) {
 
+    }
+
+    @Override
+    public Optional<TokenDatabaseData> getTokenDatabaseData(String token) {
+        return null;
     }
 
 }

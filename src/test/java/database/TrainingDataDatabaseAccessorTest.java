@@ -3,12 +3,17 @@ package database;
 import com.trainingdataprocessor.data.semantics.SemanticExtractionData;
 import com.trainingdataprocessor.data.syntax.BigramData;
 import com.trainingdataprocessor.data.syntax.SubPathData;
+import com.trainingdataprocessor.data.token.TokenDatabaseData;
 import com.trainingdataprocessor.database.TrainingDataDatabaseAccessor;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.jdbc.core.JdbcTemplate;
+
+import java.util.Optional;
+
+import static org.junit.Assert.*;
 
 /**
  * Created by Oliver on 11/9/2016.
@@ -52,17 +57,34 @@ public class TrainingDataDatabaseAccessorTest {
 
     @Test
     @Ignore
-    public void testInsertStartTagEndTagPair(){
+    public void testInsertSubPathData(){
         SubPathData subPathData = new SubPathData("N", "AJ", "N AJ AJ N", 4, 3, 7, false);
         trainingDataDatabaseAccessor.insertSubPathData(subPathData);
     }
 
     @Test
     @Ignore
-    public void testUpdateStartTagEndTagPair(){
+    public void testUpdateSubPathData(){
         SubPathData subPathData = new SubPathData("V", "N", "V AJ AJ N", 4, 3, 7, false);
         trainingDataDatabaseAccessor.insertSubPathData(subPathData);
     }
 
+    @Test
+    @Ignore
+    public void testGetTokenDatabaseDataTokenExists(){
+        String token = "dog";
+        Optional<TokenDatabaseData> tokenDatabaseData = trainingDataDatabaseAccessor.getTokenDatabaseData(token);
+        assertEquals(56, tokenDatabaseData.get().getIsNounFrequency());
+        assertTrue(tokenDatabaseData.get().isNoun());
+
+    }
+
+    @Test
+    @Ignore
+    public void testGetTokenDatabaseDataTokenDoesNotExist(){
+        String token = "cat";
+        Optional<TokenDatabaseData> tokenDatabaseData = trainingDataDatabaseAccessor.getTokenDatabaseData(token);
+        assertFalse(tokenDatabaseData.isPresent());
+    }
 
 }

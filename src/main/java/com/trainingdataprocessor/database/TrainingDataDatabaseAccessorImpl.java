@@ -4,9 +4,14 @@ import com.trainingdataprocessor.calculator.BigramProbabilityCalculator;
 import com.trainingdataprocessor.data.semantics.SemanticExtractionData;
 import com.trainingdataprocessor.data.syntax.BigramData;
 import com.trainingdataprocessor.data.syntax.SubPathData;
+import com.trainingdataprocessor.data.token.TokenDatabaseData;
 import com.trainingdataprocessor.data.token.TokenTagData;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
+
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 /**
  * Created by Oliver on 11/7/2016.
@@ -23,12 +28,12 @@ public class TrainingDataDatabaseAccessorImpl implements TrainingDataDatabaseAcc
     public void insertTag(String tag) {
         int tagFrequency = findTagFrequency(tag);
         boolean tagExistsInDB = tagFrequency > 0;
-        tagFrequency ++;
+        tagFrequency++;
         String sql = "";
-        if(tagExistsInDB){
+        if (tagExistsInDB) {
             sql = "update jos_nlp_tags set frequency = ? where tag = ?";
             jdbcTemplate.update(sql, new Object[]{tagFrequency, tag});
-        }else {
+        } else {
             sql = "insert into jos_nlp_tags (tag, frequency) values(?,?)";
             jdbcTemplate.update(sql, new Object[]{tag, tagFrequency});
         }
@@ -61,12 +66,12 @@ public class TrainingDataDatabaseAccessorImpl implements TrainingDataDatabaseAcc
         String subPathAsString = subPathData.getSubPath();
         int subPathFrequency = findSubPathFrequency(subPathAsString);
         boolean subPathExistsInDB = subPathFrequency > 0;
-        subPathFrequency ++;
+        subPathFrequency++;
         String sql = "";
-        if(subPathExistsInDB){
+        if (subPathExistsInDB) {
             sql = "update jos_nlp_subpaths set frequency = ? where subpath = ?";
             jdbcTemplate.update(sql, new Object[]{subPathFrequency, subPathAsString});
-        }else {
+        } else {
             sql = "insert into jos_nlp_subpaths (start_tag, end_tag, subpath, length, frequency, contains_constant) values (?,?,?,?,?,?)";
             jdbcTemplate.update(sql, new Object[]{subPathData.getStartTag(), subPathData.getEndTag(),
                     subPathAsString, subPathData.getLength(), subPathFrequency, subPathData.containsConstant()});
@@ -85,12 +90,46 @@ public class TrainingDataDatabaseAccessorImpl implements TrainingDataDatabaseAcc
 
     @Override
     public void insertTokenTagData(TokenTagData tokenTagData) {
-
+        String sql = "";
+        if(tokenTagData.tokenExistsInDB()){
+            sql = "update jos_nlp_tokens set is_noun_frequency = ?, is_adjective_frequency = ?, is_verb_frequency = ?, is_verbEd_frequency = ?, " +
+                    "is_verbIng_frequency = ?, is_adverb_frequency = ?, " + "total_frequency = ? where token = ? ";
+        }else {
+//            sql = "insert into jos_nlp_tokens ("
+        }
     }
 
     @Override
     public void insertEncodedPath(String encodedPath) {
 
+    }
+
+    @Override
+    public Optional<TokenDatabaseData> getTokenDatabaseData(String token) {
+        final String sql = "select is_noun, is_adjective, is_verb, is_verbEd, " +
+                "is_verbIng, is_adverb, is_noun_frequency, is_adjective_frequency, is_verb_frequency, is_verbEd_frequency, " +
+                "is_verbIng_frequency, is_adverb_frequency, " + "total_frequency from jos_nlp_tokens where token = ?";
+        final List<Map<String, Object>> rows = jdbcTemplate.queryForList(sql, new Object[]{token});
+        if (rows.size() > 0) {
+            TokenDatabaseData tokenDatabaseData = new TokenDatabaseData();
+            for (final Map row : rows) {
+                tokenDatabaseData.setNoun((Integer) row.get("is_noun") == 1);
+                tokenDatabaseData.setAdjective((Integer) row.get("is_adjective") == 1);
+                tokenDatabaseData.setVerb((Integer) row.get("is_verb") == 1);
+                tokenDatabaseData.setVerbEd((Integer) row.get("is_verbEd") == 1);
+                tokenDatabaseData.setVerbIng((Integer) row.get("is_verbIng") == 1);
+                tokenDatabaseData.setAdverb((Integer) row.get("is_adverb") == 1);
+                tokenDatabaseData.setIsNounFrequency((Integer) row.get("is_noun_frequency"));
+                tokenDatabaseData.setIsNounFrequency((Integer) row.get("is_adjective_frequency"));
+                tokenDatabaseData.setIsNounFrequency((Integer) row.get("is_verb_frequency"));
+                tokenDatabaseData.setIsNounFrequency((Integer) row.get("is_verbEd_frequency"));
+                tokenDatabaseData.setIsNounFrequency((Integer) row.get("is_verbIng_frequency"));
+                tokenDatabaseData.setIsNounFrequency((Integer) row.get("is_adverb_frequency"));
+                tokenDatabaseData.setIsNounFrequency((Integer) row.get("total_frequency"));
+            }
+            return Optional.of(tokenDatabaseData);
+        }
+        return Optional.empty();
     }
 
     private int findBigramFrequency(BigramData bigramData) {
@@ -116,15 +155,15 @@ public class TrainingDataDatabaseAccessorImpl implements TrainingDataDatabaseAcc
         return tagFrequency;
     }
 
-    private int findSubPathFrequency(String subPath){
-        int startTagEndTagPairFrequency = 0;
+    private int findSubPathFrequency(String subPath) {
+        int subPathFrequency = 0;
         String sql = "select frequency from jos_nlp_subpaths where subpath = ?";
         try {
-            startTagEndTagPairFrequency = jdbcTemplate.queryForInt(sql, new Object[]{subPath});
+            subPathFrequency = jdbcTemplate.queryForInt(sql, new Object[]{subPath});
         } catch (final EmptyResultDataAccessException e) {
             return 0;
         }
-        return startTagEndTagPairFrequency;
+        return subPathFrequency;
     }
 
 
