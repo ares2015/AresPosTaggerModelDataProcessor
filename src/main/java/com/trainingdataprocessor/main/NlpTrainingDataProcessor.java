@@ -4,6 +4,7 @@ import com.trainingdataprocessor.data.preprocessing.TrainingDataRow;
 import com.trainingdataprocessor.database.TrainingDataDatabaseAccessor;
 import com.trainingdataprocessor.factories.BigramDataListFactory;
 import com.trainingdataprocessor.factories.SubPathDataListFactory;
+import com.trainingdataprocessor.paths.EncodedPathsProcessorImpl;
 import com.trainingdataprocessor.preprocessing.TrainingDataPreprocessor;
 import com.trainingdataprocessor.semantics.analysis.SemanticAnalyserImpl;
 import com.trainingdataprocessor.semantics.extraction.SemanticExtractor;
@@ -37,6 +38,8 @@ public class NlpTrainingDataProcessor {
 
     private SemanticExtractor semanticExtractor;
 
+    private static int NUMBER_OF_THREADS = 4;
+
     public NlpTrainingDataProcessor(TrainingDataPreprocessor trainingDataPreprocessor, TrainingDataDatabaseAccessor trainingDataDatabaseAccessor,
                                     TagsProcessor tagsProcessor,
                                     BigramDataListFactory bigramDataListFactory, SubPathDataListFactory subPathDataListFactory,
@@ -59,11 +62,17 @@ public class NlpTrainingDataProcessor {
 
     public void process() {
         List<TrainingDataRow> trainingDataRowList = trainingDataPreprocessor.preprocess();
+
         tagsProcessor.process(trainingDataRowList);
-        ExecutorService executor = Executors.newFixedThreadPool(3);
+
+        ExecutorService executor = Executors.newFixedThreadPool(NUMBER_OF_THREADS);
+
+        Runnable encodedPathsProcessor = new EncodedPathsProcessorImpl(trainingDataDatabaseAccessor, trainingDataRowList);
         Runnable syntaxAnalyser = new SyntaxAnalyserImpl(trainingDataDatabaseAccessor, bigramDataListFactory, subPathDataListFactory, trainingDataRowList);
         Runnable semanticAnalyser = new SemanticAnalyserImpl(semanticPreprocessor, semanticExtractor, trainingDataDatabaseAccessor, trainingDataRowList);
         Runnable tokenTagDataProcessor = new TokenTagDataProcessorImpl(trainingDataDatabaseAccessor, trainingDataRowList);
+
+        executor.execute(encodedPathsProcessor);
         executor.execute(syntaxAnalyser);
         executor.execute(semanticAnalyser);
         executor.execute(tokenTagDataProcessor);

@@ -26,7 +26,7 @@ public class TrainingDataDatabaseAccessorTest {
     TrainingDataDatabaseAccessor trainingDataDatabaseAccessor = (TrainingDataDatabaseAccessor) context.getBean("trainingDataDatabaseAccessor");
 
     @Test
-    public void testInsertSemanticData(){
+    public void testInsertSemanticData() {
         SemanticExtractionData semanticExtractionData = new SemanticExtractionData();
         semanticExtractionData.setAtomicSubject("Gretzky");
         semanticExtractionData.setExtendedSubject("Wayne Gretzky");
@@ -39,40 +39,40 @@ public class TrainingDataDatabaseAccessorTest {
         int id = jdbcTemplate.queryForInt(sql);
 
         sql = "delete from jos_nlp_semantic_data where id = ?";
-        jdbcTemplate.update(sql,  new Object[]{id});
+        jdbcTemplate.update(sql, new Object[]{id});
     }
 
     @Test
     @Ignore
-    public void testInsertBigramData(){
+    public void testInsertBigramData() {
         BigramData bigramData = new BigramData("N", "V", false, false);
         trainingDataDatabaseAccessor.insertBigramData(bigramData);
     }
 
     @Test
     @Ignore
-    public void testUpdateBigramData(){
+    public void testUpdateBigramData() {
         BigramData bigramData = new BigramData("V", "N", false, false);
         trainingDataDatabaseAccessor.insertBigramData(bigramData);
     }
 
     @Test
     @Ignore
-    public void testInsertSubPathData(){
+    public void testInsertSubPathData() {
         SubPathData subPathData = new SubPathData("N", "AJ", "N AJ AJ N", 4, 3, 7, false);
         trainingDataDatabaseAccessor.insertSubPathData(subPathData);
     }
 
     @Test
     @Ignore
-    public void testUpdateSubPathData(){
+    public void testUpdateSubPathData() {
         SubPathData subPathData = new SubPathData("V", "N", "V AJ AJ N", 4, 3, 7, false);
         trainingDataDatabaseAccessor.insertSubPathData(subPathData);
     }
 
     @Test
     @Ignore
-    public void testGetTokenDatabaseDataTokenExists(){
+    public void testGetTokenDatabaseDataTokenExists() {
         String token = "dog";
         Optional<TokenDatabaseData> tokenDatabaseData = trainingDataDatabaseAccessor.getTokenDatabaseData(token);
         assertEquals(56, tokenDatabaseData.get().getIsNounFrequency());
@@ -82,7 +82,7 @@ public class TrainingDataDatabaseAccessorTest {
 
     @Test
     @Ignore
-    public void testGetTokenDatabaseDataTokenDoesNotExist(){
+    public void testGetTokenDatabaseDataTokenDoesNotExist() {
         String token = "cat";
         Optional<TokenDatabaseData> tokenDatabaseData = trainingDataDatabaseAccessor.getTokenDatabaseData(token);
         assertFalse(tokenDatabaseData.isPresent());
@@ -90,7 +90,7 @@ public class TrainingDataDatabaseAccessorTest {
 
     @Test
     @Ignore
-    public void insertTokenTagData(){
+    public void insertTokenTagData() {
         TokenTagData tokenTagData = new TokenTagData();
         tokenTagData.setToken("father");
         tokenTagData.setIsNounFrequency(58);
@@ -100,13 +100,19 @@ public class TrainingDataDatabaseAccessorTest {
 
     @Test
     @Ignore
-    public void updateTokenTagData(){
+    public void updateTokenTagData() {
         TokenTagData tokenTagData = new TokenTagData();
         tokenTagData.setToken("father");
         tokenTagData.setTokenExistsInDB(true);
         tokenTagData.setIsNounFrequency(59);
         tokenTagData.setTotalFrequency(59);
         trainingDataDatabaseAccessor.insertTokenTagData(tokenTagData);
+    }
+
+    @Test
+    @Ignore
+    public void insertEncodedPath() {
+        trainingDataDatabaseAccessor.insertEncodedPath("NVN");
     }
 
 }

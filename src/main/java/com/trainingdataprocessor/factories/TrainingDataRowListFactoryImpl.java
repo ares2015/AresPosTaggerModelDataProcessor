@@ -68,14 +68,14 @@ public class TrainingDataRowListFactoryImpl implements TrainingDataRowListFactor
                 trainingDataRow.setTokensList(tokensList);
                 trainingDataRow.setTagsList(tagsList);
 
-                trainingDataRow.setEncodedPathAsString(tagsEncoder.encodeTagsListToEncodedSubPath(tagsList));
+                trainingDataRow.setEncodedPathAsString(tagsEncoder.encodeTagsListToEncodedPath(tagsList));
 
                 //ENCODED TAGS MULTILIST
                 List<List<String>> encodedTagsMultiList = tagsEncoder.encodeTagsMultiListToEncodedTagsMultiList(tagsMultiList);
                 trainingDataRow.setEncodedTagsMultiList(encodedTagsMultiList);
 
                 //ENCODED SUBPATHS LIST
-                List<String> encodedSubPathsList = tagsEncoder.encodeTagMultiListToEncodedSubPathsList(tagsMultiList);
+                List<String> encodedSubPathsList = tagsEncoder.encodeTagMultiListToEncodedPathsList(tagsMultiList);
                 trainingDataRow.setEncodedSubPathsAsStringList(encodedSubPathsList);
 
                 trainingDataRowList.add(trainingDataRow);
@@ -83,7 +83,7 @@ public class TrainingDataRowListFactoryImpl implements TrainingDataRowListFactor
                 trainingDataRow.setContainsSubSentences(false);
                 LOGGER.info("Sentence does not contain any subSentences.");
 
-                String encodedSubPath = tagsEncoder.encodeTagsListToEncodedSubPath(tagsList);
+                String encodedSubPath = tagsEncoder.encodeTagsListToEncodedPath(tagsList);
                 trainingDataRow.setEncodedPathAsString(encodedSubPath);
 
                 //TOKENS LIST, TAGS LIST, ENCODED TAGS LIST

@@ -7,11 +7,11 @@ import java.util.List;
  */
 public interface TagsEncoder {
 
-    String encodeTagsListToEncodedSubPath(List<String> tags);
+    String encodeTagsListToEncodedPath(List<String> tags);
 
     List<String> encodeTagsListToEncodedTagsList(List<String> tags);
 
-    List<String> encodeTagMultiListToEncodedSubPathsList(List<List<String>> tags);
+    List<String> encodeTagMultiListToEncodedPathsList(List<List<String>> tags);
 
     List<List<String>> encodeTagsMultiListToEncodedTagsMultiList(List<List<String>> tags);
 

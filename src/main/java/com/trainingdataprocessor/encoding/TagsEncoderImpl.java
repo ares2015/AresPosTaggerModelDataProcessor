@@ -11,7 +11,7 @@ import java.util.List;
 public class TagsEncoderImpl implements TagsEncoder {
 
     @Override
-    public String encodeTagsListToEncodedSubPath(List<String> tags) {
+    public String encodeTagsListToEncodedPath(List<String> tags) {
         String encodedSubPath = "";
         for (String tag : tags) {
             String encodedTag = TagsCodingCache.encodingMap.get(tag);
@@ -30,10 +30,10 @@ public class TagsEncoderImpl implements TagsEncoder {
     }
 
     @Override
-    public List<String> encodeTagMultiListToEncodedSubPathsList(List<List<String>> tags) {
+    public List<String> encodeTagMultiListToEncodedPathsList(List<List<String>> tags) {
         List<String> encodedTagSubPaths = new ArrayList<>();
         for (List<String> tagList : tags) {
-            String encodedTagSubPath = this.encodeTagsListToEncodedSubPath(tagList);
+            String encodedTagSubPath = this.encodeTagsListToEncodedPath(tagList);
             encodedTagSubPaths.add(encodedTagSubPath);
         }
         return encodedTagSubPaths;

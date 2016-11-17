@@ -29,7 +29,7 @@ public class TagsEncoderTest {
         tags.add(Tags.VERB);
         tags.add(Tags.ADJECTIVE);
         tags.add(Tags.NOUN);
-        String encodedTagPattern = tagsEncoder.encodeTagsListToEncodedSubPath(tags);
+        String encodedTagPattern = tagsEncoder.encodeTagsListToEncodedPath(tags);
         assertEquals("NNAVJN", encodedTagPattern);
     }
 
@@ -53,7 +53,7 @@ public class TagsEncoderTest {
         listOfLists.add(tags2);
         listOfLists.add(tags3);
 
-        List<String> TagsList = tagsEncoder.encodeTagMultiListToEncodedSubPathsList(listOfLists);
+        List<String> TagsList = tagsEncoder.encodeTagMultiListToEncodedPathsList(listOfLists);
         assertEquals("NN", TagsList.get(0));
         assertEquals("AV", TagsList.get(1));
         assertEquals("JN", TagsList.get(2));

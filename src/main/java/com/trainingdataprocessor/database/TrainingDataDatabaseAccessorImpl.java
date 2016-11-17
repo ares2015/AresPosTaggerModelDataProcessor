@@ -110,7 +110,39 @@ public class TrainingDataDatabaseAccessorImpl implements TrainingDataDatabaseAcc
 
     @Override
     public void insertEncodedPath(String encodedPath) {
+        int encodedPathFrequency = findEncodedPathFrequency(encodedPath);
+        boolean encodedPathExistsInDB = encodedPathFrequency > 0;
+        encodedPathFrequency++;
+        String sql = "";
+        if (encodedPathExistsInDB) {
+            sql = "update jos_nlp_encoded_paths set frequency = ? where path = ?";
+            jdbcTemplate.update(sql, new Object[]{encodedPathFrequency, encodedPath});
+        } else {
+            sql = "insert into jos_nlp_encoded_paths (path, length, frequency) values(?,?,?)";
+            jdbcTemplate.update(sql, new Object[]{encodedPath, encodedPath.length(), encodedPathFrequency});
+        }
+    }
 
+    private int findTagFrequency(String tag) {
+        int tagFrequency = 0;
+        final String sql = "select frequency from jos_nlp_tags where tag=?";
+        try {
+            tagFrequency = jdbcTemplate.queryForInt(sql, new Object[]{tag});
+        } catch (final EmptyResultDataAccessException e) {
+            return 0;
+        }
+        return tagFrequency;
+    }
+
+    private int findEncodedPathFrequency(String encodedPath) {
+        int encodedPathFrequency = 0;
+        final String sql = "select frequency from jos_nlp_encoded_paths where path=?";
+        try {
+            encodedPathFrequency = jdbcTemplate.queryForInt(sql, new Object[]{encodedPath});
+        } catch (final EmptyResultDataAccessException e) {
+            return 0;
+        }
+        return encodedPathFrequency;
     }
 
     @Override
@@ -153,16 +185,6 @@ public class TrainingDataDatabaseAccessorImpl implements TrainingDataDatabaseAcc
         return bigramFrequency;
     }
 
-    private int findTagFrequency(String tag) {
-        int tagFrequency = 0;
-        final String sql = "select frequency from jos_nlp_tags where tag=?";
-        try {
-            tagFrequency = jdbcTemplate.queryForInt(sql, new Object[]{tag});
-        } catch (final EmptyResultDataAccessException e) {
-            return 0;
-        }
-        return tagFrequency;
-    }
 
     private int findSubPathFrequency(String subPath) {
         int subPathFrequency = 0;
