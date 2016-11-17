@@ -4,6 +4,7 @@ import com.trainingdataprocessor.data.semantics.SemanticExtractionData;
 import com.trainingdataprocessor.data.syntax.BigramData;
 import com.trainingdataprocessor.data.syntax.SubPathData;
 import com.trainingdataprocessor.data.token.TokenDatabaseData;
+import com.trainingdataprocessor.data.token.TokenTagData;
 import com.trainingdataprocessor.database.TrainingDataDatabaseAccessor;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -85,6 +86,27 @@ public class TrainingDataDatabaseAccessorTest {
         String token = "cat";
         Optional<TokenDatabaseData> tokenDatabaseData = trainingDataDatabaseAccessor.getTokenDatabaseData(token);
         assertFalse(tokenDatabaseData.isPresent());
+    }
+
+    @Test
+    @Ignore
+    public void insertTokenTagData(){
+        TokenTagData tokenTagData = new TokenTagData();
+        tokenTagData.setToken("father");
+        tokenTagData.setIsNounFrequency(58);
+        tokenTagData.setTotalFrequency(58);
+        trainingDataDatabaseAccessor.insertTokenTagData(tokenTagData);
+    }
+
+    @Test
+    @Ignore
+    public void updateTokenTagData(){
+        TokenTagData tokenTagData = new TokenTagData();
+        tokenTagData.setToken("father");
+        tokenTagData.setTokenExistsInDB(true);
+        tokenTagData.setIsNounFrequency(59);
+        tokenTagData.setTotalFrequency(59);
+        trainingDataDatabaseAccessor.insertTokenTagData(tokenTagData);
     }
 
 }

@@ -100,13 +100,12 @@ public class TrainingDataDatabaseAccessorImpl implements TrainingDataDatabaseAcc
                     tokenTagData.getIsVerbIngFrequency(), tokenTagData.isAdverb(), tokenTagData.getIsAdverbFrequency(), tokenTagData.getTotalFrequency(),
                     tokenTagData.getToken()});
         } else {
-            sql = "insert into jos_nlp_tokens (is_noun, is_noun_frequency, is_adjective, is_adjective_frequency, is_verb, is_verb_frequency, " +
-                    "is_verbEd, is_verbEd_frequency, is_verbIng, is_verbIng_frequency, is_adverb, is_adverb_frequency, total_frequency";
-            jdbcTemplate.update(sql, new Object[]{tokenTagData.isNoun(), tokenTagData.getIsNounFrequency(), tokenTagData.isAdjective(), tokenTagData.getIsAdjectiveFrequency(),
+            sql = "insert into jos_nlp_tokens (token, is_noun, is_noun_frequency, is_adjective, is_adjective_frequency, is_verb, is_verb_frequency, " +
+                    "is_verbEd, is_verbEd_frequency, is_verbIng, is_verbIng_frequency, is_adverb, is_adverb_frequency, total_frequency) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+            jdbcTemplate.update(sql, new Object[]{tokenTagData.getToken(), tokenTagData.isNoun(), tokenTagData.getIsNounFrequency(), tokenTagData.isAdjective(), tokenTagData.getIsAdjectiveFrequency(),
                     tokenTagData.isVerb(), tokenTagData.getIsVerbFrequency(), tokenTagData.isVerbEd(), tokenTagData.getIsVerbEdFrequency(), tokenTagData.isVerbIng(),
                     tokenTagData.getIsVerbIngFrequency(), tokenTagData.isAdverb(), tokenTagData.getIsAdverbFrequency(), tokenTagData.getTotalFrequency()});
         }
-
     }
 
     @Override
@@ -130,12 +129,12 @@ public class TrainingDataDatabaseAccessorImpl implements TrainingDataDatabaseAcc
                 tokenDatabaseData.setVerbIng((Integer) row.get("is_verbIng") == 1);
                 tokenDatabaseData.setAdverb((Integer) row.get("is_adverb") == 1);
                 tokenDatabaseData.setIsNounFrequency((Integer) row.get("is_noun_frequency"));
-                tokenDatabaseData.setIsNounFrequency((Integer) row.get("is_adjective_frequency"));
-                tokenDatabaseData.setIsNounFrequency((Integer) row.get("is_verb_frequency"));
-                tokenDatabaseData.setIsNounFrequency((Integer) row.get("is_verbEd_frequency"));
-                tokenDatabaseData.setIsNounFrequency((Integer) row.get("is_verbIng_frequency"));
-                tokenDatabaseData.setIsNounFrequency((Integer) row.get("is_adverb_frequency"));
-                tokenDatabaseData.setIsNounFrequency((Integer) row.get("total_frequency"));
+                tokenDatabaseData.setIsAdjectiveFrequency((Integer) row.get("is_adjective_frequency"));
+                tokenDatabaseData.setIsVerbFrequency((Integer) row.get("is_verb_frequency"));
+                tokenDatabaseData.setIsVerbEdFrequency((Integer) row.get("is_verbEd_frequency"));
+                tokenDatabaseData.setIsVerbIngFrequency((Integer) row.get("is_verbIng_frequency"));
+                tokenDatabaseData.setIsAdverbFrequency((Integer) row.get("is_adverb_frequency"));
+                tokenDatabaseData.setTotalFrequency((Integer) row.get("total_frequency"));
             }
             return Optional.of(tokenDatabaseData);
         }
