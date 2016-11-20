@@ -61,6 +61,7 @@ public class NlpTrainingDataProcessor {
 
 
     public void process() {
+        long startTime = System.currentTimeMillis();
         List<TrainingDataRow> trainingDataRowList = trainingDataPreprocessor.preprocess();
 
         tagsProcessor.process(trainingDataRowList);
@@ -76,6 +77,10 @@ public class NlpTrainingDataProcessor {
         executor.execute(syntaxAnalyser);
         executor.execute(semanticAnalyser);
         executor.execute(tokenTagDataProcessor);
-    }
 
+        executor.shutdown();
+        long stopTime = System.currentTimeMillis();
+        long elapsedTime = stopTime - startTime;
+        System.out.println("Data processed in "  + elapsedTime + " miliseconds");
+    }
 }

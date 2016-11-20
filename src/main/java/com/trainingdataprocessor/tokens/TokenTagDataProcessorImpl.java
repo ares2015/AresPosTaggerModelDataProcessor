@@ -40,7 +40,8 @@ public class TokenTagDataProcessorImpl implements TokenTagDataProcessor, Runnabl
                     TokenTagData tokenTagData = new TokenTagData();
                     String token = tokensList.get(i);
                     populateTokenTagDataAttributes(tokenTagData, tag, token);
-                    trainingDataDatabaseAccessor.insertTokenTagData(tokenTagData);
+                    trainingDataDatabaseAccessor.
+                            insertTokenTagData(tokenTagData);
                 }
             }
         }

@@ -46,7 +46,6 @@ public class TrainingDataDatabaseAccessorImpl implements TrainingDataDatabaseAcc
         bigramFrequency++;
         bigramData.setBigramFrequency(bigramFrequency);
         int tag1Frequency = findTagFrequency(bigramData.getTag1());
-        tag1Frequency++;
         double bigramProbability = BigramProbabilityCalculator.calculate(bigramFrequency, tag1Frequency);
         bigramData.setBigramProbability(bigramProbability);
         String bigram = bigramData.getTag1() + " " + bigramData.getTag2();
