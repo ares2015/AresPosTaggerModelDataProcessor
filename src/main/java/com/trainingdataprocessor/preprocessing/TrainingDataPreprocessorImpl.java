@@ -15,14 +15,22 @@ public class TrainingDataPreprocessorImpl implements TrainingDataPreprocessor {
 
     private TrainingDataRowListFactory trainingDataRowListFactory;
 
-    public TrainingDataPreprocessorImpl(TestDataReader testDataReader, TrainingDataRowListFactory trainingDataRowListFactory) {
+    private CapitalizedTokensProcessor capitalizedTokensProcessor;
+
+    public TrainingDataPreprocessorImpl(TestDataReader testDataReader, TrainingDataRowListFactory trainingDataRowListFactory,
+                                        CapitalizedTokensProcessor capitalizedTokensProcessor) {
         this.testDataReader = testDataReader;
         this.trainingDataRowListFactory = trainingDataRowListFactory;
+        this.capitalizedTokensProcessor = capitalizedTokensProcessor;
     }
 
     @Override
     public List<TrainingDataRow> preprocess() {
         List<String> testDataRowStringList = testDataReader.read();
-        return trainingDataRowListFactory.create(testDataRowStringList);
+        List<TrainingDataRow> trainingDataRows = trainingDataRowListFactory.create(testDataRowStringList);
+        for (TrainingDataRow trainingDataRow : trainingDataRows) {
+            capitalizedTokensProcessor.process(trainingDataRow);
+        }
+        return trainingDataRows;
     }
 }

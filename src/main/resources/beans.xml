@@ -55,9 +55,13 @@
         <constructor-arg ref="testDataValidator"/>
     </bean>
 
+    <bean id="capitalizedTokensProcessor"
+          class="com.trainingdataprocessor.preprocessing.CapitalizedTokensProcessorImpl"/>
+
     <bean id="trainingDataPreprocessor" class="com.trainingdataprocessor.preprocessing.TrainingDataPreprocessorImpl">
         <constructor-arg ref="testDataReader"/>
         <constructor-arg ref="trainingDataRowListFactory"/>
+        <constructor-arg ref="capitalizedTokensProcessor"/>
     </bean>
 
     <bean id="prepositionPhrasePreprocessor"
