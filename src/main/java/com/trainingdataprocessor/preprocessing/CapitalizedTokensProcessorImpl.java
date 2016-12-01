@@ -1,7 +1,9 @@
 package com.trainingdataprocessor.preprocessing;
 
 import com.trainingdataprocessor.data.preprocessing.TrainingDataRow;
+import com.trainingdataprocessor.tags.Tags;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -13,29 +15,39 @@ public class CapitalizedTokensProcessorImpl implements CapitalizedTokensProcesso
     public void process(TrainingDataRow trainingDataRow) {
         List<String> tokensList = trainingDataRow.getTokensList();
         List<String> tagsList = trainingDataRow.getTagsList();
-        int capitalizedSequenceLength = 0;
-        for (int i = 0; i < tokensList.size(); i++) {
-            if (i > 0 && Character.isUpperCase(tokensList.get(i - 1).charAt(0)) && Character.isUpperCase(tokensList.get(i).charAt(0))) {
-                capitalizedSequenceLength++;
-                String mergedToken = tokensList.get(i - 1) + "_" + tokensList.get(i);
-                tokensList.add(i, mergedToken);
-                tokensList.remove(i - 1);
-                for (int j = 0; j <= capitalizedSequenceLength; j++) {
-                    tokensList.remove(i + j);
+        List<String> processedTokensList = new ArrayList<>();
+        List<String> processeddTagsList = new ArrayList<>();
+        String mergedToken = "";
+
+        outer:
+        for (int i = 0; i <= tokensList.size(); i++) {
+            if (!"".equals(mergedToken)) {
+                i = i - 1;
+                processedTokensList.add(mergedToken);
+                mergedToken = "";
+                processeddTagsList.add(Tags.NOUN);
+            }
+            if (Character.isUpperCase(tokensList.get(i).charAt(0))) {
+                while (Character.isUpperCase(tokensList.get(i).charAt(0))) {
+                    if ("".equals(mergedToken)) {
+                        mergedToken = tokensList.get(i);
+                    } else {
+                        mergedToken += " " + tokensList.get(i);
+                    }
+                    if (i == tokensList.size() - 1) {
+                        processedTokensList.add(mergedToken);
+                        processeddTagsList.add(Tags.NOUN);
+                        break outer;
+                    }
+                    i++;
                 }
-                tagsList.remove(i - 1);
-            } else if (Character.isUpperCase(tokensList.get(i).charAt(0)) && Character.isUpperCase(tokensList.get(i + 1).charAt(0))) {
-                capitalizedSequenceLength++;
-                String mergedToken = tokensList.get(i) + "_" + tokensList.get(i + 1);
-                tokensList.add(i, mergedToken);
-                tokensList.remove(i + 1);
-                tokensList.remove(i + 1);
-                tagsList.remove(i + 1);
             } else {
-                capitalizedSequenceLength = 0;
+                processedTokensList.add(tokensList.get(i));
+                processeddTagsList.add(tagsList.get(i));
             }
         }
-
+        trainingDataRow.setTokensList(processedTokensList);
+        trainingDataRow.setTagsList(processeddTagsList);
     }
 
 }

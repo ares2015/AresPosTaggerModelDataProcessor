@@ -23,31 +23,44 @@ public class CapitalizedTokensProcessorTest {
         tokensList.add("New");
         tokensList.add("York");
         tokensList.add("City");
+        tokensList.add("Police");
+        tokensList.add("Department");
         tokensList.add("is");
-        tokensList.add("city");
+        tokensList.add("the");
+        tokensList.add("best");
+        tokensList.add("one");
         tokensList.add("in");
         tokensList.add("the");
         tokensList.add("United");
         tokensList.add("States");
+        tokensList.add("of");
+        tokensList.add("America");
 
         List<String> tagsList = new ArrayList<>();
         tagsList.add("N");
         tagsList.add("N");
         tagsList.add("N");
-        tagsList.add("IA");
         tagsList.add("N");
+        tagsList.add("N");
+        tagsList.add("IA");
+        tagsList.add("DET");
+        tagsList.add("AJ");
+        tagsList.add("NR");
         tagsList.add("PR");
         tagsList.add("DET");
         tagsList.add("N");
         tagsList.add("N");
-
+        tagsList.add("PR");
+        tagsList.add("N");
 
         TrainingDataRow trainingDataRow = new TrainingDataRow();
         trainingDataRow.setTokensList(tokensList);
         trainingDataRow.setTagsList(tagsList);
         capitalizedTokensProcessor.process(trainingDataRow);
-        assertEquals(6, trainingDataRow.getTokensList().size());
-        assertEquals(6, trainingDataRow.getTagsList().size());
+        assertEquals(10, trainingDataRow.getTokensList().size());
+        assertEquals(10, trainingDataRow.getTagsList().size());
+        assertEquals("New York City Police Department", trainingDataRow.getTokensList().get(0));
+        assertEquals("United States", trainingDataRow.getTokensList().get(7));
 
     }
 }
