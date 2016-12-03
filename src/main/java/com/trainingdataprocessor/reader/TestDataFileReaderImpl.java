@@ -31,7 +31,7 @@ public class TestDataFileReaderImpl implements TestDataReader {
         BufferedReader br = null;
         int lineNumber = 0;
         try {
-            br = new BufferedReader(new FileReader("c:\\Users\\Oliver\\Documents\\NlpTestData\\NlpTestData.txt"));
+            br = new BufferedReader(new FileReader("c:\\Users\\Oliver\\Documents\\NlpTrainingData\\NlpTrainingData.txt"));
         } catch (final FileNotFoundException e) {
             e.printStackTrace();
         }
