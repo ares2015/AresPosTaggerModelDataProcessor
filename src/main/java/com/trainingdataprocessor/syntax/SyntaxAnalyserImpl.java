@@ -54,7 +54,7 @@ public class SyntaxAnalyserImpl implements SyntaxAnalyser, Runnable {
         List<BigramData> bigramDataList = bigramDataListFactory.create(tagsList);
         List<SubPathData> subPathDataList = subPathDataListFactory.create(tagsList);
         insertBigramDataList(bigramDataList);
-        insertStartTagEndPairsList(subPathDataList);
+        insertSubPathDataList(subPathDataList);
     }
 
 
@@ -64,7 +64,7 @@ public class SyntaxAnalyserImpl implements SyntaxAnalyser, Runnable {
         }
     }
 
-    private void insertStartTagEndPairsList(List<SubPathData> subPathDataList) {
+    private void insertSubPathDataList(List<SubPathData> subPathDataList) {
         for (SubPathData subPathData : subPathDataList) {
             trainingDataDatabaseAccessor.insertSubPathData(subPathData);
         }
