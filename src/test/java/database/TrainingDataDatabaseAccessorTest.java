@@ -43,7 +43,7 @@ public class TrainingDataDatabaseAccessorTest {
     }
 
     @Test
-//    @Ignore
+    @Ignore
     public void testInsertBigramData() {
         BigramData bigramData = new BigramData("N", "V", false, false);
         trainingDataDatabaseAccessor.insertBigramData(bigramData);

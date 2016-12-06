@@ -9,6 +9,7 @@ import com.trainingdataprocessor.semantics.extraction.SemanticExtractor;
 import com.trainingdataprocessor.semantics.preprocessing.SemanticPreprocessor;
 import com.trainingdataprocessor.tags.EncodedTags;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -43,38 +44,50 @@ public class SemanticAnalyserImpl implements SemanticAnalyser, Runnable {
         for (TrainingDataRow trainingDataRow : trainingDataRowList) {
             if (trainingDataRow.containsSubSentences()) {
                 for (int i = 0; i <= trainingDataRow.getTokensMultiList().size() - 1; i++) {
-                    if (canGoToSemanticAnalysis(trainingDataRow.getEncodedTagsMultiList().get(i))) {
+                    List<Integer> verbIndexes = getVerbIndexes(trainingDataRow.getEncodedTagsMultiList().get(i));
+                    if (canGoToSemanticAnalysis(trainingDataRow.getEncodedTagsMultiList().get(i), verbIndexes)) {
+                        Integer verbIndex = verbIndexes.get(0);
                         analyseSentence(trainingDataRow.getEncodedSubPathsAsStringList().get(i), trainingDataRow.getTokensMultiList().get(i),
-                                trainingDataRow.getEncodedTagsMultiList().get(i));
+                                trainingDataRow.getEncodedTagsMultiList().get(i), verbIndex);
                     }
                 }
             } else {
-                if (canGoToSemanticAnalysis(trainingDataRow.getEncodedTagsList())) {
-                    analyseSentence(trainingDataRow.getEncodedPathAsString(), trainingDataRow.getTokensList(), trainingDataRow.getEncodedTagsList());
+                List<Integer> verbIndexes = getVerbIndexes(trainingDataRow.getEncodedTagsList());
+                if (canGoToSemanticAnalysis(trainingDataRow.getEncodedTagsList(), verbIndexes)) {
+                    Integer verbIndex = verbIndexes.get(0);
+                    analyseSentence(trainingDataRow.getEncodedPathAsString(), trainingDataRow.getTokensList(), trainingDataRow.getEncodedTagsList(), verbIndex);
                 }
             }
         }
     }
 
-    private void analyseSentence(String sentencePattern, List<String> tokens, List<String> encodedTags) {
-        SemanticPreprocessingData semanticPreprocessingData = semanticPreprocessor.preprocess(sentencePattern, tokens, encodedTags);
+    private boolean canGoToSemanticAnalysis(List<String> encodedTags, List<Integer> verbIndexes) {
+        if (verbIndexes.size() == 1) {
+            for (String tag : encodedTags) {
+                if (SemanticAnalysisFilterCache.tagsToFilterCache.contains(tag)) {
+                    return false;
+                }
+            }
+        }
+        return false;
+    }
+
+    private List<Integer> getVerbIndexes(List<String> encodedTags) {
+        List<Integer> verbIndexes = new ArrayList<>();
+        for (int i = 0; i <= encodedTags.size() - 1; i++) {
+            if (encodedTags.get(i).equals(EncodedTags.VERB) || encodedTags.get(i).equals(EncodedTags.IS_ARE)) {
+                verbIndexes.add(i);
+            }
+        }
+        return verbIndexes;
+    }
+
+    private void analyseSentence(String sentencePattern, List<String> tokens, List<String> encodedTags, int verbIndex) {
+        SemanticPreprocessingData semanticPreprocessingData = semanticPreprocessor.preprocess(sentencePattern, tokens, encodedTags, verbIndex);
         if (canGoToSemanticExtraction(semanticPreprocessingData)) {
             SemanticExtractionData semanticExtractionData = semanticExtractor.extract(semanticPreprocessingData);
             trainingDataDatabaseAccessor.insertSemanticData(semanticExtractionData);
         }
-    }
-
-    private boolean canGoToSemanticAnalysis(List<String> encodedTags) {
-        boolean containsVerb = false;
-        for (String tag : encodedTags) {
-            if (SemanticAnalysisFilterCache.tagsToFilterCache.contains(tag)) {
-                return false;
-            }
-            if (EncodedTags.VERB.equals(tag)) {
-                containsVerb = true;
-            }
-        }
-        return containsVerb;
     }
 
     private boolean canGoToSemanticExtraction(SemanticPreprocessingData semanticPreprocessingData) {

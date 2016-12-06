@@ -63,7 +63,7 @@ public class SemanticPreprocessorTest {
         String sentence = "brave firemen fight furiously the forest fire";
         List<String> tokens = Arrays.asList(sentence.split("\\ "));
 
-        SemanticPreprocessingData semanticPreprocessingData = semanticPreprocessor.preprocess(sentencePattern, tokens, encodedTags);
+        SemanticPreprocessingData semanticPreprocessingData = semanticPreprocessor.preprocess(sentencePattern, tokens, encodedTags, 2);
         assertEquals("JN", semanticPreprocessingData.getBeforeVerbNounPhrase().getPattern());
         assertEquals("NN", semanticPreprocessingData.getAfterVerbNounPhrase().getPattern());
         assertEquals("VA", semanticPreprocessingData.getVerbPhrase().getPattern());
@@ -91,7 +91,7 @@ public class SemanticPreprocessorTest {
         String sentence = "Fans of Russia in Paris attack furiosly English supporters at European Championships";
         List<String> tokens = Arrays.asList(sentence.split("\\ "));
 
-        SemanticPreprocessingData semanticPreprocessingData = semanticPreprocessor.preprocess(sentencePattern, tokens, encodedTags);
+        SemanticPreprocessingData semanticPreprocessingData = semanticPreprocessor.preprocess(sentencePattern, tokens, encodedTags, 5);
         assertTrue(semanticPreprocessingData.containsBeforeVerbPrepositionPhrase());
         assertTrue(semanticPreprocessingData.containsAfterVerbPrepositionPhrase());
 

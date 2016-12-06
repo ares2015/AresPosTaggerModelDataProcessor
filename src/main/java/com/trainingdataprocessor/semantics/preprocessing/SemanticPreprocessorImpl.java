@@ -30,7 +30,7 @@ public class SemanticPreprocessorImpl implements SemanticPreprocessor {
         this.verbPhrasePreprocessor = verbPhrasePreprocessor;
     }
 
-    public SemanticPreprocessingData preprocess(String encodedSubPath, List<String> tokensList, List<String> encodedTagsList) {
+    public SemanticPreprocessingData preprocess(String encodedSubPath, List<String> tokensList, List<String> encodedTagsList, int verbIndex) {
         LOGGER.info("ENTERING preprocess method of SemanticPreprocessorImpl....");
         LOGGER.info("*********************************************************************");
 
@@ -39,7 +39,6 @@ public class SemanticPreprocessorImpl implements SemanticPreprocessor {
         List<String> filteredEncodedTagsList = semanticPreprocessingFilter.filterToList(encodedTagsList);
 
         SemanticPreprocessingData semanticPreprocessingData = new SemanticPreprocessingData();
-        int verbIndex = getVerbIndex(filteredEncodedTagsList);
         semanticPreprocessingData.setVerbIndex(verbIndex);
         LOGGER.info("Verb index in: " + encodedSubPath + " is on index: " + verbIndex);
 
@@ -60,15 +59,6 @@ public class SemanticPreprocessorImpl implements SemanticPreprocessor {
         LOGGER.info("*********************************************************************");
 
         return semanticPreprocessingData;
-    }
-
-    private int getVerbIndex(List<String> encodedTags) {
-        for (int i = 0; i <= encodedTags.size() - 1; i++) {
-            if (EncodedTags.VERB.equals(encodedTags.get(i)) || EncodedTags.IS_ARE.equals(encodedTags.get(i))) {
-                return i;
-            }
-        }
-        throw new IllegalStateException("Sentence does not contain verb!");
     }
 
     private int getAfterVerbPrepositionIndex(List<String> encodedTags, int verbIndex) {
