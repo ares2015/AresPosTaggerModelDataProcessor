@@ -7,8 +7,7 @@ import com.trainingdataprocessor.factories.SubPathDataListFactory;
 import com.trainingdataprocessor.paths.EncodedPathsProcessorImpl;
 import com.trainingdataprocessor.preprocessing.TrainingDataPreprocessor;
 import com.trainingdataprocessor.semantics.analysis.SemanticAnalyserImpl;
-import com.trainingdataprocessor.semantics.extraction.SemanticExtractor;
-import com.trainingdataprocessor.semantics.preprocessing.SemanticPreprocessor;
+import com.trainingdataprocessor.semantics.analysis.SemanticAnalysisExecutor;
 import com.trainingdataprocessor.syntax.SyntaxAnalyserImpl;
 import com.trainingdataprocessor.tags.TagsProcessor;
 import com.trainingdataprocessor.tokens.TokenTagDataProcessorImpl;
@@ -34,23 +33,20 @@ public class NlpTrainingDataProcessor {
 
     private SubPathDataListFactory subPathDataListFactory;
 
-    private SemanticPreprocessor semanticPreprocessor;
-
-    private SemanticExtractor semanticExtractor;
+    private SemanticAnalysisExecutor semanticAnalysisExecutor;
 
     private static int NUMBER_OF_THREADS = 4;
 
     public NlpTrainingDataProcessor(TrainingDataPreprocessor trainingDataPreprocessor, TrainingDataDatabaseAccessor trainingDataDatabaseAccessor,
                                     TagsProcessor tagsProcessor,
                                     BigramDataListFactory bigramDataListFactory, SubPathDataListFactory subPathDataListFactory,
-                                    SemanticPreprocessor semanticPreprocessor, SemanticExtractor semanticExtractor) {
+                                    SemanticAnalysisExecutor semanticAnalysisExecutor) {
         this.trainingDataPreprocessor = trainingDataPreprocessor;
         this.trainingDataDatabaseAccessor = trainingDataDatabaseAccessor;
         this.tagsProcessor = tagsProcessor;
         this.bigramDataListFactory = bigramDataListFactory;
         this.subPathDataListFactory = subPathDataListFactory;
-        this.semanticPreprocessor = semanticPreprocessor;
-        this.semanticExtractor = semanticExtractor;
+        this.semanticAnalysisExecutor = semanticAnalysisExecutor;
     }
 
     public static void main(String[] args) {
@@ -70,9 +66,8 @@ public class NlpTrainingDataProcessor {
 
         Runnable encodedPathsProcessor = new EncodedPathsProcessorImpl(trainingDataDatabaseAccessor, trainingDataRowList);
         Runnable syntaxAnalyser = new SyntaxAnalyserImpl(trainingDataDatabaseAccessor, bigramDataListFactory, subPathDataListFactory, trainingDataRowList);
-        Runnable semanticAnalyser = new SemanticAnalyserImpl(semanticPreprocessor, semanticExtractor, trainingDataDatabaseAccessor, trainingDataRowList);
+        Runnable semanticAnalyser = new SemanticAnalyserImpl(semanticAnalysisExecutor, trainingDataDatabaseAccessor, trainingDataRowList);
         Runnable tokenTagDataProcessor = new TokenTagDataProcessorImpl(trainingDataDatabaseAccessor, trainingDataRowList);
-
         executor.execute(encodedPathsProcessor);
         executor.execute(syntaxAnalyser);
         executor.execute(semanticAnalyser);
@@ -81,6 +76,6 @@ public class NlpTrainingDataProcessor {
         executor.shutdown();
         long stopTime = System.currentTimeMillis();
         long elapsedTime = stopTime - startTime;
-        System.out.println("Data processed in "  + elapsedTime + " miliseconds");
+        System.out.println("Data processed in " + elapsedTime + " miliseconds");
     }
 }

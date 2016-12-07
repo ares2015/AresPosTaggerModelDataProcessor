@@ -9,7 +9,8 @@ import com.trainingdataprocessor.factories.SubPathDataListFactory;
 import com.trainingdataprocessor.factories.SubPathDataListFactoryImpl;
 import com.trainingdataprocessor.regex.RegexPatternSearcher;
 import com.trainingdataprocessor.regex.RegexPatternSearcherImpl;
-import com.trainingdataprocessor.semantics.analysis.SemanticAnalyserImpl;
+import com.trainingdataprocessor.semantics.analysis.SemanticAnalysisExecutor;
+import com.trainingdataprocessor.semantics.analysis.SemanticAnalysisExecutorImpl;
 import com.trainingdataprocessor.semantics.extraction.SemanticExtractor;
 import com.trainingdataprocessor.semantics.extraction.SemanticExtractorImpl;
 import com.trainingdataprocessor.semantics.extraction.phrases.NounPhraseExtractorImpl;
@@ -24,7 +25,6 @@ import com.trainingdataprocessor.semantics.preprocessing.phrases.NounPhrasePrepr
 import com.trainingdataprocessor.semantics.preprocessing.phrases.PhrasePreprocessor;
 import com.trainingdataprocessor.semantics.preprocessing.phrases.PrepositionPhrasePreprocessorImpl;
 import com.trainingdataprocessor.semantics.preprocessing.phrases.VerbPhrasePreprocessorImpl;
-import com.trainingdataprocessor.syntax.SyntaxAnalyserImpl;
 import com.trainingdataprocessor.tags.EncodedTags;
 import com.trainingdataprocessor.tags.Tags;
 import com.trainingdataprocessor.tokens.Tokenizer;
@@ -37,8 +37,6 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 /**
  * Created by Oliver on 11/12/2016.
@@ -66,6 +64,7 @@ public class SyntaxAndSemanticAnalysersTest {
     private PhraseExtractor nounPhraseExtractor = new NounPhraseExtractorImpl(tokenizer);
     private PhraseExtractor verbPhraseExtractor = new VerbPhraseExtractorImpl(tokenizer);
     private SemanticExtractor semanticExtractor = new SemanticExtractorImpl(prepositionPhraseExtractor, nounPhraseExtractor, verbPhraseExtractor);
+    private SemanticAnalysisExecutor semanticAnalysisExecutor = new SemanticAnalysisExecutorImpl(semanticPreprocessor, semanticExtractor);
 
     @Test
     public void test() throws InterruptedException {
@@ -108,12 +107,12 @@ public class SyntaxAndSemanticAnalysersTest {
 
         trainingDataRowList.add(trainingDataRow);
 
-        ExecutorService executor = Executors.newFixedThreadPool(2);
-        Runnable syntaxAnalyser = new SyntaxAnalyserImpl(trainingDataDatabaseAccessor, bigramDataListFactory, subPathDataListFactory, trainingDataRowList);
-        Runnable semanticAnalyser = new SemanticAnalyserImpl(semanticPreprocessor, semanticExtractor, trainingDataDatabaseAccessor, trainingDataRowList);
-
-        executor.execute(syntaxAnalyser);
-        executor.execute(semanticAnalyser);
+//        ExecutorService executor = Executors.newFixedThreadPool(2);
+//        Runnable syntaxAnalyser = new SyntaxAnalyserImpl(trainingDataDatabaseAccessor, bigramDataListFactory, subPathDataListFactory, trainingDataRowList);
+//        Runnable semanticAnalyser = new SemanticAnalyserImpl(semanticAnalysisExecutor, trainingDataDatabaseAccessor, trainingDataRowList);
+//
+//        executor.execute(syntaxAnalyser);
+//        executor.execute(semanticAnalyser);
 
 //        String sql = "select max(id) from jos_nlp_semantic_data";
 //        int id = jdbcTemplate.queryForInt(sql);
@@ -121,13 +120,7 @@ public class SyntaxAndSemanticAnalysersTest {
 //        sql = "delete from jos_nlp_semantic_data where id = ?";
 //        jdbcTemplate.update(sql,  new Object[]{id});
 
-        Thread.sleep(7000);
+//        Thread.sleep(7000);
     }
 
-
-
-
-
 }
-
-
