@@ -1,6 +1,7 @@
 package com.trainingdataprocessor.preprocessing;
 
 import com.trainingdataprocessor.data.preprocessing.TrainingDataRow;
+import com.trainingdataprocessor.tags.EncodedTags;
 import com.trainingdataprocessor.tags.Tags;
 
 import java.util.ArrayList;
@@ -15,17 +16,22 @@ public class CapitalizedTokensProcessorImpl implements CapitalizedTokensProcesso
     public void process(TrainingDataRow trainingDataRow) {
         List<String> tokensList = trainingDataRow.getTokensList();
         List<String> tagsList = trainingDataRow.getTagsList();
+        List<String> encodedTagsList = trainingDataRow.getEncodedTagsList();
+
         List<String> processedTokensList = new ArrayList<>();
-        List<String> processeddTagsList = new ArrayList<>();
+        List<String> processedTagsList = new ArrayList<>();
+        List<String> processedEncodedTagsList = new ArrayList<>();
+
         String mergedToken = "";
 
         outer:
-        for (int i = 0; i <= tokensList.size(); i++) {
+        for (int i = 0; i < tokensList.size(); i++) {
             if (!"".equals(mergedToken)) {
                 i = i - 1;
                 processedTokensList.add(mergedToken);
+                processedTagsList.add(Tags.NOUN);
+                processedEncodedTagsList.add(EncodedTags.NOUN);
                 mergedToken = "";
-                processeddTagsList.add(Tags.NOUN);
             }
             if (Character.isUpperCase(tokensList.get(i).charAt(0))) {
                 while (Character.isUpperCase(tokensList.get(i).charAt(0))) {
@@ -36,18 +42,21 @@ public class CapitalizedTokensProcessorImpl implements CapitalizedTokensProcesso
                     }
                     if (i == tokensList.size() - 1) {
                         processedTokensList.add(mergedToken);
-                        processeddTagsList.add(Tags.NOUN);
+                        processedTagsList.add(Tags.NOUN);
+                        processedEncodedTagsList.add(EncodedTags.NOUN);
                         break outer;
                     }
                     i++;
                 }
             } else {
                 processedTokensList.add(tokensList.get(i));
-                processeddTagsList.add(tagsList.get(i));
+                processedTagsList.add(tagsList.get(i));
+                processedEncodedTagsList.add(encodedTagsList.get(i));
             }
         }
         trainingDataRow.setTokensList(processedTokensList);
-        trainingDataRow.setTagsList(processeddTagsList);
+        trainingDataRow.setTagsList(processedTagsList);
+        trainingDataRow.setEncodedTagsList(processedEncodedTagsList);
     }
 
 }

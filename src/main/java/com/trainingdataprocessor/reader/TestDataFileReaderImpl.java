@@ -37,10 +37,12 @@ public class TestDataFileReaderImpl implements TestDataReader {
         }
         try {
             String testDataRow = br.readLine();
-            while (testDataRow != null && !"".equals(testDataRow)) {
-                lineNumber ++;
-                testDataValidator.validate(testDataRow, lineNumber);
-                testDataRowList.add(testDataRow);
+            while (testDataRow != null) {
+                lineNumber++;
+                if (!"".equals(testDataRow)) {
+                    testDataValidator.validate(testDataRow, lineNumber);
+                    testDataRowList.add(testDataRow);
+                }
                 testDataRow = br.readLine();
             }
         } catch (final IOException e) {

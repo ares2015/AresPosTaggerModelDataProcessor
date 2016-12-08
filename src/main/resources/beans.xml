@@ -122,6 +122,7 @@
           class="com.trainingdataprocessor.main.NlpTrainingDataProcessor">
         <constructor-arg ref="trainingDataPreprocessor"/>
         <constructor-arg ref="trainingDataDatabaseAccessor"/>
+        <constructor-arg ref="tokenizer"/>
         <constructor-arg ref="tagsProcessor"/>
         <constructor-arg ref="bigramDataListFactory"/>
         <constructor-arg ref="subPathDataListFactory"/>

@@ -2,6 +2,7 @@ package com.trainingdataprocessor.paths;
 
 import com.trainingdataprocessor.data.preprocessing.TrainingDataRow;
 import com.trainingdataprocessor.database.TrainingDataDatabaseAccessor;
+import com.trainingdataprocessor.tokens.Tokenizer;
 
 import java.util.List;
 
@@ -10,11 +11,15 @@ import java.util.List;
  */
 public class EncodedPathsProcessorImpl implements EncodedPathsProcessor, Runnable {
 
+    private Tokenizer tokenizer;
+
     private TrainingDataDatabaseAccessor trainingDataDatabaseAccessor;
 
     private List<TrainingDataRow> trainingDataRowList;
 
-    public EncodedPathsProcessorImpl(TrainingDataDatabaseAccessor trainingDataDatabaseAccessor, List<TrainingDataRow> trainingDataRowList) {
+    public EncodedPathsProcessorImpl(Tokenizer tokenizer, TrainingDataDatabaseAccessor trainingDataDatabaseAccessor,
+                                     List<TrainingDataRow> trainingDataRowList) {
+        this.tokenizer = tokenizer;
         this.trainingDataDatabaseAccessor = trainingDataDatabaseAccessor;
         this.trainingDataRowList = trainingDataRowList;
     }
@@ -27,7 +32,8 @@ public class EncodedPathsProcessorImpl implements EncodedPathsProcessor, Runnabl
     @Override
     public void process() {
         for (TrainingDataRow trainingDataRow : trainingDataRowList) {
-            trainingDataDatabaseAccessor.insertEncodedPath(trainingDataRow.getEncodedPathAsString());
+            String encodedPathAsString = tokenizer.convertEncodedTagsListToString(trainingDataRow.getEncodedTagsList());
+            trainingDataDatabaseAccessor.insertEncodedPath(encodedPathAsString);
         }
     }
 

@@ -76,7 +76,7 @@ public class SemanticAnalysisExecutorTest {
 
         trainingDataRowList.add(trainingDataRow);
 
-        Optional<SemanticExtractionData> semanticExtractionData = semanticAnalysisExecutor.execute(encodedPath, tokens, encodedTags, 1);
+        Optional<SemanticExtractionData> semanticExtractionData = semanticAnalysisExecutor.execute(tokens, encodedTags, 1);
         assertEquals("George", semanticExtractionData.get().getAtomicSubject());
         assertEquals("visited", semanticExtractionData.get().getAtomicVerbPredicate());
         assertEquals("Hanover", semanticExtractionData.get().getAtomicNounPredicate());
@@ -106,7 +106,7 @@ public class SemanticAnalysisExecutorTest {
         List<TrainingDataRow> trainingDataRowList = new ArrayList<>();
         trainingDataRowList.add(trainingDataRow);
 
-        Optional<SemanticExtractionData> semanticExtractionData = semanticAnalysisExecutor.execute(encodedPath, tokens, encodedTags, 3);
+        Optional<SemanticExtractionData> semanticExtractionData = semanticAnalysisExecutor.execute(tokens, encodedTags, 3);
         assertEquals("people", semanticExtractionData.get().getAtomicSubject());
         assertEquals("Jamaica people ", semanticExtractionData.get().getExtendedSubject());
         assertEquals("run", semanticExtractionData.get().getAtomicVerbPredicate());
@@ -138,7 +138,7 @@ public class SemanticAnalysisExecutorTest {
         List<TrainingDataRow> trainingDataRowList = new ArrayList<>();
         trainingDataRowList.add(trainingDataRow);
 
-        Optional<SemanticExtractionData> semanticExtractionData = semanticAnalysisExecutor.execute(encodedPath, tokens, encodedTags, 4);
+        Optional<SemanticExtractionData> semanticExtractionData = semanticAnalysisExecutor.execute(tokens, encodedTags, 4);
         assertEquals("players", semanticExtractionData.get().getAtomicSubject());
         assertEquals("Slovak players ", semanticExtractionData.get().getExtendedSubject());
         assertEquals("score", semanticExtractionData.get().getAtomicVerbPredicate());
@@ -173,7 +173,7 @@ public class SemanticAnalysisExecutorTest {
         List<TrainingDataRow> trainingDataRowList = new ArrayList<>();
         trainingDataRowList.add(trainingDataRow);
 
-        Optional<SemanticExtractionData> semanticExtractionData = semanticAnalysisExecutor.execute(encodedPath, tokens, encodedTags, 6);
+        Optional<SemanticExtractionData> semanticExtractionData = semanticAnalysisExecutor.execute(tokens, encodedTags, 6);
         assertEquals("", semanticExtractionData.get().getAtomicSubject());
         assertEquals("Players of Slovak team ", semanticExtractionData.get().getExtendedSubject());
         assertEquals("score", semanticExtractionData.get().getAtomicVerbPredicate());
@@ -199,7 +199,7 @@ public class SemanticAnalysisExecutorTest {
 
         trainingDataRowList.add(trainingDataRow);
 
-        Optional<SemanticExtractionData> semanticExtractionData = semanticAnalysisExecutor.execute(encodedPath, tokens, encodedTags, 0);
+        Optional<SemanticExtractionData> semanticExtractionData = semanticAnalysisExecutor.execute(tokens, encodedTags, 0);
         assertFalse(semanticExtractionData.isPresent());
 
     }

@@ -30,7 +30,7 @@ public class SemanticPreprocessorImpl implements SemanticPreprocessor {
         this.verbPhrasePreprocessor = verbPhrasePreprocessor;
     }
 
-    public SemanticPreprocessingData preprocess(String encodedSubPath, List<String> tokensList, List<String> encodedTagsList, int verbIndex) {
+    public SemanticPreprocessingData preprocess(List<String> tokensList, List<String> encodedTagsList, int verbIndex) {
         LOGGER.info("ENTERING preprocess method of SemanticPreprocessorImpl....");
         LOGGER.info("*********************************************************************");
 
@@ -40,12 +40,10 @@ public class SemanticPreprocessorImpl implements SemanticPreprocessor {
 
         SemanticPreprocessingData semanticPreprocessingData = new SemanticPreprocessingData();
         semanticPreprocessingData.setVerbIndex(verbIndex);
-        LOGGER.info("Verb index in: " + encodedSubPath + " is on index: " + verbIndex);
+        LOGGER.info("Verb index in: " + filteredEncodedSubpath + " is on index: " + verbIndex);
 
         int afterVerbPrepositionIndex = getAfterVerbPrepositionIndex(filteredEncodedTagsList, verbIndex);
-        if (afterVerbPrepositionIndex > -1) {
-            semanticPreprocessingData.setContainsAfterVerbPreposition(true);
-        }
+        semanticPreprocessingData.setContainsAfterVerbPreposition(afterVerbPrepositionIndex > -1);
 
         semanticPreprocessingData.setAfterVerbFirstPrepositionIndex(afterVerbPrepositionIndex);
         semanticPreprocessingData.setTokens(filteredTokensList);

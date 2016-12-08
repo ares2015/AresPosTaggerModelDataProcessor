@@ -23,8 +23,8 @@ public class SemanticAnalysisExecutorImpl implements SemanticAnalysisExecutor {
     }
 
     @Override
-    public Optional<SemanticExtractionData> execute(String sentencePattern, List<String> tokens, List<String> encodedTags, int verbIndex) {
-        SemanticPreprocessingData semanticPreprocessingData = semanticPreprocessor.preprocess(sentencePattern, tokens, encodedTags, verbIndex);
+    public Optional<SemanticExtractionData> execute(List<String> tokens, List<String> encodedTags, int verbIndex) {
+        SemanticPreprocessingData semanticPreprocessingData = semanticPreprocessor.preprocess(tokens, encodedTags, verbIndex);
         if (canGoToSemanticExtraction(semanticPreprocessingData)) {
             return Optional.of(semanticExtractor.extract(semanticPreprocessingData));
         } else {

@@ -53,14 +53,82 @@ public class CapitalizedTokensProcessorTest {
         tagsList.add("PR");
         tagsList.add("N");
 
+        List<String> encodedTagsList = new ArrayList<>();
+        encodedTagsList.add("N");
+        encodedTagsList.add("N");
+        encodedTagsList.add("N");
+        encodedTagsList.add("N");
+        encodedTagsList.add("N");
+        encodedTagsList.add("I");
+        encodedTagsList.add("D");
+        encodedTagsList.add("J");
+        encodedTagsList.add("#");
+        encodedTagsList.add("P");
+        encodedTagsList.add("D");
+        encodedTagsList.add("N");
+        encodedTagsList.add("N");
+        encodedTagsList.add("P");
+        encodedTagsList.add("N");
+
         TrainingDataRow trainingDataRow = new TrainingDataRow();
         trainingDataRow.setTokensList(tokensList);
         trainingDataRow.setTagsList(tagsList);
+        trainingDataRow.setEncodedTagsList(encodedTagsList);
+
         capitalizedTokensProcessor.process(trainingDataRow);
+
         assertEquals(10, trainingDataRow.getTokensList().size());
         assertEquals(10, trainingDataRow.getTagsList().size());
         assertEquals("New York City Police Department", trainingDataRow.getTokensList().get(0));
         assertEquals("United States", trainingDataRow.getTokensList().get(7));
+    }
 
+    @Test
+    public void test2() {
+        List<String> tokensList = new ArrayList<>();
+        tokensList.add("George");
+        tokensList.add("Bush");
+        tokensList.add("met");
+        tokensList.add("Vladimir");
+        tokensList.add("Putin");
+        tokensList.add("in");
+        tokensList.add("Bratislava");
+        tokensList.add("in");
+        tokensList.add("2005");
+
+        List<String> tagsList = new ArrayList<>();
+        tagsList.add("N");
+        tagsList.add("N");
+        tagsList.add("V");
+        tagsList.add("N");
+        tagsList.add("N");
+        tagsList.add("PR");
+        tagsList.add("N");
+        tagsList.add("PR");
+        tagsList.add("NR");
+
+        List<String> encodedTagsList = new ArrayList<>();
+        encodedTagsList.add("N");
+        encodedTagsList.add("N");
+        encodedTagsList.add("V");
+        encodedTagsList.add("N");
+        encodedTagsList.add("N");
+        encodedTagsList.add("P");
+        encodedTagsList.add("N");
+        encodedTagsList.add("P");
+        encodedTagsList.add("#");
+
+        TrainingDataRow trainingDataRow = new TrainingDataRow();
+        trainingDataRow.setTokensList(tokensList);
+        trainingDataRow.setTagsList(tagsList);
+        trainingDataRow.setEncodedTagsList(encodedTagsList);
+
+        capitalizedTokensProcessor.process(trainingDataRow);
+
+        assertEquals(7, trainingDataRow.getTokensList().size());
+        assertEquals(7, trainingDataRow.getTagsList().size());
+        assertEquals("George Bush", trainingDataRow.getTokensList().get(0));
+        assertEquals("Vladimir Putin", trainingDataRow.getTokensList().get(2));
+        assertEquals("Bratislava", trainingDataRow.getTokensList().get(4));
     }
 }

@@ -66,7 +66,7 @@ public class SemanticPreprocessingAndExtractionIntegrationTest {
         encodedTags.add(EncodedTags.NOUN);
         sentence = "brave firemen fight furiously forest fire";
         tokens = Arrays.asList(sentence.split("\\ "));
-        semanticPreprocessingData = semanticPreprocessor.preprocess(sentencePattern, tokens, encodedTags, 2);
+        semanticPreprocessingData = semanticPreprocessor.preprocess(tokens, encodedTags, 2);
         semanticExtractionData = semanticExtractor.extract(semanticPreprocessingData);
         assertEquals("brave firemen ", semanticExtractionData.getExtendedSubject());
         assertEquals("firemen", semanticExtractionData.getAtomicSubject());
@@ -87,7 +87,7 @@ public class SemanticPreprocessingAndExtractionIntegrationTest {
         encodedTags.add(EncodedTags.NOUN);
         sentence = "brave soldiers and firemen fight furiously forest fire";
         tokens = Arrays.asList(sentence.split("\\ "));
-        semanticPreprocessingData = semanticPreprocessor.preprocess(sentencePattern, tokens, encodedTags, 4);
+        semanticPreprocessingData = semanticPreprocessor.preprocess(tokens, encodedTags, 4);
         semanticExtractionData = semanticExtractor.extract(semanticPreprocessingData);
         assertEquals("", semanticExtractionData.getExtendedSubject());
         assertEquals("firemen", semanticExtractionData.getAtomicSubject());
@@ -112,7 +112,7 @@ public class SemanticPreprocessingAndExtractionIntegrationTest {
         encodedTags.add(EncodedTags.NOUN);
         sentence = "Fans of Russia in Paris attack furiously English supporters at European Championships";
         tokens = Arrays.asList(sentence.split("\\ "));
-        semanticPreprocessingData = semanticPreprocessor.preprocess(sentencePattern, tokens, encodedTags, 5);
+        semanticPreprocessingData = semanticPreprocessor.preprocess(tokens, encodedTags, 5);
         semanticExtractionData = semanticExtractor.extract(semanticPreprocessingData);
         assertEquals("Fans of Russia in Paris ", semanticExtractionData.getExtendedSubject());
         assertEquals("attack", semanticExtractionData.getAtomicVerbPredicate());
@@ -132,7 +132,7 @@ public class SemanticPreprocessingAndExtractionIntegrationTest {
         encodedTags.add(EncodedTags.NOUN);
         sentence = "George exercised little control over British domestic policy";
         tokens = Arrays.asList(sentence.split("\\ "));
-        semanticPreprocessingData = semanticPreprocessor.preprocess(sentencePattern, tokens, encodedTags, 1);
+        semanticPreprocessingData = semanticPreprocessor.preprocess(tokens, encodedTags, 1);
         semanticExtractionData = semanticExtractor.extract(semanticPreprocessingData);
         assertEquals("George", semanticExtractionData.getAtomicSubject());
         assertEquals("", semanticExtractionData.getExtendedSubject());
@@ -155,7 +155,7 @@ public class SemanticPreprocessingAndExtractionIntegrationTest {
         encodedTags.add(EncodedTags.NUMBER);
         sentence = "King George visited Hanover again from May to November 1719";
         tokens = Arrays.asList(sentence.split("\\ "));
-        semanticPreprocessingData = semanticPreprocessor.preprocess(sentencePattern, tokens, encodedTags, 2);
+        semanticPreprocessingData = semanticPreprocessor.preprocess(tokens, encodedTags, 2);
         semanticExtractionData = semanticExtractor.extract(semanticPreprocessingData);
         assertEquals("George", semanticExtractionData.getAtomicSubject());
         assertEquals("King George ", semanticExtractionData.getExtendedSubject());
@@ -181,7 +181,7 @@ public class SemanticPreprocessingAndExtractionIntegrationTest {
 
         sentence = "Shot John Lennon is still very popular singer in United States";
         tokens = Arrays.asList(sentence.split("\\ "));
-        semanticPreprocessingData = semanticPreprocessor.preprocess(sentencePattern, tokens, encodedTags, 3);
+        semanticPreprocessingData = semanticPreprocessor.preprocess(tokens, encodedTags, 3);
         semanticExtractionData = semanticExtractor.extract(semanticPreprocessingData);
         assertEquals("Lennon", semanticExtractionData.getAtomicSubject());
         assertEquals("Shot John Lennon ", semanticExtractionData.getExtendedSubject());
@@ -206,7 +206,7 @@ public class SemanticPreprocessingAndExtractionIntegrationTest {
 
         sentence = "Members of Fragile can sing absolutely perfectly before audience";
         tokens = Arrays.asList(sentence.split("\\ "));
-        semanticPreprocessingData = semanticPreprocessor.preprocess(sentencePattern, tokens, encodedTags, 4);
+        semanticPreprocessingData = semanticPreprocessor.preprocess(tokens, encodedTags, 4);
         semanticExtractionData = semanticExtractor.extract(semanticPreprocessingData);
         assertEquals("Members of Fragile ", semanticExtractionData.getExtendedSubject());
         assertEquals("sing", semanticExtractionData.getAtomicVerbPredicate());

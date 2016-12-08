@@ -77,6 +77,17 @@ public class TokenizerImpl implements Tokenizer {
     }
 
     @Override
+    public String convertEncodedTagsListToString(List<String> list) {
+        String encodedPath = "";
+        int i = 0;
+        for (String word : list) {
+            encodedPath += word;
+            i++;
+        }
+        return encodedPath;
+    }
+
+    @Override
     public String convertSubListToString(List<String> list, int startIndex, int endIndex) {
         String s = "";
         for (int i = startIndex; i <= endIndex - 1; i++) {

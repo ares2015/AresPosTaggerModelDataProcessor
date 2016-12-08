@@ -11,6 +11,7 @@ import com.trainingdataprocessor.semantics.analysis.SemanticAnalysisExecutor;
 import com.trainingdataprocessor.syntax.SyntaxAnalyserImpl;
 import com.trainingdataprocessor.tags.TagsProcessor;
 import com.trainingdataprocessor.tokens.TokenTagDataProcessorImpl;
+import com.trainingdataprocessor.tokens.Tokenizer;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -27,6 +28,8 @@ public class NlpTrainingDataProcessor {
 
     private TrainingDataDatabaseAccessor trainingDataDatabaseAccessor;
 
+    private Tokenizer tokenizer;
+
     private TagsProcessor tagsProcessor;
 
     private BigramDataListFactory bigramDataListFactory;
@@ -37,12 +40,11 @@ public class NlpTrainingDataProcessor {
 
     private static int NUMBER_OF_THREADS = 4;
 
-    public NlpTrainingDataProcessor(TrainingDataPreprocessor trainingDataPreprocessor, TrainingDataDatabaseAccessor trainingDataDatabaseAccessor,
-                                    TagsProcessor tagsProcessor,
-                                    BigramDataListFactory bigramDataListFactory, SubPathDataListFactory subPathDataListFactory,
-                                    SemanticAnalysisExecutor semanticAnalysisExecutor) {
+    public NlpTrainingDataProcessor(TrainingDataPreprocessor trainingDataPreprocessor, TrainingDataDatabaseAccessor trainingDataDatabaseAccessor, Tokenizer tokenizer, TagsProcessor tagsProcessor,
+                                    BigramDataListFactory bigramDataListFactory, SubPathDataListFactory subPathDataListFactory, SemanticAnalysisExecutor semanticAnalysisExecutor) {
         this.trainingDataPreprocessor = trainingDataPreprocessor;
         this.trainingDataDatabaseAccessor = trainingDataDatabaseAccessor;
+        this.tokenizer = tokenizer;
         this.tagsProcessor = tagsProcessor;
         this.bigramDataListFactory = bigramDataListFactory;
         this.subPathDataListFactory = subPathDataListFactory;
@@ -55,25 +57,27 @@ public class NlpTrainingDataProcessor {
         nlpTrainingDataProcessor.process();
     }
 
-
     public void process() {
         long startTime = System.currentTimeMillis();
+
         List<TrainingDataRow> trainingDataRowList = trainingDataPreprocessor.preprocess();
 
         tagsProcessor.process(trainingDataRowList);
 
         ExecutorService executor = Executors.newFixedThreadPool(NUMBER_OF_THREADS);
 
-        Runnable encodedPathsProcessor = new EncodedPathsProcessorImpl(trainingDataDatabaseAccessor, trainingDataRowList);
+        Runnable encodedPathsProcessor = new EncodedPathsProcessorImpl(tokenizer, trainingDataDatabaseAccessor, trainingDataRowList);
         Runnable syntaxAnalyser = new SyntaxAnalyserImpl(trainingDataDatabaseAccessor, bigramDataListFactory, subPathDataListFactory, trainingDataRowList);
         Runnable semanticAnalyser = new SemanticAnalyserImpl(semanticAnalysisExecutor, trainingDataDatabaseAccessor, trainingDataRowList);
         Runnable tokenTagDataProcessor = new TokenTagDataProcessorImpl(trainingDataDatabaseAccessor, trainingDataRowList);
+
         executor.execute(encodedPathsProcessor);
         executor.execute(syntaxAnalyser);
         executor.execute(semanticAnalyser);
         executor.execute(tokenTagDataProcessor);
 
         executor.shutdown();
+
         long stopTime = System.currentTimeMillis();
         long elapsedTime = stopTime - startTime;
         System.out.println("Data processed in " + elapsedTime + " miliseconds");

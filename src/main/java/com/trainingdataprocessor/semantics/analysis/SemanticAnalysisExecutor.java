@@ -10,5 +10,5 @@ import java.util.Optional;
  */
 public interface SemanticAnalysisExecutor {
 
-    Optional<SemanticExtractionData> execute(String sentencePattern, List<String> tokens, List<String> encodedTags, int verbIndex);
+    Optional<SemanticExtractionData> execute(List<String> tokens, List<String> encodedTags, int verbIndex);
 }

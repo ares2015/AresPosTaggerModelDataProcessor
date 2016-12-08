@@ -43,18 +43,16 @@ public class SemanticAnalyserImpl implements SemanticAnalyser, Runnable {
                     if (canGoToSemanticAnalysis(encodedTags, verbIndexes)) {
                         Integer verbIndex = verbIndexes.get(0);
                         List<String> tokens = trainingDataRow.getTokensMultiList().get(i);
-                        String encodedPathAsString = trainingDataRow.getEncodedSubPathsAsStringList().get(i);
-                        analyseSentence(encodedPathAsString, tokens, encodedTags, verbIndex);
+                        analyseSentence(tokens, encodedTags, verbIndex);
                     }
                 }
             } else {
-                List<String> encodedTagsList = trainingDataRow.getEncodedTagsList();
-                List<Integer> verbIndexes = getVerbIndexes(encodedTagsList);
-                if (canGoToSemanticAnalysis(encodedTagsList, verbIndexes)) {
+                List<String> encodedTags = trainingDataRow.getEncodedTagsList();
+                List<Integer> verbIndexes = getVerbIndexes(encodedTags);
+                if (canGoToSemanticAnalysis(encodedTags, verbIndexes)) {
                     Integer verbIndex = verbIndexes.get(0);
                     List<String> tokensList = trainingDataRow.getTokensList();
-                    String encodedPathAsString = trainingDataRow.getEncodedPathAsString();
-                    analyseSentence(encodedPathAsString, tokensList, encodedTagsList, verbIndex);
+                    analyseSentence(tokensList, encodedTags, verbIndex);
                 }
             }
         }
@@ -83,8 +81,8 @@ public class SemanticAnalyserImpl implements SemanticAnalyser, Runnable {
         return verbIndexes;
     }
 
-    private void analyseSentence(String sentencePattern, List<String> tokens, List<String> encodedTags, int verbIndex) {
-        Optional<SemanticExtractionData> semanticExtractionData = semanticAnalysisExecutor.execute(sentencePattern, tokens, encodedTags, verbIndex);
+    private void analyseSentence(List<String> tokens, List<String> encodedTags, int verbIndex) {
+        Optional<SemanticExtractionData> semanticExtractionData = semanticAnalysisExecutor.execute(tokens, encodedTags, verbIndex);
         if (semanticExtractionData.isPresent()) {
             trainingDataDatabaseAccessor.insertSemanticData(semanticExtractionData.get());
         }
