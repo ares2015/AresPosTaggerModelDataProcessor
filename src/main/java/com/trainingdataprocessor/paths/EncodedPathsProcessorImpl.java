@@ -32,8 +32,16 @@ public class EncodedPathsProcessorImpl implements EncodedPathsProcessor, Runnabl
     @Override
     public void process() {
         for (TrainingDataRow trainingDataRow : trainingDataRowList) {
-            String encodedPathAsString = tokenizer.convertEncodedTagsListToString(trainingDataRow.getEncodedTagsList());
-            trainingDataDatabaseAccessor.insertEncodedPath(encodedPathAsString);
+            if (trainingDataRow.containsSubSentences()) {
+                List<List<String>> encodedTagsMultiList = trainingDataRow.getEncodedTagsMultiList();
+                for (List<String> list : encodedTagsMultiList) {
+                    String encodedPathAsString = tokenizer.convertEncodedTagsListToString(list);
+                    trainingDataDatabaseAccessor.insertEncodedPath(encodedPathAsString);
+                }
+            } else {
+                String encodedPathAsString = tokenizer.convertEncodedTagsListToString(trainingDataRow.getEncodedTagsList());
+                trainingDataDatabaseAccessor.insertEncodedPath(encodedPathAsString);
+            }
         }
     }
 
