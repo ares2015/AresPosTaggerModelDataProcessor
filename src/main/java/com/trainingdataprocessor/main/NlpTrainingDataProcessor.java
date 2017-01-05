@@ -18,6 +18,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 /**
  * Created by Oliver on 11/12/2016.
@@ -58,6 +59,7 @@ public class NlpTrainingDataProcessor {
     }
 
     public void process() {
+
         long startTime = System.currentTimeMillis();
 
         List<TrainingDataRow> trainingDataRowList = trainingDataPreprocessor.preprocess();
@@ -71,11 +73,15 @@ public class NlpTrainingDataProcessor {
         Runnable semanticAnalyser = new SemanticAnalyserImpl(semanticAnalysisExecutor, trainingDataDatabaseAccessor, trainingDataRowList);
         Runnable tokenTagDataProcessor = new TokenTagDataProcessorImpl(trainingDataDatabaseAccessor, trainingDataRowList);
 
-        executor.execute(encodedPathsProcessor);
-        executor.execute(syntaxAnalyser);
-        executor.execute(semanticAnalyser);
-        executor.execute(tokenTagDataProcessor);
+        Future<?> encodedPathsAnalyserFuture = executor.submit(encodedPathsProcessor);
+        Future<?> syntaxAnalyserFuture = executor.submit(syntaxAnalyser);
+        Future<?> semanticAnalyserFuture = executor.submit(semanticAnalyser);
+        Future<?> tokenTagDataProcessorFuture = executor.submit(tokenTagDataProcessor);
 
+        while (!encodedPathsAnalyserFuture.isDone() && !syntaxAnalyserFuture.isDone() &&
+                !semanticAnalyserFuture.isDone() && !tokenTagDataProcessorFuture.isDone()) {
+
+        }
         executor.shutdown();
 
         long stopTime = System.currentTimeMillis();

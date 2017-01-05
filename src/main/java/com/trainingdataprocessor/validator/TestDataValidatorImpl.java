@@ -67,6 +67,9 @@ public class TestDataValidatorImpl implements TestDataValidator {
                     " -> number of words in sentence is not equal to number of tags.");
         }
         for (String tag : tagsList) {
+            if (tag.contains(",")) {
+                tag = tokenizer.removeCommaAndDot(tag);
+            }
             if (!(tagsCache.contains(tag))) {
                 LOGGER.log(Level.SEVERE, "EXCEPTION: Test data row < " + testDataRow + " > on line " + lineNumber + " " +
                         " -> contains an invalid tag: " + tag);
