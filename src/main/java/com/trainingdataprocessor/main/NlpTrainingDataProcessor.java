@@ -18,7 +18,6 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
 
 /**
  * Created by Oliver on 11/12/2016.
@@ -59,7 +58,7 @@ public class NlpTrainingDataProcessor {
     }
 
     public void process() {
-
+        boolean areDataProcessed = false;
         long startTime = System.currentTimeMillis();
 
         List<TrainingDataRow> trainingDataRowList = trainingDataPreprocessor.preprocess();
@@ -73,19 +72,39 @@ public class NlpTrainingDataProcessor {
         Runnable semanticAnalyser = new SemanticAnalyserImpl(semanticAnalysisExecutor, trainingDataDatabaseAccessor, trainingDataRowList);
         Runnable tokenTagDataProcessor = new TokenTagDataProcessorImpl(trainingDataDatabaseAccessor, trainingDataRowList);
 
-        Future<?> encodedPathsAnalyserFuture = executor.submit(encodedPathsProcessor);
-        Future<?> syntaxAnalyserFuture = executor.submit(syntaxAnalyser);
-        Future<?> semanticAnalyserFuture = executor.submit(semanticAnalyser);
-        Future<?> tokenTagDataProcessorFuture = executor.submit(tokenTagDataProcessor);
+        executor.execute(encodedPathsProcessor);
+        executor.execute(syntaxAnalyser);
+        executor.execute(semanticAnalyser);
+        executor.execute(tokenTagDataProcessor);
 
-        while (!encodedPathsAnalyserFuture.isDone() && !syntaxAnalyserFuture.isDone() &&
-                !semanticAnalyserFuture.isDone() && !tokenTagDataProcessorFuture.isDone()) {
-
-        }
         executor.shutdown();
 
-        long stopTime = System.currentTimeMillis();
-        long elapsedTime = stopTime - startTime;
-        System.out.println("Data processed in " + elapsedTime + " miliseconds");
+
+//        EncodedPathsProcessor encodedPathsProcessor = new EncodedPathsProcessorImpl(tokenizer, trainingDataDatabaseAccessor, trainingDataRowList);
+//        SyntaxAnalyser syntaxAnalyser = new SyntaxAnalyserImpl(trainingDataDatabaseAccessor, bigramDataListFactory, subPathDataListFactory, trainingDataRowList);
+//        SemanticAnalyser semanticAnalyser = new SemanticAnalyserImpl(semanticAnalysisExecutor, trainingDataDatabaseAccessor, trainingDataRowList);
+//        TokenTagDataProcessor tokenTagDataProcessor = new TokenTagDataProcessorImpl(trainingDataDatabaseAccessor, trainingDataRowList);
+//
+//        encodedPathsProcessor.process();
+//        syntaxAnalyser.analyse();
+//        semanticAnalyser.analyse();
+//        tokenTagDataProcessor.process();
+
+//        Future<?> encodedPathsAnalyserFuture = executor.submit(encodedPathsProcessor);
+//        Future<?> syntaxAnalyserFuture = executor.submit(syntaxAnalyser);
+//        Future<?> semanticAnalyserFuture = executor.submit(semanticAnalyser);
+//        Future<?> tokenTagDataProcessorFuture = executor.submit(tokenTagDataProcessor);
+
+//        while (!areDataProcessed) {
+//            areDataProcessed = encodedPathsAnalyserFuture.isDone() && syntaxAnalyserFuture.isDone() &&
+//                    semanticAnalyserFuture.isDone() && tokenTagDataProcessorFuture.isDone();
+//        }
+//
+//        if (areDataProcessed) {
+//            executor.shutdown();
+//            long stopTime = System.currentTimeMillis();
+//            long elapsedTime = stopTime - startTime;
+//            System.out.println("Data processed in " + elapsedTime / 1000 + " seconds");
+//        }
     }
 }

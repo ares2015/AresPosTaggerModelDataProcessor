@@ -22,6 +22,12 @@ public class CapitalizedTokensProcessorImpl implements CapitalizedTokensProcesso
         List<String> processedTagsList = new ArrayList<>();
         List<String> processedEncodedTagsList = new ArrayList<>();
 
+
+    }
+
+    private void runCapitalizationLogic(List<String> tokensList, List<String> tagsList, List<String> encodedTagsList,
+                                        List<String> processedTokensList, List<String> processedTagsList, List<String> processedEncodedTagsList,
+                                        TrainingDataRow trainingDataRow, boolean containsSubSentence, int listIndex) {
         String mergedToken = "";
 
         outer:
@@ -54,9 +60,18 @@ public class CapitalizedTokensProcessorImpl implements CapitalizedTokensProcesso
                 processedEncodedTagsList.add(encodedTagsList.get(i));
             }
         }
-        trainingDataRow.setTokensList(processedTokensList);
-        trainingDataRow.setTagsList(processedTagsList);
-        trainingDataRow.setEncodedTagsList(processedEncodedTagsList);
+        if (containsSubSentence) {
+            trainingDataRow.getTokensMultiList().remove(listIndex);
+            trainingDataRow.getTokensMultiList().add(processedTokensList);
+            trainingDataRow.getTagsMultiList().remove(listIndex);
+            trainingDataRow.getTagsMultiList().add(processedTagsList);
+            trainingDataRow.getEncodedTagsMultiList().remove(listIndex);
+            trainingDataRow.getEncodedTagsMultiList().add(processedEncodedTagsList);
+        } else {
+            trainingDataRow.setTokensList(processedTokensList);
+            trainingDataRow.setTagsList(processedTagsList);
+            trainingDataRow.setEncodedTagsList(processedEncodedTagsList);
+        }
     }
 
 }
