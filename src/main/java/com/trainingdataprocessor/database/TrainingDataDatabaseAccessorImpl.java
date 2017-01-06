@@ -6,17 +6,20 @@ import com.trainingdataprocessor.data.syntax.BigramData;
 import com.trainingdataprocessor.data.syntax.SubPathData;
 import com.trainingdataprocessor.data.token.TokenDatabaseData;
 import com.trainingdataprocessor.data.token.TokenTagData;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.logging.Logger;
 
 /**
  * Created by Oliver on 11/7/2016.
  */
 public class TrainingDataDatabaseAccessorImpl implements TrainingDataDatabaseAccessor {
+
+    private final static Logger LOGGER = Logger.getLogger(TrainingDataDatabaseAccessorImpl.class.getName());
+
 
     private JdbcTemplate jdbcTemplate;
 
@@ -26,36 +29,40 @@ public class TrainingDataDatabaseAccessorImpl implements TrainingDataDatabaseAcc
 
     @Override
     public void insertTag(String tag) {
-        int tagFrequency = findTagFrequency(tag);
-        boolean tagExistsInDB = tagFrequency > 0;
-        tagFrequency++;
+        FrequencyIdPair frequencyIdPair = findTagFrequency(tag);
+        boolean tagExistsInDB = frequencyIdPair.frequency > 0;
+        frequencyIdPair.frequency++;
         String sql = "";
         if (tagExistsInDB) {
-            sql = "update jos_nlp_tags set frequency = ? where tag = ?";
-            jdbcTemplate.update(sql, new Object[]{tagFrequency, tag});
+            sql = "update jos_nlp_tags set frequency = ? where id = ?";
+            LOGGER.info(sql);
+            jdbcTemplate.update(sql, new Object[]{frequencyIdPair.frequency, frequencyIdPair.id});
         } else {
             sql = "insert into jos_nlp_tags (tag, frequency) values(?,?)";
-            jdbcTemplate.update(sql, new Object[]{tag, tagFrequency});
+            LOGGER.info(sql);
+            jdbcTemplate.update(sql, new Object[]{tag, 1});
         }
     }
 
     @Override
     public void insertBigramData(BigramData bigramData) {
-        int bigramFrequency = findBigramFrequency(bigramData);
-        boolean bigramExistsInDB = bigramFrequency > 0;
-        bigramFrequency++;
-        bigramData.setBigramFrequency(bigramFrequency);
-        int tag1Frequency = findTagFrequency(bigramData.getTag1());
-        double bigramProbability = BigramProbabilityCalculator.calculate(bigramFrequency, tag1Frequency);
+        FrequencyIdPair bigramFrequencyIdPair = findBigramFrequency(bigramData);
+        boolean bigramExistsInDB = bigramFrequencyIdPair.frequency > 0;
+        bigramFrequencyIdPair.frequency++;
+        bigramData.setBigramFrequency(bigramFrequencyIdPair.frequency);
+        FrequencyIdPair tagFrequencyIdPair = findTagFrequency(bigramData.getTag1());
+        double bigramProbability = BigramProbabilityCalculator.calculate(bigramFrequencyIdPair.frequency, tagFrequencyIdPair.frequency);
         bigramData.setBigramProbability(bigramProbability);
         String bigram = bigramData.getTag1() + " " + bigramData.getTag2();
         String sql = "";
         if (bigramExistsInDB) {
-            sql = "update jos_nlp_bigrams set frequency = ?, probability = ? where bigram = ?";
-            jdbcTemplate.update(sql, new Object[]{bigramFrequency, bigramProbability, bigram});
+            sql = "update jos_nlp_bigrams set frequency = ?, probability = ? where id = ?";
+            LOGGER.info(sql);
+            jdbcTemplate.update(sql, new Object[]{bigramFrequencyIdPair.frequency, bigramProbability, bigramFrequencyIdPair.id});
         } else {
             sql = "insert into jos_nlp_bigrams (frequency, bigram, tag1, tag2, probability, is_tag1_constant, is_tag2_constant) values (?,?,?,?,?,?,?)";
-            jdbcTemplate.update(sql, new Object[]{bigramFrequency, bigram, bigramData.getTag1(), bigramData.getTag2(), bigramProbability,
+            LOGGER.info(sql);
+            jdbcTemplate.update(sql, new Object[]{1, bigram, bigramData.getTag1(), bigramData.getTag2(), bigramProbability,
                     bigramData.isTag1Constant(), bigramData.isTag2Constant()});
         }
     }
@@ -63,17 +70,19 @@ public class TrainingDataDatabaseAccessorImpl implements TrainingDataDatabaseAcc
     @Override
     public void insertSubPathData(SubPathData subPathData) {
         String subPathAsString = subPathData.getSubPath();
-        int subPathFrequency = findSubPathFrequency(subPathAsString);
-        boolean subPathExistsInDB = subPathFrequency > 0;
-        subPathFrequency++;
+        FrequencyIdPair frequencyIdPair = findSubPathFrequency(subPathAsString);
+        boolean subPathExistsInDB = frequencyIdPair.frequency > 0;
+        frequencyIdPair.frequency++;
         String sql = "";
         if (subPathExistsInDB) {
-            sql = "update jos_nlp_subpaths set frequency = ? where subpath = ?";
-            jdbcTemplate.update(sql, new Object[]{subPathFrequency, subPathAsString});
+            sql = "update jos_nlp_subpaths set frequency = ? where id = ?";
+            LOGGER.info(sql);
+            jdbcTemplate.update(sql, new Object[]{frequencyIdPair.frequency, frequencyIdPair.id});
         } else {
             sql = "insert into jos_nlp_subpaths (start_tag, end_tag, subpath, length, frequency, contains_constant) values (?,?,?,?,?,?)";
+            LOGGER.info(sql);
             jdbcTemplate.update(sql, new Object[]{subPathData.getStartTag(), subPathData.getEndTag(),
-                    subPathAsString, subPathData.getLength(), subPathFrequency, subPathData.containsConstant()});
+                    subPathAsString, subPathData.getLength(), 1, subPathData.containsConstant()});
         }
     }
 
@@ -81,6 +90,7 @@ public class TrainingDataDatabaseAccessorImpl implements TrainingDataDatabaseAcc
     public void insertSemanticData(SemanticExtractionData semanticExtractionData) {
         final String sql = "insert into jos_nlp_semantic_data (atomic_subject,extended_subject,atomic_verb_predicate,extended_verb_predicate," +
                 "atomic_noun_predicate,extended_noun_predicate) values (?,?,?,?,?,?)";
+        LOGGER.info(sql);
         jdbcTemplate.update(sql, new Object[]{semanticExtractionData.getAtomicSubject(), semanticExtractionData.getExtendedSubject(),
                 semanticExtractionData.getAtomicVerbPredicate(),
                 semanticExtractionData.getExtendedVerbPredicate(), semanticExtractionData.getAtomicNounPredicate(),
@@ -94,6 +104,7 @@ public class TrainingDataDatabaseAccessorImpl implements TrainingDataDatabaseAcc
             sql = "update jos_nlp_tokens set is_noun = ?, is_noun_frequency = ?, is_adjective = ?, is_adjective_frequency = ?," +
                     "is_verb = ?, is_verb_frequency = ?, is_verbEd = ?, is_verbEd_frequency = ?, " +
                     "is_verbIng = ?, is_verbIng_frequency = ?, is_adverb = ?, is_adverb_frequency = ?, " + "total_frequency = ? where token = ? ";
+            LOGGER.info(sql);
             jdbcTemplate.update(sql, new Object[]{tokenTagData.isNoun(), tokenTagData.getIsNounFrequency(), tokenTagData.isAdjective(), tokenTagData.getIsAdjectiveFrequency(),
                     tokenTagData.isVerb(), tokenTagData.getIsVerbFrequency(), tokenTagData.isVerbEd(), tokenTagData.getIsVerbEdFrequency(), tokenTagData.isVerbIng(),
                     tokenTagData.getIsVerbIngFrequency(), tokenTagData.isAdverb(), tokenTagData.getIsAdverbFrequency(), tokenTagData.getTotalFrequency(),
@@ -101,6 +112,7 @@ public class TrainingDataDatabaseAccessorImpl implements TrainingDataDatabaseAcc
         } else {
             sql = "insert into jos_nlp_tokens (token, is_noun, is_noun_frequency, is_adjective, is_adjective_frequency, is_verb, is_verb_frequency, " +
                     "is_verbEd, is_verbEd_frequency, is_verbIng, is_verbIng_frequency, is_adverb, is_adverb_frequency, total_frequency) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+            LOGGER.info(sql);
             jdbcTemplate.update(sql, new Object[]{tokenTagData.getToken(), tokenTagData.isNoun(), tokenTagData.getIsNounFrequency(), tokenTagData.isAdjective(), tokenTagData.getIsAdjectiveFrequency(),
                     tokenTagData.isVerb(), tokenTagData.getIsVerbFrequency(), tokenTagData.isVerbEd(), tokenTagData.getIsVerbEdFrequency(), tokenTagData.isVerbIng(),
                     tokenTagData.getIsVerbIngFrequency(), tokenTagData.isAdverb(), tokenTagData.getIsAdverbFrequency(), tokenTagData.getTotalFrequency()});
@@ -109,39 +121,19 @@ public class TrainingDataDatabaseAccessorImpl implements TrainingDataDatabaseAcc
 
     @Override
     public void insertEncodedPath(String encodedPath) {
-        int encodedPathFrequency = findEncodedPathFrequency(encodedPath);
-        boolean encodedPathExistsInDB = encodedPathFrequency > 0;
-        encodedPathFrequency++;
+        FrequencyIdPair frequencyIdPair = findEncodedPathFrequency(encodedPath);
+        boolean encodedPathExistsInDB = frequencyIdPair.frequency > 0;
+        frequencyIdPair.frequency++;
         String sql = "";
         if (encodedPathExistsInDB) {
             sql = "update jos_nlp_encoded_paths set frequency = ? where path = ?";
-            jdbcTemplate.update(sql, new Object[]{encodedPathFrequency, encodedPath});
+            LOGGER.info(sql);
+            jdbcTemplate.update(sql, new Object[]{frequencyIdPair.frequency, encodedPath});
         } else {
             sql = "insert into jos_nlp_encoded_paths (path, length, frequency) values(?,?,?)";
-            jdbcTemplate.update(sql, new Object[]{encodedPath, encodedPath.length(), encodedPathFrequency});
+            LOGGER.info(sql);
+            jdbcTemplate.update(sql, new Object[]{encodedPath, encodedPath.length(), 1});
         }
-    }
-
-    private int findTagFrequency(String tag) {
-        int tagFrequency = 0;
-        final String sql = "select frequency from jos_nlp_tags where tag=?";
-        try {
-            tagFrequency = jdbcTemplate.queryForInt(sql, new Object[]{tag});
-        } catch (final EmptyResultDataAccessException e) {
-            return 0;
-        }
-        return tagFrequency;
-    }
-
-    private int findEncodedPathFrequency(String encodedPath) {
-        int encodedPathFrequency = 0;
-        final String sql = "select frequency from jos_nlp_encoded_paths where path=?";
-        try {
-            encodedPathFrequency = jdbcTemplate.queryForInt(sql, new Object[]{encodedPath});
-        } catch (final EmptyResultDataAccessException e) {
-            return 0;
-        }
-        return encodedPathFrequency;
     }
 
     @Override
@@ -172,29 +164,64 @@ public class TrainingDataDatabaseAccessorImpl implements TrainingDataDatabaseAcc
         return Optional.empty();
     }
 
-    private int findBigramFrequency(BigramData bigramData) {
-        int bigramFrequency = 0;
+    private FrequencyIdPair findTagFrequency(String tag) {
+        final String sql = "select id, frequency from jos_nlp_tags where tag=?";
+        List<Map<String, Object>> row = jdbcTemplate.queryForList(sql, new Object[]{tag});
+        if (row.size() == 1) {
+            int id = (Integer) row.get(0).get("id");
+            int tagFrequency = (Integer) row.get(0).get("frequency");
+            return new FrequencyIdPair(id, tagFrequency);
+        } else {
+            return new FrequencyIdPair(0, 0);
+        }
+    }
+
+    private FrequencyIdPair findEncodedPathFrequency(String encodedPath) {
+        final String sql = "select id, frequency from jos_nlp_encoded_paths where path=?";
+        List<Map<String, Object>> row = jdbcTemplate.queryForList(sql, new Object[]{encodedPath});
+        if (row.size() == 1) {
+            int id = (Integer) row.get(0).get("id");
+            int pathFrequency = (Integer) row.get(0).get("frequency");
+            return new FrequencyIdPair(id, pathFrequency);
+        } else {
+            return new FrequencyIdPair(0, 0);
+        }
+    }
+
+
+    private FrequencyIdPair findBigramFrequency(BigramData bigramData) {
         String bigram = bigramData.getTag1() + " " + bigramData.getTag2();
-        final String sql = "select frequency from jos_nlp_bigrams where bigram=?";
-        try {
-            bigramFrequency = jdbcTemplate.queryForInt(sql, new Object[]{bigram});
-        } catch (final EmptyResultDataAccessException e) {
-            return 0;
+        final String sql = "select id, frequency from jos_nlp_bigrams where bigram=?";
+        List<Map<String, Object>> row = jdbcTemplate.queryForList(sql, new Object[]{bigram});
+        if (row.size() == 1) {
+            int id = (Integer) row.get(0).get("id");
+            int bigramFrequency = (Integer) row.get(0).get("frequency");
+            return new FrequencyIdPair(id, bigramFrequency);
+        } else {
+            return new FrequencyIdPair(0, 0);
         }
-        return bigramFrequency;
     }
 
-
-    private int findSubPathFrequency(String subPath) {
-        int subPathFrequency = 0;
-        String sql = "select frequency from jos_nlp_subpaths where subpath = ?";
-        try {
-            subPathFrequency = jdbcTemplate.queryForInt(sql, new Object[]{subPath});
-        } catch (final EmptyResultDataAccessException e) {
-            return 0;
+    private FrequencyIdPair findSubPathFrequency(String subPath) {
+        final String sql = "select id, frequency from jos_nlp_subpaths where subpath =?";
+        List<Map<String, Object>> row = jdbcTemplate.queryForList(sql, new Object[]{subPath});
+        if (row.size() == 1) {
+            int id = (Integer) row.get(0).get("id");
+            int subPathFrequency = (Integer) row.get(0).get("frequency");
+            return new FrequencyIdPair(id, subPathFrequency);
+        } else {
+            return new FrequencyIdPair(0, 0);
         }
-        return subPathFrequency;
     }
 
+    private class FrequencyIdPair {
+        int id;
+        int frequency;
+
+        public FrequencyIdPair(int id, int frequency) {
+            this.id = id;
+            this.frequency = frequency;
+        }
+    }
 
 }
