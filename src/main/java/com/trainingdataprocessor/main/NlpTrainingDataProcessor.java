@@ -74,7 +74,7 @@ public class NlpTrainingDataProcessor {
 
         executor.execute(encodedPathsProcessor);
         executor.execute(syntaxAnalyser);
-        executor.execute(semanticAnalyser);
+//        executor.execute(semanticAnalyser);
         executor.execute(tokenTagDataProcessor);
 
         executor.shutdown();

@@ -30,24 +30,24 @@ public class TrainingDataDatabaseAccessorImpl implements TrainingDataDatabaseAcc
     @Override
     public void insertTag(String tag) {
         FrequencyIdPair frequencyIdPair = findTagFrequency(tag);
-        boolean tagExistsInDB = frequencyIdPair.frequency > 0;
+        boolean tagExistsInDB = frequencyIdPair.id > 0;
         frequencyIdPair.frequency++;
         String sql = "";
         if (tagExistsInDB) {
             sql = "update jos_nlp_tags set frequency = ? where id = ?";
-            LOGGER.info(sql);
+            LOGGER.info("update jos_nlp_tags -> tag: " + tag + " -> frequency: " + frequencyIdPair.frequency);
             jdbcTemplate.update(sql, new Object[]{frequencyIdPair.frequency, frequencyIdPair.id});
         } else {
             sql = "insert into jos_nlp_tags (tag, frequency) values(?,?)";
-            LOGGER.info(sql);
-            jdbcTemplate.update(sql, new Object[]{tag, 1});
+            LOGGER.info("insert jos_nlp_tags -> tag: " + tag + " -> frequency: " + frequencyIdPair.frequency);
+            jdbcTemplate.update(sql, new Object[]{tag, frequencyIdPair.frequency});
         }
     }
 
     @Override
     public void insertBigramData(BigramData bigramData) {
         FrequencyIdPair bigramFrequencyIdPair = findBigramFrequency(bigramData);
-        boolean bigramExistsInDB = bigramFrequencyIdPair.frequency > 0;
+        boolean bigramExistsInDB = bigramFrequencyIdPair.id > 0;
         bigramFrequencyIdPair.frequency++;
         bigramData.setBigramFrequency(bigramFrequencyIdPair.frequency);
         FrequencyIdPair tagFrequencyIdPair = findTagFrequency(bigramData.getTag1());
@@ -57,12 +57,14 @@ public class TrainingDataDatabaseAccessorImpl implements TrainingDataDatabaseAcc
         String sql = "";
         if (bigramExistsInDB) {
             sql = "update jos_nlp_bigrams set frequency = ?, probability = ? where id = ?";
-            LOGGER.info(sql);
+            LOGGER.info("update jos_nlp_bigrams -> bigram: " + bigram + " -> frequency: " + bigramFrequencyIdPair.frequency +
+                    " -> probability: " + bigramProbability);
             jdbcTemplate.update(sql, new Object[]{bigramFrequencyIdPair.frequency, bigramProbability, bigramFrequencyIdPair.id});
         } else {
             sql = "insert into jos_nlp_bigrams (frequency, bigram, tag1, tag2, probability, is_tag1_constant, is_tag2_constant) values (?,?,?,?,?,?,?)";
-            LOGGER.info(sql);
-            jdbcTemplate.update(sql, new Object[]{1, bigram, bigramData.getTag1(), bigramData.getTag2(), bigramProbability,
+            LOGGER.info("insert jos_nlp_bigrams -> bigram: " + bigram + " -> frequency: " + bigramFrequencyIdPair.frequency +
+                    " -> probability: " + bigramProbability);
+            jdbcTemplate.update(sql, new Object[]{bigramFrequencyIdPair.frequency, bigram, bigramData.getTag1(), bigramData.getTag2(), bigramProbability,
                     bigramData.isTag1Constant(), bigramData.isTag2Constant()});
         }
     }
@@ -71,18 +73,19 @@ public class TrainingDataDatabaseAccessorImpl implements TrainingDataDatabaseAcc
     public void insertSubPathData(SubPathData subPathData) {
         String subPathAsString = subPathData.getSubPath();
         FrequencyIdPair frequencyIdPair = findSubPathFrequency(subPathAsString);
-        boolean subPathExistsInDB = frequencyIdPair.frequency > 0;
+        boolean subPathExistsInDB = frequencyIdPair.id > 0;
         frequencyIdPair.frequency++;
         String sql = "";
         if (subPathExistsInDB) {
             sql = "update jos_nlp_subpaths set frequency = ? where id = ?";
-            LOGGER.info(sql);
+            LOGGER.info("update jos_nlp_subpaths -> subPath: " + subPathData.getSubPath() + " -> frequency: " + frequencyIdPair.frequency);
             jdbcTemplate.update(sql, new Object[]{frequencyIdPair.frequency, frequencyIdPair.id});
         } else {
             sql = "insert into jos_nlp_subpaths (start_tag, end_tag, subpath, length, frequency, contains_constant) values (?,?,?,?,?,?)";
-            LOGGER.info(sql);
+            LOGGER.info("insert jos_nlp_subpaths -> subPath: " + subPathData.getSubPath() + " -> frequency: " + frequencyIdPair.frequency
+                    + " -> startTag: " + subPathData.getStartTag() + " -> endTag: " + subPathData.getEndTag() + " -> length: " + subPathData.getLength());
             jdbcTemplate.update(sql, new Object[]{subPathData.getStartTag(), subPathData.getEndTag(),
-                    subPathAsString, subPathData.getLength(), 1, subPathData.containsConstant()});
+                    subPathAsString, subPathData.getLength(), frequencyIdPair.frequency, subPathData.containsConstant()});
         }
     }
 
@@ -104,7 +107,7 @@ public class TrainingDataDatabaseAccessorImpl implements TrainingDataDatabaseAcc
             sql = "update jos_nlp_tokens set is_noun = ?, is_noun_frequency = ?, is_adjective = ?, is_adjective_frequency = ?," +
                     "is_verb = ?, is_verb_frequency = ?, is_verbEd = ?, is_verbEd_frequency = ?, " +
                     "is_verbIng = ?, is_verbIng_frequency = ?, is_adverb = ?, is_adverb_frequency = ?, " + "total_frequency = ? where token = ? ";
-            LOGGER.info(sql);
+            LOGGER.info("update jos_nlp_tokens -> token: " + tokenTagData.getToken() + " -> total_frequency -> " + tokenTagData.getTotalFrequency());
             jdbcTemplate.update(sql, new Object[]{tokenTagData.isNoun(), tokenTagData.getIsNounFrequency(), tokenTagData.isAdjective(), tokenTagData.getIsAdjectiveFrequency(),
                     tokenTagData.isVerb(), tokenTagData.getIsVerbFrequency(), tokenTagData.isVerbEd(), tokenTagData.getIsVerbEdFrequency(), tokenTagData.isVerbIng(),
                     tokenTagData.getIsVerbIngFrequency(), tokenTagData.isAdverb(), tokenTagData.getIsAdverbFrequency(), tokenTagData.getTotalFrequency(),
@@ -112,7 +115,7 @@ public class TrainingDataDatabaseAccessorImpl implements TrainingDataDatabaseAcc
         } else {
             sql = "insert into jos_nlp_tokens (token, is_noun, is_noun_frequency, is_adjective, is_adjective_frequency, is_verb, is_verb_frequency, " +
                     "is_verbEd, is_verbEd_frequency, is_verbIng, is_verbIng_frequency, is_adverb, is_adverb_frequency, total_frequency) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-            LOGGER.info(sql);
+            LOGGER.info("insert jos_nlp_tokens -> token: " + tokenTagData.getToken() + " -> total_frequency -> " + tokenTagData.getTotalFrequency());
             jdbcTemplate.update(sql, new Object[]{tokenTagData.getToken(), tokenTagData.isNoun(), tokenTagData.getIsNounFrequency(), tokenTagData.isAdjective(), tokenTagData.getIsAdjectiveFrequency(),
                     tokenTagData.isVerb(), tokenTagData.getIsVerbFrequency(), tokenTagData.isVerbEd(), tokenTagData.getIsVerbEdFrequency(), tokenTagData.isVerbIng(),
                     tokenTagData.getIsVerbIngFrequency(), tokenTagData.isAdverb(), tokenTagData.getIsAdverbFrequency(), tokenTagData.getTotalFrequency()});
@@ -122,17 +125,17 @@ public class TrainingDataDatabaseAccessorImpl implements TrainingDataDatabaseAcc
     @Override
     public void insertEncodedPath(String encodedPath) {
         FrequencyIdPair frequencyIdPair = findEncodedPathFrequency(encodedPath);
-        boolean encodedPathExistsInDB = frequencyIdPair.frequency > 0;
+        boolean encodedPathExistsInDB = frequencyIdPair.id > 0;
         frequencyIdPair.frequency++;
         String sql = "";
         if (encodedPathExistsInDB) {
             sql = "update jos_nlp_encoded_paths set frequency = ? where path = ?";
-            LOGGER.info(sql);
+            LOGGER.info("update jos_nlp_encoded_paths -> path: " + encodedPath + " -> frequency: " + frequencyIdPair.frequency);
             jdbcTemplate.update(sql, new Object[]{frequencyIdPair.frequency, encodedPath});
         } else {
-            sql = "insert into jos_nlp_encoded_paths (path, length, frequency) values(?,?,?)";
-            LOGGER.info(sql);
-            jdbcTemplate.update(sql, new Object[]{encodedPath, encodedPath.length(), 1});
+            LOGGER.info("insert jos_nlp_encoded_paths -> path: " + encodedPath + " -> frequency: " + frequencyIdPair.frequency);
+            LOGGER.info("insert jos_nlp_encoded_paths -> path: " + encodedPath + " -> frequency: " + frequencyIdPair.frequency);
+            jdbcTemplate.update(sql, new Object[]{encodedPath, encodedPath.length(), frequencyIdPair.frequency});
         }
     }
 
@@ -187,7 +190,6 @@ public class TrainingDataDatabaseAccessorImpl implements TrainingDataDatabaseAcc
             return new FrequencyIdPair(0, 0);
         }
     }
-
 
     private FrequencyIdPair findBigramFrequency(BigramData bigramData) {
         String bigram = bigramData.getTag1() + " " + bigramData.getTag2();
