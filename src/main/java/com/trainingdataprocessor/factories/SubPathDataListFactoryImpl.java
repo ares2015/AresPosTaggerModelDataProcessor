@@ -56,12 +56,20 @@ public class SubPathDataListFactoryImpl implements SubPathDataListFactory {
             } else {
                 subPathAsString += subPath.get(i);
             }
-            if (i > 0 && i < tags.size() - 1) {
+            if (tags.size() > 2 && i > 0 && i < tags.size() - 1) {
                 containsConstant = constantTagsCache.contains(subPath.get(i));
             }
         }
+        if (tags.size() == 2) {
+            containsConstant = subPathOfLength2ContainsConstant(tags);
+        }
         return new SubPathTemporaryObject(subPathAsString, containsConstant);
     }
+
+    private boolean subPathOfLength2ContainsConstant(List<String> tags) {
+        return constantTagsCache.contains(tags.get(0)) && constantTagsCache.contains(tags.get(1));
+    }
+
 
     private class SubPathTemporaryObject {
 
