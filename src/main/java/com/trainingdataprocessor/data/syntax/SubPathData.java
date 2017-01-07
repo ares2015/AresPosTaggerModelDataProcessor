@@ -17,16 +17,16 @@ public final class SubPathData {
 
     private int endIndex;
 
-    private boolean containsConstant = false;
+    private boolean isConstantSubPath = false;
 
-    public SubPathData(String startTag, String endTag, String subPath, int length, int startIndex, int endIndex, boolean containsConstant) {
+    public SubPathData(String startTag, String endTag, String subPath, int length, int startIndex, int endIndex, boolean isConstantSubPath) {
         this.startTag = startTag;
         this.endTag = endTag;
         this.subPath = subPath;
         this.length = length;
         this.startIndex = startIndex;
         this.endIndex = endIndex;
-        this.containsConstant = containsConstant;
+        this.isConstantSubPath = isConstantSubPath;
     }
 
     public String getStartTag() {
@@ -46,10 +46,10 @@ public final class SubPathData {
     }
 
     public boolean containsConstant() {
-        return containsConstant;
+        return isConstantSubPath;
     }
 
-    public void setContainsConstant(boolean containsConstant) {
-        this.containsConstant = containsConstant;
+    public void setConstantSubPath(boolean constantSubPath) {
+        this.isConstantSubPath = constantSubPath;
     }
 }

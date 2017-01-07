@@ -29,10 +29,10 @@ public class SubPathDataListFactoryImpl implements SubPathDataListFactory {
                 String startTag = tags.get(i);
                 String endTag = tags.get(j);
                 SubPathTemporaryObject subPathTemporaryObject = getSubPathFromTagsList(i, j, tags);
-                boolean containsConstant = subPathTemporaryObject.containsConstant;
+                boolean containsConstant = subPathTemporaryObject.isConstantSubPath;
                 String subPath = subPathTemporaryObject.subPath;
                 LOGGER.info("Created new StartTagEndTag pair -> startIndex: " + startIndex + ", endIndex: " + endIndex +
-                        ", startTag: " + startTag + ", endTag: " + endTag + ", containsConstant: " + containsConstant +
+                        ", startTag: " + startTag + ", endTag: " + endTag + ", isConstantSubPath: " + containsConstant +
                         ", subPath: " + subPathTemporaryObject.subPath);
                 subPathDataList.add(new SubPathData(startTag, endTag, subPath, subPathLength, startIndex, endIndex, containsConstant));
             }
@@ -47,7 +47,7 @@ public class SubPathDataListFactoryImpl implements SubPathDataListFactory {
     }
 
     private SubPathTemporaryObject getSubPathFromTagsList(int startIndex, int endIndex, List<String> tags) {
-        boolean containsConstant = false;
+        boolean isConstantSubPath = false;
         List<String> subPath = tags.subList(startIndex, endIndex + 1);
         String subPathAsString = "";
         for (int i = 0; i < subPath.size(); i++) {
@@ -57,29 +57,28 @@ public class SubPathDataListFactoryImpl implements SubPathDataListFactory {
                 subPathAsString += subPath.get(i);
             }
             if (tags.size() > 2 && i > 0 && i < tags.size() - 1) {
-                containsConstant = constantTagsCache.contains(subPath.get(i));
+                isConstantSubPath = constantTagsCache.contains(subPath.get(i));
             }
         }
         if (tags.size() == 2) {
-            containsConstant = subPathOfLength2ContainsConstant(tags);
+            isConstantSubPath = isSubPathOfLength2ConstantSubPath(tags);
         }
-        return new SubPathTemporaryObject(subPathAsString, containsConstant);
+        return new SubPathTemporaryObject(subPathAsString, isConstantSubPath);
     }
 
-    private boolean subPathOfLength2ContainsConstant(List<String> tags) {
+    private boolean isSubPathOfLength2ConstantSubPath(List<String> tags) {
         return constantTagsCache.contains(tags.get(0)) && constantTagsCache.contains(tags.get(1));
     }
-
 
     private class SubPathTemporaryObject {
 
         private String subPath;
 
-        private boolean containsConstant;
+        private boolean isConstantSubPath;
 
-        public SubPathTemporaryObject(String subPath, boolean containsConstant) {
+        public SubPathTemporaryObject(String subPath, boolean isConstantSubPath) {
             this.subPath = subPath;
-            this.containsConstant = containsConstant;
+            this.isConstantSubPath = isConstantSubPath;
         }
     }
 }

@@ -81,7 +81,7 @@ public class TrainingDataDatabaseAccessorImpl implements TrainingDataDatabaseAcc
             LOGGER.info("update jos_nlp_subpaths -> subPath: " + subPathData.getSubPath() + " -> frequency: " + frequencyIdPair.frequency);
             jdbcTemplate.update(sql, new Object[]{frequencyIdPair.frequency, frequencyIdPair.id});
         } else {
-            sql = "insert into jos_nlp_subpaths (start_tag, end_tag, subpath, length, frequency, contains_constant) values (?,?,?,?,?,?)";
+            sql = "insert into jos_nlp_subpaths (start_tag, end_tag, subpath, length, frequency, is_constant_subpath) values (?,?,?,?,?,?)";
             LOGGER.info("insert jos_nlp_subpaths -> subPath: " + subPathData.getSubPath() + " -> frequency: " + frequencyIdPair.frequency
                     + " -> startTag: " + subPathData.getStartTag() + " -> endTag: " + subPathData.getEndTag() + " -> length: " + subPathData.getLength());
             jdbcTemplate.update(sql, new Object[]{subPathData.getStartTag(), subPathData.getEndTag(),
@@ -134,8 +134,8 @@ public class TrainingDataDatabaseAccessorImpl implements TrainingDataDatabaseAcc
             jdbcTemplate.update(sql, new Object[]{frequencyIdPair.frequency, encodedPath});
         } else {
             LOGGER.info("insert jos_nlp_encoded_paths -> path: " + encodedPath + " -> frequency: " + frequencyIdPair.frequency);
-            LOGGER.info("insert jos_nlp_encoded_paths -> path: " + encodedPath + " -> frequency: " + frequencyIdPair.frequency);
-            jdbcTemplate.update(sql, new Object[]{encodedPath, encodedPath.length(), frequencyIdPair.frequency});
+            sql = "insert into jos_nlp_encoded_paths (length, path, frequency) values(?,?,?)";
+            jdbcTemplate.update(sql, new Object[]{encodedPath.length(), encodedPath, frequencyIdPair.frequency});
         }
     }
 
