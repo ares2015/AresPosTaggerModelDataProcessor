@@ -1,7 +1,6 @@
 package factories;
 
 
-import com.trainingdataprocessor.cache.ConstantTagsCache;
 import com.trainingdataprocessor.data.syntax.SubPathData;
 import com.trainingdataprocessor.factories.SubPathDataListFactory;
 import com.trainingdataprocessor.factories.SubPathDataListFactoryImpl;
@@ -11,10 +10,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 public class SubPathDataListFactoryTest {
 
-    ConstantTagsCache constantTagsCache = new ConstantTagsCache();
     SubPathDataListFactory subPathDataListFactory = new SubPathDataListFactoryImpl();
 
     @Test
@@ -27,7 +27,25 @@ public class SubPathDataListFactoryTest {
         tags.add("N");
 
         List<SubPathData> subPathDataList = subPathDataListFactory.create(tags);
-        assertEquals(6, subPathDataList.size());
+        //N V
+        assertFalse(subPathDataList.get(0).isConstantSubPath());
+        assertEquals("N V", subPathDataList.get(0).getSubPath());
+        //N V DET
+        assertFalse(subPathDataList.get(1).isConstantSubPath());
+        assertEquals("N V DET", subPathDataList.get(1).getSubPath());
+        //N V DET N
+        assertTrue(subPathDataList.get(2).isConstantSubPath());
+        assertEquals("N V DET N", subPathDataList.get(2).getSubPath());
+        //V DET
+        assertFalse(subPathDataList.get(3).isConstantSubPath());
+        assertEquals("V DET", subPathDataList.get(3).getSubPath());
+        //V DET N
+        assertTrue(subPathDataList.get(4).isConstantSubPath());
+        assertEquals("V DET N", subPathDataList.get(4).getSubPath());
+        //DET N
+        assertFalse(subPathDataList.get(5).isConstantSubPath());
+        assertEquals("DET N", subPathDataList.get(5).getSubPath());
 
+        assertEquals(6, subPathDataList.size());
     }
 }

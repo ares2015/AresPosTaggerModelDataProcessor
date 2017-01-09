@@ -45,11 +45,8 @@ public final class SubPathData {
         return length;
     }
 
-    public boolean containsConstant() {
+    public boolean isConstantSubPath() {
         return isConstantSubPath;
     }
 
-    public void setConstantSubPath(boolean constantSubPath) {
-        this.isConstantSubPath = constantSubPath;
-    }
 }

@@ -47,27 +47,28 @@ public class SubPathDataListFactoryImpl implements SubPathDataListFactory {
     }
 
     private SubPathTemporaryObject getSubPathFromTagsList(int startIndex, int endIndex, List<String> tags) {
+        StringBuilder stringBuilder = new StringBuilder();
         boolean isConstantSubPath = false;
-        List<String> subPath = tags.subList(startIndex, endIndex + 1);
-        String subPathAsString = "";
-        for (int i = 0; i < subPath.size(); i++) {
-            if (i < subPath.size() - 1) {
-                subPathAsString += subPath.get(i) + " ";
+        boolean isSubPathOfLength2 = endIndex - startIndex == 1;
+        if (isSubPathOfLength2) {
+            isConstantSubPath = isSubPathOfLength2ConstantSubPath(tags, startIndex, endIndex);
+        }
+        for (int i = startIndex; i <= endIndex; i++) {
+            if (i < endIndex) {
+                stringBuilder.append(tags.get(i));
+                stringBuilder.append(" ");
             } else {
-                subPathAsString += subPath.get(i);
+                stringBuilder.append(tags.get(i));
             }
-            if (tags.size() > 2 && i > 0 && i < tags.size() - 1) {
-                isConstantSubPath = constantTagsCache.contains(subPath.get(i));
+            if (!isSubPathOfLength2 && i > startIndex && i < endIndex) {
+                isConstantSubPath = constantTagsCache.contains(tags.get(i));
             }
         }
-        if (tags.size() == 2) {
-            isConstantSubPath = isSubPathOfLength2ConstantSubPath(tags);
-        }
-        return new SubPathTemporaryObject(subPathAsString, isConstantSubPath);
+        return new SubPathTemporaryObject(stringBuilder.toString(), isConstantSubPath);
     }
 
-    private boolean isSubPathOfLength2ConstantSubPath(List<String> tags) {
-        return constantTagsCache.contains(tags.get(0)) && constantTagsCache.contains(tags.get(1));
+    private boolean isSubPathOfLength2ConstantSubPath(List<String> tags, int startIndex, int endIndex) {
+        return constantTagsCache.contains(tags.get(startIndex)) && constantTagsCache.contains(tags.get(endIndex));
     }
 
     private class SubPathTemporaryObject {

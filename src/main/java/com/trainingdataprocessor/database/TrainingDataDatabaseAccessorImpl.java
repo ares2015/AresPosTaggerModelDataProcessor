@@ -85,7 +85,7 @@ public class TrainingDataDatabaseAccessorImpl implements TrainingDataDatabaseAcc
             LOGGER.info("insert jos_nlp_subpaths -> subPath: " + subPathData.getSubPath() + " -> frequency: " + frequencyIdPair.frequency
                     + " -> startTag: " + subPathData.getStartTag() + " -> endTag: " + subPathData.getEndTag() + " -> length: " + subPathData.getLength());
             jdbcTemplate.update(sql, new Object[]{subPathData.getStartTag(), subPathData.getEndTag(),
-                    subPathAsString, subPathData.getLength(), frequencyIdPair.frequency, subPathData.containsConstant()});
+                    subPathAsString, subPathData.getLength(), frequencyIdPair.frequency, subPathData.isConstantSubPath()});
         }
     }
 
