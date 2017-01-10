@@ -17,7 +17,7 @@ public final class TrainingDataRow {
 
     private List<String> encodedTagsList;
 
-    private List<String> encodedSubPathsAsStringList;
+    private List<String> encodedPathsAsStringList;
 
     private List<List<String>> encodedTagsMultiList;
 
@@ -65,12 +65,12 @@ public final class TrainingDataRow {
         this.encodedTagsList = encodedTagsList;
     }
 
-    public List<String> getEncodedSubPathsAsStringList() {
-        return encodedSubPathsAsStringList;
+    public List<String> getEncodedPathsAsStringList() {
+        return encodedPathsAsStringList;
     }
 
-    public void setEncodedSubPathsAsStringList(List<String> encodedSubPathsAsStringList) {
-        this.encodedSubPathsAsStringList = encodedSubPathsAsStringList;
+    public void setEncodedPathsAsStringList(List<String> encodedPathsAsStringList) {
+        this.encodedPathsAsStringList = encodedPathsAsStringList;
     }
 
     public List<List<String>> getEncodedTagsMultiList() {

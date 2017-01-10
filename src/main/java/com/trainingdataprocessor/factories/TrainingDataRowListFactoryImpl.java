@@ -61,22 +61,19 @@ public class TrainingDataRowListFactoryImpl implements TrainingDataRowListFactor
 
                 LOGGER.info("Sentence contains " + subSentencesMultiList.size() + " subSentences.");
 
+                //TOKENS LIST, TAGS LIST
                 tokensList = removeCommasAndDots(tokensList);
                 tagsList = removeCommasAndDots(tagsList);
-
-                //TOKENS LIST, TAGS LIST
                 trainingDataRow.setTokensList(tokensList);
                 trainingDataRow.setTagsList(tagsList);
-
-                trainingDataRow.setEncodedPathAsString(tagsEncoder.encodeTagsListToEncodedPath(tagsList));
 
                 //ENCODED TAGS MULTILIST
                 List<List<String>> encodedTagsMultiList = tagsEncoder.encodeTagsMultiListToEncodedTagsMultiList(tagsMultiList);
                 trainingDataRow.setEncodedTagsMultiList(encodedTagsMultiList);
 
-                //ENCODED SUBPATHS LIST
-                List<String> encodedSubPathsList = tagsEncoder.encodeTagMultiListToEncodedPathsList(tagsMultiList);
-                trainingDataRow.setEncodedSubPathsAsStringList(encodedSubPathsList);
+                //ENCODED PATHS LIST
+                List<String> encodedPathsList = tagsEncoder.encodeTagMultiListToEncodedPathsList(tagsMultiList);
+                trainingDataRow.setEncodedPathsAsStringList(encodedPathsList);
 
                 trainingDataRowList.add(trainingDataRow);
             } else {

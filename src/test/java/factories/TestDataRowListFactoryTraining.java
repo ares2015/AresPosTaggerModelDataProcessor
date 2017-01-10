@@ -38,8 +38,11 @@ public class TestDataRowListFactoryTraining {
         String testDataRowString = "boys drink beer in pub#N V N PR N";
         testDataRowStringList.add(testDataRowString);
         List<TrainingDataRow> trainingDataRowList = trainingDataRowListFactory.create(testDataRowStringList);
+
         assertEquals(1, trainingDataRowList.size());
+
         TrainingDataRow trainingDataRow = trainingDataRowList.get(0);
+
         assertFalse(trainingDataRow.containsSubSentences());
         assertEquals(5, trainingDataRow.getTokensList().size());
         assertEquals(5, trainingDataRow.getTagsList().size());
@@ -76,8 +79,7 @@ public class TestDataRowListFactoryTraining {
         assertEquals(1, trainingDataRowList.size());
         TrainingDataRow trainingDataRow = trainingDataRowList.get(0);
 
-        assertTrue(trainingDataRow.containsSubSentences());
-        assertEquals("NNN>NVNPN", trainingDataRow.getEncodedPathAsString());
+        assertNull(trainingDataRow.getEncodedPathAsString());
 
         assertEquals(9, trainingDataRow.getTokensList().size());
         assertEquals(9, trainingDataRow.getTagsList().size());
@@ -118,12 +120,11 @@ public class TestDataRowListFactoryTraining {
         assertEquals("P", encodedTagsMultiList.get(2).get(5));
         assertEquals("N", encodedTagsMultiList.get(2).get(6));
 
-        List<String> encodedSubPathsList = trainingDataRow.getEncodedSubPathsAsStringList();
-        assertEquals(3, encodedSubPathsList.size());
-        assertEquals("N", encodedSubPathsList.get(0));
-        assertEquals("N", encodedSubPathsList.get(1));
-        assertEquals("N>NVNPN", encodedSubPathsList.get(2));
-
+        List<String> encodedPathsList = trainingDataRow.getEncodedPathsAsStringList();
+        assertEquals(3, encodedPathsList.size());
+        assertEquals("N", encodedPathsList.get(0));
+        assertEquals("N", encodedPathsList.get(1));
+        assertEquals("N>NVNPN", encodedPathsList.get(2));
 
     }
 
