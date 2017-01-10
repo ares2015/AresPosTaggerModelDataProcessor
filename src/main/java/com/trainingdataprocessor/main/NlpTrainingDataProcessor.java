@@ -67,7 +67,7 @@ public class NlpTrainingDataProcessor {
 
         ExecutorService executor = Executors.newFixedThreadPool(NUMBER_OF_THREADS);
 
-        Runnable encodedPathsProcessor = new EncodedPathsProcessorImpl(tokenizer, trainingDataDatabaseAccessor, trainingDataRowList);
+        Runnable encodedPathsProcessor = new EncodedPathsProcessorImpl(trainingDataDatabaseAccessor, trainingDataRowList);
         Runnable syntaxAnalyser = new SyntaxAnalyserImpl(trainingDataDatabaseAccessor, bigramDataListFactory, subPathDataListFactory, trainingDataRowList);
         Runnable semanticAnalyser = new SemanticAnalyserImpl(semanticAnalysisExecutor, trainingDataDatabaseAccessor, trainingDataRowList);
         Runnable tokenTagDataProcessor = new TokenTagDataProcessorImpl(trainingDataDatabaseAccessor, trainingDataRowList);
@@ -80,7 +80,7 @@ public class NlpTrainingDataProcessor {
         executor.shutdown();
 
 
-//        EncodedPathsProcessor encodedPathsProcessor = new EncodedPathsProcessorImpl(tokenizer, trainingDataDatabaseAccessor, trainingDataRowList);
+//        EncodedPathsProcessor encodedPathsProcessor = new EncodedPathsProcessorImpl(trainingDataDatabaseAccessor, trainingDataRowList);
 //        SyntaxAnalyser syntaxAnalyser = new SyntaxAnalyserImpl(trainingDataDatabaseAccessor, bigramDataListFactory, subPathDataListFactory, trainingDataRowList);
 //        SemanticAnalyser semanticAnalyser = new SemanticAnalyserImpl(semanticAnalysisExecutor, trainingDataDatabaseAccessor, trainingDataRowList);
 //        TokenTagDataProcessor tokenTagDataProcessor = new TokenTagDataProcessorImpl(trainingDataDatabaseAccessor, trainingDataRowList);
