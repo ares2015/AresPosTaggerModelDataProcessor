@@ -14,14 +14,31 @@ public class CapitalizedTokensProcessorImpl implements CapitalizedTokensProcesso
 
     @Override
     public void process(TrainingDataRow trainingDataRow) {
-        List<String> tokensList = trainingDataRow.getTokensList();
-        List<String> tagsList = trainingDataRow.getTagsList();
-        List<String> encodedTagsList = trainingDataRow.getEncodedTagsList();
+        boolean containsSubSentences = trainingDataRow.containsSubSentences();
+        if (containsSubSentences) {
+            int numberOfSubSentences = trainingDataRow.getTagsMultiList().size();
+            for (int i = 0; i < numberOfSubSentences; i++) {
+                List<String> tokensList = trainingDataRow.getTokensMultiList().get(i);
+                List<String> tagsList = trainingDataRow.getTagsMultiList().get(i);
+                List<String> encodedTagsList = trainingDataRow.getEncodedTagsMultiList().get(i);
 
-        List<String> processedTokensList = new ArrayList<>();
-        List<String> processedTagsList = new ArrayList<>();
-        List<String> processedEncodedTagsList = new ArrayList<>();
+                List<String> processedTokensList = new ArrayList<>();
+                List<String> processedTagsList = new ArrayList<>();
+                List<String> processedEncodedTagsList = new ArrayList<>();
+                runCapitalizationLogic(tokensList, tagsList, encodedTagsList, processedTokensList, processedTagsList,
+                        processedEncodedTagsList, trainingDataRow, containsSubSentences, i);
+            }
+        } else {
+            List<String> tokensList = trainingDataRow.getTokensList();
+            List<String> tagsList = trainingDataRow.getTagsList();
+            List<String> encodedTagsList = trainingDataRow.getEncodedTagsList();
 
+            List<String> processedTokensList = new ArrayList<>();
+            List<String> processedTagsList = new ArrayList<>();
+            List<String> processedEncodedTagsList = new ArrayList<>();
+            runCapitalizationLogic(tokensList, tagsList, encodedTagsList, processedTokensList, processedTagsList,
+                    processedEncodedTagsList, trainingDataRow, containsSubSentences, -1);
+        }
 
     }
 
