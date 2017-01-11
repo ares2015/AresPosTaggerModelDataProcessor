@@ -1,0 +1,2 @@
+# NlpTrainingDataProcessor
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/3e57b08c5bb64c0b8b191ff9178839c2)](https://www.codacy.com/app/ares2015/NlpTrainingDataProcessor?utm_source=github.com&utm_medium=referral&utm_content=ares2015/NlpTrainingDataProcessor&utm_campaign=badger)
