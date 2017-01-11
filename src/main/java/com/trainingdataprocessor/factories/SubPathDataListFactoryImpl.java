@@ -48,11 +48,10 @@ public class SubPathDataListFactoryImpl implements SubPathDataListFactory {
 
     private SubPathTemporaryObject getSubPathFromTagsList(int startIndex, int endIndex, List<String> tags) {
         StringBuilder stringBuilder = new StringBuilder();
+
         boolean isConstantSubPath = false;
         boolean isSubPathOfLength2 = endIndex - startIndex == 1;
-        if (isSubPathOfLength2) {
-            isConstantSubPath = isSubPathOfLength2ConstantSubPath(tags, startIndex, endIndex);
-        }
+
         for (int i = startIndex; i <= endIndex; i++) {
             if (i < endIndex) {
                 stringBuilder.append(tags.get(i));
@@ -60,10 +59,15 @@ public class SubPathDataListFactoryImpl implements SubPathDataListFactory {
             } else {
                 stringBuilder.append(tags.get(i));
             }
-            if (!isSubPathOfLength2 && i > startIndex && i < endIndex) {
+            if (!isSubPathOfLength2 && !isConstantSubPath && i > startIndex && i < endIndex) {
                 isConstantSubPath = constantTagsCache.contains(tags.get(i));
             }
         }
+
+        if (isSubPathOfLength2) {
+            isConstantSubPath = isSubPathOfLength2ConstantSubPath(tags, startIndex, endIndex);
+        }
+
         return new SubPathTemporaryObject(stringBuilder.toString(), isConstantSubPath);
     }
 
