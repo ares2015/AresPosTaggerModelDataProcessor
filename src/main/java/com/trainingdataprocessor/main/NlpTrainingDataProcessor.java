@@ -18,6 +18,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 /**
  * Created by Oliver on 11/12/2016.
@@ -72,12 +73,12 @@ public class NlpTrainingDataProcessor {
         Runnable semanticAnalyser = new SemanticAnalyserImpl(semanticAnalysisExecutor, trainingDataDatabaseAccessor, trainingDataRowList);
         Runnable tokenTagDataProcessor = new TokenTagDataProcessorImpl(trainingDataDatabaseAccessor, trainingDataRowList);
 
-        executor.execute(encodedPathsProcessor);
-        executor.execute(syntaxAnalyser);
-//        executor.execute(semanticAnalyser);
-        executor.execute(tokenTagDataProcessor);
-
-        executor.shutdown();
+//        executor.execute(encodedPathsProcessor);
+//        executor.execute(syntaxAnalyser);
+////        executor.execute(semanticAnalyser);
+//        executor.execute(tokenTagDataProcessor);
+//
+//        executor.shutdown();
 
 
 //        EncodedPathsProcessor encodedPathsProcessor = new EncodedPathsProcessorImpl(trainingDataDatabaseAccessor, trainingDataRowList);
@@ -90,21 +91,21 @@ public class NlpTrainingDataProcessor {
 //        semanticAnalyser.analyse();
 //        tokenTagDataProcessor.process();
 
-//        Future<?> encodedPathsAnalyserFuture = executor.submit(encodedPathsProcessor);
-//        Future<?> syntaxAnalyserFuture = executor.submit(syntaxAnalyser);
-//        Future<?> semanticAnalyserFuture = executor.submit(semanticAnalyser);
-//        Future<?> tokenTagDataProcessorFuture = executor.submit(tokenTagDataProcessor);
+        Future<?> encodedPathsAnalyserFuture = executor.submit(encodedPathsProcessor);
+        Future<?> syntaxAnalyserFuture = executor.submit(syntaxAnalyser);
+        Future<?> semanticAnalyserFuture = executor.submit(semanticAnalyser);
+        Future<?> tokenTagDataProcessorFuture = executor.submit(tokenTagDataProcessor);
 
-//        while (!areDataProcessed) {
-//            areDataProcessed = encodedPathsAnalyserFuture.isDone() && syntaxAnalyserFuture.isDone() &&
-//                    semanticAnalyserFuture.isDone() && tokenTagDataProcessorFuture.isDone();
-//        }
-//
-//        if (areDataProcessed) {
-//            executor.shutdown();
-//            long stopTime = System.currentTimeMillis();
-//            long elapsedTime = stopTime - startTime;
-//            System.out.println("Data processed in " + elapsedTime / 1000 + " seconds");
-//        }
+        while (!areDataProcessed) {
+            areDataProcessed = encodedPathsAnalyserFuture.isDone() && syntaxAnalyserFuture.isDone() &&
+                    semanticAnalyserFuture.isDone() && tokenTagDataProcessorFuture.isDone();
+        }
+
+        if (areDataProcessed) {
+            executor.shutdown();
+            long stopTime = System.currentTimeMillis();
+            long elapsedTime = stopTime - startTime;
+            System.out.println("Data processed in " + elapsedTime / 1000 + " seconds");
+        }
     }
 }
