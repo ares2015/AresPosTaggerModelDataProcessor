@@ -167,6 +167,12 @@ public class TrainingDataDatabaseAccessorImpl implements TrainingDataDatabaseAcc
         return Optional.empty();
     }
 
+    @Override
+    public void insertNumberOfSentences(int number) {
+        String sql = "update jos_nlp_number_of_sentences set number = ? where id = 1";
+        jdbcTemplate.update(sql, new Object[]{number});
+    }
+
     private FrequencyIdPair findTagFrequency(String tag) {
         final String sql = "select id, frequency from jos_nlp_tags where tag=?";
         List<Map<String, Object>> row = jdbcTemplate.queryForList(sql, new Object[]{tag});

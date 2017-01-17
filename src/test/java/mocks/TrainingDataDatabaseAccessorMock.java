@@ -49,4 +49,9 @@ public class TrainingDataDatabaseAccessorMock implements TrainingDataDatabaseAcc
         return null;
     }
 
+    @Override
+    public void insertNumberOfSentences(int number) {
+
+    }
+
 }

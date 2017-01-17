@@ -6,7 +6,6 @@ import com.trainingdataprocessor.factories.BigramDataListFactory;
 import com.trainingdataprocessor.factories.SubPathDataListFactory;
 import com.trainingdataprocessor.paths.EncodedPathsProcessorImpl;
 import com.trainingdataprocessor.preprocessing.TrainingDataPreprocessor;
-import com.trainingdataprocessor.semantics.analysis.SemanticAnalyserImpl;
 import com.trainingdataprocessor.semantics.analysis.SemanticAnalysisExecutor;
 import com.trainingdataprocessor.syntax.SyntaxAnalyserImpl;
 import com.trainingdataprocessor.tags.TagsProcessor;
@@ -70,42 +69,28 @@ public class NlpTrainingDataProcessor {
 
         Runnable encodedPathsProcessor = new EncodedPathsProcessorImpl(trainingDataDatabaseAccessor, trainingDataRowList);
         Runnable syntaxAnalyser = new SyntaxAnalyserImpl(trainingDataDatabaseAccessor, bigramDataListFactory, subPathDataListFactory, trainingDataRowList);
-        Runnable semanticAnalyser = new SemanticAnalyserImpl(semanticAnalysisExecutor, trainingDataDatabaseAccessor, trainingDataRowList);
+//        Runnable semanticAnalyser = new SemanticAnalyserImpl(semanticAnalysisExecutor, trainingDataDatabaseAccessor, trainingDataRowList);
         Runnable tokenTagDataProcessor = new TokenTagDataProcessorImpl(trainingDataDatabaseAccessor, trainingDataRowList);
 
-//        executor.execute(encodedPathsProcessor);
-//        executor.execute(syntaxAnalyser);
-////        executor.execute(semanticAnalyser);
-//        executor.execute(tokenTagDataProcessor);
-//
-//        executor.shutdown();
-
-
-//        EncodedPathsProcessor encodedPathsProcessor = new EncodedPathsProcessorImpl(trainingDataDatabaseAccessor, trainingDataRowList);
-//        SyntaxAnalyser syntaxAnalyser = new SyntaxAnalyserImpl(trainingDataDatabaseAccessor, bigramDataListFactory, subPathDataListFactory, trainingDataRowList);
-//        SemanticAnalyser semanticAnalyser = new SemanticAnalyserImpl(semanticAnalysisExecutor, trainingDataDatabaseAccessor, trainingDataRowList);
-//        TokenTagDataProcessor tokenTagDataProcessor = new TokenTagDataProcessorImpl(trainingDataDatabaseAccessor, trainingDataRowList);
-//
-//        encodedPathsProcessor.process();
-//        syntaxAnalyser.analyse();
-//        semanticAnalyser.analyse();
-//        tokenTagDataProcessor.process();
 
         Future<?> encodedPathsAnalyserFuture = executor.submit(encodedPathsProcessor);
         Future<?> syntaxAnalyserFuture = executor.submit(syntaxAnalyser);
-        Future<?> semanticAnalyserFuture = executor.submit(semanticAnalyser);
+//        Future<?> semanticAnalyserFuture = executor.submit(semanticAnalyser);
         Future<?> tokenTagDataProcessorFuture = executor.submit(tokenTagDataProcessor);
 
         while (!areDataProcessed) {
             areDataProcessed = encodedPathsAnalyserFuture.isDone() && syntaxAnalyserFuture.isDone() &&
-                    semanticAnalyserFuture.isDone() && tokenTagDataProcessorFuture.isDone();
+//                    semanticAnalyserFuture.isDone() &&
+                    tokenTagDataProcessorFuture.isDone();
         }
 
         if (areDataProcessed) {
             executor.shutdown();
             long stopTime = System.currentTimeMillis();
             long elapsedTime = stopTime - startTime;
-            System.out.println("Data processed in " + elapsedTime / 1000 + " seconds");
+            trainingDataDatabaseAccessor.insertNumberOfSentences(trainingDataRowList.size());
+            System.out.println(trainingDataRowList.size() + " sentences processed in " + elapsedTime / 1000 + " seconds / in  "
+                    + (elapsedTime / 1000) / 60 + " minutes");
         }
     }
 }

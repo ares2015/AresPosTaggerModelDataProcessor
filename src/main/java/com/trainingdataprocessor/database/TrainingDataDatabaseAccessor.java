@@ -27,4 +27,6 @@ public interface TrainingDataDatabaseAccessor {
 
     Optional<TokenDatabaseData> getTokenDatabaseData(String token);
 
+    void insertNumberOfSentences(int number);
+
 }
