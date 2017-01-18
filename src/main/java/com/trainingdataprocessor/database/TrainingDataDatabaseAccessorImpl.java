@@ -168,7 +168,13 @@ public class TrainingDataDatabaseAccessorImpl implements TrainingDataDatabaseAcc
     }
 
     @Override
-    public void insertNumberOfSentences(int number) {
+    public int getNumberOfSentences() {
+        String sql = "select number from jos_nlp_number_of_sentences where id = 1";
+        return jdbcTemplate.queryForInt(sql);
+    }
+
+    @Override
+    public void updateNumberOfSentences(int number) {
         String sql = "update jos_nlp_number_of_sentences set number = ? where id = 1";
         jdbcTemplate.update(sql, new Object[]{number});
     }

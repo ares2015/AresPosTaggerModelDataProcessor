@@ -88,7 +88,9 @@ public class NlpTrainingDataProcessor {
             executor.shutdown();
             long stopTime = System.currentTimeMillis();
             long elapsedTime = stopTime - startTime;
-            trainingDataDatabaseAccessor.insertNumberOfSentences(trainingDataRowList.size());
+            int numberOfSentences = trainingDataDatabaseAccessor.getNumberOfSentences();
+            numberOfSentences = numberOfSentences + trainingDataRowList.size();
+            trainingDataDatabaseAccessor.updateNumberOfSentences(numberOfSentences);
             System.out.println(trainingDataRowList.size() + " sentences processed in " + elapsedTime / 1000 + " seconds / in  "
                     + (elapsedTime / 1000) / 60 + " minutes");
         }
