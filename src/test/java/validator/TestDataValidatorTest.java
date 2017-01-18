@@ -24,6 +24,9 @@ public class TestDataValidatorTest {
         String testDataRow = "boys drink beer at pub#N V N PR N";
         int testDataRowLine = 2;
         testDataValidator.validate(testDataRow, testDataRowLine);
+
+        testDataRow = "In fact, it 's very small#CJ N, PRP V AV AJ";
+        testDataValidator.validate(testDataRow, testDataRowLine);
     }
 
     @Test(expected=IllegalStateException.class)
