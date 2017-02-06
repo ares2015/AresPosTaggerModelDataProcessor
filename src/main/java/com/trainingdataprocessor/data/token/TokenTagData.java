@@ -7,6 +7,8 @@ public class TokenTagData {
 
     private String token;
 
+    private String tag;
+
     private boolean tokenExistsInDB;
 
     private boolean isNoun;
@@ -43,6 +45,18 @@ public class TokenTagData {
 
     public void setToken(String token) {
         this.token = token;
+    }
+
+    public String getTag() {
+        return tag;
+    }
+
+    public void setTag(String tag) {
+        this.tag = tag;
+    }
+
+    public boolean isTokenExistsInDB() {
+        return tokenExistsInDB;
     }
 
     public boolean tokenExistsInDB() {
