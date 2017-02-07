@@ -1,7 +1,9 @@
 package com.trainingdataprocessor.writer;
 
 import com.trainingdataprocessor.data.syntax.BigramData;
+import com.trainingdataprocessor.data.syntax.SubPathData;
 
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -13,6 +15,10 @@ public interface TrainingDataWriter {
 
     void writeTokenTags(List<String> tokensList, List<String> tagsList);
 
-    void writeBigram(List<BigramData> bigramDataList);
+    void writeBigrams(List<BigramData> bigramDataList);
+
+    void writeSubPaths(List<SubPathData> subPathDataList);
+
+    void writeEncodedPath(List<String> encodedPathsList) throws IOException;
 
 }

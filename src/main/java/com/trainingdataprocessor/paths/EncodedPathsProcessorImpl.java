@@ -1,8 +1,10 @@
 package com.trainingdataprocessor.paths;
 
 import com.trainingdataprocessor.data.preprocessing.TrainingDataRow;
-import com.trainingdataprocessor.database.TrainingDataDatabaseAccessor;
+import com.trainingdataprocessor.writer.TrainingDataWriter;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -10,32 +12,38 @@ import java.util.List;
  */
 public class EncodedPathsProcessorImpl implements EncodedPathsProcessor, Runnable {
 
-    private TrainingDataDatabaseAccessor trainingDataDatabaseAccessor;
+    private TrainingDataWriter trainingDataWriter;
 
     private List<TrainingDataRow> trainingDataRowList;
 
-    public EncodedPathsProcessorImpl(TrainingDataDatabaseAccessor trainingDataDatabaseAccessor,
+    public EncodedPathsProcessorImpl(TrainingDataWriter trainingDataWriter,
                                      List<TrainingDataRow> trainingDataRowList) {
-        this.trainingDataDatabaseAccessor = trainingDataDatabaseAccessor;
+        this.trainingDataWriter = trainingDataWriter;
         this.trainingDataRowList = trainingDataRowList;
     }
 
     @Override
     public void run() {
-        process();
+        try {
+            process();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
-    public void process() {
+    public void process() throws IOException {
+        List<String> encodedPathsList = new ArrayList<>();
         for (TrainingDataRow trainingDataRow : trainingDataRowList) {
             if (trainingDataRow.containsSubSentences()) {
                 for (String encodedPathAsString : trainingDataRow.getEncodedPathsAsStringList()) {
-                    trainingDataDatabaseAccessor.insertEncodedPath(encodedPathAsString);
+                    encodedPathsList.add(encodedPathAsString);
                 }
             } else {
-                trainingDataDatabaseAccessor.insertEncodedPath(trainingDataRow.getEncodedPathAsString());
+                encodedPathsList.add(trainingDataRow.getEncodedPathAsString());
             }
         }
+        trainingDataWriter.writeEncodedPath(encodedPathsList);
     }
 
 }

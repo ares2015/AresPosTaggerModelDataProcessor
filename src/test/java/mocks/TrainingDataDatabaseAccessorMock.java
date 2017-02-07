@@ -50,6 +50,11 @@ public class TrainingDataDatabaseAccessorMock implements TrainingDataDatabaseAcc
     }
 
     @Override
+    public int getNumberOfSentences() {
+        return 0;
+    }
+
+    @Override
     public void updateNumberOfSentences(int number) {
 
     }

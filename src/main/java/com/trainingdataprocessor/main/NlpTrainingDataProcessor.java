@@ -11,6 +11,7 @@ import com.trainingdataprocessor.syntax.SyntaxAnalyserImpl;
 import com.trainingdataprocessor.tags.TagsProcessor;
 import com.trainingdataprocessor.tokens.TokenTagDataProcessorImpl;
 import com.trainingdataprocessor.tokens.Tokenizer;
+import com.trainingdataprocessor.writer.TrainingDataWriter;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -26,6 +27,8 @@ public class NlpTrainingDataProcessor {
 
     private TrainingDataPreprocessor trainingDataPreprocessor;
 
+    private TrainingDataWriter trainingDataWriter;
+
     private TrainingDataDatabaseAccessor trainingDataDatabaseAccessor;
 
     private Tokenizer tokenizer;
@@ -40,9 +43,12 @@ public class NlpTrainingDataProcessor {
 
     private static int NUMBER_OF_THREADS = 4;
 
-    public NlpTrainingDataProcessor(TrainingDataPreprocessor trainingDataPreprocessor, TrainingDataDatabaseAccessor trainingDataDatabaseAccessor, Tokenizer tokenizer, TagsProcessor tagsProcessor,
-                                    BigramDataListFactory bigramDataListFactory, SubPathDataListFactory subPathDataListFactory, SemanticAnalysisExecutor semanticAnalysisExecutor) {
+    public NlpTrainingDataProcessor(TrainingDataPreprocessor trainingDataPreprocessor, TrainingDataWriter trainingDataWriter,
+                                    TrainingDataDatabaseAccessor trainingDataDatabaseAccessor, Tokenizer tokenizer, TagsProcessor tagsProcessor,
+                                    BigramDataListFactory bigramDataListFactory, SubPathDataListFactory subPathDataListFactory,
+                                    SemanticAnalysisExecutor semanticAnalysisExecutor) {
         this.trainingDataPreprocessor = trainingDataPreprocessor;
+        this.trainingDataWriter = trainingDataWriter;
         this.trainingDataDatabaseAccessor = trainingDataDatabaseAccessor;
         this.tokenizer = tokenizer;
         this.tagsProcessor = tagsProcessor;
@@ -67,7 +73,7 @@ public class NlpTrainingDataProcessor {
 
         ExecutorService executor = Executors.newFixedThreadPool(NUMBER_OF_THREADS);
 
-        Runnable encodedPathsProcessor = new EncodedPathsProcessorImpl(trainingDataDatabaseAccessor, trainingDataRowList);
+        Runnable encodedPathsProcessor = new EncodedPathsProcessorImpl(trainingDataWriter, trainingDataRowList);
         Runnable syntaxAnalyser = new SyntaxAnalyserImpl(trainingDataDatabaseAccessor, bigramDataListFactory, subPathDataListFactory, trainingDataRowList);
 //        Runnable semanticAnalyser = new SemanticAnalyserImpl(semanticAnalysisExecutor, trainingDataDatabaseAccessor, trainingDataRowList);
         Runnable tokenTagDataProcessor = new TokenTagDataProcessorImpl(trainingDataDatabaseAccessor, trainingDataRowList);

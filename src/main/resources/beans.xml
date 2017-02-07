@@ -20,6 +20,8 @@
         <constructor-arg ref="jdbcTemplate"/>
     </bean>
 
+    <bean id="trainingDataWriter" class="com.trainingdataprocessor.writer.TrainingDataWriterImpl"/>
+
     <bean id="tagsProcessor" class="com.trainingdataprocessor.tags.TagsProcessorImpl">
         <constructor-arg ref="trainingDataDatabaseAccessor"/>
     </bean>
@@ -121,6 +123,7 @@
     <bean id="nlpTrainingDataProcessor"
           class="com.trainingdataprocessor.main.NlpTrainingDataProcessor">
         <constructor-arg ref="trainingDataPreprocessor"/>
+        <constructor-arg ref="trainingDataWriter"/>
         <constructor-arg ref="trainingDataDatabaseAccessor"/>
         <constructor-arg ref="tokenizer"/>
         <constructor-arg ref="tagsProcessor"/>
