@@ -1,6 +1,6 @@
 package com.trainingdataprocessor.reader;
 
-import com.trainingdataprocessor.validator.TestDataValidator;
+import com.trainingdataprocessor.validator.TrainingDataValidator;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -13,19 +13,19 @@ import java.util.logging.Logger;
 /**
  * Created by Oliver on 8/5/2016.
  */
-public class TestDataFileReaderImpl implements TestDataReader {
+public class TrainingDataFileReaderImpl implements TrainingDataReader {
 
-    private final static Logger LOGGER = Logger.getLogger(TestDataFileReaderImpl.class.getName());
+    private final static Logger LOGGER = Logger.getLogger(TrainingDataFileReaderImpl.class.getName());
 
-    private TestDataValidator testDataValidator;
+    private TrainingDataValidator trainingDataValidator;
 
-    public TestDataFileReaderImpl(TestDataValidator testDataValidator) {
-        this.testDataValidator = testDataValidator;
+    public TrainingDataFileReaderImpl(TrainingDataValidator trainingDataValidator) {
+        this.trainingDataValidator = trainingDataValidator;
     }
 
     @Override
     public List<String> read() {
-        LOGGER.info("ENTERING read method of TestDataFileReaderImpl... ");
+        LOGGER.info("ENTERING read method of TrainingDataFileReaderImpl... ");
         LOGGER.info("*********************************************************************");
         List<String> testDataRowList = new ArrayList<>();
         BufferedReader br = null;
@@ -40,7 +40,7 @@ public class TestDataFileReaderImpl implements TestDataReader {
             while (testDataRow != null) {
                 lineNumber++;
                 if (!"".equals(testDataRow)) {
-                    testDataValidator.validate(testDataRow, lineNumber);
+                    trainingDataValidator.validate(testDataRow, lineNumber);
                     testDataRowList.add(testDataRow);
                 }
                 testDataRow = br.readLine();
@@ -54,7 +54,7 @@ public class TestDataFileReaderImpl implements TestDataReader {
                 e.printStackTrace();
             }
         }
-        LOGGER.info("LEAVING read method of TestDataFileReaderImpl with  " + testDataRowList.size() + " lines read.");
+        LOGGER.info("LEAVING read method of TrainingDataFileReaderImpl with  " + testDataRowList.size() + " lines read.");
         LOGGER.info("*********************************************************************");
         return testDataRowList;
     }

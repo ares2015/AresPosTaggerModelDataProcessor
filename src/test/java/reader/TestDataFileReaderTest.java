@@ -1,13 +1,13 @@
 package reader;
 
-import com.trainingdataprocessor.reader.TestDataFileReaderImpl;
-import com.trainingdataprocessor.reader.TestDataReader;
+import com.trainingdataprocessor.reader.TrainingDataFileReaderImpl;
+import com.trainingdataprocessor.reader.TrainingDataReader;
 import com.trainingdataprocessor.tokens.Tokenizer;
 import com.trainingdataprocessor.tokens.TokenizerImpl;
 import com.trainingdataprocessor.validator.ListComparator;
 import com.trainingdataprocessor.validator.ListComparatorImpl;
-import com.trainingdataprocessor.validator.TestDataValidator;
-import com.trainingdataprocessor.validator.TestDataValidatorImpl;
+import com.trainingdataprocessor.validator.TrainingDataValidator;
+import com.trainingdataprocessor.validator.TrainingDataValidatorImpl;
 import org.junit.Test;
 
 import java.util.List;
@@ -21,13 +21,13 @@ public class TestDataFileReaderTest {
 
     private Tokenizer tokenizer = new TokenizerImpl();
     private ListComparator listComparator = new ListComparatorImpl();
-    private TestDataValidator testDataValidator = new TestDataValidatorImpl(tokenizer, listComparator);
-    private TestDataReader testDataReader = new TestDataFileReaderImpl(testDataValidator);
+    private TrainingDataValidator trainingDataValidator = new TrainingDataValidatorImpl(tokenizer, listComparator);
+    private TrainingDataReader trainingDataReader = new TrainingDataFileReaderImpl(trainingDataValidator);
 
 
     @Test
     public void testRead(){
-        List<String> testDataRowList = testDataReader.read();
+        List<String> testDataRowList = trainingDataReader.read();
         assertTrue(testDataRowList.size() > 0);
     }
 }

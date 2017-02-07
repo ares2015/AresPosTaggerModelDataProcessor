@@ -1,7 +1,7 @@
 package factories;
 
-import com.trainingdataprocessor.factories.MultiListFactory;
-import com.trainingdataprocessor.factories.MultiListFactoryImpl;
+import com.trainingdataprocessor.factories.multilist.MultiListFactory;
+import com.trainingdataprocessor.factories.multilist.MultiListFactoryImpl;
 import org.junit.Test;
 
 import java.util.ArrayList;

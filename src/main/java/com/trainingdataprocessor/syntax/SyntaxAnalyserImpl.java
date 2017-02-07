@@ -3,9 +3,10 @@ package com.trainingdataprocessor.syntax;
 import com.trainingdataprocessor.data.preprocessing.TrainingDataRow;
 import com.trainingdataprocessor.data.syntax.BigramData;
 import com.trainingdataprocessor.data.syntax.SubPathData;
-import com.trainingdataprocessor.database.TrainingDataDatabaseAccessor;
-import com.trainingdataprocessor.factories.BigramDataListFactory;
-import com.trainingdataprocessor.factories.SubPathDataListFactory;
+import com.trainingdataprocessor.factories.bigram.BigramDataListFactory;
+import com.trainingdataprocessor.factories.subpath.SubPathDataListFactory;
+import com.trainingdataprocessor.writer.bigrams.BigramsWriter;
+import com.trainingdataprocessor.writer.subpaths.SubPathsWriter;
 
 import java.util.List;
 
@@ -14,7 +15,9 @@ import java.util.List;
  */
 public class SyntaxAnalyserImpl implements SyntaxAnalyser, Runnable {
 
-    private TrainingDataDatabaseAccessor trainingDataDatabaseAccessor;
+    private BigramsWriter bigramsWriter;
+
+    private SubPathsWriter subPathsWriter;
 
     private BigramDataListFactory bigramDataListFactory;
 
@@ -22,9 +25,11 @@ public class SyntaxAnalyserImpl implements SyntaxAnalyser, Runnable {
 
     private List<TrainingDataRow> trainingDataRowList;
 
-    public SyntaxAnalyserImpl(TrainingDataDatabaseAccessor trainingDataDatabaseAccessor, BigramDataListFactory bigramDataListFactory,
-                              SubPathDataListFactory subPathDataListFactory, List<TrainingDataRow> trainingDataRowList) {
-        this.trainingDataDatabaseAccessor = trainingDataDatabaseAccessor;
+    public SyntaxAnalyserImpl(BigramsWriter bigramsWriter, SubPathsWriter subPathsWriter,
+                              BigramDataListFactory bigramDataListFactory, SubPathDataListFactory subPathDataListFactory,
+                              List<TrainingDataRow> trainingDataRowList) {
+        this.bigramsWriter = bigramsWriter;
+        this.subPathsWriter = subPathsWriter;
         this.bigramDataListFactory = bigramDataListFactory;
         this.subPathDataListFactory = subPathDataListFactory;
         this.trainingDataRowList = trainingDataRowList;
@@ -53,21 +58,8 @@ public class SyntaxAnalyserImpl implements SyntaxAnalyser, Runnable {
     private void analyseSentence(List<String> tagsList) {
         List<BigramData> bigramDataList = bigramDataListFactory.create(tagsList);
         List<SubPathData> subPathDataList = subPathDataListFactory.create(tagsList);
-        insertBigramDataList(bigramDataList);
-        insertSubPathDataList(subPathDataList);
-    }
-
-
-    private void insertBigramDataList(List<BigramData> bigramDataList) {
-        for (BigramData bigramData : bigramDataList) {
-            trainingDataDatabaseAccessor.insertBigramData(bigramData);
-        }
-    }
-
-    private void insertSubPathDataList(List<SubPathData> subPathDataList) {
-        for (SubPathData subPathData : subPathDataList) {
-            trainingDataDatabaseAccessor.insertSubPathData(subPathData);
-        }
+        bigramsWriter.write(bigramDataList);
+        subPathsWriter.write(subPathDataList);
     }
 
 }

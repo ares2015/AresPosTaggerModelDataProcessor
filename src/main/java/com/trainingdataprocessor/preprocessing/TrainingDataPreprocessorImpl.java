@@ -1,8 +1,8 @@
 package com.trainingdataprocessor.preprocessing;
 
 import com.trainingdataprocessor.data.preprocessing.TrainingDataRow;
-import com.trainingdataprocessor.factories.TrainingDataRowListFactory;
-import com.trainingdataprocessor.reader.TestDataReader;
+import com.trainingdataprocessor.factories.row.TrainingDataRowListFactory;
+import com.trainingdataprocessor.reader.TrainingDataReader;
 
 import java.util.List;
 
@@ -11,22 +11,22 @@ import java.util.List;
  */
 public class TrainingDataPreprocessorImpl implements TrainingDataPreprocessor {
 
-    private TestDataReader testDataReader;
+    private TrainingDataReader trainingDataReader;
 
     private TrainingDataRowListFactory trainingDataRowListFactory;
 
     private CapitalizedTokensProcessor capitalizedTokensProcessor;
 
-    public TrainingDataPreprocessorImpl(TestDataReader testDataReader, TrainingDataRowListFactory trainingDataRowListFactory,
+    public TrainingDataPreprocessorImpl(TrainingDataReader trainingDataReader, TrainingDataRowListFactory trainingDataRowListFactory,
                                         CapitalizedTokensProcessor capitalizedTokensProcessor) {
-        this.testDataReader = testDataReader;
+        this.trainingDataReader = trainingDataReader;
         this.trainingDataRowListFactory = trainingDataRowListFactory;
         this.capitalizedTokensProcessor = capitalizedTokensProcessor;
     }
 
     @Override
     public List<TrainingDataRow> preprocess() {
-        List<String> testDataRowStringList = testDataReader.read();
+        List<String> testDataRowStringList = trainingDataReader.read();
         List<TrainingDataRow> trainingDataRows = trainingDataRowListFactory.create(testDataRowStringList);
         for (TrainingDataRow trainingDataRow : trainingDataRows) {
             capitalizedTokensProcessor.process(trainingDataRow);

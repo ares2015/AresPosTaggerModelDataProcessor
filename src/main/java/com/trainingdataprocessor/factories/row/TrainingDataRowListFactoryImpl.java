@@ -1,7 +1,8 @@
-package com.trainingdataprocessor.factories;
+package com.trainingdataprocessor.factories.row;
 
 import com.trainingdataprocessor.data.preprocessing.TrainingDataRow;
 import com.trainingdataprocessor.encoding.TagsEncoder;
+import com.trainingdataprocessor.factories.multilist.MultiListFactory;
 import com.trainingdataprocessor.tokens.Tokenizer;
 
 import java.util.ArrayList;

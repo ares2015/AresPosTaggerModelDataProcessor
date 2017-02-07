@@ -20,11 +20,11 @@
         <constructor-arg ref="jdbcTemplate"/>
     </bean>
 
-    <bean id="trainingDataWriter" class="com.trainingdataprocessor.writer.TrainingDataWriterImpl"/>
+    <bean id="tagsWriter" class="com.trainingdataprocessor.writer.tags.TagsWriterImpl"/>
 
-    <bean id="tagsProcessor" class="com.trainingdataprocessor.tags.TagsProcessorImpl">
-        <constructor-arg ref="trainingDataDatabaseAccessor"/>
-    </bean>
+    <bean id="bigramsWriter" class="com.trainingdataprocessor.writer.bigrams.BigramsWriterImpl"/>
+
+    <bean id="subPathsWriter" class="com.trainingdataprocessor.writer.subpaths.SubPathsWriterImpl"/>
 
     <bean id="tokenizer" class="com.trainingdataprocessor.tokens.TokenizerImpl"/>
 
@@ -34,34 +34,34 @@
 
     <bean id="regexPatternSearcher" class="com.trainingdataprocessor.regex.RegexPatternSearcherImpl"/>
 
-    <bean id="bigramDataListFactory" class="com.trainingdataprocessor.factories.BigramDataListFactoryImpl"/>
+    <bean id="bigramDataListFactory" class="com.trainingdataprocessor.factories.bigram.BigramDataListFactoryImpl"/>
 
-    <bean id="multiListFactory" class="com.trainingdataprocessor.factories.MultiListFactoryImpl"/>
+    <bean id="multiListFactory" class="com.trainingdataprocessor.factories.multilist.MultiListFactoryImpl"/>
 
     <bean id="subPathDataListFactory"
-          class="com.trainingdataprocessor.factories.SubPathDataListFactoryImpl"/>
+          class="com.trainingdataprocessor.factories.subpath.SubPathDataListFactoryImpl"/>
 
     <bean id="trainingDataRowListFactory"
-          class="com.trainingdataprocessor.factories.TrainingDataRowListFactoryImpl">
+          class="com.trainingdataprocessor.factories.row.TrainingDataRowListFactoryImpl">
         <constructor-arg ref="tokenizer"/>
         <constructor-arg ref="tagsEncoder"/>
         <constructor-arg ref="multiListFactory"/>
     </bean>
 
-    <bean id="testDataValidator" class="com.trainingdataprocessor.validator.TestDataValidatorImpl">
+    <bean id="trainingDataValidator" class="com.trainingdataprocessor.validator.TrainingDataValidatorImpl">
         <constructor-arg ref="tokenizer"/>
         <constructor-arg ref="listComparator"/>
     </bean>
 
-    <bean id="testDataReader" class="com.trainingdataprocessor.reader.TestDataFileReaderImpl">
-        <constructor-arg ref="testDataValidator"/>
+    <bean id="trainingDataReader" class="com.trainingdataprocessor.reader.TrainingDataFileReaderImpl">
+        <constructor-arg ref="trainingDataValidator"/>
     </bean>
 
     <bean id="capitalizedTokensProcessor"
           class="com.trainingdataprocessor.preprocessing.CapitalizedTokensProcessorImpl"/>
 
     <bean id="trainingDataPreprocessor" class="com.trainingdataprocessor.preprocessing.TrainingDataPreprocessorImpl">
-        <constructor-arg ref="testDataReader"/>
+        <constructor-arg ref="trainingDataReader"/>
         <constructor-arg ref="trainingDataRowListFactory"/>
         <constructor-arg ref="capitalizedTokensProcessor"/>
     </bean>
@@ -123,14 +123,14 @@
     <bean id="nlpTrainingDataProcessor"
           class="com.trainingdataprocessor.main.NlpTrainingDataProcessor">
         <constructor-arg ref="trainingDataPreprocessor"/>
-        <constructor-arg ref="trainingDataWriter"/>
+        <constructor-arg ref="tagsWriter"/>
+        <constructor-arg ref="bigramsWriter"/>
+        <constructor-arg ref="subPathsWriter"/>
         <constructor-arg ref="trainingDataDatabaseAccessor"/>
         <constructor-arg ref="tokenizer"/>
-        <constructor-arg ref="tagsProcessor"/>
         <constructor-arg ref="bigramDataListFactory"/>
         <constructor-arg ref="subPathDataListFactory"/>
         <constructor-arg ref="semanticAnalysisExecutor"/>
-
     </bean>
 
 </beans>

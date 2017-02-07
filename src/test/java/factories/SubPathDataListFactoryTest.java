@@ -2,16 +2,14 @@ package factories;
 
 
 import com.trainingdataprocessor.data.syntax.SubPathData;
-import com.trainingdataprocessor.factories.SubPathDataListFactory;
-import com.trainingdataprocessor.factories.SubPathDataListFactoryImpl;
+import com.trainingdataprocessor.factories.subpath.SubPathDataListFactory;
+import com.trainingdataprocessor.factories.subpath.SubPathDataListFactoryImpl;
 import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 public class SubPathDataListFactoryTest {
 

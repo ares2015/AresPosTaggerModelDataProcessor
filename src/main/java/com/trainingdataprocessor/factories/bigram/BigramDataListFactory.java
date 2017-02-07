@@ -1,4 +1,4 @@
-package com.trainingdataprocessor.factories;
+package com.trainingdataprocessor.factories.bigram;
 
 import com.trainingdataprocessor.data.syntax.BigramData;
 

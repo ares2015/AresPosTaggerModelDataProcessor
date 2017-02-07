@@ -1,8 +1,8 @@
 package factories;
 
 import com.trainingdataprocessor.data.syntax.BigramData;
-import com.trainingdataprocessor.factories.BigramDataListFactory;
-import com.trainingdataprocessor.factories.BigramDataListFactoryImpl;
+import com.trainingdataprocessor.factories.bigram.BigramDataListFactory;
+import com.trainingdataprocessor.factories.bigram.BigramDataListFactoryImpl;
 import com.trainingdataprocessor.tags.EncodedTags;
 import org.junit.Test;
 

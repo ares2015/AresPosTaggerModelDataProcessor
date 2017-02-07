@@ -1,4 +1,4 @@
-package com.trainingdataprocessor.factories;
+package com.trainingdataprocessor.factories.subpath;
 
 import com.trainingdataprocessor.data.syntax.SubPathData;
 

@@ -1,4 +1,4 @@
-package com.trainingdataprocessor.factories;
+package com.trainingdataprocessor.factories.multilist;
 
 import java.util.List;
 

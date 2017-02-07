@@ -2,10 +2,10 @@ package syntax;
 
 import com.trainingdataprocessor.data.preprocessing.TrainingDataRow;
 import com.trainingdataprocessor.database.TrainingDataDatabaseAccessor;
-import com.trainingdataprocessor.factories.BigramDataListFactory;
-import com.trainingdataprocessor.factories.BigramDataListFactoryImpl;
-import com.trainingdataprocessor.factories.SubPathDataListFactory;
-import com.trainingdataprocessor.factories.SubPathDataListFactoryImpl;
+import com.trainingdataprocessor.factories.bigram.BigramDataListFactory;
+import com.trainingdataprocessor.factories.bigram.BigramDataListFactoryImpl;
+import com.trainingdataprocessor.factories.subpath.SubPathDataListFactory;
+import com.trainingdataprocessor.factories.subpath.SubPathDataListFactoryImpl;
 import com.trainingdataprocessor.tags.Tags;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;

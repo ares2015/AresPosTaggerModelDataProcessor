@@ -2,16 +2,17 @@ package com.trainingdataprocessor.main;
 
 import com.trainingdataprocessor.data.preprocessing.TrainingDataRow;
 import com.trainingdataprocessor.database.TrainingDataDatabaseAccessor;
-import com.trainingdataprocessor.factories.BigramDataListFactory;
-import com.trainingdataprocessor.factories.SubPathDataListFactory;
-import com.trainingdataprocessor.paths.EncodedPathsProcessorImpl;
+import com.trainingdataprocessor.factories.bigram.BigramDataListFactory;
+import com.trainingdataprocessor.factories.subpath.SubPathDataListFactory;
 import com.trainingdataprocessor.preprocessing.TrainingDataPreprocessor;
 import com.trainingdataprocessor.semantics.analysis.SemanticAnalysisExecutor;
 import com.trainingdataprocessor.syntax.SyntaxAnalyserImpl;
-import com.trainingdataprocessor.tags.TagsProcessor;
-import com.trainingdataprocessor.tokens.TokenTagDataProcessorImpl;
 import com.trainingdataprocessor.tokens.Tokenizer;
-import com.trainingdataprocessor.writer.TrainingDataWriter;
+import com.trainingdataprocessor.writer.bigrams.BigramsWriter;
+import com.trainingdataprocessor.writer.paths.EncodedPathsWriterImpl;
+import com.trainingdataprocessor.writer.subpaths.SubPathsWriter;
+import com.trainingdataprocessor.writer.tags.TagsWriter;
+import com.trainingdataprocessor.writer.tokens.TokenTagsWriterImpl;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -27,13 +28,15 @@ public class NlpTrainingDataProcessor {
 
     private TrainingDataPreprocessor trainingDataPreprocessor;
 
-    private TrainingDataWriter trainingDataWriter;
+    private TagsWriter tagsWriter;
+
+    private BigramsWriter bigramsWriter;
+
+    private SubPathsWriter subPathsWriter;
 
     private TrainingDataDatabaseAccessor trainingDataDatabaseAccessor;
 
     private Tokenizer tokenizer;
-
-    private TagsProcessor tagsProcessor;
 
     private BigramDataListFactory bigramDataListFactory;
 
@@ -43,15 +46,16 @@ public class NlpTrainingDataProcessor {
 
     private static int NUMBER_OF_THREADS = 4;
 
-    public NlpTrainingDataProcessor(TrainingDataPreprocessor trainingDataPreprocessor, TrainingDataWriter trainingDataWriter,
-                                    TrainingDataDatabaseAccessor trainingDataDatabaseAccessor, Tokenizer tokenizer, TagsProcessor tagsProcessor,
-                                    BigramDataListFactory bigramDataListFactory, SubPathDataListFactory subPathDataListFactory,
-                                    SemanticAnalysisExecutor semanticAnalysisExecutor) {
+    public NlpTrainingDataProcessor(TrainingDataPreprocessor trainingDataPreprocessor, TagsWriter tagsWriter, BigramsWriter bigramsWriter,
+                                    SubPathsWriter subPathsWriter, TrainingDataDatabaseAccessor trainingDataDatabaseAccessor,
+                                    Tokenizer tokenizer, BigramDataListFactory bigramDataListFactory,
+                                    SubPathDataListFactory subPathDataListFactory, SemanticAnalysisExecutor semanticAnalysisExecutor) {
         this.trainingDataPreprocessor = trainingDataPreprocessor;
-        this.trainingDataWriter = trainingDataWriter;
+        this.tagsWriter = tagsWriter;
+        this.bigramsWriter = bigramsWriter;
+        this.subPathsWriter = subPathsWriter;
         this.trainingDataDatabaseAccessor = trainingDataDatabaseAccessor;
         this.tokenizer = tokenizer;
-        this.tagsProcessor = tagsProcessor;
         this.bigramDataListFactory = bigramDataListFactory;
         this.subPathDataListFactory = subPathDataListFactory;
         this.semanticAnalysisExecutor = semanticAnalysisExecutor;
@@ -69,36 +73,33 @@ public class NlpTrainingDataProcessor {
 
         List<TrainingDataRow> trainingDataRowList = trainingDataPreprocessor.preprocess();
 
-        tagsProcessor.process(trainingDataRowList);
+        tagsWriter.write(trainingDataRowList);
 
         ExecutorService executor = Executors.newFixedThreadPool(NUMBER_OF_THREADS);
 
-        Runnable encodedPathsProcessor = new EncodedPathsProcessorImpl(trainingDataWriter, trainingDataRowList);
-        Runnable syntaxAnalyser = new SyntaxAnalyserImpl(trainingDataDatabaseAccessor, bigramDataListFactory, subPathDataListFactory, trainingDataRowList);
+        Runnable encodedPathsWriter = new EncodedPathsWriterImpl(trainingDataRowList);
+        Runnable syntaxAnalyser = new SyntaxAnalyserImpl(bigramsWriter, subPathsWriter, bigramDataListFactory, subPathDataListFactory, trainingDataRowList);
 //        Runnable semanticAnalyser = new SemanticAnalyserImpl(semanticAnalysisExecutor, trainingDataDatabaseAccessor, trainingDataRowList);
-        Runnable tokenTagDataProcessor = new TokenTagDataProcessorImpl(trainingDataDatabaseAccessor, trainingDataRowList);
+        Runnable tokenTagsWriter = new TokenTagsWriterImpl(trainingDataRowList);
 
 
-        Future<?> encodedPathsAnalyserFuture = executor.submit(encodedPathsProcessor);
+        Future<?> encodedPathsFuture = executor.submit(encodedPathsWriter);
         Future<?> syntaxAnalyserFuture = executor.submit(syntaxAnalyser);
 //        Future<?> semanticAnalyserFuture = executor.submit(semanticAnalyser);
-        Future<?> tokenTagDataProcessorFuture = executor.submit(tokenTagDataProcessor);
+        Future<?> tokenTagDataFuture = executor.submit(tokenTagsWriter);
 
         while (!areDataProcessed) {
-            areDataProcessed = encodedPathsAnalyserFuture.isDone() && syntaxAnalyserFuture.isDone() &&
+            areDataProcessed = encodedPathsFuture.isDone() && syntaxAnalyserFuture.isDone() &&
 //                    semanticAnalyserFuture.isDone() &&
-                    tokenTagDataProcessorFuture.isDone();
+                    tokenTagDataFuture.isDone();
         }
 
         if (areDataProcessed) {
             executor.shutdown();
             long stopTime = System.currentTimeMillis();
             long elapsedTime = stopTime - startTime;
-            int numberOfSentences = trainingDataDatabaseAccessor.getNumberOfSentences();
-            numberOfSentences = numberOfSentences + trainingDataRowList.size();
-            trainingDataDatabaseAccessor.updateNumberOfSentences(numberOfSentences);
-            System.out.println(trainingDataRowList.size() + " sentences processed in " + elapsedTime / 1000 + " seconds / in  "
-                    + (elapsedTime / 1000) / 60 + " minutes");
+            System.out.println(trainingDataRowList.size() + " training data rows processed in " + (elapsedTime / 1000) / 60 + " minutes and "
+                    + +(elapsedTime / 1000) % 60 + " seconds");
         }
     }
 }

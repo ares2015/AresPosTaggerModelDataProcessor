@@ -11,22 +11,22 @@ import static com.trainingdataprocessor.cache.TagsCache.tagsCache;
 /**
  * Created by Oliver on 8/5/2016.
  */
-public class TestDataValidatorImpl implements TestDataValidator {
+public class TrainingDataValidatorImpl implements TrainingDataValidator {
 
-    private final static Logger LOGGER = Logger.getLogger(TestDataValidatorImpl.class.getName());
+    private final static Logger LOGGER = Logger.getLogger(TrainingDataValidatorImpl.class.getName());
 
     private Tokenizer tokenizer;
 
     private ListComparator listComparator;
 
-    public TestDataValidatorImpl(Tokenizer tokenizer, ListComparator listComparator) {
+    public TrainingDataValidatorImpl(Tokenizer tokenizer, ListComparator listComparator) {
         this.tokenizer = tokenizer;
         this.listComparator = listComparator;
     }
 
     @Override
     public void validate(String testDataRow, int lineNumber) {
-        LOGGER.info("ENTERING validate method of TestDataValidatorImpl... ");
+        LOGGER.info("ENTERING validate method of TrainingDataValidatorImpl... ");
         LOGGER.info("*********************************************************************");
 
         LOGGER.info("Validating < " + testDataRow + " > on line " + lineNumber);
@@ -78,7 +78,7 @@ public class TestDataValidatorImpl implements TestDataValidator {
             }
         }
         LOGGER.info("Validation OK");
-        LOGGER.info("LEAVING validate method of TestDataValidatorImpl... ");
+        LOGGER.info("LEAVING validate method of TrainingDataValidatorImpl... ");
         LOGGER.info("*********************************************************************");
     }
 
