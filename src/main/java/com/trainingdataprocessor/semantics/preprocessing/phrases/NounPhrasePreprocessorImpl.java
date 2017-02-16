@@ -56,7 +56,7 @@ public class NounPhrasePreprocessorImpl implements PhrasePreprocessor {
 
     private boolean containsAfterVerbNounPhraseWithPrepositionPhrase(RegexPatternData regexPatternData, int verbIndex,
                                                                      SemanticPreprocessingData semanticPreprocessingData) {
-        return regexPatternData.getEndIndex() >= verbIndex && semanticPreprocessingData.containsAfterVerbPreposition() &&
+        return regexPatternData.getEndIndex() > verbIndex && semanticPreprocessingData.containsAfterVerbPreposition() &&
                 regexPatternData.getEndIndex() <= semanticPreprocessingData.getAfterVerbFirstPrepositionIndex();
     }
 

@@ -85,7 +85,6 @@
           class="com.trainingdataprocessor.semantics.preprocessing.SemanticPreprocessingFilterImpl"/>
 
     <bean id="semanticPreprocessor" class="com.trainingdataprocessor.semantics.preprocessing.SemanticPreprocessorImpl">
-        <constructor-arg ref="semanticPreprocessingFilter"/>
         <constructor-arg ref="prepositionPhrasePreprocessor"/>
         <constructor-arg ref="nounPhrasePreprocessor"/>
         <constructor-arg ref="verbPhrasePreprocessor"/>
@@ -131,6 +130,7 @@
         <constructor-arg ref="bigramDataListFactory"/>
         <constructor-arg ref="subPathDataListFactory"/>
         <constructor-arg ref="semanticAnalysisExecutor"/>
+        <constructor-arg ref="semanticPreprocessingFilter"/>
     </bean>
 
 </beans>

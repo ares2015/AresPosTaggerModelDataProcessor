@@ -49,7 +49,7 @@ public class SemanticAnalyserTest {
     private PhrasePreprocessor prepositionPhrasePreprocessor = new PrepositionPhrasePreprocessorImpl(regexPatternSearcher);
     private PhrasePreprocessor nounPhrasePreprocessor = new NounPhrasePreprocessorImpl(regexPatternSearcher);
     private PhrasePreprocessor verbPhrasePreprocessor = new VerbPhrasePreprocessorImpl(regexPatternSearcher);
-    private SemanticPreprocessor semanticPreprocessor = new SemanticPreprocessorImpl(semanticPreprocessingFilter, prepositionPhrasePreprocessor, nounPhrasePreprocessor, verbPhrasePreprocessor);
+    private SemanticPreprocessor semanticPreprocessor = new SemanticPreprocessorImpl(prepositionPhrasePreprocessor, nounPhrasePreprocessor, verbPhrasePreprocessor);
     private PhraseExtractor prepositionPhraseExtractor = new PrepositionPhraseExtractorImpl(tokenizer);
     private PhraseExtractor nounPhraseExtractor = new NounPhraseExtractorImpl(tokenizer);
     private PhraseExtractor verbPhraseExtractor = new VerbPhraseExtractorImpl(tokenizer);
@@ -83,7 +83,7 @@ public class SemanticAnalyserTest {
 
         trainingDataRowList.add(trainingDataRow);
 
-        Runnable semanticAnalyser = new SemanticAnalyserImpl(semanticAnalysisExecutor, trainingDataDatabaseAccessor, trainingDataRowList);
+        Runnable semanticAnalyser = new SemanticAnalyserImpl(semanticAnalysisExecutor, semanticPreprocessingFilter, trainingDataDatabaseAccessor, trainingDataRowList);
         ExecutorService executor = Executors.newFixedThreadPool(1);
 //        executor.execute(semanticAnalyser);
 

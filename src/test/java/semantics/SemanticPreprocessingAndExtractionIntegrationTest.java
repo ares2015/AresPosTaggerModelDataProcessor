@@ -41,7 +41,7 @@ public class SemanticPreprocessingAndExtractionIntegrationTest {
     private PhrasePreprocessor prepositionPhrasePreprocessor = new PrepositionPhrasePreprocessorImpl(regexPatternSearcher);
     private PhrasePreprocessor nounPhrasePreprocessor = new NounPhrasePreprocessorImpl(regexPatternSearcher);
     private PhrasePreprocessor verbPhrasePreprocessor = new VerbPhrasePreprocessorImpl(regexPatternSearcher);
-    private SemanticPreprocessor semanticPreprocessor = new SemanticPreprocessorImpl(semanticPreprocessingFilter, prepositionPhrasePreprocessor, nounPhrasePreprocessor, verbPhrasePreprocessor);
+    private SemanticPreprocessor semanticPreprocessor = new SemanticPreprocessorImpl(prepositionPhrasePreprocessor, nounPhrasePreprocessor, verbPhrasePreprocessor);
     private PhraseExtractor prepositionPhraseExtractor = new PrepositionPhraseExtractorImpl(tokenizer);
     private PhraseExtractor nounPhraseExtractor = new NounPhraseExtractorImpl(tokenizer);
     private PhraseExtractor verbPhraseExtractor = new VerbPhraseExtractorImpl(tokenizer);
@@ -49,14 +49,14 @@ public class SemanticPreprocessingAndExtractionIntegrationTest {
 
     @Test
     public void test() {
-        String sentencePattern = "";
+        String encodedPath = "";
         List<String> tokens = null;
         List<String> encodedTags = null;
         String sentence = "";
         SemanticPreprocessingData semanticPreprocessingData = null;
         SemanticExtractionData semanticExtractionData = null;
         /*********************************************************************************************/
-        sentencePattern = "JNVANN";
+        encodedPath = "JNVANN";
         encodedTags = new ArrayList<String>();
         encodedTags.add(EncodedTags.ADJECTIVE);
         encodedTags.add(EncodedTags.NOUN);
@@ -66,7 +66,7 @@ public class SemanticPreprocessingAndExtractionIntegrationTest {
         encodedTags.add(EncodedTags.NOUN);
         sentence = "brave firemen fight furiously forest fire";
         tokens = Arrays.asList(sentence.split("\\ "));
-        semanticPreprocessingData = semanticPreprocessor.preprocess(tokens, encodedTags, 2);
+        semanticPreprocessingData = semanticPreprocessor.preprocess(encodedPath, tokens, encodedTags, 2);
         semanticExtractionData = semanticExtractor.extract(semanticPreprocessingData);
         assertEquals("brave firemen ", semanticExtractionData.getExtendedSubject());
         assertEquals("firemen", semanticExtractionData.getAtomicSubject());
@@ -75,7 +75,7 @@ public class SemanticPreprocessingAndExtractionIntegrationTest {
         assertEquals("forest fire ", semanticExtractionData.getExtendedNounPredicate());
         assertEquals("fire", semanticExtractionData.getAtomicNounPredicate());
         /*********************************************************************************************/
-        sentencePattern = "JN<NVANN";
+        encodedPath = "JN<NVANN";
         encodedTags = new ArrayList<String>();
         encodedTags.add(EncodedTags.ADJECTIVE);
         encodedTags.add(EncodedTags.NOUN);
@@ -87,7 +87,7 @@ public class SemanticPreprocessingAndExtractionIntegrationTest {
         encodedTags.add(EncodedTags.NOUN);
         sentence = "brave soldiers and firemen fight furiously forest fire";
         tokens = Arrays.asList(sentence.split("\\ "));
-        semanticPreprocessingData = semanticPreprocessor.preprocess(tokens, encodedTags, 4);
+        semanticPreprocessingData = semanticPreprocessor.preprocess(encodedPath, tokens, encodedTags, 4);
         semanticExtractionData = semanticExtractor.extract(semanticPreprocessingData);
         assertEquals("", semanticExtractionData.getExtendedSubject());
         assertEquals("firemen", semanticExtractionData.getAtomicSubject());
@@ -96,7 +96,7 @@ public class SemanticPreprocessingAndExtractionIntegrationTest {
         assertEquals("forest fire ", semanticExtractionData.getExtendedNounPredicate());
         assertEquals("fire", semanticExtractionData.getAtomicNounPredicate());
         /*********************************************************************************************/
-        sentencePattern = "NPNPNVANNPNN";
+        encodedPath = "NPNPNVANNPNN";
         encodedTags = new ArrayList<String>();
         encodedTags.add(EncodedTags.NOUN);
         encodedTags.add(EncodedTags.PREPOSITION);
@@ -112,7 +112,7 @@ public class SemanticPreprocessingAndExtractionIntegrationTest {
         encodedTags.add(EncodedTags.NOUN);
         sentence = "Fans of Russia in Paris attack furiously English supporters at European Championships";
         tokens = Arrays.asList(sentence.split("\\ "));
-        semanticPreprocessingData = semanticPreprocessor.preprocess(tokens, encodedTags, 5);
+        semanticPreprocessingData = semanticPreprocessor.preprocess(encodedPath, tokens, encodedTags, 5);
         semanticExtractionData = semanticExtractor.extract(semanticPreprocessingData);
         assertEquals("Fans of Russia in Paris ", semanticExtractionData.getExtendedSubject());
         assertEquals("attack", semanticExtractionData.getAtomicVerbPredicate());
@@ -120,7 +120,7 @@ public class SemanticPreprocessingAndExtractionIntegrationTest {
         assertEquals("English supporters at European Championships ", semanticExtractionData.getExtendedNounPredicate());
         assertEquals("supporters", semanticExtractionData.getAtomicNounPredicate());
         /*********************************************************************************************/
-        sentencePattern = "NVANPNNN";
+        encodedPath = "NVANPNNN";
         encodedTags = new ArrayList<String>();
         encodedTags.add(EncodedTags.NOUN);
         encodedTags.add(EncodedTags.VERB);
@@ -132,7 +132,7 @@ public class SemanticPreprocessingAndExtractionIntegrationTest {
         encodedTags.add(EncodedTags.NOUN);
         sentence = "George exercised little control over British domestic policy";
         tokens = Arrays.asList(sentence.split("\\ "));
-        semanticPreprocessingData = semanticPreprocessor.preprocess(tokens, encodedTags, 1);
+        semanticPreprocessingData = semanticPreprocessor.preprocess(encodedPath, tokens, encodedTags, 1);
         semanticExtractionData = semanticExtractor.extract(semanticPreprocessingData);
         assertEquals("George", semanticExtractionData.getAtomicSubject());
         assertEquals("", semanticExtractionData.getExtendedSubject());
@@ -141,7 +141,7 @@ public class SemanticPreprocessingAndExtractionIntegrationTest {
         assertEquals("control over British domestic policy ", semanticExtractionData.getExtendedNounPredicate());
         assertEquals("control", semanticExtractionData.getAtomicNounPredicate());
         /*********************************************************************************************/
-        sentencePattern = "NNVNAPNPN#";
+        encodedPath = "NNVNAPNPN#";
         encodedTags = new ArrayList<String>();
         encodedTags.add(EncodedTags.NOUN);
         encodedTags.add(EncodedTags.NOUN);
@@ -155,7 +155,7 @@ public class SemanticPreprocessingAndExtractionIntegrationTest {
         encodedTags.add(EncodedTags.NUMBER);
         sentence = "King George visited Hanover again from May to November 1719";
         tokens = Arrays.asList(sentence.split("\\ "));
-        semanticPreprocessingData = semanticPreprocessor.preprocess(tokens, encodedTags, 2);
+        semanticPreprocessingData = semanticPreprocessor.preprocess(encodedPath, tokens, encodedTags, 2);
         semanticExtractionData = semanticExtractor.extract(semanticPreprocessingData);
         assertEquals("George", semanticExtractionData.getAtomicSubject());
         assertEquals("King George ", semanticExtractionData.getExtendedSubject());
@@ -164,7 +164,7 @@ public class SemanticPreprocessingAndExtractionIntegrationTest {
         assertEquals("Hanover again from May to November 1719 ", semanticExtractionData.getExtendedNounPredicate());
         assertEquals("Hanover", semanticExtractionData.getAtomicNounPredicate());
         /*********************************************************************************************/
-        sentencePattern = "$NNIAAJNPNN";
+        encodedPath = "$NNIAAJNPNN";
         encodedTags = new ArrayList<String>();
         encodedTags.add(EncodedTags.VERB_ED);
         encodedTags.add(EncodedTags.NOUN);
@@ -175,13 +175,12 @@ public class SemanticPreprocessingAndExtractionIntegrationTest {
         encodedTags.add(EncodedTags.ADJECTIVE);
         encodedTags.add(EncodedTags.NOUN);
         encodedTags.add(EncodedTags.PREPOSITION);
-        encodedTags.add(EncodedTags.DETERMINER);
         encodedTags.add(EncodedTags.NOUN);
         encodedTags.add(EncodedTags.NOUN);
 
         sentence = "Shot John Lennon is still very popular singer in United States";
         tokens = Arrays.asList(sentence.split("\\ "));
-        semanticPreprocessingData = semanticPreprocessor.preprocess(tokens, encodedTags, 3);
+        semanticPreprocessingData = semanticPreprocessor.preprocess(encodedPath, tokens, encodedTags, 3);
         semanticExtractionData = semanticExtractor.extract(semanticPreprocessingData);
         assertEquals("Lennon", semanticExtractionData.getAtomicSubject());
         assertEquals("Shot John Lennon ", semanticExtractionData.getExtendedSubject());
@@ -191,7 +190,7 @@ public class SemanticPreprocessingAndExtractionIntegrationTest {
         assertEquals("singer", semanticExtractionData.getAtomicNounPredicate());
 
         /*********************************************************************************************/
-        sentencePattern = "NPNMVAAPN";
+        encodedPath = "NPNMVAAPN";
         encodedTags = new ArrayList<String>();
         encodedTags.add(EncodedTags.NOUN);
         encodedTags.add(EncodedTags.PREPOSITION);
@@ -206,16 +205,16 @@ public class SemanticPreprocessingAndExtractionIntegrationTest {
 
         sentence = "Members of Fragile can sing absolutely perfectly before audience";
         tokens = Arrays.asList(sentence.split("\\ "));
-        semanticPreprocessingData = semanticPreprocessor.preprocess(tokens, encodedTags, 4);
+        semanticPreprocessingData = semanticPreprocessor.preprocess(encodedPath, tokens, encodedTags, 4);
         semanticExtractionData = semanticExtractor.extract(semanticPreprocessingData);
         assertEquals("Members of Fragile ", semanticExtractionData.getExtendedSubject());
         assertEquals("sing", semanticExtractionData.getAtomicVerbPredicate());
         assertEquals("can sing absolutely perfectly ", semanticExtractionData.getExtendedVerbPredicate());
-        assertEquals("before audience ", semanticExtractionData.getExtendedNounPredicate());
+        assertEquals("absolutely perfectly before audience ", semanticExtractionData.getExtendedNounPredicate());
         assertEquals("", semanticExtractionData.getAtomicNounPredicate());
 
         /*********************************************************************************************/
-        sentencePattern = "NIJPN";
+        encodedPath = "NIJPN";
         encodedTags = new ArrayList<String>();
         encodedTags.add(EncodedTags.NOUN);
         encodedTags.add(EncodedTags.IS_ARE);
@@ -225,15 +224,115 @@ public class SemanticPreprocessingAndExtractionIntegrationTest {
 
 
         sentence = "Bob is alone at home";
-//        tokens = Arrays.asList(sentence.split("\\ "));
-//        semanticPreprocessingData = semanticPreprocessor.preprocess(sentencePattern, tokens, encodedTags, 1);
-//        semanticExtractionData = semanticExtractor.extract(semanticPreprocessingData);
-//        assertEquals("", semanticExtractionData.getExtendedSubject());
-//        assertEquals("Bob", semanticExtractionData.getAtomicSubject());
-//        assertEquals("is", semanticExtractionData.getAtomicVerbPredicate());
-//        assertEquals("", semanticExtractionData.getExtendedVerbPredicate());
-//        assertEquals("alone at home ", semanticExtractionData.getExtendedNounPredicate());
-//        assertEquals("alone", semanticExtractionData.getAtomicNounPredicate());
+        tokens = Arrays.asList(sentence.split("\\ "));
+        semanticPreprocessingData = semanticPreprocessor.preprocess(encodedPath, tokens, encodedTags, 1);
+        semanticExtractionData = semanticExtractor.extract(semanticPreprocessingData);
+        assertEquals("", semanticExtractionData.getExtendedSubject());
+        assertEquals("Bob", semanticExtractionData.getAtomicSubject());
+        assertEquals("is", semanticExtractionData.getAtomicVerbPredicate());
+        assertEquals("", semanticExtractionData.getExtendedVerbPredicate());
+        assertEquals("alone at home ", semanticExtractionData.getExtendedNounPredicate());
+        assertEquals("alone", semanticExtractionData.getAtomicNounPredicate());
+
+        /*********************************************************************************************/
+        encodedPath = "DQNVN";
+        encodedTags = new ArrayList<String>();
+        encodedTags.add(EncodedTags.DETERMINER);
+        encodedTags.add(EncodedTags.QUANTIFIER);
+        encodedTags.add(EncodedTags.NOUN);
+        encodedTags.add(EncodedTags.VERB);
+        encodedTags.add(EncodedTags.NOUN);
+
+        sentence = "a few scholars defend Louis";
+        tokens = Arrays.asList(sentence.split("\\ "));
+        semanticPreprocessingData = semanticPreprocessor.preprocess(encodedPath, tokens, encodedTags, 3);
+        semanticExtractionData = semanticExtractor.extract(semanticPreprocessingData);
+        assertEquals("a few scholars ", semanticExtractionData.getExtendedSubject());
+        assertEquals("scholars", semanticExtractionData.getAtomicSubject());
+        assertEquals("defend", semanticExtractionData.getAtomicVerbPredicate());
+        assertEquals("", semanticExtractionData.getExtendedVerbPredicate());
+        assertEquals("", semanticExtractionData.getExtendedNounPredicate());
+        assertEquals("Louis", semanticExtractionData.getAtomicNounPredicate());
+
+        /*********************************************************************************************/
+
+        encodedPath = "NVTN";
+        encodedTags = new ArrayList<String>();
+        encodedTags.add(EncodedTags.NOUN);
+        encodedTags.add(EncodedTags.VERB);
+        encodedTags.add(EncodedTags.TO);
+        encodedTags.add(EncodedTags.NOUN);
+
+
+        sentence = "Raphael moved to Rome";
+        tokens = Arrays.asList(sentence.split("\\ "));
+        semanticPreprocessingData = semanticPreprocessor.preprocess(encodedPath, tokens, encodedTags, 1);
+        semanticExtractionData = semanticExtractor.extract(semanticPreprocessingData);
+        assertEquals("", semanticExtractionData.getExtendedSubject());
+        assertEquals("Raphael", semanticExtractionData.getAtomicSubject());
+        assertEquals("moved", semanticExtractionData.getAtomicVerbPredicate());
+        assertEquals("", semanticExtractionData.getExtendedVerbPredicate());
+        assertEquals("to Rome ", semanticExtractionData.getExtendedNounPredicate());
+        assertEquals("", semanticExtractionData.getAtomicNounPredicate());
+
+        /*********************************************************************************************/
+        encodedPath = "J$NPJNIP#NAPN";
+        encodedTags = new ArrayList<String>();
+        encodedTags.add(EncodedTags.ADJECTIVE);
+        encodedTags.add(EncodedTags.VERB_ED);
+        encodedTags.add(EncodedTags.NOUN);
+        encodedTags.add(EncodedTags.PREPOSITION);
+        encodedTags.add(EncodedTags.ADJECTIVE);
+        encodedTags.add(EncodedTags.NOUN);
+        encodedTags.add(EncodedTags.IS_ARE);
+        encodedTags.add(EncodedTags.PREPOSITION);
+        encodedTags.add(EncodedTags.NUMBER);
+        encodedTags.add(EncodedTags.NOUN);
+        encodedTags.add(EncodedTags.ADVERB);
+        encodedTags.add(EncodedTags.PREPOSITION);
+        encodedTags.add(EncodedTags.NOUN);
+
+        sentence = "earliest known fossil of domestic dog is from 31700 years ago in Belgium";
+        tokens = Arrays.asList(sentence.split("\\ "));
+        semanticPreprocessingData = semanticPreprocessor.preprocess(encodedPath, tokens, encodedTags, 6);
+        semanticExtractionData = semanticExtractor.extract(semanticPreprocessingData);
+        assertEquals("earliest known fossil of domestic dog ", semanticExtractionData.getExtendedSubject());
+        assertEquals("", semanticExtractionData.getAtomicSubject());
+        assertEquals("is", semanticExtractionData.getAtomicVerbPredicate());
+        assertEquals("", semanticExtractionData.getExtendedVerbPredicate());
+        assertEquals("from 31700 years ago in Belgium ", semanticExtractionData.getExtendedNounPredicate());
+        assertEquals("", semanticExtractionData.getAtomicNounPredicate());
+
+
+        /*********************************************************************************************/
+        sentence = "oldest material found in Solar System is dated to 4.5672 billion years ago";
+
+        encodedPath = "JN$PNNI$T##NA";
+        encodedTags = new ArrayList<String>();
+        encodedTags.add(EncodedTags.ADJECTIVE);
+        encodedTags.add(EncodedTags.NOUN);
+        encodedTags.add(EncodedTags.VERB_ED);
+        encodedTags.add(EncodedTags.PREPOSITION);
+        encodedTags.add(EncodedTags.NOUN);
+        encodedTags.add(EncodedTags.NOUN);
+        encodedTags.add(EncodedTags.IS_ARE);
+        encodedTags.add(EncodedTags.VERB_ED);
+        encodedTags.add(EncodedTags.TO);
+        encodedTags.add(EncodedTags.NUMBER);
+        encodedTags.add(EncodedTags.NUMBER);
+        encodedTags.add(EncodedTags.NOUN);
+        encodedTags.add(EncodedTags.ADVERB);
+        tokens = Arrays.asList(sentence.split("\\ "));
+        semanticPreprocessingData = semanticPreprocessor.preprocess(encodedPath, tokens, encodedTags, 6);
+        semanticExtractionData = semanticExtractor.extract(semanticPreprocessingData);
+        assertEquals("oldest material found in Solar System ", semanticExtractionData.getExtendedSubject());
+        assertEquals("", semanticExtractionData.getAtomicSubject());
+        assertEquals("is", semanticExtractionData.getAtomicVerbPredicate());
+        assertEquals("", semanticExtractionData.getExtendedVerbPredicate());
+        assertEquals("dated to 4.5672 billion years ago ", semanticExtractionData.getExtendedNounPredicate());
+        assertEquals("dated", semanticExtractionData.getAtomicNounPredicate());
+
+
 
 
     }

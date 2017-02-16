@@ -12,9 +12,9 @@ import java.util.Map;
  */
 public final class RegexExpressions {
 
-    public static final String PREPOSITION_PHRASE = "[O]*[PT]?[#NJD$@SQ]*[O]*[PT]?[#NJD$@SQ]*[O]*[PT]?[#NJD$@SQ]*";
+    public static final String PREPOSITION_PHRASE = "[O]*[PT]?[#NJD$@SQA]*[O]*[PT]?[#NJD$@SQA]*[O]*[PT]?[#NJD$@SQA]*";
 
-    public static final String NOUN_PHRASE = "[#$@NJDSQ]*[JN]";
+    public static final String NOUN_PHRASE = "[#$@NJDSQ]*[$JN]";
 
     public static final String IS_PHRASE = "[A]*[I][A]*";
 

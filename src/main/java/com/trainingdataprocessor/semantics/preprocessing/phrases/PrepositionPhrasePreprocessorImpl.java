@@ -41,11 +41,11 @@ public class PrepositionPhrasePreprocessorImpl implements PhrasePreprocessor {
     }
 
     private boolean containsBeforeVerbPrepositionPhrase(RegexPatternData regexPatternData, int verbIndex) {
-        return regexPatternData.getEndIndex() <= verbIndex && regexPatternData.getPattern().contains(EncodedTags.PREPOSITION);
+        return regexPatternData.getEndIndex() <= verbIndex && (regexPatternData.getPattern().contains(EncodedTags.PREPOSITION) || regexPatternData.getPattern().contains(EncodedTags.TO));
     }
 
     private boolean containsAfterVerbPrepositionPhrase(RegexPatternData regexPatternData, int verbIndex) {
-        return regexPatternData.getEndIndex() >= verbIndex && regexPatternData.getPattern().contains(EncodedTags.PREPOSITION);
+        return regexPatternData.getEndIndex() >= verbIndex && (regexPatternData.getPattern().contains(EncodedTags.PREPOSITION) || regexPatternData.getPattern().contains(EncodedTags.TO));
     }
 
 }

@@ -5,7 +5,9 @@ import com.trainingdataprocessor.database.TrainingDataDatabaseAccessor;
 import com.trainingdataprocessor.factories.bigram.BigramDataListFactory;
 import com.trainingdataprocessor.factories.subpath.SubPathDataListFactory;
 import com.trainingdataprocessor.preprocessing.TrainingDataPreprocessor;
+import com.trainingdataprocessor.semantics.analysis.SemanticAnalyserImpl;
 import com.trainingdataprocessor.semantics.analysis.SemanticAnalysisExecutor;
+import com.trainingdataprocessor.semantics.preprocessing.SemanticPreprocessingFilter;
 import com.trainingdataprocessor.syntax.SyntaxAnalyserImpl;
 import com.trainingdataprocessor.tokens.Tokenizer;
 import com.trainingdataprocessor.writer.bigrams.BigramsWriter;
@@ -44,12 +46,15 @@ public class NlpTrainingDataProcessor {
 
     private SemanticAnalysisExecutor semanticAnalysisExecutor;
 
+    private SemanticPreprocessingFilter semanticPreprocessingFilter;
+
     private static int NUMBER_OF_THREADS = 4;
 
     public NlpTrainingDataProcessor(TrainingDataPreprocessor trainingDataPreprocessor, TagsWriter tagsWriter, BigramsWriter bigramsWriter,
                                     SubPathsWriter subPathsWriter, TrainingDataDatabaseAccessor trainingDataDatabaseAccessor,
                                     Tokenizer tokenizer, BigramDataListFactory bigramDataListFactory,
-                                    SubPathDataListFactory subPathDataListFactory, SemanticAnalysisExecutor semanticAnalysisExecutor) {
+                                    SubPathDataListFactory subPathDataListFactory, SemanticAnalysisExecutor semanticAnalysisExecutor,
+                                    SemanticPreprocessingFilter semanticPreprocessingFilter) {
         this.trainingDataPreprocessor = trainingDataPreprocessor;
         this.tagsWriter = tagsWriter;
         this.bigramsWriter = bigramsWriter;
@@ -59,6 +64,7 @@ public class NlpTrainingDataProcessor {
         this.bigramDataListFactory = bigramDataListFactory;
         this.subPathDataListFactory = subPathDataListFactory;
         this.semanticAnalysisExecutor = semanticAnalysisExecutor;
+        this.semanticPreprocessingFilter = semanticPreprocessingFilter;
     }
 
     public static void main(String[] args) {
@@ -79,7 +85,7 @@ public class NlpTrainingDataProcessor {
 
         Runnable encodedPathsWriter = new EncodedPathsWriterImpl(trainingDataRowList);
         Runnable syntaxAnalyser = new SyntaxAnalyserImpl(bigramsWriter, subPathsWriter, bigramDataListFactory, subPathDataListFactory, trainingDataRowList);
-//        Runnable semanticAnalyser = new SemanticAnalyserImpl(semanticAnalysisExecutor, trainingDataDatabaseAccessor, trainingDataRowList);
+        Runnable semanticAnalyser = new SemanticAnalyserImpl(semanticAnalysisExecutor, semanticPreprocessingFilter, trainingDataDatabaseAccessor, trainingDataRowList);
         Runnable tokenTagsWriter = new TokenTagsWriterImpl(trainingDataRowList);
 
 

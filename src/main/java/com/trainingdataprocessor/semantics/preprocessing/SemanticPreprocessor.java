@@ -9,5 +9,5 @@ import java.util.List;
  */
 public interface SemanticPreprocessor {
 
-    SemanticPreprocessingData preprocess(List<String> tokensList, List<String> encodedTagsList, int verbIndex);
+    SemanticPreprocessingData preprocess(String filteredEncodedSubPath, List<String> tokensList, List<String> encodedTagsList, int verbIndex);
 }

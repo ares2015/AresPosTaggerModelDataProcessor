@@ -4,6 +4,7 @@ import com.trainingdataprocessor.cache.SemanticAnalysisFilterCache;
 import com.trainingdataprocessor.data.preprocessing.TrainingDataRow;
 import com.trainingdataprocessor.data.semantics.SemanticExtractionData;
 import com.trainingdataprocessor.database.TrainingDataDatabaseAccessor;
+import com.trainingdataprocessor.semantics.preprocessing.SemanticPreprocessingFilter;
 import com.trainingdataprocessor.tags.EncodedTags;
 
 import java.util.ArrayList;
@@ -17,13 +18,16 @@ public class SemanticAnalyserImpl implements SemanticAnalyser, Runnable {
 
     private SemanticAnalysisExecutor semanticAnalysisExecutor;
 
+    private SemanticPreprocessingFilter semanticPreprocessingFilter;
+
     private TrainingDataDatabaseAccessor trainingDataDatabaseAccessor;
 
     private List<TrainingDataRow> trainingDataRowList;
 
-    public SemanticAnalyserImpl(SemanticAnalysisExecutor semanticAnalysisExecutor, TrainingDataDatabaseAccessor trainingDataDatabaseAccessor,
-                                List<TrainingDataRow> trainingDataRowList) {
+    public SemanticAnalyserImpl(SemanticAnalysisExecutor semanticAnalysisExecutor, SemanticPreprocessingFilter semanticPreprocessingFilter,
+                                TrainingDataDatabaseAccessor trainingDataDatabaseAccessor, List<TrainingDataRow> trainingDataRowList) {
         this.semanticAnalysisExecutor = semanticAnalysisExecutor;
+        this.semanticPreprocessingFilter = semanticPreprocessingFilter;
         this.trainingDataDatabaseAccessor = trainingDataDatabaseAccessor;
         this.trainingDataRowList = trainingDataRowList;
     }
@@ -38,21 +42,28 @@ public class SemanticAnalyserImpl implements SemanticAnalyser, Runnable {
         for (TrainingDataRow trainingDataRow : trainingDataRowList) {
             if (trainingDataRow.containsSubSentences()) {
                 for (int i = 0; i <= trainingDataRow.getTokensMultiList().size() - 1; i++) {
-                    List<String> encodedTags = trainingDataRow.getEncodedTagsMultiList().get(i);
+                    List<String> encodedTags = trainingDataRow.getEncodedTagsList();
                     List<Integer> verbIndexes = getVerbIndexes(encodedTags);
+                    List<String> tokensList = trainingDataRow.getTokensList();
+                    String filteredEncodedSubpath = semanticPreprocessingFilter.filterToString(encodedTags);
+                    List<String> filteredTokensList = semanticPreprocessingFilter.filterToList(tokensList);
+                    List<String> filteredEncodedTagsList = semanticPreprocessingFilter.filterToList(encodedTags);
                     if (canGoToSemanticAnalysis(encodedTags, verbIndexes)) {
                         Integer verbIndex = verbIndexes.get(0);
                         List<String> tokens = trainingDataRow.getTokensMultiList().get(i);
-                        analyseSentence(tokens, encodedTags, verbIndex);
+                        analyseSentence(filteredEncodedSubpath, filteredTokensList, filteredEncodedTagsList, verbIndex);
                     }
                 }
             } else {
                 List<String> encodedTags = trainingDataRow.getEncodedTagsList();
                 List<Integer> verbIndexes = getVerbIndexes(encodedTags);
-                if (canGoToSemanticAnalysis(encodedTags, verbIndexes)) {
+                List<String> tokensList = trainingDataRow.getTokensList();
+                String filteredEncodedSubpath = semanticPreprocessingFilter.filterToString(encodedTags);
+                List<String> filteredTokensList = semanticPreprocessingFilter.filterToList(tokensList);
+                List<String> filteredEncodedTagsList = semanticPreprocessingFilter.filterToList(encodedTags);
+                if (canGoToSemanticAnalysis(filteredEncodedTagsList, verbIndexes)) {
                     Integer verbIndex = verbIndexes.get(0);
-                    List<String> tokensList = trainingDataRow.getTokensList();
-                    analyseSentence(tokensList, encodedTags, verbIndex);
+                    analyseSentence(filteredEncodedSubpath, filteredTokensList, filteredEncodedTagsList, verbIndex);
                 }
             }
         }
@@ -81,8 +92,8 @@ public class SemanticAnalyserImpl implements SemanticAnalyser, Runnable {
         return verbIndexes;
     }
 
-    private void analyseSentence(List<String> tokens, List<String> encodedTags, int verbIndex) {
-        Optional<SemanticExtractionData> semanticExtractionData = semanticAnalysisExecutor.execute(tokens, encodedTags, verbIndex);
+    private void analyseSentence(String filteredEncodedSubPath, List<String> tokens, List<String> encodedTags, int verbIndex) {
+        Optional<SemanticExtractionData> semanticExtractionData = semanticAnalysisExecutor.execute(filteredEncodedSubPath, tokens, encodedTags, verbIndex);
         if (semanticExtractionData.isPresent()) {
             trainingDataDatabaseAccessor.insertSemanticData(semanticExtractionData.get());
         }
