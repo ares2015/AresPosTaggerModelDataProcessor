@@ -5,23 +5,18 @@ import com.trainingdataprocessor.database.TrainingDataDatabaseAccessor;
 import com.trainingdataprocessor.factories.bigram.BigramDataListFactory;
 import com.trainingdataprocessor.factories.subpath.SubPathDataListFactory;
 import com.trainingdataprocessor.preprocessing.TrainingDataPreprocessor;
+import com.trainingdataprocessor.semantics.analysis.SemanticAnalyser;
 import com.trainingdataprocessor.semantics.analysis.SemanticAnalyserImpl;
 import com.trainingdataprocessor.semantics.analysis.SemanticAnalysisExecutor;
 import com.trainingdataprocessor.semantics.preprocessing.SemanticPreprocessingFilter;
-import com.trainingdataprocessor.syntax.SyntaxAnalyserImpl;
 import com.trainingdataprocessor.tokens.Tokenizer;
 import com.trainingdataprocessor.writer.bigrams.BigramsWriter;
-import com.trainingdataprocessor.writer.paths.EncodedPathsWriterImpl;
 import com.trainingdataprocessor.writer.subpaths.SubPathsWriter;
 import com.trainingdataprocessor.writer.tags.TagsWriter;
-import com.trainingdataprocessor.writer.tokens.TokenTagsWriterImpl;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
 
 /**
  * Created by Oliver on 11/12/2016.
@@ -74,38 +69,41 @@ public class NlpTrainingDataProcessor {
     }
 
     public void process() {
-        boolean areDataProcessed = false;
-        long startTime = System.currentTimeMillis();
-
+//        boolean areDataProcessed = false;
+//        long startTime = System.currentTimeMillis();
+//
         List<TrainingDataRow> trainingDataRowList = trainingDataPreprocessor.preprocess();
-
-        tagsWriter.write(trainingDataRowList);
-
-        ExecutorService executor = Executors.newFixedThreadPool(NUMBER_OF_THREADS);
-
-        Runnable encodedPathsWriter = new EncodedPathsWriterImpl(trainingDataRowList);
-        Runnable syntaxAnalyser = new SyntaxAnalyserImpl(bigramsWriter, subPathsWriter, bigramDataListFactory, subPathDataListFactory, trainingDataRowList);
-        Runnable semanticAnalyser = new SemanticAnalyserImpl(semanticAnalysisExecutor, semanticPreprocessingFilter, trainingDataDatabaseAccessor, trainingDataRowList);
-        Runnable tokenTagsWriter = new TokenTagsWriterImpl(trainingDataRowList);
-
-
-        Future<?> encodedPathsFuture = executor.submit(encodedPathsWriter);
-        Future<?> syntaxAnalyserFuture = executor.submit(syntaxAnalyser);
+//
+//        tagsWriter.write(trainingDataRowList);
+//
+//        ExecutorService executor = Executors.newFixedThreadPool(NUMBER_OF_THREADS);
+//
+//        Runnable encodedPathsWriter = new EncodedPathsWriterImpl(trainingDataRowList);
+//        Runnable syntaxAnalyser = new SyntaxAnalyserImpl(bigramsWriter, subPathsWriter, bigramDataListFactory, subPathDataListFactory, trainingDataRowList);
+//        Runnable semanticAnalyser = new SemanticAnalyserImpl(semanticAnalysisExecutor, semanticPreprocessingFilter, trainingDataDatabaseAccessor, trainingDataRowList);
+//        Runnable tokenTagsWriter = new TokenTagsWriterImpl(trainingDataRowList);
+//
+//
+//        Future<?> encodedPathsFuture = executor.submit(encodedPathsWriter);
+//        Future<?> syntaxAnalyserFuture = executor.submit(syntaxAnalyser);
 //        Future<?> semanticAnalyserFuture = executor.submit(semanticAnalyser);
-        Future<?> tokenTagDataFuture = executor.submit(tokenTagsWriter);
-
-        while (!areDataProcessed) {
-            areDataProcessed = encodedPathsFuture.isDone() && syntaxAnalyserFuture.isDone() &&
+//        Future<?> tokenTagDataFuture = executor.submit(tokenTagsWriter);
+//
+//        while (!areDataProcessed) {
+//            areDataProcessed = encodedPathsFuture.isDone() && syntaxAnalyserFuture.isDone() &&
 //                    semanticAnalyserFuture.isDone() &&
-                    tokenTagDataFuture.isDone();
-        }
+//                    tokenTagDataFuture.isDone();
+//        }
+//
+//        if (areDataProcessed) {
+//            executor.shutdown();
+//            long stopTime = System.currentTimeMillis();
+//            long elapsedTime = stopTime - startTime;
+//            System.out.println(trainingDataRowList.size() + " training data rows processed in " + (elapsedTime / 1000) / 60 + " minutes and "
+//                    + +(elapsedTime / 1000) % 60 + " seconds");
+//        }
 
-        if (areDataProcessed) {
-            executor.shutdown();
-            long stopTime = System.currentTimeMillis();
-            long elapsedTime = stopTime - startTime;
-            System.out.println(trainingDataRowList.size() + " training data rows processed in " + (elapsedTime / 1000) / 60 + " minutes and "
-                    + +(elapsedTime / 1000) % 60 + " seconds");
-        }
+        SemanticAnalyser semanticAnalyser = new SemanticAnalyserImpl(semanticAnalysisExecutor, semanticPreprocessingFilter, trainingDataDatabaseAccessor, trainingDataRowList);
+        semanticAnalyser.analyse();
     }
 }

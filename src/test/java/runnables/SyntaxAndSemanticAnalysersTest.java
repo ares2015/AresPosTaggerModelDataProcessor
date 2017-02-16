@@ -1,6 +1,6 @@
 package runnables;
 
-import com.trainingdataprocessor.cache.SemanticAnalysisFilterCache;
+import com.trainingdataprocessor.cache.SemanticExtractionFilterCache;
 import com.trainingdataprocessor.data.preprocessing.TrainingDataRow;
 import com.trainingdataprocessor.database.TrainingDataDatabaseAccessor;
 import com.trainingdataprocessor.factories.bigram.BigramDataListFactory;
@@ -53,7 +53,7 @@ public class SyntaxAndSemanticAnalysersTest {
 
 
     private Tokenizer tokenizer = new TokenizerImpl();
-    private SemanticAnalysisFilterCache semanticAnalysisFilterCache = new SemanticAnalysisFilterCache();
+    private SemanticExtractionFilterCache semanticExtractionFilterCache = new SemanticExtractionFilterCache();
     private SemanticPreprocessingFilter semanticPreprocessingFilter = new SemanticPreprocessingFilterImpl();
     private RegexPatternSearcher regexPatternSearcher = new RegexPatternSearcherImpl();
     private PhrasePreprocessor prepositionPhrasePreprocessor = new PrepositionPhrasePreprocessorImpl(regexPatternSearcher);

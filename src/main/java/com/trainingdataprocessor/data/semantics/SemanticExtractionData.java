@@ -5,6 +5,12 @@ package com.trainingdataprocessor.data.semantics;
  */
 public class SemanticExtractionData {
 
+    private int verbIndex;
+
+    private int beforeVerbIndex;
+
+    private int afterVerbIndex;
+
     private String atomicSubject = "";
 
     private String extendedSubject = "";
@@ -16,6 +22,30 @@ public class SemanticExtractionData {
     private String atomicNounPredicate = "";
 
     private String extendedNounPredicate = "";
+
+    public int getVerbIndex() {
+        return verbIndex;
+    }
+
+    public void setVerbIndex(int verbIndex) {
+        this.verbIndex = verbIndex;
+    }
+
+    public int getBeforeVerbIndex() {
+        return beforeVerbIndex;
+    }
+
+    public void setBeforeVerbIndex(int beforeVerbIndex) {
+        this.beforeVerbIndex = beforeVerbIndex;
+    }
+
+    public int getAfterVerbIndex() {
+        return afterVerbIndex;
+    }
+
+    public void setAfterVerbIndex(int afterVerbIndex) {
+        this.afterVerbIndex = afterVerbIndex;
+    }
 
     public String getAtomicSubject() {
         return atomicSubject;

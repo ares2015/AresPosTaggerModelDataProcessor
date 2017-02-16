@@ -1,5 +1,6 @@
 package com.trainingdataprocessor.preprocessing;
 
+import com.trainingdataprocessor.cache.ConstantTagsCache;
 import com.trainingdataprocessor.data.preprocessing.TrainingDataRow;
 import com.trainingdataprocessor.tags.EncodedTags;
 import com.trainingdataprocessor.tags.Tags;
@@ -49,6 +50,7 @@ public class CapitalizedTokensProcessorImpl implements CapitalizedTokensProcesso
 
         outer:
         for (int i = 0; i < tokensList.size(); i++) {
+
             if (!"".equals(mergedToken)) {
                 i = i - 1;
                 processedTokensList.add(mergedToken);
@@ -56,7 +58,7 @@ public class CapitalizedTokensProcessorImpl implements CapitalizedTokensProcesso
                 processedEncodedTagsList.add(EncodedTags.NOUN);
                 mergedToken = "";
             }
-            if (Character.isUpperCase(tokensList.get(i).charAt(0))) {
+            if (!ConstantTagsCache.constantTagsCache.contains(tagsList.get(i)) && Character.isUpperCase(tokensList.get(i).charAt(0))) {
                 while (Character.isUpperCase(tokensList.get(i).charAt(0))) {
                     if ("".equals(mergedToken)) {
                         mergedToken = tokensList.get(i);
