@@ -5,10 +5,6 @@ import com.trainingdataprocessor.database.TrainingDataDatabaseAccessor;
 import com.trainingdataprocessor.factories.bigram.BigramDataListFactory;
 import com.trainingdataprocessor.factories.subpath.SubPathDataListFactory;
 import com.trainingdataprocessor.preprocessing.TrainingDataPreprocessor;
-import com.trainingdataprocessor.semantics.analysis.SemanticAnalyser;
-import com.trainingdataprocessor.semantics.analysis.SemanticAnalyserImpl;
-import com.trainingdataprocessor.semantics.analysis.SemanticAnalysisExecutor;
-import com.trainingdataprocessor.semantics.preprocessing.SemanticPreprocessingFilter;
 import com.trainingdataprocessor.tokens.Tokenizer;
 import com.trainingdataprocessor.writer.bigrams.BigramsWriter;
 import com.trainingdataprocessor.writer.subpaths.SubPathsWriter;
@@ -39,17 +35,12 @@ public class NlpTrainingDataProcessor {
 
     private SubPathDataListFactory subPathDataListFactory;
 
-    private SemanticAnalysisExecutor semanticAnalysisExecutor;
-
-    private SemanticPreprocessingFilter semanticPreprocessingFilter;
-
     private static int NUMBER_OF_THREADS = 4;
 
     public NlpTrainingDataProcessor(TrainingDataPreprocessor trainingDataPreprocessor, TagsWriter tagsWriter, BigramsWriter bigramsWriter,
                                     SubPathsWriter subPathsWriter, TrainingDataDatabaseAccessor trainingDataDatabaseAccessor,
                                     Tokenizer tokenizer, BigramDataListFactory bigramDataListFactory,
-                                    SubPathDataListFactory subPathDataListFactory, SemanticAnalysisExecutor semanticAnalysisExecutor,
-                                    SemanticPreprocessingFilter semanticPreprocessingFilter) {
+                                    SubPathDataListFactory subPathDataListFactory) {
         this.trainingDataPreprocessor = trainingDataPreprocessor;
         this.tagsWriter = tagsWriter;
         this.bigramsWriter = bigramsWriter;
@@ -58,8 +49,6 @@ public class NlpTrainingDataProcessor {
         this.tokenizer = tokenizer;
         this.bigramDataListFactory = bigramDataListFactory;
         this.subPathDataListFactory = subPathDataListFactory;
-        this.semanticAnalysisExecutor = semanticAnalysisExecutor;
-        this.semanticPreprocessingFilter = semanticPreprocessingFilter;
     }
 
     public static void main(String[] args) {
@@ -80,13 +69,13 @@ public class NlpTrainingDataProcessor {
 //
 //        Runnable encodedPathsWriter = new EncodedPathsWriterImpl(trainingDataRowList);
 //        Runnable syntaxAnalyser = new SyntaxAnalyserImpl(bigramsWriter, subPathsWriter, bigramDataListFactory, subPathDataListFactory, trainingDataRowList);
-//        Runnable semanticAnalyser = new SemanticAnalyserImpl(semanticAnalysisExecutor, semanticPreprocessingFilter, trainingDataDatabaseAccessor, trainingDataRowList);
+//        Runnable semanticExtractor = new SemanticAnalyserImpl(semanticAnalysisExecutor, semanticPreprocessingFilter, trainingDataDatabaseAccessor, trainingDataRowList);
 //        Runnable tokenTagsWriter = new TokenTagsWriterImpl(trainingDataRowList);
 //
 //
 //        Future<?> encodedPathsFuture = executor.submit(encodedPathsWriter);
 //        Future<?> syntaxAnalyserFuture = executor.submit(syntaxAnalyser);
-//        Future<?> semanticAnalyserFuture = executor.submit(semanticAnalyser);
+//        Future<?> semanticAnalyserFuture = executor.submit(semanticExtractor);
 //        Future<?> tokenTagDataFuture = executor.submit(tokenTagsWriter);
 //
 //        while (!areDataProcessed) {
@@ -103,7 +92,7 @@ public class NlpTrainingDataProcessor {
 //                    + +(elapsedTime / 1000) % 60 + " seconds");
 //        }
 
-        SemanticAnalyser semanticAnalyser = new SemanticAnalyserImpl(semanticAnalysisExecutor, semanticPreprocessingFilter, trainingDataDatabaseAccessor, trainingDataRowList);
-        semanticAnalyser.analyse();
+//        SemanticExtractor semanticExtractor = new SemanticAnalyserImpl(semanticAnalysisExecutor, semanticPreprocessingFilter, trainingDataDatabaseAccessor, trainingDataRowList);
+//        semanticExtractor.extract();
     }
 }

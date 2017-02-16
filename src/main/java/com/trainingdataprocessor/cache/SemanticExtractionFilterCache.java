@@ -12,7 +12,7 @@ public final class SemanticExtractionFilterCache {
 
     public static final Set<String> semanticExtractionAllowedTags = new HashSet<>();
 
-    public static final Set<String> subjectExtractionAllowedTags = new HashSet<>();
+    public static final Set<String> subjectNounPredicateExtractionAllowedTags = new HashSet<>();
 
 
     public static final Set<String> wordsToFilterCache = new HashSet<>();
@@ -34,14 +34,15 @@ public final class SemanticExtractionFilterCache {
         semanticExtractionAllowedTags.add(EncodedTags.VERB_ING);
         semanticExtractionAllowedTags.add(EncodedTags.VERB_ED);
 
-        subjectExtractionAllowedTags.add(EncodedTags.ADJECTIVE);
-        subjectExtractionAllowedTags.add(EncodedTags.ADVERB);
-        subjectExtractionAllowedTags.add(EncodedTags.NOUN);
-        subjectExtractionAllowedTags.add(EncodedTags.NUMBER);
-        subjectExtractionAllowedTags.add(EncodedTags.QUANTIFIER);
-        subjectExtractionAllowedTags.add(EncodedTags.TO);
-        subjectExtractionAllowedTags.add(EncodedTags.VERB_ING);
-        subjectExtractionAllowedTags.add(EncodedTags.VERB_ED);
+        subjectNounPredicateExtractionAllowedTags.add(EncodedTags.ADJECTIVE);
+        subjectNounPredicateExtractionAllowedTags.add(EncodedTags.ADVERB);
+        subjectNounPredicateExtractionAllowedTags.add(EncodedTags.NOUN);
+        subjectNounPredicateExtractionAllowedTags.add(EncodedTags.NUMBER);
+        subjectNounPredicateExtractionAllowedTags.add(EncodedTags.PREPOSITION);
+        subjectNounPredicateExtractionAllowedTags.add(EncodedTags.QUANTIFIER);
+        subjectNounPredicateExtractionAllowedTags.add(EncodedTags.TO);
+        subjectNounPredicateExtractionAllowedTags.add(EncodedTags.VERB_ING);
+        subjectNounPredicateExtractionAllowedTags.add(EncodedTags.VERB_ED);
 
 
         wordsToFilterCache.add("the");
