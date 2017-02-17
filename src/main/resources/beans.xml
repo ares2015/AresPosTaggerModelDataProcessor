@@ -32,7 +32,6 @@
 
     <bean id="listComparator" class="com.trainingdataprocessor.validator.ListComparatorImpl"/>
 
-    <bean id="regexPatternSearcher" class="com.trainingdataprocessor.regex.RegexPatternSearcherImpl"/>
 
     <bean id="bigramDataListFactory" class="com.trainingdataprocessor.factories.bigram.BigramDataListFactoryImpl"/>
 
@@ -66,56 +65,22 @@
         <constructor-arg ref="capitalizedTokensProcessor"/>
     </bean>
 
-    <bean id="prepositionPhrasePreprocessor"
-          class="com.trainingdataprocessor.semantics.preprocessing.phrases.PrepositionPhrasePreprocessorImpl">
-        <constructor-arg ref="regexPatternSearcher"/>
-    </bean>
 
-    <bean id="nounPhrasePreprocessor"
-          class="com.trainingdataprocessor.semantics.preprocessing.phrases.NounPhrasePreprocessorImpl">
-        <constructor-arg ref="regexPatternSearcher"/>
-    </bean>
+    <bean id="semanticPreprocessor" class="com.trainingdataprocessor.semantics.preprocessing.SemanticPreprocessorImpl"/>
 
-    <bean id="verbPhrasePreprocessor"
-          class="com.trainingdataprocessor.semantics.preprocessing.phrases.VerbPhrasePreprocessorImpl">
-        <constructor-arg ref="regexPatternSearcher"/>
-    </bean>
+    <bean id="subjectExtractor" class="com.trainingdataprocessor.semantics.extraction.SubjectExtractorImpl"/>
 
-    <bean id="semanticPreprocessingFilter"
-          class="com.trainingdataprocessor.semantics.preprocessing.SemanticPreprocessingFilterImpl"/>
+    <bean id="verbPredicateExtractor"
+          class="com.trainingdataprocessor.semantics.extraction.VerbPredicateExtractorImpl"/>
 
-    <bean id="semanticPreprocessor" class="com.trainingdataprocessor.semantics.preprocessing.SemanticPreprocessorImpl">
-        <constructor-arg ref="prepositionPhrasePreprocessor"/>
-        <constructor-arg ref="nounPhrasePreprocessor"/>
-        <constructor-arg ref="verbPhrasePreprocessor"/>
-    </bean>
-
-    <bean id="prepositionPhraseExtractor"
-          class="com.trainingdataprocessor.semantics.extraction.phrases.PrepositionPhraseExtractorImpl">
-        <constructor-arg ref="tokenizer"/>
-    </bean>
-
-    <bean id="nounPhraseExtractor"
-          class="com.trainingdataprocessor.semantics.extraction.phrases.NounPhraseExtractorImpl">
-        <constructor-arg ref="tokenizer"/>
-    </bean>
-
-    <bean id="verbPhraseExtractor"
-          class="com.trainingdataprocessor.semantics.extraction.phrases.VerbPhraseExtractorImpl">
-        <constructor-arg ref="tokenizer"/>
-    </bean>
+    <bean id="nounPredicateExtractor"
+          class="com.trainingdataprocessor.semantics.extraction.NounPredicateExtractorImpl"/>
 
     <bean id="semanticExtractor"
           class="com.trainingdataprocessor.semantics.extraction.SemanticExtractorImpl">
-        <constructor-arg ref="prepositionPhraseExtractor"/>
-        <constructor-arg ref="nounPhraseExtractor"/>
-        <constructor-arg ref="verbPhraseExtractor"/>
-    </bean>
-
-    <bean id="semanticAnalysisExecutor"
-          class="com.trainingdataprocessor.semantics.analysis.SemanticAnalysisExecutorImpl">
-        <constructor-arg ref="semanticPreprocessor"/>
-        <constructor-arg ref="semanticExtractor"/>
+        <constructor-arg ref="subjectExtractor"/>
+        <constructor-arg ref="verbPredicateExtractor"/>
+        <constructor-arg ref="nounPredicateExtractor"/>
     </bean>
 
 
@@ -126,11 +91,10 @@
         <constructor-arg ref="bigramsWriter"/>
         <constructor-arg ref="subPathsWriter"/>
         <constructor-arg ref="trainingDataDatabaseAccessor"/>
-        <constructor-arg ref="tokenizer"/>
         <constructor-arg ref="bigramDataListFactory"/>
         <constructor-arg ref="subPathDataListFactory"/>
-        <constructor-arg ref="semanticAnalysisExecutor"/>
-        <constructor-arg ref="semanticPreprocessingFilter"/>
+        <constructor-arg ref="semanticPreprocessor"/>
+        <constructor-arg ref="semanticExtractor"/>
     </bean>
 
 </beans>

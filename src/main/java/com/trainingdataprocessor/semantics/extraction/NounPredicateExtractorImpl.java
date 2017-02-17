@@ -2,7 +2,7 @@ package com.trainingdataprocessor.semantics.extraction;
 
 import com.trainingdataprocessor.data.semantics.SemanticExtractionData;
 import com.trainingdataprocessor.data.semantics.SemanticPreprocessingData;
-import com.trainingdataprocessor.tags.EncodedTags;
+import com.trainingdataprocessor.tags.Tags;
 
 import java.util.List;
 
@@ -40,13 +40,13 @@ public class NounPredicateExtractorImpl implements NounPredicateExtractor {
         int lastNounIndex = -1;
         if (afterVerbPrepositionIndex > -1) {
             for (int i = verbIndex + 1; i < afterVerbPrepositionIndex; i++) {
-                if (EncodedTags.NOUN.equals(encodedTagsList.get(i)) || EncodedTags.VERB_ED.equals(encodedTagsList.get(i))) {
+                if (Tags.NOUN.equals(encodedTagsList.get(i)) || Tags.VERB_ED.equals(encodedTagsList.get(i))) {
                     lastNounIndex = i;
                 }
             }
         } else {
             for (int i = verbIndex + 1; i < encodedTagsList.size(); i++) {
-                if (EncodedTags.NOUN.equals(encodedTagsList.get(i))) {
+                if (Tags.NOUN.equals(encodedTagsList.get(i))) {
                     lastNounIndex = i;
                 }
             }

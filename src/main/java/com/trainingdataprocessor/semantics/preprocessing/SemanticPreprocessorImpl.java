@@ -30,15 +30,15 @@ public class SemanticPreprocessorImpl implements SemanticPreprocessor {
                     filteredTags.add(tag);
                     filteredTokens.add(tokens.get(tagsListIndex));
                     if ((Tags.VERB.equals(tag) || Tags.IS_ARE.equals(tag)) && verbIndex == -1) {
-                        verbIndex = tagsListIndex;
+                        verbIndex = filteredTags.size() - 1;
                     } else if ((Tags.VERB.equals(tag) || Tags.IS_ARE.equals(tag)) && verbIndex > -1) {
                         return semanticPreprocessingData;
                     }
                     if (Tags.MODAL_VERB.equals(tag)) {
-                        modalVerbIndex = tagsListIndex;
+                        modalVerbIndex = filteredTags.size() - 1;
                     }
                     if ((Tags.PREPOSITION.equals(tag) || Tags.TO.equals(tag)) && afterVerbFirstPrepositionIndex == -1 && verbIndex > -1) {
-                        afterVerbFirstPrepositionIndex = tagsListIndex;
+                        afterVerbFirstPrepositionIndex = filteredTags.size() - 1;
                     }
                     if ((Tags.PREPOSITION.equals(tag) || Tags.TO.equals(tag)) && verbIndex == -1) {
                         containsBeforeVerbPreposition = true;
@@ -46,8 +46,8 @@ public class SemanticPreprocessorImpl implements SemanticPreprocessor {
                     if (Tags.VERB_ING.equals(tag) && verbIndex > -1) {
                         containsAfterVerbVerbIng = true;
                     }
-                    tagsListIndex++;
                 }
+                tagsListIndex++;
             } else {
                 if (verbIndex > -1) {
                     break;
@@ -66,4 +66,5 @@ public class SemanticPreprocessorImpl implements SemanticPreprocessor {
         semanticPreprocessingData.setCanGoToExtraction(true);
         return semanticPreprocessingData;
     }
+
 }
