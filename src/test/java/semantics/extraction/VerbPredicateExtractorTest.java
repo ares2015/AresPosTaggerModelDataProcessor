@@ -1,9 +1,10 @@
-package semantics;
+package semantics.extraction;
 
 import com.trainingdataprocessor.data.semantics.SemanticExtractionData;
+import com.trainingdataprocessor.data.semantics.SemanticPreprocessingData;
 import com.trainingdataprocessor.semantics.extraction.VerbPredicateExtractor;
 import com.trainingdataprocessor.semantics.extraction.VerbPredicateExtractorImpl;
-import com.trainingdataprocessor.tags.EncodedTags;
+import com.trainingdataprocessor.tags.Tags;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -21,24 +22,31 @@ public class VerbPredicateExtractorTest {
 
     @Test
     public void test() {
-        List<String> encodedTags = new ArrayList<>();
+        List<String> tags = new ArrayList<>();
 
-        encodedTags.add(EncodedTags.NOUN);
-        encodedTags.add(EncodedTags.MODAL_VERB);
-        encodedTags.add(EncodedTags.VERB);
-        encodedTags.add(EncodedTags.ADVERB);
-        encodedTags.add(EncodedTags.ADVERB);
-        encodedTags.add(EncodedTags.PREPOSITION);
-        encodedTags.add(EncodedTags.DETERMINER);
-        encodedTags.add(EncodedTags.NOUN);
-        encodedTags.add(EncodedTags.PREPOSITION);
-        encodedTags.add(EncodedTags.NOUN);
+        tags.add(Tags.NOUN);
+        tags.add(Tags.MODAL_VERB);
+        tags.add(Tags.VERB);
+        tags.add(Tags.ADVERB);
+        tags.add(Tags.ADVERB);
+        tags.add(Tags.PREPOSITION);
+        tags.add(Tags.DETERMINER);
+        tags.add(Tags.NOUN);
+        tags.add(Tags.PREPOSITION);
+        tags.add(Tags.NOUN);
 
         String sentence = "cheetahs can run very quickly on the savannahs of Africa";
         List<String> tokens = Arrays.asList(sentence.split("\\ "));
         SemanticExtractionData semanticExtractionData = new SemanticExtractionData();
-        verbPredicateExtractor.extract(semanticExtractionData, tokens, encodedTags, 2, 1);
+        SemanticPreprocessingData semanticPreprocessingData = new SemanticPreprocessingData();
+        semanticPreprocessingData.setTokensList(tokens);
+        semanticPreprocessingData.setTagsList(tags);
+        semanticPreprocessingData.setVerbIndex(2);
+        semanticPreprocessingData.setModalVerbIndex(1);
+        verbPredicateExtractor.extract(semanticExtractionData, semanticPreprocessingData);
         assertEquals("can run very quickly ", semanticExtractionData.getExtendedVerbPredicate());
         assertEquals("run", semanticExtractionData.getAtomicVerbPredicate());
+
+
     }
 }

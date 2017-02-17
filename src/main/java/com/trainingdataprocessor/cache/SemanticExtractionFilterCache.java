@@ -1,6 +1,6 @@
 package com.trainingdataprocessor.cache;
 
-import com.trainingdataprocessor.tags.EncodedTags;
+import com.trainingdataprocessor.tags.Tags;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -14,33 +14,33 @@ public final class SemanticExtractionFilterCache {
 
     public static final Set<String> subjectNounPredicateExtractionAllowedTags = new HashSet<>();
 
-
     public static final Set<String> wordsToFilterCache = new HashSet<>();
 
     static {
-        semanticExtractionAllowedTags.add(EncodedTags.ADJECTIVE);
-        semanticExtractionAllowedTags.add(EncodedTags.ADVERB);
-        semanticExtractionAllowedTags.add(EncodedTags.DETERMINER);
-        semanticExtractionAllowedTags.add(EncodedTags.IS_ARE);
-        semanticExtractionAllowedTags.add(EncodedTags.MODAL_VERB);
-        semanticExtractionAllowedTags.add(EncodedTags.NOUN);
-        semanticExtractionAllowedTags.add(EncodedTags.NUMBER);
-        semanticExtractionAllowedTags.add(EncodedTags.PREPOSITION);
-        semanticExtractionAllowedTags.add(EncodedTags.QUANTIFIER);
-        semanticExtractionAllowedTags.add(EncodedTags.TO);
-        semanticExtractionAllowedTags.add(EncodedTags.VERB);
-        semanticExtractionAllowedTags.add(EncodedTags.VERB_ING);
-        semanticExtractionAllowedTags.add(EncodedTags.VERB_ED);
+        semanticExtractionAllowedTags.add(Tags.ADJECTIVE);
+        semanticExtractionAllowedTags.add(Tags.ADVERB);
+        semanticExtractionAllowedTags.add(Tags.DETERMINER);
+        semanticExtractionAllowedTags.add(Tags.IS_ARE);
+        semanticExtractionAllowedTags.add(Tags.MODAL_VERB);
+        semanticExtractionAllowedTags.add(Tags.NOUN);
+        semanticExtractionAllowedTags.add(Tags.NUMBER);
+        semanticExtractionAllowedTags.add(Tags.PREPOSITION);
+        semanticExtractionAllowedTags.add(Tags.PRONOUN_POSSESIVE);
+        semanticExtractionAllowedTags.add(Tags.QUANTIFIER);
+        semanticExtractionAllowedTags.add(Tags.TO);
+        semanticExtractionAllowedTags.add(Tags.VERB);
+        semanticExtractionAllowedTags.add(Tags.VERB_ING);
+        semanticExtractionAllowedTags.add(Tags.VERB_ED);
 
-        subjectNounPredicateExtractionAllowedTags.add(EncodedTags.ADJECTIVE);
-        subjectNounPredicateExtractionAllowedTags.add(EncodedTags.ADVERB);
-        subjectNounPredicateExtractionAllowedTags.add(EncodedTags.NOUN);
-        subjectNounPredicateExtractionAllowedTags.add(EncodedTags.NUMBER);
-        subjectNounPredicateExtractionAllowedTags.add(EncodedTags.PREPOSITION);
-        subjectNounPredicateExtractionAllowedTags.add(EncodedTags.QUANTIFIER);
-        subjectNounPredicateExtractionAllowedTags.add(EncodedTags.TO);
-        subjectNounPredicateExtractionAllowedTags.add(EncodedTags.VERB_ING);
-        subjectNounPredicateExtractionAllowedTags.add(EncodedTags.VERB_ED);
+        subjectNounPredicateExtractionAllowedTags.add(Tags.ADJECTIVE);
+        subjectNounPredicateExtractionAllowedTags.add(Tags.ADVERB);
+        subjectNounPredicateExtractionAllowedTags.add(Tags.NOUN);
+        subjectNounPredicateExtractionAllowedTags.add(Tags.NUMBER);
+        subjectNounPredicateExtractionAllowedTags.add(Tags.PREPOSITION);
+        subjectNounPredicateExtractionAllowedTags.add(Tags.QUANTIFIER);
+        subjectNounPredicateExtractionAllowedTags.add(Tags.TO);
+        subjectNounPredicateExtractionAllowedTags.add(Tags.VERB_ING);
+        subjectNounPredicateExtractionAllowedTags.add(Tags.VERB_ED);
 
 
         wordsToFilterCache.add("the");

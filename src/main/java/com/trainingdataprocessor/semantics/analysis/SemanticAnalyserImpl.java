@@ -92,7 +92,7 @@
 ////        return -1;
 ////    }
 ////
-////    private int getAfterVerbPrepositionIndex(List<String> encodedTags, int verbIndex) {
+////    private int getAfterVerbFirstPrepositionIndex(List<String> encodedTags, int verbIndex) {
 ////        for (int i = 0; i <= encodedTags.size() - 1; i++) {
 ////            if ((EncodedTags.PREPOSITION.equals(encodedTags.get(i)) || EncodedTags.TO.equals(encodedTags.get(i))) && i > verbIndex) {
 ////                return i;

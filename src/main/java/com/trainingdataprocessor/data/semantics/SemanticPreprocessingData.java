@@ -13,15 +13,17 @@ public class SemanticPreprocessingData {
 
     private List<String> tagsList;
 
-    private int verbIndex;
+    private int verbIndex = -1;
 
-    private int modalVerbIndex;
+    private int modalVerbIndex = -1;
 
-    private int beforeVerbPrepositionIndex;
+    private boolean containsBeforeVerbPreposition;
 
-    private int afterVerbPrepositionIndex;
+    private int afterVerbFirstPrepositionIndex = -1;
 
-    public boolean isCanGoToExtraction() {
+    private boolean containsAfterVerbVerbIng;
+
+    public boolean canGoToExtraction() {
         return canGoToExtraction;
     }
 
@@ -61,19 +63,27 @@ public class SemanticPreprocessingData {
         this.modalVerbIndex = modalVerbIndex;
     }
 
-    public int getBeforeVerbPrepositionIndex() {
-        return beforeVerbPrepositionIndex;
+    public boolean containsBeforeVerbPreposition() {
+        return containsBeforeVerbPreposition;
     }
 
-    public void setBeforeVerbPrepositionIndex(int beforeVerbPrepositionIndex) {
-        this.beforeVerbPrepositionIndex = beforeVerbPrepositionIndex;
+    public void setContainsBeforeVerbPreposition(boolean containsBeforeVerbPreposition) {
+        this.containsBeforeVerbPreposition = containsBeforeVerbPreposition;
     }
 
-    public int getAfterVerbPrepositionIndex() {
-        return afterVerbPrepositionIndex;
+    public boolean containsAfterVerbVerbIng() {
+        return containsAfterVerbVerbIng;
     }
 
-    public void setAfterVerbPrepositionIndex(int afterVerbPrepositionIndex) {
-        this.afterVerbPrepositionIndex = afterVerbPrepositionIndex;
+    public void setContainsAfterVerbVerbIng(boolean containsAfterVerbVerbIng) {
+        this.containsAfterVerbVerbIng = containsAfterVerbVerbIng;
+    }
+
+    public int getAfterVerbFirstPrepositionIndex() {
+        return afterVerbFirstPrepositionIndex;
+    }
+
+    public void setAfterVerbFirstPrepositionIndex(int afterVerbFirstPrepositionIndex) {
+        this.afterVerbFirstPrepositionIndex = afterVerbFirstPrepositionIndex;
     }
 }

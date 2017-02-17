@@ -2,7 +2,7 @@ package com.trainingdataprocessor.semantics.extraction;
 
 import com.trainingdataprocessor.data.semantics.SemanticExtractionData;
 import com.trainingdataprocessor.data.semantics.SemanticPreprocessingData;
-import com.trainingdataprocessor.tags.EncodedTags;
+import com.trainingdataprocessor.tags.Tags;
 
 import java.util.List;
 
@@ -27,8 +27,8 @@ public class VerbPredicateExtractorImpl implements VerbPredicateExtractor {
     private String extractAtomicVerbPredicate(List<String> tokensList, List<String> encodedTagsList, int modalVerbIndex) {
         StringBuilder stringBuilder = new StringBuilder();
         for (int i = modalVerbIndex; i < tokensList.size(); i++) {
-            if (EncodedTags.VERB.equals(encodedTagsList.get(i)) || EncodedTags.MODAL_VERB.equals(encodedTagsList.get(i))
-                    || EncodedTags.ADVERB.equals(encodedTagsList.get(i))) {
+            if (Tags.VERB.equals(encodedTagsList.get(i)) || Tags.MODAL_VERB.equals(encodedTagsList.get(i))
+                    || Tags.ADVERB.equals(encodedTagsList.get(i))) {
                 stringBuilder.append(tokensList.get(i));
                 stringBuilder.append(" ");
             } else {

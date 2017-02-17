@@ -3,7 +3,7 @@ package com.trainingdataprocessor.semantics.extraction;
 import com.trainingdataprocessor.cache.SemanticExtractionFilterCache;
 import com.trainingdataprocessor.data.semantics.SemanticExtractionData;
 import com.trainingdataprocessor.data.semantics.SemanticPreprocessingData;
-import com.trainingdataprocessor.tags.EncodedTags;
+import com.trainingdataprocessor.tags.Tags;
 
 import java.util.List;
 
@@ -17,7 +17,7 @@ public class SubjectExtractorImpl implements SubjectExtractor {
         List<String> tokensList = semanticPreprocessingData.getTokensList();
         List<String> tagsList = semanticPreprocessingData.getTagsList();
         int verbIndex = semanticPreprocessingData.getVerbIndex();
-        if (semanticPreprocessingData.getBeforeVerbPrepositionIndex() == -1) {
+        if (!semanticPreprocessingData.containsBeforeVerbPreposition()) {
             String atomicSubject = extractAtomicSubject(tokensList, tagsList, verbIndex);
             semanticExtractionData.setAtomicSubject(atomicSubject);
         }
@@ -27,9 +27,9 @@ public class SubjectExtractorImpl implements SubjectExtractor {
         }
     }
 
-    private String extractAtomicSubject(List<String> tokensList, List<String> encodedTagsList, int verbIndex) {
+    private String extractAtomicSubject(List<String> tokensList, List<String> tagsList, int verbIndex) {
         for (int i = verbIndex; i >= 0; i--) {
-            if (EncodedTags.NOUN.equals(encodedTagsList.get(i)) || EncodedTags.VERB_ED.equals(encodedTagsList.get(i))) {
+            if (Tags.NOUN.equals(tagsList.get(i)) || Tags.VERB_ED.equals(tagsList.get(i))) {
                 return tokensList.get(i);
             }
         }
