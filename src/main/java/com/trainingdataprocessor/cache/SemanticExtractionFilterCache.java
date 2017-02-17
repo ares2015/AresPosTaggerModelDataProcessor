@@ -21,11 +21,9 @@ public final class SemanticExtractionFilterCache {
         semanticExtractionAllowedTags.add(EncodedTags.ADJECTIVE);
         semanticExtractionAllowedTags.add(EncodedTags.ADVERB);
         semanticExtractionAllowedTags.add(EncodedTags.DETERMINER);
-        semanticExtractionAllowedTags.add(EncodedTags.DO);
         semanticExtractionAllowedTags.add(EncodedTags.IS_ARE);
         semanticExtractionAllowedTags.add(EncodedTags.MODAL_VERB);
         semanticExtractionAllowedTags.add(EncodedTags.NOUN);
-        semanticExtractionAllowedTags.add(EncodedTags.NOT);
         semanticExtractionAllowedTags.add(EncodedTags.NUMBER);
         semanticExtractionAllowedTags.add(EncodedTags.PREPOSITION);
         semanticExtractionAllowedTags.add(EncodedTags.QUANTIFIER);

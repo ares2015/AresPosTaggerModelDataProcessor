@@ -21,7 +21,7 @@ public class NounPredicateExtractorImpl implements NounPredicateExtractor {
 
     private String extractAtomicNounPredicate(List<String> tokensList, List<String> encodedTagsList,
                                               int verbIndex, int afterVerbPrepositionIndex) {
-        int lastNounIndex = getLastNounIndex(encodedTagsList, verbIndex, afterVerbPrepositionIndex);
+        int lastNounIndex = getLastNounVerbEdIndex(encodedTagsList, verbIndex, afterVerbPrepositionIndex);
         if (lastNounIndex > -1) {
             return tokensList.get(lastNounIndex);
         } else {
@@ -29,12 +29,12 @@ public class NounPredicateExtractorImpl implements NounPredicateExtractor {
         }
     }
 
-    private int getLastNounIndex(List<String> encodedTagsList,
-                                 int verbIndex, int afterVerbPrepositionIndex) {
+    private int getLastNounVerbEdIndex(List<String> encodedTagsList,
+                                       int verbIndex, int afterVerbPrepositionIndex) {
         int lastNounIndex = -1;
         if (afterVerbPrepositionIndex > -1) {
             for (int i = verbIndex + 1; i < afterVerbPrepositionIndex; i++) {
-                if (EncodedTags.NOUN.equals(encodedTagsList.get(i))) {
+                if (EncodedTags.NOUN.equals(encodedTagsList.get(i)) || EncodedTags.VERB_ED.equals(encodedTagsList.get(i))) {
                     lastNounIndex = i;
                 }
             }
