@@ -23,6 +23,7 @@ public class SemanticPreprocessorImpl implements SemanticPreprocessor {
         boolean containsBeforeVerbPreposition = false;
         int afterVerbFirstPrepositionIndex = -1;
         boolean containsAfterVerbVerbIng = false;
+        boolean containsSubject = false;
 
         for (String tag : tags) {
             if (SemanticExtractionFilterCache.semanticExtractionAllowedTags.contains(tag)) {
@@ -46,6 +47,9 @@ public class SemanticPreprocessorImpl implements SemanticPreprocessor {
                     if (Tags.VERB_ING.equals(tag) && verbIndex > -1) {
                         containsAfterVerbVerbIng = true;
                     }
+                    if ((Tags.NOUN.equals(tag) || Tags.VERB_ED.equals(tag)) && verbIndex == -1) {
+                        containsSubject = true;
+                    }
                 }
                 tagsListIndex++;
             } else {
@@ -56,15 +60,19 @@ public class SemanticPreprocessorImpl implements SemanticPreprocessor {
                 }
             }
         }
-        semanticPreprocessingData.setTagsList(filteredTags);
-        semanticPreprocessingData.setTokensList(filteredTokens);
-        semanticPreprocessingData.setContainsBeforeVerbPreposition(containsBeforeVerbPreposition);
-        semanticPreprocessingData.setVerbIndex(verbIndex);
-        semanticPreprocessingData.setModalVerbIndex(modalVerbIndex);
-        semanticPreprocessingData.setAfterVerbFirstPrepositionIndex(afterVerbFirstPrepositionIndex);
-        semanticPreprocessingData.setContainsAfterVerbVerbIng(containsAfterVerbVerbIng);
-        semanticPreprocessingData.setCanGoToExtraction(true);
-        return semanticPreprocessingData;
+        if (verbIndex == -1 || !containsSubject) {
+            return semanticPreprocessingData;
+        } else {
+            semanticPreprocessingData.setTagsList(filteredTags);
+            semanticPreprocessingData.setTokensList(filteredTokens);
+            semanticPreprocessingData.setContainsBeforeVerbPreposition(containsBeforeVerbPreposition);
+            semanticPreprocessingData.setVerbIndex(verbIndex);
+            semanticPreprocessingData.setModalVerbIndex(modalVerbIndex);
+            semanticPreprocessingData.setAfterVerbFirstPrepositionIndex(afterVerbFirstPrepositionIndex);
+            semanticPreprocessingData.setContainsAfterVerbVerbIng(containsAfterVerbVerbIng);
+            semanticPreprocessingData.setCanGoToExtraction(true);
+            return semanticPreprocessingData;
+        }
     }
 
 }

@@ -55,4 +55,19 @@ public class SemanticIntegrationTest {
         assertEquals("produced", semanticExtractionData.getAtomicNounPredicate());
         assertEquals("first produced in 1934 in Los Angeles under title Woman on Trial ", semanticExtractionData.getExtendedNounPredicate());
     }
+
+    @Test
+    public void test3() {
+        String sentence = "A drone looks like a conflation of a giant insect and a light aircraft";
+        List<String> tokensList = Arrays.asList(sentence.split("\\ "));
+        String tags = "DET N V PR DET N PR DET AJ N AO DET AJ N";
+        List<String> tagsList = Arrays.asList(tags.split("\\ "));
+        SemanticPreprocessingData semanticPreprocessingData = semanticPreprocessor.preprocess(tokensList, tagsList);
+        SemanticExtractionData semanticExtractionData = semanticExtractor.extract(semanticPreprocessingData);
+        assertEquals("drone", semanticExtractionData.getAtomicSubject());
+        assertEquals("", semanticExtractionData.getExtendedSubject());
+        assertEquals("looks", semanticExtractionData.getAtomicVerbPredicate());
+        assertEquals("", semanticExtractionData.getAtomicNounPredicate());
+        assertEquals("like conflation of giant insect ", semanticExtractionData.getExtendedNounPredicate());
+    }
 }

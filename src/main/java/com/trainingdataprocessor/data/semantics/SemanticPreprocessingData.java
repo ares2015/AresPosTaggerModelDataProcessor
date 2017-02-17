@@ -7,7 +7,7 @@ import java.util.List;
  */
 public class SemanticPreprocessingData {
 
-    private boolean canGoToExtraction;
+    private boolean canGoToExtraction = false;
 
     private List<String> tokensList;
 
@@ -17,11 +17,13 @@ public class SemanticPreprocessingData {
 
     private int modalVerbIndex = -1;
 
-    private boolean containsBeforeVerbPreposition;
+    private boolean containsBeforeVerbPreposition = false;
 
     private int afterVerbFirstPrepositionIndex = -1;
 
-    private boolean containsAfterVerbVerbIng;
+    private boolean containsAfterVerbVerbIng = false;
+
+    private boolean containsSubject = false;
 
     public boolean canGoToExtraction() {
         return canGoToExtraction;
@@ -85,5 +87,13 @@ public class SemanticPreprocessingData {
 
     public void setAfterVerbFirstPrepositionIndex(int afterVerbFirstPrepositionIndex) {
         this.afterVerbFirstPrepositionIndex = afterVerbFirstPrepositionIndex;
+    }
+
+    public boolean isContainsSubject() {
+        return containsSubject;
+    }
+
+    public void setContainsSubject(boolean containsSubject) {
+        this.containsSubject = containsSubject;
     }
 }
