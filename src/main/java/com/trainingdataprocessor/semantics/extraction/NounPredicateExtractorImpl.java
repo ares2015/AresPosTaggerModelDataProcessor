@@ -1,6 +1,7 @@
-package com.trainingdataprocessor.semantics;
+package com.trainingdataprocessor.semantics.extraction;
 
 import com.trainingdataprocessor.data.semantics.SemanticExtractionData;
+import com.trainingdataprocessor.data.semantics.SemanticPreprocessingData;
 import com.trainingdataprocessor.tags.EncodedTags;
 
 import java.util.List;
@@ -11,9 +12,12 @@ import java.util.List;
 public class NounPredicateExtractorImpl implements NounPredicateExtractor {
 
     @Override
-    public void extract(SemanticExtractionData semanticExtractionData, List<String> tokensList, List<String> encodedTagsList,
-                        int verbIndex, int afterVerbPrepositionIndex) {
-        String atomicNounPredicate = extractAtomicNounPredicate(tokensList, encodedTagsList, verbIndex, afterVerbPrepositionIndex);
+    public void extract(SemanticExtractionData semanticExtractionData, SemanticPreprocessingData semanticPreprocessingData) {
+        List<String> tokensList = semanticPreprocessingData.getTokensList();
+        List<String> tagsList = semanticPreprocessingData.getTagsList();
+        int verbIndex = semanticPreprocessingData.getVerbIndex();
+        int afterVerbPrepositionIndex = semanticPreprocessingData.getAfterVerbPrepositionIndex();
+        String atomicNounPredicate = extractAtomicNounPredicate(tokensList, tagsList, verbIndex, afterVerbPrepositionIndex);
         semanticExtractionData.setAtomicNounPredicate(atomicNounPredicate);
         String extendedNounPredicate = extractExtendedNounPredicate(tokensList, verbIndex);
         semanticExtractionData.setExtendedNounPredicate(extendedNounPredicate);

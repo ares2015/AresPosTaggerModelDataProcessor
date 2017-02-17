@@ -1,7 +1,8 @@
-package com.trainingdataprocessor.semantics;
+package com.trainingdataprocessor.semantics.extraction;
 
 import com.trainingdataprocessor.cache.SemanticExtractionFilterCache;
 import com.trainingdataprocessor.data.semantics.SemanticExtractionData;
+import com.trainingdataprocessor.data.semantics.SemanticPreprocessingData;
 import com.trainingdataprocessor.tags.EncodedTags;
 
 import java.util.List;
@@ -12,14 +13,16 @@ import java.util.List;
 public class SubjectExtractorImpl implements SubjectExtractor {
 
     @Override
-    public void extract(SemanticExtractionData semanticExtractionData, List<String> tokensList, List<String> encodedTagsList, int verbIndex,
-                        int beforeVerbPrepositionIndex) {
-        if (beforeVerbPrepositionIndex == -1) {
-            String atomicSubject = extractAtomicSubject(tokensList, encodedTagsList, verbIndex);
+    public void extract(SemanticExtractionData semanticExtractionData, SemanticPreprocessingData semanticPreprocessingData) {
+        List<String> tokensList = semanticPreprocessingData.getTokensList();
+        List<String> tagsList = semanticPreprocessingData.getTagsList();
+        int verbIndex = semanticPreprocessingData.getVerbIndex();
+        if (semanticPreprocessingData.getBeforeVerbPrepositionIndex() == -1) {
+            String atomicSubject = extractAtomicSubject(tokensList, tagsList, verbIndex);
             semanticExtractionData.setAtomicSubject(atomicSubject);
         }
         if (verbIndex > 1) {
-            String extendedSubject = extractExtendedSubject(tokensList, encodedTagsList);
+            String extendedSubject = extractExtendedSubject(tokensList, tagsList);
             semanticExtractionData.setExtendedSubject(extendedSubject);
         }
     }

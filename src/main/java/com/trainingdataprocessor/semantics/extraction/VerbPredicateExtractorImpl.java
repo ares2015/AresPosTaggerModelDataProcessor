@@ -1,6 +1,7 @@
-package com.trainingdataprocessor.semantics;
+package com.trainingdataprocessor.semantics.extraction;
 
 import com.trainingdataprocessor.data.semantics.SemanticExtractionData;
+import com.trainingdataprocessor.data.semantics.SemanticPreprocessingData;
 import com.trainingdataprocessor.tags.EncodedTags;
 
 import java.util.List;
@@ -11,11 +12,14 @@ import java.util.List;
 public class VerbPredicateExtractorImpl implements VerbPredicateExtractor {
 
     @Override
-    public void extract(SemanticExtractionData semanticExtractionData, List<String> tokensList, List<String> encodedTagsList,
-                        int verbIndex, int modalVerbIndex) {
+    public void extract(SemanticExtractionData semanticExtractionData, SemanticPreprocessingData semanticPreprocessingData) {
+        List<String> tokensList = semanticPreprocessingData.getTokensList();
+        List<String> tagsList = semanticPreprocessingData.getTagsList();
+        int verbIndex = semanticPreprocessingData.getVerbIndex();
+        int modalVerbIndex = semanticPreprocessingData.getModalVerbIndex();
         semanticExtractionData.setAtomicVerbPredicate(tokensList.get(verbIndex));
         if (modalVerbIndex > -1) {
-            String extendedVerbPredicate = extractAtomicVerbPredicate(tokensList, encodedTagsList, modalVerbIndex);
+            String extendedVerbPredicate = extractAtomicVerbPredicate(tokensList, tagsList, modalVerbIndex);
             semanticExtractionData.setExtendedVerbPredicate(extendedVerbPredicate);
         }
     }

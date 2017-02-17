@@ -1,8 +1,7 @@
-package com.trainingdataprocessor.semantics;
+package com.trainingdataprocessor.semantics.extraction;
 
 import com.trainingdataprocessor.data.semantics.SemanticExtractionData;
-
-import java.util.List;
+import com.trainingdataprocessor.data.semantics.SemanticPreprocessingData;
 
 /**
  * Created by Oliver on 2/17/2017.
@@ -23,12 +22,11 @@ public class SemanticExtractorImpl implements SemanticExtractor {
     }
 
     @Override
-    public SemanticExtractionData extract(List<String> tokensList, List<String> encodedTagsList, int verbIndex, int modalVerbIndex,
-                                          int beforeVerbPrepositionIndex, int afterVerbPrepositionIndex) {
+    public SemanticExtractionData extract(SemanticPreprocessingData semanticPreprocessingData) {
         SemanticExtractionData semanticExtractionData = new SemanticExtractionData();
-        subjectExtractor.extract(semanticExtractionData, tokensList, encodedTagsList, verbIndex, beforeVerbPrepositionIndex);
-        verbPredicateExtractor.extract(semanticExtractionData, tokensList, encodedTagsList, verbIndex, modalVerbIndex);
-        nounPredicateExtractor.extract(semanticExtractionData, tokensList, encodedTagsList, verbIndex, afterVerbPrepositionIndex);
+        subjectExtractor.extract(semanticExtractionData, semanticPreprocessingData);
+        verbPredicateExtractor.extract(semanticExtractionData, semanticPreprocessingData);
+        nounPredicateExtractor.extract(semanticExtractionData, semanticPreprocessingData);
         return semanticExtractionData;
     }
 

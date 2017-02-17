@@ -1,7 +1,7 @@
 package semantics;
 
 import com.trainingdataprocessor.data.semantics.SemanticExtractionData;
-import com.trainingdataprocessor.semantics.*;
+import com.trainingdataprocessor.semantics.extraction.*;
 import com.trainingdataprocessor.tags.EncodedTags;
 import org.junit.Test;
 
