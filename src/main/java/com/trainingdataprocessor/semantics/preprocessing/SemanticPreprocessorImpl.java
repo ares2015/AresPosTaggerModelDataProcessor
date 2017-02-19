@@ -24,6 +24,8 @@ public class SemanticPreprocessorImpl implements SemanticPreprocessor {
         int afterVerbFirstPrepositionIndex = -1;
         boolean containsAfterVerbVerbIng = false;
         boolean containsSubject = false;
+        boolean containsNounAdjectivePredicate = false;
+        boolean containsAdverbPredicate = false;
 
         for (String tag : tags) {
             if (SemanticExtractionFilterCache.semanticExtractionAllowedTags.contains(tag)) {
@@ -50,6 +52,14 @@ public class SemanticPreprocessorImpl implements SemanticPreprocessor {
                     if ((Tags.NOUN.equals(tag) || Tags.VERB_ED.equals(tag)) && verbIndex == -1) {
                         containsSubject = true;
                     }
+                    if (verbIndex > -1 && tagsListIndex > verbIndex && ((Tags.NOUN.equals(tag) || Tags.ADJECTIVE.equals(tag)) || Tags.VERB_ED.equals(tag) ||
+                            Tags.VERB_ING.equals(tag))) {
+                        containsNounAdjectivePredicate = true;
+                    }
+                    if (verbIndex > -1 && tagsListIndex > verbIndex && Tags.ADVERB.equals(tag)) {
+                        containsAdverbPredicate = true;
+                    }
+
                 }
                 tagsListIndex++;
             } else {
@@ -60,7 +70,8 @@ public class SemanticPreprocessorImpl implements SemanticPreprocessor {
                 }
             }
         }
-        if (verbIndex == -1 || !containsSubject) {
+        if (verbIndex == -1 || !containsSubject || (!containsNounAdjectivePredicate && containsAdverbPredicate) ||
+                (Tags.IS_ARE.equals(tags.get(verbIndex)) && !containsNounAdjectivePredicate)) {
             return semanticPreprocessingData;
         } else {
             semanticPreprocessingData.setTagsList(filteredTags);
