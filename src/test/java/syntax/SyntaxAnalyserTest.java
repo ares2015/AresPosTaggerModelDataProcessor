@@ -1,7 +1,6 @@
 package syntax;
 
 import com.trainingdataprocessor.data.preprocessing.TrainingDataRow;
-import com.trainingdataprocessor.database.TrainingDataDatabaseAccessor;
 import com.trainingdataprocessor.factories.bigram.BigramDataListFactory;
 import com.trainingdataprocessor.factories.bigram.BigramDataListFactoryImpl;
 import com.trainingdataprocessor.factories.subpath.SubPathDataListFactory;
@@ -10,7 +9,6 @@ import com.trainingdataprocessor.tags.Tags;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import org.springframework.jdbc.core.JdbcTemplate;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,8 +19,6 @@ import java.util.List;
 public class SyntaxAnalyserTest {
 
     ApplicationContext context = new ClassPathXmlApplicationContext("beans.xml");
-    JdbcTemplate jdbcTemplate = (JdbcTemplate) context.getBean("jdbcTemplate");
-    TrainingDataDatabaseAccessor trainingDataDatabaseAccessor = (TrainingDataDatabaseAccessor) context.getBean("trainingDataDatabaseAccessor");
 
     BigramDataListFactory bigramDataListFactory = new BigramDataListFactoryImpl();
 
@@ -50,18 +46,7 @@ public class SyntaxAnalyserTest {
 
         trainingDataRowList.add(trainingDataRow);
 
-//        ExecutorService executor = Executors.newFixedThreadPool(1);
-//        Runnable syntaxAnalyser = new SyntaxAnalyserImpl(trainingDataDatabaseAccessor, bigramDataListFactory, subPathDataListFactory, trainingDataRowList);
-//
-//        executor.execute(syntaxAnalyser);
 
-//        String sql = "select max(id) from jos_nlp_semantic_data";
-//        int id = jdbcTemplate.queryForInt(sql);
-//
-//        sql = "delete from jos_nlp_semantic_data where id = ?";
-//        jdbcTemplate.update(sql,  new Object[]{id});
-
-//        Thread.sleep(5000);
     }
 
 

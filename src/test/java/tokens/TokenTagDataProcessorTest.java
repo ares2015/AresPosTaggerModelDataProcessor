@@ -1,7 +1,6 @@
 package tokens;
 
 import com.trainingdataprocessor.data.preprocessing.TrainingDataRow;
-import com.trainingdataprocessor.database.TrainingDataDatabaseAccessor;
 import com.trainingdataprocessor.tags.Tags;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -17,7 +16,6 @@ import java.util.List;
 public class TokenTagDataProcessorTest {
 
     ApplicationContext context = new ClassPathXmlApplicationContext("beans.xml");
-    TrainingDataDatabaseAccessor trainingDataDatabaseAccessor = (TrainingDataDatabaseAccessor) context.getBean("trainingDataDatabaseAccessor");
 
     @Test
     @Ignore
@@ -35,10 +33,7 @@ public class TokenTagDataProcessorTest {
 
         trainingDataRowList.add(trainingDataRow);
 
-//        Runnable tokenTagDataProcessor = new TokenTagDataProcessorImpl(trainingDataDatabaseAccessor, trainingDataRowList);
-//        ExecutorService executor = Executors.newFixedThreadPool(1);
-//        executor.submit(tokenTagDataProcessor);
-//        Thread.sleep(7000);
+
     }
 
     @Test
@@ -57,11 +52,5 @@ public class TokenTagDataProcessorTest {
 
         trainingDataRowList.add(trainingDataRow);
 
-//        Runnable tokenTagDataProcessor = new TokenTagDataProcessorImpl(trainingDataDatabaseAccessor, trainingDataRowList);
-////        TokenTagDataProcessor tokenTagDataProcessor = new TokenTagDataProcessorImpl(trainingDataDatabaseAccessor, trainingDataRowList);
-////        tokenTagDataProcessor.process();
-//        ExecutorService executor = Executors.newFixedThreadPool(1);
-//        executor.submit(tokenTagDataProcessor);
-//        Thread.sleep(7000);
     }
 }

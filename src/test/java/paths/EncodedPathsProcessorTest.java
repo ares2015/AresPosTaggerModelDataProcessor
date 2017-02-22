@@ -1,7 +1,6 @@
 package paths;
 
 import com.trainingdataprocessor.data.preprocessing.TrainingDataRow;
-import com.trainingdataprocessor.database.TrainingDataDatabaseAccessor;
 import com.trainingdataprocessor.tokens.Tokenizer;
 import com.trainingdataprocessor.tokens.TokenizerImpl;
 import org.junit.Ignore;
@@ -18,7 +17,6 @@ import java.util.List;
 public class EncodedPathsProcessorTest {
 
     ApplicationContext context = new ClassPathXmlApplicationContext("beans.xml");
-    TrainingDataDatabaseAccessor trainingDataDatabaseAccessor = (TrainingDataDatabaseAccessor) context.getBean("trainingDataDatabaseAccessor");
     Tokenizer tokenizer = new TokenizerImpl();
 
     @Test
@@ -28,10 +26,5 @@ public class EncodedPathsProcessorTest {
         TrainingDataRow trainingDataRow = new TrainingDataRow();
         trainingDataRow.setEncodedPathAsString("JNVN");
         trainingDataRowList.add(trainingDataRow);
-
-//        Runnable encodedPathsProcessor = new EncodedPathsProcessorImpl(tokenizer, trainingDataDatabaseAccessor, trainingDataRowList);
-//        ExecutorService executor = Executors.newFixedThreadPool(1);
-//        executor.execute(encodedPathsProcessor);
-//        Thread.sleep(7000);
     }
 }

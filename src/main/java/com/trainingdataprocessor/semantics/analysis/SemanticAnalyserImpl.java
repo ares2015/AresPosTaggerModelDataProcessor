@@ -3,10 +3,11 @@ package com.trainingdataprocessor.semantics.analysis;
 import com.trainingdataprocessor.data.preprocessing.TrainingDataRow;
 import com.trainingdataprocessor.data.semantics.SemanticExtractionData;
 import com.trainingdataprocessor.data.semantics.SemanticPreprocessingData;
-import com.trainingdataprocessor.database.TrainingDataDatabaseAccessor;
 import com.trainingdataprocessor.semantics.extraction.SemanticExtractor;
 import com.trainingdataprocessor.semantics.preprocessing.SemanticPreprocessor;
+import com.trainingdataprocessor.writer.semantics.SemanticsWriter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -18,16 +19,18 @@ public class SemanticAnalyserImpl implements SemanticAnalyser, Runnable {
 
     private SemanticExtractor semanticExtractor;
 
+    private SemanticsWriter semanticsWriter;
+
     private List<TrainingDataRow> trainingDataRowList;
 
-    private TrainingDataDatabaseAccessor trainingDataDatabaseAccessor;
+    private List<SemanticExtractionData> semanticExtractionDataList = new ArrayList<>();
 
     public SemanticAnalyserImpl(SemanticPreprocessor semanticPreprocessor, SemanticExtractor semanticExtractor,
-                                List<TrainingDataRow> trainingDataRowList, TrainingDataDatabaseAccessor trainingDataDatabaseAccessor) {
+                                SemanticsWriter semanticsWriter, List<TrainingDataRow> trainingDataRowList) {
         this.semanticPreprocessor = semanticPreprocessor;
         this.semanticExtractor = semanticExtractor;
+        this.semanticsWriter = semanticsWriter;
         this.trainingDataRowList = trainingDataRowList;
-        this.trainingDataDatabaseAccessor = trainingDataDatabaseAccessor;
     }
 
     @Override
@@ -50,13 +53,14 @@ public class SemanticAnalyserImpl implements SemanticAnalyser, Runnable {
                 analyseSentence(tokensList, tagsList);
             }
         }
+        semanticsWriter.write(semanticExtractionDataList);
     }
 
     private void analyseSentence(List<String> tokensList, List<String> tagsList) {
         SemanticPreprocessingData semanticPreprocessingData = semanticPreprocessor.preprocess(tokensList, tagsList);
         if (semanticPreprocessingData.canGoToExtraction()) {
             SemanticExtractionData semanticExtractionData = semanticExtractor.extract(semanticPreprocessingData);
-            trainingDataDatabaseAccessor.insertSemanticData(semanticExtractionData);
+            semanticExtractionDataList.add(semanticExtractionData);
         }
     }
 

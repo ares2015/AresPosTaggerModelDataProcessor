@@ -1,7 +1,6 @@
 package com.trainingdataprocessor.main;
 
 import com.trainingdataprocessor.data.preprocessing.TrainingDataRow;
-import com.trainingdataprocessor.database.TrainingDataDatabaseAccessor;
 import com.trainingdataprocessor.factories.bigram.BigramDataListFactory;
 import com.trainingdataprocessor.factories.subpath.SubPathDataListFactory;
 import com.trainingdataprocessor.preprocessing.TrainingDataPreprocessor;
@@ -11,6 +10,7 @@ import com.trainingdataprocessor.semantics.preprocessing.SemanticPreprocessor;
 import com.trainingdataprocessor.syntax.SyntaxAnalyserImpl;
 import com.trainingdataprocessor.writer.bigrams.BigramsWriter;
 import com.trainingdataprocessor.writer.paths.EncodedPathsWriterImpl;
+import com.trainingdataprocessor.writer.semantics.SemanticsWriter;
 import com.trainingdataprocessor.writer.subpaths.SubPathsWriter;
 import com.trainingdataprocessor.writer.tags.TagsWriter;
 import com.trainingdataprocessor.writer.tokens.TokenTagsWriterImpl;
@@ -33,9 +33,9 @@ public class NlpTrainingDataProcessor {
 
     private BigramsWriter bigramsWriter;
 
-    private SubPathsWriter subPathsWriter;
+    private SemanticsWriter semanticsWriter;
 
-    private TrainingDataDatabaseAccessor trainingDataDatabaseAccessor;
+    private SubPathsWriter subPathsWriter;
 
     private BigramDataListFactory bigramDataListFactory;
 
@@ -48,14 +48,14 @@ public class NlpTrainingDataProcessor {
     private static int NUMBER_OF_THREADS = 4;
 
     public NlpTrainingDataProcessor(TrainingDataPreprocessor trainingDataPreprocessor, TagsWriter tagsWriter, BigramsWriter bigramsWriter,
-                                    SubPathsWriter subPathsWriter, TrainingDataDatabaseAccessor trainingDataDatabaseAccessor,
+                                    SemanticsWriter semanticsWriter, SubPathsWriter subPathsWriter,
                                     BigramDataListFactory bigramDataListFactory, SubPathDataListFactory subPathDataListFactory,
                                     SemanticPreprocessor semanticPreprocessor, SemanticExtractor semanticExtractor) {
         this.trainingDataPreprocessor = trainingDataPreprocessor;
         this.tagsWriter = tagsWriter;
         this.bigramsWriter = bigramsWriter;
+        this.semanticsWriter = semanticsWriter;
         this.subPathsWriter = subPathsWriter;
-        this.trainingDataDatabaseAccessor = trainingDataDatabaseAccessor;
         this.bigramDataListFactory = bigramDataListFactory;
         this.subPathDataListFactory = subPathDataListFactory;
         this.semanticPreprocessor = semanticPreprocessor;
@@ -80,9 +80,8 @@ public class NlpTrainingDataProcessor {
 
         Runnable encodedPathsWriter = new EncodedPathsWriterImpl(trainingDataRowList);
         Runnable syntaxAnalyser = new SyntaxAnalyserImpl(bigramsWriter, subPathsWriter, bigramDataListFactory, subPathDataListFactory, trainingDataRowList);
-        Runnable semanticAnalyser = new SemanticAnalyserImpl(semanticPreprocessor, semanticExtractor, trainingDataRowList, trainingDataDatabaseAccessor);
+        Runnable semanticAnalyser = new SemanticAnalyserImpl(semanticPreprocessor, semanticExtractor, semanticsWriter, trainingDataRowList);
         Runnable tokenTagsWriter = new TokenTagsWriterImpl(trainingDataRowList);
-
 
         Future<?> encodedPathsFuture = executor.submit(encodedPathsWriter);
         Future<?> syntaxAnalyserFuture = executor.submit(syntaxAnalyser);
@@ -101,7 +100,5 @@ public class NlpTrainingDataProcessor {
             System.out.println(trainingDataRowList.size() + " training data rows processed in " + (elapsedTime / 1000) / 60 + " minutes and "
                     + +(elapsedTime / 1000) % 60 + " seconds");
         }
-
-
     }
 }

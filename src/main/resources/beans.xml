@@ -3,35 +3,19 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
     http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
 
-    <bean id="dataSource"
-          class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-        <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
-        <property name="url"
-                  value="jdbc:mysql://mysql15.hostmaster.sk/do784507db"/>
-        <property name="username" value="do784500"/>
-        <property name="password" value="glavoika"/>
-    </bean>
-
-    <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
-        <property name="dataSource" ref="dataSource"/>
-    </bean>
-
-    <bean id="trainingDataDatabaseAccessor" class="com.trainingdataprocessor.database.TrainingDataDatabaseAccessorImpl">
-        <constructor-arg ref="jdbcTemplate"/>
-    </bean>
-
     <bean id="tagsWriter" class="com.trainingdataprocessor.writer.tags.TagsWriterImpl"/>
 
     <bean id="bigramsWriter" class="com.trainingdataprocessor.writer.bigrams.BigramsWriterImpl"/>
 
     <bean id="subPathsWriter" class="com.trainingdataprocessor.writer.subpaths.SubPathsWriterImpl"/>
 
+    <bean id="semanticsWriter" class="com.trainingdataprocessor.writer.semantics.SemanticsWriterImpl"/>
+
     <bean id="tokenizer" class="com.trainingdataprocessor.tokens.TokenizerImpl"/>
 
     <bean id="tagsEncoder" class="com.trainingdataprocessor.encoding.TagsEncoderImpl"/>
 
     <bean id="listComparator" class="com.trainingdataprocessor.validator.ListComparatorImpl"/>
-
 
     <bean id="bigramDataListFactory" class="com.trainingdataprocessor.factories.bigram.BigramDataListFactoryImpl"/>
 
@@ -89,8 +73,8 @@
         <constructor-arg ref="trainingDataPreprocessor"/>
         <constructor-arg ref="tagsWriter"/>
         <constructor-arg ref="bigramsWriter"/>
+        <constructor-arg ref="semanticsWriter"/>
         <constructor-arg ref="subPathsWriter"/>
-        <constructor-arg ref="trainingDataDatabaseAccessor"/>
         <constructor-arg ref="bigramDataListFactory"/>
         <constructor-arg ref="subPathDataListFactory"/>
         <constructor-arg ref="semanticPreprocessor"/>
