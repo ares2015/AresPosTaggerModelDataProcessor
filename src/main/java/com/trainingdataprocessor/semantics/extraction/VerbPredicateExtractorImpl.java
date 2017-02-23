@@ -28,7 +28,7 @@ public class VerbPredicateExtractorImpl implements VerbPredicateExtractor {
         StringBuilder stringBuilder = new StringBuilder();
         for (int i = modalVerbIndex; i < tokensList.size(); i++) {
             if (Tags.VERB.equals(encodedTagsList.get(i)) || Tags.MODAL_VERB.equals(encodedTagsList.get(i))
-                    || Tags.ADVERB.equals(encodedTagsList.get(i))) {
+                    || Tags.IS_ARE.equals(encodedTagsList.get(i)) || Tags.ADVERB.equals(encodedTagsList.get(i))) {
                 stringBuilder.append(tokensList.get(i));
                 stringBuilder.append(" ");
             } else {

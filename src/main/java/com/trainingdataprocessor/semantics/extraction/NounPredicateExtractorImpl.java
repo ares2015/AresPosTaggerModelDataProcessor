@@ -21,7 +21,7 @@ public class NounPredicateExtractorImpl implements NounPredicateExtractor {
             String atomicNounPredicate = extractAtomicNounPredicate(tokensList, tagsList, verbIndex, afterVerbPrepositionIndex);
             semanticExtractionData.setAtomicNounPredicate(atomicNounPredicate);
         }
-        String extendedNounPredicate = extractExtendedNounPredicate(tokensList, verbIndex);
+        String extendedNounPredicate = extractExtendedNounPredicate(tokensList, tagsList, verbIndex);
         semanticExtractionData.setExtendedNounPredicate(extendedNounPredicate);
     }
 
@@ -54,9 +54,12 @@ public class NounPredicateExtractorImpl implements NounPredicateExtractor {
         return lastNounIndex;
     }
 
-    private String extractExtendedNounPredicate(List<String> tokensList, int verbIndex) {
+    private String extractExtendedNounPredicate(List<String> tokensList, List<String> tagsList, int verbIndex) {
         StringBuilder stringBuilder = new StringBuilder();
         for (int i = verbIndex + 1; i < tokensList.size(); i++) {
+            if (i == tokensList.size() - 1 && (Tags.PREPOSITION.equals(tagsList.get(i)) || Tags.CONJUNCTION.equals(tagsList.get(i)))) {
+                break;
+            }
             stringBuilder.append(tokensList.get(i));
             stringBuilder.append(" ");
         }

@@ -70,4 +70,50 @@ public class SemanticIntegrationTest {
         assertEquals("", semanticExtractionData.getAtomicNounPredicate());
         assertEquals("like conflation of giant insect ", semanticExtractionData.getExtendedNounPredicate());
     }
+
+    @Test
+    public void test4() {
+        String sentence = "Its head was so bright that as it flew through the air it made the lightning";
+        List<String> tokensList = Arrays.asList(sentence.split("\\ "));
+        String tags = "PRPS N IA CJ AJ WP PR PRP Ved CJ DET N PRP Ved DET N";
+        List<String> tagsList = Arrays.asList(tags.split("\\ "));
+        SemanticPreprocessingData semanticPreprocessingData = semanticPreprocessor.preprocess(tokensList, tagsList);
+        SemanticExtractionData semanticExtractionData = semanticExtractor.extract(semanticPreprocessingData);
+        assertEquals("head", semanticExtractionData.getAtomicSubject());
+        assertEquals("", semanticExtractionData.getExtendedSubject());
+        assertEquals("was", semanticExtractionData.getAtomicVerbPredicate());
+        assertEquals("", semanticExtractionData.getAtomicNounPredicate());
+        assertEquals("so bright ", semanticExtractionData.getExtendedNounPredicate());
+    }
+
+    @Test
+    public void test5() {
+        String sentence = "The sorrow of all living things at his death means the gloom of northern countries when winter comes";
+        List<String> tokensList = Arrays.asList(sentence.split("\\ "));
+        String tags = "DET N PR Q Ving N PR PRPS N V DET N PR AJ N WAV N V";
+        List<String> tagsList = Arrays.asList(tags.split("\\ "));
+        SemanticPreprocessingData semanticPreprocessingData = semanticPreprocessor.preprocess(tokensList, tagsList);
+        SemanticExtractionData semanticExtractionData = semanticExtractor.extract(semanticPreprocessingData);
+        assertEquals("", semanticExtractionData.getAtomicSubject());
+        assertEquals("sorrow of all living things at death ", semanticExtractionData.getExtendedSubject());
+        assertEquals("means", semanticExtractionData.getAtomicVerbPredicate());
+        assertEquals("gloom", semanticExtractionData.getAtomicNounPredicate());
+        assertEquals("gloom of northern countries ", semanticExtractionData.getExtendedNounPredicate());
+    }
+
+    @Test
+    public void test6() {
+        String sentence = "The earth will be shaken as when there is a great earthquake the waves of the sea will roar and the highest mountains will totter and fall";
+        List<String> tokensList = Arrays.asList(sentence.split("\\ "));
+        String tags = "DET N MV IA Ved PR WAV T IA DET AJ N DET N PR DET N MV N AO DET AJ N MV V AO V";
+        List<String> tagsList = Arrays.asList(tags.split("\\ "));
+        SemanticPreprocessingData semanticPreprocessingData = semanticPreprocessor.preprocess(tokensList, tagsList);
+        SemanticExtractionData semanticExtractionData = semanticExtractor.extract(semanticPreprocessingData);
+        assertEquals("earth", semanticExtractionData.getAtomicSubject());
+        assertEquals("earth ", semanticExtractionData.getExtendedSubject());
+        assertEquals("be", semanticExtractionData.getAtomicVerbPredicate());
+        assertEquals("will be ", semanticExtractionData.getExtendedVerbPredicate());
+        assertEquals("shaken", semanticExtractionData.getAtomicNounPredicate());
+        assertEquals("shaken ", semanticExtractionData.getExtendedNounPredicate());
+    }
 }

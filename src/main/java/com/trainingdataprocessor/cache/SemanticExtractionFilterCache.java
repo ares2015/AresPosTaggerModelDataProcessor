@@ -20,6 +20,7 @@ public final class SemanticExtractionFilterCache {
         semanticExtractionAllowedTags.add(Tags.ADJECTIVE);
         semanticExtractionAllowedTags.add(Tags.ADVERB);
         semanticExtractionAllowedTags.add(Tags.DETERMINER);
+        semanticExtractionAllowedTags.add(Tags.CONJUNCTION);
         semanticExtractionAllowedTags.add(Tags.IS_ARE);
         semanticExtractionAllowedTags.add(Tags.MODAL_VERB);
         semanticExtractionAllowedTags.add(Tags.NOUN);
@@ -34,6 +35,7 @@ public final class SemanticExtractionFilterCache {
 
         subjectNounPredicateExtractionAllowedTags.add(Tags.ADJECTIVE);
         subjectNounPredicateExtractionAllowedTags.add(Tags.ADVERB);
+        subjectNounPredicateExtractionAllowedTags.add(Tags.CONJUNCTION);
         subjectNounPredicateExtractionAllowedTags.add(Tags.NOUN);
         subjectNounPredicateExtractionAllowedTags.add(Tags.NUMBER);
         subjectNounPredicateExtractionAllowedTags.add(Tags.PREPOSITION);
