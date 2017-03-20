@@ -27,7 +27,7 @@ public class TrainingDataFileReaderImpl implements TrainingDataReader {
     public List<String> read() {
         LOGGER.info("ENTERING read method of TrainingDataFileReaderImpl... ");
         LOGGER.info("*********************************************************************");
-        List<String> testDataRowList = new ArrayList<>();
+        List<String> trainingDataRowList = new ArrayList<>();
         BufferedReader br = null;
         int lineNumber = 0;
         try {
@@ -36,14 +36,14 @@ public class TrainingDataFileReaderImpl implements TrainingDataReader {
             e.printStackTrace();
         }
         try {
-            String testDataRow = br.readLine();
-            while (testDataRow != null) {
+            String trainingDataRow = br.readLine();
+            while (trainingDataRow != null) {
                 lineNumber++;
-                if (!"".equals(testDataRow)) {
-                    trainingDataValidator.validate(testDataRow, lineNumber);
-                    testDataRowList.add(testDataRow);
+                if (!"".equals(trainingDataRow)) {
+                    trainingDataValidator.validate(trainingDataRow, lineNumber);
+                    trainingDataRowList.add(trainingDataRow);
                 }
-                testDataRow = br.readLine();
+                trainingDataRow = br.readLine();
             }
         } catch (final IOException e) {
             e.printStackTrace();
@@ -54,8 +54,8 @@ public class TrainingDataFileReaderImpl implements TrainingDataReader {
                 e.printStackTrace();
             }
         }
-        LOGGER.info("LEAVING read method of TrainingDataFileReaderImpl with  " + testDataRowList.size() + " lines read.");
+        LOGGER.info("LEAVING read method of TrainingDataFileReaderImpl with  " + trainingDataRowList.size() + " lines read.");
         LOGGER.info("*********************************************************************");
-        return testDataRowList;
+        return trainingDataRowList;
     }
 }
