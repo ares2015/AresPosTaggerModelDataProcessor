@@ -3,12 +3,14 @@ package com.trainingdataprocessor.main;
 import com.trainingdataprocessor.data.preprocessing.TrainingDataRow;
 import com.trainingdataprocessor.factories.bigram.BigramDataListFactory;
 import com.trainingdataprocessor.factories.subpath.SubPathDataListFactory;
+import com.trainingdataprocessor.morphology.MorphemesDetector;
 import com.trainingdataprocessor.preprocessing.TrainingDataPreprocessor;
 import com.trainingdataprocessor.semantics.analysis.SemanticAnalyserImpl;
 import com.trainingdataprocessor.semantics.extraction.SemanticExtractor;
 import com.trainingdataprocessor.semantics.preprocessing.SemanticPreprocessor;
 import com.trainingdataprocessor.syntax.SyntaxAnalyserImpl;
 import com.trainingdataprocessor.writer.bigrams.BigramsWriter;
+import com.trainingdataprocessor.writer.morphology.SuffixesWriterImpl;
 import com.trainingdataprocessor.writer.paths.EncodedPathsWriterImpl;
 import com.trainingdataprocessor.writer.semantics.SemanticsWriter;
 import com.trainingdataprocessor.writer.subpaths.SubPathsWriter;
@@ -45,12 +47,14 @@ public class NlpTrainingDataProcessor {
 
     private SemanticExtractor semanticExtractor;
 
-    private static int NUMBER_OF_THREADS = 4;
+    private MorphemesDetector morphemesDetector;
+
+    private static int NUMBER_OF_THREADS = 5;
 
     public NlpTrainingDataProcessor(TrainingDataPreprocessor trainingDataPreprocessor, TagsWriter tagsWriter, BigramsWriter bigramsWriter,
                                     SemanticsWriter semanticsWriter, SubPathsWriter subPathsWriter,
                                     BigramDataListFactory bigramDataListFactory, SubPathDataListFactory subPathDataListFactory,
-                                    SemanticPreprocessor semanticPreprocessor, SemanticExtractor semanticExtractor) {
+                                    SemanticPreprocessor semanticPreprocessor, SemanticExtractor semanticExtractor, MorphemesDetector morphemesDetector) {
         this.trainingDataPreprocessor = trainingDataPreprocessor;
         this.tagsWriter = tagsWriter;
         this.bigramsWriter = bigramsWriter;
@@ -60,6 +64,7 @@ public class NlpTrainingDataProcessor {
         this.subPathDataListFactory = subPathDataListFactory;
         this.semanticPreprocessor = semanticPreprocessor;
         this.semanticExtractor = semanticExtractor;
+        this.morphemesDetector = morphemesDetector;
     }
 
     public static void main(String[] args) {
@@ -82,15 +87,17 @@ public class NlpTrainingDataProcessor {
         Runnable syntaxAnalyser = new SyntaxAnalyserImpl(bigramsWriter, subPathsWriter, bigramDataListFactory, subPathDataListFactory, trainingDataRowList);
         Runnable semanticAnalyser = new SemanticAnalyserImpl(semanticPreprocessor, semanticExtractor, semanticsWriter, trainingDataRowList);
         Runnable tokenTagsWriter = new TokenTagsWriterImpl(trainingDataRowList);
+        Runnable suffixesWriter = new SuffixesWriterImpl(morphemesDetector, trainingDataRowList);
 
         Future<?> encodedPathsFuture = executor.submit(encodedPathsWriter);
         Future<?> syntaxAnalyserFuture = executor.submit(syntaxAnalyser);
         Future<?> semanticAnalyserFuture = executor.submit(semanticAnalyser);
         Future<?> tokenTagDataFuture = executor.submit(tokenTagsWriter);
+        Future<?> suffixesWriterFuture = executor.submit(suffixesWriter);
 
         while (!areDataProcessed) {
             areDataProcessed = encodedPathsFuture.isDone() && syntaxAnalyserFuture.isDone() && semanticAnalyserFuture.isDone() &&
-                    tokenTagDataFuture.isDone();
+                    tokenTagDataFuture.isDone() && suffixesWriterFuture.isDone();
         }
 
         if (areDataProcessed) {

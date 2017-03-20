@@ -3,6 +3,8 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
     http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
 
+    <bean id="morphemesDetector" class="com.trainingdataprocessor.morphology.MorphemesDetectorImpl"/>
+
     <bean id="tagsWriter" class="com.trainingdataprocessor.writer.tags.TagsWriterImpl"/>
 
     <bean id="bigramsWriter" class="com.trainingdataprocessor.writer.bigrams.BigramsWriterImpl"/>
@@ -49,7 +51,6 @@
         <constructor-arg ref="capitalizedTokensProcessor"/>
     </bean>
 
-
     <bean id="semanticPreprocessor" class="com.trainingdataprocessor.semantics.preprocessing.SemanticPreprocessorImpl"/>
 
     <bean id="subjectExtractor" class="com.trainingdataprocessor.semantics.extraction.SubjectExtractorImpl"/>
@@ -67,7 +68,6 @@
         <constructor-arg ref="nounPredicateExtractor"/>
     </bean>
 
-
     <bean id="nlpTrainingDataProcessor"
           class="com.trainingdataprocessor.main.NlpTrainingDataProcessor">
         <constructor-arg ref="trainingDataPreprocessor"/>
@@ -79,6 +79,7 @@
         <constructor-arg ref="subPathDataListFactory"/>
         <constructor-arg ref="semanticPreprocessor"/>
         <constructor-arg ref="semanticExtractor"/>
+        <constructor-arg ref="morphemesDetector"/>
     </bean>
 
 </beans>
