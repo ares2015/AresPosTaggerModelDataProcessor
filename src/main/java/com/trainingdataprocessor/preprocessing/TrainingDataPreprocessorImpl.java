@@ -26,8 +26,8 @@ public class TrainingDataPreprocessorImpl implements TrainingDataPreprocessor {
 
     @Override
     public List<TrainingDataRow> preprocess() {
-        List<String> testDataRowStringList = trainingDataReader.read();
-        List<TrainingDataRow> trainingDataRows = trainingDataRowListFactory.create(testDataRowStringList);
+        List<String> trainingDataRowStringList = trainingDataReader.read();
+        List<TrainingDataRow> trainingDataRows = trainingDataRowListFactory.create(trainingDataRowStringList);
         for (TrainingDataRow trainingDataRow : trainingDataRows) {
             capitalizedTokensProcessor.process(trainingDataRow);
         }
