@@ -31,7 +31,7 @@ public class MorphemesDetectorImpl implements MorphemesDetector {
     private String detectShortOrSpecialSuffix(final String token) {
         if (token.length() > 2 && token.endsWith(Suffixes.S)
                 && !token.endsWith(Suffixes.SES) && !token.endsWith(Suffixes.XES)
-                && !token.endsWith(Suffixes.IES)) {
+                && !token.endsWith(Suffixes.IES) && !token.endsWith("ous") && !token.endsWith("less")) {
             return Suffixes.S;
         } else if ((token.length() > 3 && (token.endsWith(Suffixes.SES) || token.endsWith(Suffixes.XES)))
                 && !token.endsWith(Suffixes.IES)) {

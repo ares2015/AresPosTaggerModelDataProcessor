@@ -24,63 +24,13 @@ public final class SuffixesCache {
         As this application is used to read mainly Wikipedia articles, 's is used only to refer to possesion of something
 		to some noun. It is not used as shortening for is/has.
 		 */
-        suffixesLengthsModelMap.add(Suffixes.APOSTROHE_S.length());
-
-        suffixesLengthsModelMap.add(Suffixes.APOSTROHE_VE.length());
-
-        suffixesLengthsModelMap.add(Suffixes.APOSTROHE_LL.length());
-
         suffixesLengthsModelMap.add(Suffixes.ICS.length());
-
-        suffixesLengthsModelMap.add(Suffixes.TION.length());
-
-        suffixesLengthsModelMap.add(Suffixes.TIONS.length());
-
-        suffixesLengthsModelMap.add(Suffixes.SION.length());
-
-        suffixesLengthsModelMap.add(Suffixes.ACY.length());
 
         suffixesLengthsModelMap.add(Suffixes.ACIES.length());
 
         suffixesLengthsModelMap.add(Suffixes.ASY.length());
 
         suffixesLengthsModelMap.add(Suffixes.ASIES.length());
-
-        suffixesLengthsModelMap.add(Suffixes.ISM.length());
-
-        suffixesLengthsModelMap.add(Suffixes.ISMS.length());
-
-        suffixesLengthsModelMap.add(Suffixes.IST.length());
-
-        suffixesLengthsModelMap.add(Suffixes.ISTS.length());
-
-        suffixesLengthsModelMap.add(Suffixes.MENT.length());
-
-        suffixesLengthsModelMap.add(Suffixes.MENTS.length());
-
-        suffixesLengthsModelMap.add(Suffixes.AGE.length());
-
-        suffixesLengthsModelMap.add(Suffixes.AGES.length());
-
-        suffixesLengthsModelMap.add(Suffixes.SHIP.length());
-
-        suffixesLengthsModelMap.add(Suffixes.IFY.length());
-
-        suffixesLengthsModelMap.add(Suffixes.IFIES.length());
-
-        suffixesLengthsModelMap.add(Suffixes.ISE.length());
-
-        suffixesLengthsModelMap.add(Suffixes.ABLE.length());
-
-        suffixesLengthsModelMap.add(Suffixes.IBLE.length());
-
-        suffixesLengthsModelMap.add(Suffixes.ESQUE.length());
-
-        suffixesLengthsModelMap.add(Suffixes.OUS.length());
-
-        suffixesLengthsModelMap.add(Suffixes.ISH.length());
-
-        suffixesLengthsModelMap.add(Suffixes.IVE.length());
 
         suffixesLengthsModelMap.add(Suffixes.FUL.length());
 
@@ -90,15 +40,9 @@ public final class SuffixesCache {
 
         suffixesLengthsModelMap.add(Suffixes.ALLY.length());
 
-        suffixesLengthsModelMap.add(Suffixes.OUSLY.length());
-
-        suffixesLengthsModelMap.add(Suffixes.ABLY.length());
-
         suffixesLengthsModelMap.add(Suffixes.TIONAL.length());
 
         suffixesLengthsModelMap.add(Suffixes.CIAL.length());
-
-        suffixesLengthsModelMap.add(Suffixes.ARY.length());
 
         suffixesLengthsModelMap.add(Suffixes.ANCE.length());
 

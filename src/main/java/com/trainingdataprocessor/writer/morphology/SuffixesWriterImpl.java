@@ -2,6 +2,7 @@ package com.trainingdataprocessor.writer.morphology;
 
 import com.trainingdataprocessor.data.preprocessing.TrainingDataRow;
 import com.trainingdataprocessor.morphology.MorphemesDetector;
+import com.trainingdataprocessor.tags.Tags;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
@@ -44,10 +45,13 @@ public class SuffixesWriterImpl implements SuffixesWriter, Runnable {
                     String suffix = morphemesDetector.detectSuffix(token);
                     if (!"no suffix".equals(suffix)) {
                         String tag = trainingDataRow.getTagsList().get(i);
-                        String trainingDataRowAsString = suffix + "#" + tag;
-                        LOGGER.info("Token: " + token + " contains suffix " + suffix + " with tag " + tag);
-                        bw.write(trainingDataRowAsString);
-                        bw.newLine();
+                        if (Tags.NOUN.equals(tag) || Tags.ADJECTIVE.equals(tag) || Tags.VERB.equals(tag) ||
+                                Tags.VERB_ED.equals(tag) || Tags.VERB_ING.equals(tag) || Tags.ADVERB.equals(tag)) {
+                            String trainingDataRowAsString = suffix + "#" + tag + "#" + token;
+                            LOGGER.info("Token: " + token + " contains suffix " + suffix + " with tag " + tag);
+                            bw.write(trainingDataRowAsString);
+                            bw.newLine();
+                        }
                     }
                 }
             }
