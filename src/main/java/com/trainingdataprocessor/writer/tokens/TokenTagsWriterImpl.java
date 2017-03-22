@@ -1,6 +1,7 @@
 package com.trainingdataprocessor.writer.tokens;
 
 import com.trainingdataprocessor.data.preprocessing.TrainingDataRow;
+import com.trainingdataprocessor.tags.Tags;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
@@ -36,9 +37,17 @@ public class TokenTagsWriterImpl implements TokenTagsWriter, Runnable {
                 tokensList = trainingDataRow.getTokensList();
                 tagsList = trainingDataRow.getTagsList();
                 for (int i = 0; i < tokensList.size(); i++) {
-                    String trainingDataRowAsString = tokensList.get(i) + "#" + tagsList.get(i);
-                    bw.write(trainingDataRowAsString);
-                    bw.newLine();
+                    String token = tokensList.get(i);
+                    if (!Character.isUpperCase(token.charAt(0))) {
+                        String tag = tagsList.get(i);
+                        if (Tags.NOUN.equals(tag) || Tags.ADJECTIVE.equals(tag) || Tags.VERB.equals(tag) || Tags.VERB_ED.equals(tag)
+                                || Tags.VERB_ING.equals(tag) || Tags.ADVERB.equals(tag)) {
+
+                            String trainingDataRowAsString = token + "#" + tag;
+                            bw.write(trainingDataRowAsString);
+                            bw.newLine();
+                        }
+                    }
                 }
             }
             System.out.println("Writing into token tags file finished");
