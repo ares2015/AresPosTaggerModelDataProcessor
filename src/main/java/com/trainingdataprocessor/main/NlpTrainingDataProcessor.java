@@ -83,6 +83,21 @@ public class NlpTrainingDataProcessor {
 
         ExecutorService executor = Executors.newFixedThreadPool(NUMBER_OF_THREADS);
 
+////        EncodedPathsWriter encodedPathsWriter = new EncodedPathsWriterImpl(trainingDataRowList);
+////        encodedPathsWriter.write();
+//
+//        SyntaxAnalyser syntaxAnalyser = new SyntaxAnalyserImpl(bigramsWriter, subPathsWriter, bigramDataListFactory, subPathDataListFactory, trainingDataRowList);
+//        syntaxAnalyser.analyse();
+//
+////        SemanticAnalyser semanticAnalyser = new SemanticAnalyserImpl(semanticPreprocessor, semanticExtractor, semanticsWriter, trainingDataRowList);
+////        semanticAnalyser.analyse();
+////
+//        TokenTagsWriter tokenTagsWriter = new TokenTagsWriterImpl(trainingDataRowList);
+//        tokenTagsWriter.write();
+//
+//        SuffixesWriter suffixesWriter = new SuffixesWriterImpl(morphemesDetector, trainingDataRowList);
+//        suffixesWriter.write();
+
         Runnable encodedPathsWriter = new EncodedPathsWriterImpl(trainingDataRowList);
         Runnable syntaxAnalyser = new SyntaxAnalyserImpl(bigramsWriter, subPathsWriter, bigramDataListFactory, subPathDataListFactory, trainingDataRowList);
         Runnable semanticAnalyser = new SemanticAnalyserImpl(semanticPreprocessor, semanticExtractor, semanticsWriter, trainingDataRowList);

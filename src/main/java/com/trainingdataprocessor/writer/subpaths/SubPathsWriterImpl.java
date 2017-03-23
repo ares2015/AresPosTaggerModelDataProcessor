@@ -20,10 +20,12 @@ public class SubPathsWriterImpl implements SubPathsWriter {
             fw = new FileWriter("C:\\Users\\Oliver\\Documents\\NlpTrainingData\\SubPaths.txt", true);
             bw = new BufferedWriter(fw);
             for (SubPathData subPathData : subPathDataList) {
-                String trainingDataRow = subPathData.getStartTag() + "#" + subPathData.getEndTag() + "#" +
-                        subPathData.getSubPath() + "#" + subPathData.getLength() + "#" + subPathData.isConstantSubPath();
-                bw.write(trainingDataRow);
-                bw.newLine();
+                if (!subPathData.isConstantSubPath()) {
+                    String trainingDataRow = subPathData.getStartTag() + "#" + subPathData.getEndTag() + "#" +
+                            subPathData.getSubPath() + "#" + subPathData.getLength() + "#" + subPathData.isConstantSubPath();
+                    bw.write(trainingDataRow);
+                    bw.newLine();
+                }
             }
             System.out.println("Writing into subpaths file finished");
         } catch (IOException e) {
