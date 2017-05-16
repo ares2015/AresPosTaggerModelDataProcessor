@@ -5,6 +5,6 @@ package com.trainingdataprocessor.validator;
  */
 public interface TrainingDataValidator {
 
-    void validate(String testDataRow, int lineNumber);
+    boolean validate(String testDataRow, int lineNumber);
 
 }

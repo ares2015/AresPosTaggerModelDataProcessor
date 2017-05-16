@@ -25,7 +25,7 @@ public class TrainingDataValidatorImpl implements TrainingDataValidator {
     }
 
     @Override
-    public void validate(String testDataRow, int lineNumber) {
+    public boolean validate(String testDataRow, int lineNumber) {
         LOGGER.info("ENTERING validate method of TrainingDataValidatorImpl... ");
         LOGGER.info("*********************************************************************");
 
@@ -34,8 +34,7 @@ public class TrainingDataValidatorImpl implements TrainingDataValidator {
         if (!(testDataRow.contains("#"))) {
             LOGGER.log(Level.SEVERE, "EXCEPTION: Test data row < " + testDataRow + " > on line " + lineNumber + " does not contain # as separator " +
                     "between sentence and tags.");
-            throw new IllegalStateException("Test data row: " + testDataRow + " on line " + " does not contain # as separator " +
-                    "between sentence and tags.");
+            return false;
         }
         final String[] sentenceAndTags = testDataRow.split("#");
 
@@ -49,22 +48,20 @@ public class TrainingDataValidatorImpl implements TrainingDataValidator {
                 !(sentenceAsString.contains(",")) && tagsAsString.contains(",")) {
             LOGGER.log(Level.SEVERE, "EXCEPTION: Sentence or tags does not contain comma but it should probably. Please check" +
                     " the data.");
-            throw new IllegalStateException("\"EXCEPTION: Sentence or tags does not contain comma but it should probably. Please check\" +\n" +
-                    "                    \" the data.\"");
+            return false;
         }
         if (sentenceAsString.contains(",") && tagsAsString.contains(",")) {
             List<Integer> tokensCommaIndexes = tokenizer.getCommaIndexes(tokensList);
             List<Integer> tagsCommaIndexes = tokenizer.getCommaIndexes(tagsList);
             if (!(listComparator.compare(tokensCommaIndexes, tagsCommaIndexes))) {
                 LOGGER.log(Level.SEVERE, "EXCEPTION: Comma indexes for tokens and tags are not equal");
-                throw new IllegalStateException("EXCEPTION: Comma indexes for tokens and tags are not equal.");
+                return false;
             }
         }
         if (tokensList.size() != tagsList.size()) {
             LOGGER.log(Level.SEVERE, "EXCEPTION: Test data row < " + testDataRow + " > on line " + lineNumber + " " +
                     " -> number of words in sentence is not equal to number of tags.");
-            throw new IllegalStateException("Test data row < " + testDataRow + " > on line " + lineNumber + " " +
-                    " -> number of words in sentence is not equal to number of tags.");
+            return false;
         }
         for (String tag : tagsList) {
             if (tag.contains(",")) {
@@ -73,13 +70,13 @@ public class TrainingDataValidatorImpl implements TrainingDataValidator {
             if (!(tagsCache.contains(tag))) {
                 LOGGER.log(Level.SEVERE, "EXCEPTION: Test data row < " + testDataRow + " > on line " + lineNumber + " " +
                         " -> contains an invalid tag: " + tag);
-                throw new IllegalStateException("Test data row < " + testDataRow + " > on line " + lineNumber + " " +
-                        " -> contains an invalid tag: " + tag);
+                return false;
             }
         }
         LOGGER.info("Validation OK");
         LOGGER.info("LEAVING validate method of TrainingDataValidatorImpl... ");
         LOGGER.info("*********************************************************************");
+        return true;
     }
 
 }

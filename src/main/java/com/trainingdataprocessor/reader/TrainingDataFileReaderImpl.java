@@ -40,8 +40,9 @@ public class TrainingDataFileReaderImpl implements TrainingDataReader {
             while (trainingDataRow != null) {
                 lineNumber++;
                 if (!"".equals(trainingDataRow)) {
-                    trainingDataValidator.validate(trainingDataRow, lineNumber);
-                    trainingDataRowList.add(trainingDataRow);
+                    if (trainingDataValidator.validate(trainingDataRow, lineNumber)) {
+                        trainingDataRowList.add(trainingDataRow);
+                    }
                 }
                 trainingDataRow = br.readLine();
             }
