@@ -5,6 +5,6 @@ package com.trainingdataprocessor.semantics.analysis;
  */
 public interface SemanticAnalyser {
 
-    void analyse();
+    void analyse() throws InterruptedException;
 
 }

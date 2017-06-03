@@ -17,6 +17,13 @@
     <dependencies>
 
         <dependency>
+            <groupId>com.semanticRelationsExtractor</groupId>
+            <artifactId>SemanticRelationsExtractorForNLPTraining</artifactId>
+            <version>2.0</version>
+        </dependency>
+
+
+        <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-core</artifactId>
             <version>${spring.version}</version>

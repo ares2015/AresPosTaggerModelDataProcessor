@@ -1,7 +1,5 @@
 package com.trainingdataprocessor.writer.semantics;
 
-import com.trainingdataprocessor.data.semantics.SemanticExtractionData;
-
 import java.util.List;
 
 /**
@@ -9,5 +7,5 @@ import java.util.List;
  */
 public interface SemanticsWriter {
 
-    void write(List<SemanticExtractionData> semanticExtractionDataList);
+    void write(List<com.semanticRelationsExtractor.data.SemanticExtractionData> semanticExtractionDataList);
 }
