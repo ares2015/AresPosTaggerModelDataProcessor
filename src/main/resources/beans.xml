@@ -77,8 +77,6 @@
         <constructor-arg ref="subPathsWriter"/>
         <constructor-arg ref="bigramDataListFactory"/>
         <constructor-arg ref="subPathDataListFactory"/>
-        <constructor-arg ref="semanticPreprocessor"/>
-        <constructor-arg ref="semanticExtractor"/>
         <constructor-arg ref="morphemesDetector"/>
     </bean>
 

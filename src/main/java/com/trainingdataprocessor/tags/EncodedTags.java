@@ -17,19 +17,27 @@ public final class EncodedTags {
 
     public static final String DO = "L";
 
+    public static final String DO_NOT = "7";
+
     public static final String FOREIGN_WORD = "1";
 
     public static final String HAVE = "H";
 
+    public static final String HAVE_NOT = "?";
+
     public static final String HERE = "G";
 
     public static final String IS_ARE = "I";
+
+    public static final String IS_ARE_NOT = "8";
 
     public static final String INTERJECTION = "2";
 
     public static final String LIST_ITEM_MARKER = "3";
 
     public static final String MODAL_VERB = "M";
+
+    public static final String MODAL_VERB_NOT = "9";
 
     public static final String NOT = "O";
 
@@ -68,6 +76,5 @@ public final class EncodedTags {
     public static final String WH_PRONOUN_POSSESSIVE = "Y";
 
     public static final String WH_ADVERB = "B";
-
 
 }

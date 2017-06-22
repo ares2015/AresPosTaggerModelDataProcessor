@@ -15,19 +15,27 @@ public final class Tags {
 
     public static final String DO = "DO";
 
+    public static final String DO_NOT = "DO_NOT";
+
     public static final String FOREIGN_WORD = "FW";
 
     public static final String HAVE = "H";
 
+    public static final String HAVE_NOT = "H_NOT";
+
     public static final String HERE = "HR";
 
     public static final String IS_ARE = "IA";
+
+    public static final String IS_ARE_NOT = "IA_NOT";
 
     public static final String INTERJECTION = "UH";
 
     public static final String LIST_ITEM_MARKER = "LS";
 
     public static final String MODAL_VERB = "MV";
+
+    public static final String MODAL_VERB_NOT = "MV_NOT";
 
     public static final String NOT = "NOT";
 

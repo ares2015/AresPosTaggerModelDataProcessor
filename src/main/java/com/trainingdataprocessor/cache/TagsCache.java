@@ -19,13 +19,17 @@ public final class TagsCache {
         tagsCache.add(Tags.CONJUNCTION);
         tagsCache.add(Tags.DETERMINER);
         tagsCache.add(Tags.DO);
+        tagsCache.add(Tags.DO_NOT);
         tagsCache.add(Tags.FOREIGN_WORD);
         tagsCache.add(Tags.HAVE);
+        tagsCache.add(Tags.HAVE_NOT);
         tagsCache.add(Tags.HERE);
         tagsCache.add(Tags.IS_ARE);
+        tagsCache.add(Tags.IS_ARE_NOT);
         tagsCache.add(Tags.INTERJECTION);
         tagsCache.add(Tags.LIST_ITEM_MARKER);
         tagsCache.add(Tags.MODAL_VERB);
+        tagsCache.add(Tags.MODAL_VERB_NOT);
         tagsCache.add(Tags.NOT);
         tagsCache.add(Tags.NOUN);
         tagsCache.add(Tags.NUMBER);
