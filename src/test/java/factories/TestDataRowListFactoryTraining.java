@@ -1,9 +1,6 @@
 package factories;
 
-import com.trainingdataprocessor.cache.TagsCodingCache;
 import com.trainingdataprocessor.data.preprocessing.TrainingDataRow;
-import com.trainingdataprocessor.encoding.TagsEncoder;
-import com.trainingdataprocessor.encoding.TagsEncoderImpl;
 import com.trainingdataprocessor.factories.multilist.MultiListFactory;
 import com.trainingdataprocessor.factories.multilist.MultiListFactoryImpl;
 import com.trainingdataprocessor.factories.row.TrainingDataRowListFactory;
@@ -15,22 +12,19 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 
 /**
  * Created by Oliver on 8/5/2016.
  */
 public class TestDataRowListFactoryTraining {
 
-    private TagsCodingCache tagsCodingCache = new TagsCodingCache();
-
     private Tokenizer tokenizer = new TokenizerImpl();
-
-    private TagsEncoder tagsEncoder = new TagsEncoderImpl();
 
     private MultiListFactory multiListFactory = new MultiListFactoryImpl();
 
-    private TrainingDataRowListFactory trainingDataRowListFactory = new TrainingDataRowListFactoryImpl(tokenizer, tagsEncoder, multiListFactory);
+    private TrainingDataRowListFactory trainingDataRowListFactory = new TrainingDataRowListFactoryImpl(tokenizer, multiListFactory);
 
     @Test
     public void testCreate() {
@@ -47,8 +41,6 @@ public class TestDataRowListFactoryTraining {
         assertEquals(5, trainingDataRow.getTokensList().size());
         assertEquals(5, trainingDataRow.getTagsList().size());
 
-        assertEquals("NVNPN", trainingDataRow.getEncodedPathAsString());
-
         assertEquals("boys", trainingDataRow.getTokensList().get(0));
         assertEquals("drink", trainingDataRow.getTokensList().get(1));
         assertEquals("beer", trainingDataRow.getTokensList().get(2));
@@ -61,12 +53,6 @@ public class TestDataRowListFactoryTraining {
         assertEquals("PR", trainingDataRow.getTagsList().get(3));
         assertEquals("N", trainingDataRow.getTagsList().get(4));
 
-        assertEquals("N", trainingDataRow.getEncodedTagsList().get(0));
-        assertEquals("V", trainingDataRow.getEncodedTagsList().get(1));
-        assertEquals("N", trainingDataRow.getEncodedTagsList().get(2));
-        assertEquals("P", trainingDataRow.getEncodedTagsList().get(3));
-        assertEquals("N", trainingDataRow.getEncodedTagsList().get(4));
-
     }
 
     @Test
@@ -78,8 +64,6 @@ public class TestDataRowListFactoryTraining {
 
         assertEquals(1, trainingDataRowList.size());
         TrainingDataRow trainingDataRow = trainingDataRowList.get(0);
-
-        assertNull(trainingDataRow.getEncodedPathAsString());
 
         assertEquals(9, trainingDataRow.getTokensList().size());
         assertEquals(9, trainingDataRow.getTagsList().size());
@@ -108,23 +92,6 @@ public class TestDataRowListFactoryTraining {
         assertEquals("PR", tagsMultiList.get(2).get(5));
         assertEquals("N", tagsMultiList.get(2).get(6));
 
-        List<List<String>> encodedTagsMultiList = trainingDataRow.getEncodedTagsMultiList();
-        assertEquals(3, encodedTagsMultiList.size());
-        assertEquals("N", encodedTagsMultiList.get(0).get(0));
-        assertEquals("N", encodedTagsMultiList.get(1).get(0));
-        assertEquals("N", encodedTagsMultiList.get(2).get(0));
-        assertEquals(">", encodedTagsMultiList.get(2).get(1));
-        assertEquals("N", encodedTagsMultiList.get(2).get(2));
-        assertEquals("V", encodedTagsMultiList.get(2).get(3));
-        assertEquals("N", encodedTagsMultiList.get(2).get(4));
-        assertEquals("P", encodedTagsMultiList.get(2).get(5));
-        assertEquals("N", encodedTagsMultiList.get(2).get(6));
-
-        List<String> encodedPathsList = trainingDataRow.getEncodedPathsAsStringList();
-        assertEquals(3, encodedPathsList.size());
-        assertEquals("N", encodedPathsList.get(0));
-        assertEquals("N", encodedPathsList.get(1));
-        assertEquals("N>NVNPN", encodedPathsList.get(2));
 
     }
 

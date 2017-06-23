@@ -15,8 +15,6 @@
 
     <bean id="tokenizer" class="com.trainingdataprocessor.tokens.TokenizerImpl"/>
 
-    <bean id="tagsEncoder" class="com.trainingdataprocessor.encoding.TagsEncoderImpl"/>
-
     <bean id="listComparator" class="com.trainingdataprocessor.validator.ListComparatorImpl"/>
 
     <bean id="bigramDataListFactory" class="com.trainingdataprocessor.factories.bigram.BigramDataListFactoryImpl"/>
@@ -29,7 +27,6 @@
     <bean id="trainingDataRowListFactory"
           class="com.trainingdataprocessor.factories.row.TrainingDataRowListFactoryImpl">
         <constructor-arg ref="tokenizer"/>
-        <constructor-arg ref="tagsEncoder"/>
         <constructor-arg ref="multiListFactory"/>
     </bean>
 
@@ -49,23 +46,6 @@
         <constructor-arg ref="trainingDataReader"/>
         <constructor-arg ref="trainingDataRowListFactory"/>
         <constructor-arg ref="capitalizedTokensProcessor"/>
-    </bean>
-
-    <bean id="semanticPreprocessor" class="com.trainingdataprocessor.semantics.preprocessing.SemanticPreprocessorImpl"/>
-
-    <bean id="subjectExtractor" class="com.trainingdataprocessor.semantics.extraction.SubjectExtractorImpl"/>
-
-    <bean id="verbPredicateExtractor"
-          class="com.trainingdataprocessor.semantics.extraction.VerbPredicateExtractorImpl"/>
-
-    <bean id="nounPredicateExtractor"
-          class="com.trainingdataprocessor.semantics.extraction.NounPredicateExtractorImpl"/>
-
-    <bean id="semanticExtractor"
-          class="com.trainingdataprocessor.semantics.extraction.SemanticExtractorImpl">
-        <constructor-arg ref="subjectExtractor"/>
-        <constructor-arg ref="verbPredicateExtractor"/>
-        <constructor-arg ref="nounPredicateExtractor"/>
     </bean>
 
     <bean id="nlpTrainingDataProcessor"

@@ -73,7 +73,6 @@ public class CapitalizedTokensProcessorTest {
         TrainingDataRow trainingDataRow = new TrainingDataRow();
         trainingDataRow.setTokensList(tokensList);
         trainingDataRow.setTagsList(tagsList);
-        trainingDataRow.setEncodedTagsList(encodedTagsList);
 
         capitalizedTokensProcessor.process(trainingDataRow);
 
@@ -121,7 +120,6 @@ public class CapitalizedTokensProcessorTest {
         TrainingDataRow trainingDataRow = new TrainingDataRow();
         trainingDataRow.setTokensList(tokensList);
         trainingDataRow.setTagsList(tagsList);
-        trainingDataRow.setEncodedTagsList(encodedTagsList);
 
         capitalizedTokensProcessor.process(trainingDataRow);
 

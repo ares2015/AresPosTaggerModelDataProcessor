@@ -1,7 +1,6 @@
 package com.trainingdataprocessor.factories.row;
 
 import com.trainingdataprocessor.data.preprocessing.TrainingDataRow;
-import com.trainingdataprocessor.encoding.TagsEncoder;
 import com.trainingdataprocessor.factories.multilist.MultiListFactory;
 import com.trainingdataprocessor.tokens.Tokenizer;
 
@@ -18,13 +17,10 @@ public class TrainingDataRowListFactoryImpl implements TrainingDataRowListFactor
 
     private Tokenizer tokenizer;
 
-    private TagsEncoder tagsEncoder;
-
     private MultiListFactory multiListFactory;
 
-    public TrainingDataRowListFactoryImpl(Tokenizer tokenizer, TagsEncoder tagsEncoder, MultiListFactory multiListFactory) {
+    public TrainingDataRowListFactoryImpl(Tokenizer tokenizer, MultiListFactory multiListFactory) {
         this.tokenizer = tokenizer;
-        this.tagsEncoder = tagsEncoder;
         this.multiListFactory = multiListFactory;
     }
 
@@ -68,26 +64,14 @@ public class TrainingDataRowListFactoryImpl implements TrainingDataRowListFactor
                 trainingDataRow.setTokensList(tokensList);
                 trainingDataRow.setTagsList(tagsList);
 
-                //ENCODED TAGS MULTILIST
-                List<List<String>> encodedTagsMultiList = tagsEncoder.encodeTagsMultiListToEncodedTagsMultiList(tagsMultiList);
-                trainingDataRow.setEncodedTagsMultiList(encodedTagsMultiList);
-
-                //ENCODED PATHS LIST
-                List<String> encodedPathsList = tagsEncoder.encodeTagMultiListToEncodedPathsList(tagsMultiList);
-                trainingDataRow.setEncodedPathsAsStringList(encodedPathsList);
-
                 trainingDataRowList.add(trainingDataRow);
             } else {
                 trainingDataRow.setContainsSubSentences(false);
                 LOGGER.info("Sentence does not contain any subSentences.");
 
-                String encodedSubPath = tagsEncoder.encodeTagsListToEncodedPath(tagsList);
-                trainingDataRow.setEncodedPathAsString(encodedSubPath);
-
                 //TOKENS LIST, TAGS LIST, ENCODED TAGS LIST
                 trainingDataRow.setTokensList(tokensList);
                 trainingDataRow.setTagsList(tagsList);
-                trainingDataRow.setEncodedTagsList(tagsEncoder.encodeTagsListToEncodedTagsList(tagsList));
 
                 trainingDataRowList.add(trainingDataRow);
             }

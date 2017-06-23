@@ -9,7 +9,6 @@ import com.trainingdataprocessor.semantics.analysis.SemanticAnalyserImpl;
 import com.trainingdataprocessor.syntax.SyntaxAnalyserImpl;
 import com.trainingdataprocessor.writer.bigrams.BigramsWriter;
 import com.trainingdataprocessor.writer.morphology.SuffixesWriterImpl;
-import com.trainingdataprocessor.writer.paths.EncodedPathsWriterImpl;
 import com.trainingdataprocessor.writer.semantics.SemanticsWriter;
 import com.trainingdataprocessor.writer.subpaths.SubPathsWriter;
 import com.trainingdataprocessor.writer.tags.TagsWriter;
@@ -92,20 +91,20 @@ public class NlpTrainingDataProcessor {
 //        SuffixesWriter suffixesWriter = new SuffixesWriterImpl(morphemesDetector, trainingDataRowList);
 //        suffixesWriter.write();
 
-        Runnable encodedPathsWriter = new EncodedPathsWriterImpl(trainingDataRowList);
+
         Runnable syntaxAnalyser = new SyntaxAnalyserImpl(bigramsWriter, subPathsWriter, bigramDataListFactory, subPathDataListFactory, trainingDataRowList);
         Runnable semanticAnalyser = new SemanticAnalyserImpl(semanticsWriter, trainingDataRowList);
         Runnable tokenTagsWriter = new TokenTagsWriterImpl(trainingDataRowList);
         Runnable suffixesWriter = new SuffixesWriterImpl(morphemesDetector, trainingDataRowList);
 
-        Future<?> encodedPathsFuture = executor.submit(encodedPathsWriter);
+
         Future<?> syntaxAnalyserFuture = executor.submit(syntaxAnalyser);
         Future<?> semanticAnalyserFuture = executor.submit(semanticAnalyser);
         Future<?> tokenTagDataFuture = executor.submit(tokenTagsWriter);
         Future<?> suffixesWriterFuture = executor.submit(suffixesWriter);
 
         while (!areDataProcessed) {
-            areDataProcessed = encodedPathsFuture.isDone() && syntaxAnalyserFuture.isDone() && semanticAnalyserFuture.isDone() &&
+            areDataProcessed = syntaxAnalyserFuture.isDone() && semanticAnalyserFuture.isDone() &&
                     tokenTagDataFuture.isDone() && suffixesWriterFuture.isDone();
         }
 

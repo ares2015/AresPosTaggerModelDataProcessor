@@ -9,17 +9,9 @@ public final class TrainingDataRow {
 
     private boolean containsSubSentences;
 
-    private String encodedPathAsString;
-
     private List<String> tokensList;
 
     private List<String> tagsList;
-
-    private List<String> encodedTagsList;
-
-    private List<String> encodedPathsAsStringList;
-
-    private List<List<String>> encodedTagsMultiList;
 
     private List<List<String>> tokensMultiList;
 
@@ -31,14 +23,6 @@ public final class TrainingDataRow {
 
     public void setContainsSubSentences(boolean containsSubSentences) {
         this.containsSubSentences = containsSubSentences;
-    }
-
-    public String getEncodedPathAsString() {
-        return encodedPathAsString;
-    }
-
-    public void setEncodedPathAsString(String encodedPathAsString) {
-        this.encodedPathAsString = encodedPathAsString;
     }
 
     public List<String> getTokensList() {
@@ -55,30 +39,6 @@ public final class TrainingDataRow {
 
     public void setTagsList(List<String> tagsList) {
         this.tagsList = tagsList;
-    }
-
-    public List<String> getEncodedTagsList() {
-        return encodedTagsList;
-    }
-
-    public void setEncodedTagsList(List<String> encodedTagsList) {
-        this.encodedTagsList = encodedTagsList;
-    }
-
-    public List<String> getEncodedPathsAsStringList() {
-        return encodedPathsAsStringList;
-    }
-
-    public void setEncodedPathsAsStringList(List<String> encodedPathsAsStringList) {
-        this.encodedPathsAsStringList = encodedPathsAsStringList;
-    }
-
-    public List<List<String>> getEncodedTagsMultiList() {
-        return encodedTagsMultiList;
-    }
-
-    public void setEncodedTagsMultiList(List<List<String>> encodedTagsMultiList) {
-        this.encodedTagsMultiList = encodedTagsMultiList;
     }
 
     public List<List<String>> getTokensMultiList() {

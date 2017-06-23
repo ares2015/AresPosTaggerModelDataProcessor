@@ -3,7 +3,7 @@ package factories;
 import com.trainingdataprocessor.data.syntax.BigramData;
 import com.trainingdataprocessor.factories.bigram.BigramDataListFactory;
 import com.trainingdataprocessor.factories.bigram.BigramDataListFactoryImpl;
-import com.trainingdataprocessor.tags.EncodedTags;
+import com.trainingdataprocessor.tags.Tags;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -18,23 +18,23 @@ public class BigramDataListFactoryTest {
     @Test
     public void testCreate(){
         List<String> tags = new ArrayList<String>();
-        tags.add(EncodedTags.DETERMINER);
-        tags.add(EncodedTags.ADJECTIVE);
-        tags.add(EncodedTags.NOUN);
-        tags.add(EncodedTags.VERB);
+        tags.add(Tags.DETERMINER);
+        tags.add(Tags.ADJECTIVE);
+        tags.add(Tags.NOUN);
+        tags.add(Tags.VERB);
         List<BigramData> bigramDataList = bigramDataListFactory.create(tags);
 
         assertEquals(3, bigramDataList.size());
 
-        assertEquals(EncodedTags.DETERMINER, bigramDataList.get(0).getTag1());
-        assertEquals(EncodedTags.ADJECTIVE, bigramDataList.get(0).getTag2());
+        assertEquals(Tags.DETERMINER, bigramDataList.get(0).getTag1());
+        assertEquals(Tags.ADJECTIVE, bigramDataList.get(0).getTag2());
 
 
-        assertEquals(EncodedTags.ADJECTIVE, bigramDataList.get(1).getTag1());
-        assertEquals(EncodedTags.NOUN, bigramDataList.get(1).getTag2());
+        assertEquals(Tags.ADJECTIVE, bigramDataList.get(1).getTag1());
+        assertEquals(Tags.NOUN, bigramDataList.get(1).getTag2());
 
-        assertEquals(EncodedTags.NOUN, bigramDataList.get(2).getTag1());
-        assertEquals(EncodedTags.VERB, bigramDataList.get(2).getTag2());
+        assertEquals(Tags.NOUN, bigramDataList.get(2).getTag1());
+        assertEquals(Tags.VERB, bigramDataList.get(2).getTag2());
 
     }
 
