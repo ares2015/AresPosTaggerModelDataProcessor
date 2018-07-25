@@ -1,7 +1,7 @@
 package validator;
 
-import com.trainingdataprocessor.validator.ListComparator;
-import com.trainingdataprocessor.validator.ListComparatorImpl;
+import com.aresPosTaggerModelDataProcessor.validator.ListComparator;
+import com.aresPosTaggerModelDataProcessor.validator.ListComparatorImpl;
 import org.junit.Test;
 
 import java.util.ArrayList;

@@ -1,0 +1,32 @@
+package com.aresPosTaggerModelDataProcessor.data.regex;
+
+/**
+ * Created by Oliver on 8/17/2016.
+ */
+public class RegexPatternData {
+
+    private String pattern;
+
+    private int startIndex;
+
+    private int endIndex;
+
+    public RegexPatternData(String pattern, int startIndex, int endIndex) {
+        this.pattern = pattern;
+        this.startIndex = startIndex;
+        this.endIndex = endIndex;
+    }
+
+    public String getPattern() {
+        return pattern;
+    }
+
+    public int getStartIndex() {
+        return startIndex;
+    }
+
+    public int getEndIndex() {
+        return endIndex;
+    }
+
+}

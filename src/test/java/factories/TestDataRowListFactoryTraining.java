@@ -1,12 +1,12 @@
 package factories;
 
-import com.trainingdataprocessor.data.preprocessing.TrainingDataRow;
-import com.trainingdataprocessor.factories.multilist.MultiListFactory;
-import com.trainingdataprocessor.factories.multilist.MultiListFactoryImpl;
-import com.trainingdataprocessor.factories.row.TrainingDataRowListFactory;
-import com.trainingdataprocessor.factories.row.TrainingDataRowListFactoryImpl;
-import com.trainingdataprocessor.tokens.Tokenizer;
-import com.trainingdataprocessor.tokens.TokenizerImpl;
+import com.aresPosTaggerModelDataProcessor.data.preprocessing.TrainingDataRow;
+import com.aresPosTaggerModelDataProcessor.factories.multilist.MultiListFactory;
+import com.aresPosTaggerModelDataProcessor.factories.multilist.MultiListFactoryImpl;
+import com.aresPosTaggerModelDataProcessor.factories.row.TrainingDataRowListFactory;
+import com.aresPosTaggerModelDataProcessor.factories.row.TrainingDataRowListFactoryImpl;
+import com.aresPosTaggerModelDataProcessor.tokens.Tokenizer;
+import com.aresPosTaggerModelDataProcessor.tokens.TokenizerImpl;
 import org.junit.Test;
 
 import java.util.ArrayList;

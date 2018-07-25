@@ -1,7 +1,7 @@
 package factories;
 
-import com.trainingdataprocessor.factories.multilist.MultiListFactory;
-import com.trainingdataprocessor.factories.multilist.MultiListFactoryImpl;
+import com.aresPosTaggerModelDataProcessor.factories.multilist.MultiListFactory;
+import com.aresPosTaggerModelDataProcessor.factories.multilist.MultiListFactoryImpl;
 import org.junit.Test;
 
 import java.util.ArrayList;

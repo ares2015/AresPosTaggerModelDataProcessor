@@ -1,7 +1,7 @@
 package tokens;
 
-import com.trainingdataprocessor.tokens.Tokenizer;
-import com.trainingdataprocessor.tokens.TokenizerImpl;
+import com.aresPosTaggerModelDataProcessor.tokens.Tokenizer;
+import com.aresPosTaggerModelDataProcessor.tokens.TokenizerImpl;
 import org.junit.Test;
 
 import java.util.ArrayList;

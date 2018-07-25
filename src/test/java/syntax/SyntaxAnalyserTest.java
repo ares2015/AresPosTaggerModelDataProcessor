@@ -1,11 +1,11 @@
 package syntax;
 
-import com.trainingdataprocessor.data.preprocessing.TrainingDataRow;
-import com.trainingdataprocessor.factories.bigram.BigramDataListFactory;
-import com.trainingdataprocessor.factories.bigram.BigramDataListFactoryImpl;
-import com.trainingdataprocessor.factories.subpath.SubPathDataListFactory;
-import com.trainingdataprocessor.factories.subpath.SubPathDataListFactoryImpl;
-import com.trainingdataprocessor.tags.Tags;
+import com.aresPosTaggerModelDataProcessor.data.preprocessing.TrainingDataRow;
+import com.aresPosTaggerModelDataProcessor.factories.bigram.BigramDataListFactory;
+import com.aresPosTaggerModelDataProcessor.factories.bigram.BigramDataListFactoryImpl;
+import com.aresPosTaggerModelDataProcessor.factories.subpath.SubPathDataListFactory;
+import com.aresPosTaggerModelDataProcessor.factories.subpath.SubPathDataListFactoryImpl;
+import com.aresPosTaggerModelDataProcessor.tags.Tags;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;

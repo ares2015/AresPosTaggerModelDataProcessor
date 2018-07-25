@@ -1,13 +1,13 @@
 package reader;
 
-import com.trainingdataprocessor.reader.TrainingDataFileReaderImpl;
-import com.trainingdataprocessor.reader.TrainingDataReader;
-import com.trainingdataprocessor.tokens.Tokenizer;
-import com.trainingdataprocessor.tokens.TokenizerImpl;
-import com.trainingdataprocessor.validator.ListComparator;
-import com.trainingdataprocessor.validator.ListComparatorImpl;
-import com.trainingdataprocessor.validator.TrainingDataValidator;
-import com.trainingdataprocessor.validator.TrainingDataValidatorImpl;
+import com.aresPosTaggerModelDataProcessor.reader.TrainingDataFileReaderImpl;
+import com.aresPosTaggerModelDataProcessor.reader.TrainingDataReader;
+import com.aresPosTaggerModelDataProcessor.tokens.Tokenizer;
+import com.aresPosTaggerModelDataProcessor.tokens.TokenizerImpl;
+import com.aresPosTaggerModelDataProcessor.validator.ListComparator;
+import com.aresPosTaggerModelDataProcessor.validator.ListComparatorImpl;
+import com.aresPosTaggerModelDataProcessor.validator.TrainingDataValidator;
+import com.aresPosTaggerModelDataProcessor.validator.TrainingDataValidatorImpl;
 import org.junit.Test;
 
 import java.util.List;

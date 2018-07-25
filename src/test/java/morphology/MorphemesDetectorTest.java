@@ -1,8 +1,8 @@
 package morphology;
 
-import com.trainingdataprocessor.morphology.MorphemesDetector;
-import com.trainingdataprocessor.morphology.MorphemesDetectorImpl;
-import com.trainingdataprocessor.morphology.Suffixes;
+import com.aresPosTaggerModelDataProcessor.morphology.MorphemesDetector;
+import com.aresPosTaggerModelDataProcessor.morphology.MorphemesDetectorImpl;
+import com.aresPosTaggerModelDataProcessor.morphology.Suffixes;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;

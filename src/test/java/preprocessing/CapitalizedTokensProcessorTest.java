@@ -1,8 +1,8 @@
 package preprocessing;
 
-import com.trainingdataprocessor.data.preprocessing.TrainingDataRow;
-import com.trainingdataprocessor.preprocessing.CapitalizedTokensProcessor;
-import com.trainingdataprocessor.preprocessing.CapitalizedTokensProcessorImpl;
+import com.aresPosTaggerModelDataProcessor.data.preprocessing.TrainingDataRow;
+import com.aresPosTaggerModelDataProcessor.preprocessing.CapitalizedTokensProcessor;
+import com.aresPosTaggerModelDataProcessor.preprocessing.CapitalizedTokensProcessorImpl;
 import org.junit.Test;
 
 import java.util.ArrayList;

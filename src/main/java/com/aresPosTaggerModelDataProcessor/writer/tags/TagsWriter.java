@@ -1,0 +1,14 @@
+package com.aresPosTaggerModelDataProcessor.writer.tags;
+
+import com.aresPosTaggerModelDataProcessor.data.preprocessing.TrainingDataRow;
+
+import java.util.List;
+
+/**
+ * Created by Oliver on 2/7/2017.
+ */
+public interface TagsWriter {
+
+    void write(List<TrainingDataRow> trainingDataRowList);
+
+}

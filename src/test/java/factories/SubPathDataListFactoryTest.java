@@ -1,9 +1,9 @@
 package factories;
 
 
-import com.trainingdataprocessor.data.syntax.SubPathData;
-import com.trainingdataprocessor.factories.subpath.SubPathDataListFactory;
-import com.trainingdataprocessor.factories.subpath.SubPathDataListFactoryImpl;
+import com.aresPosTaggerModelDataProcessor.data.syntax.SubPathData;
+import com.aresPosTaggerModelDataProcessor.factories.subpath.SubPathDataListFactory;
+import com.aresPosTaggerModelDataProcessor.factories.subpath.SubPathDataListFactoryImpl;
 import org.junit.Test;
 
 import java.util.ArrayList;

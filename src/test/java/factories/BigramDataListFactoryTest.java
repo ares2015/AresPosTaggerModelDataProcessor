@@ -1,9 +1,9 @@
 package factories;
 
-import com.trainingdataprocessor.data.syntax.BigramData;
-import com.trainingdataprocessor.factories.bigram.BigramDataListFactory;
-import com.trainingdataprocessor.factories.bigram.BigramDataListFactoryImpl;
-import com.trainingdataprocessor.tags.Tags;
+import com.aresPosTaggerModelDataProcessor.data.syntax.BigramData;
+import com.aresPosTaggerModelDataProcessor.factories.bigram.BigramDataListFactory;
+import com.aresPosTaggerModelDataProcessor.factories.bigram.BigramDataListFactoryImpl;
+import com.aresPosTaggerModelDataProcessor.tags.Tags;
 import org.junit.Test;
 
 import java.util.ArrayList;
