@@ -1,6 +1,6 @@
 package com.aresPosTaggerModelDataProcessor.reader;
 
-import com.aresPosTaggerModelDataProcessor.validator.TrainingDataValidator;
+import com.aresPosTaggerModelDataProcessor.validator.ModelDataValidator;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -13,25 +13,25 @@ import java.util.logging.Logger;
 /**
  * Created by Oliver on 8/5/2016.
  */
-public class TrainingDataFileReaderImpl implements TrainingDataReader {
+public class AresPosTaggerModelDataReaderImpl implements AresPosTaggerModelDataReader {
 
-    private final static Logger LOGGER = Logger.getLogger(TrainingDataFileReaderImpl.class.getName());
+    private final static Logger LOGGER = Logger.getLogger(AresPosTaggerModelDataReaderImpl.class.getName());
 
-    private TrainingDataValidator trainingDataValidator;
+    private ModelDataValidator modelDataValidator;
 
-    public TrainingDataFileReaderImpl(TrainingDataValidator trainingDataValidator) {
-        this.trainingDataValidator = trainingDataValidator;
+    public AresPosTaggerModelDataReaderImpl(ModelDataValidator modelDataValidator) {
+        this.modelDataValidator = modelDataValidator;
     }
 
     @Override
     public List<String> read() {
-        LOGGER.info("ENTERING read method of TrainingDataFileReaderImpl... ");
+        LOGGER.info("ENTERING read method of AresPosTaggerModelDataReaderImpl... ");
         LOGGER.info("*********************************************************************");
         List<String> trainingDataRowList = new ArrayList<>();
         BufferedReader br = null;
         int lineNumber = 0;
         try {
-            br = new BufferedReader(new FileReader("c:\\Users\\Oliver\\Documents\\NlpTrainingData\\NlpTrainingData.txt"));
+            br = new BufferedReader(new FileReader("C:\\Users\\Oliver\\Documents\\NlpTrainingData\\AresPosTaggerModelData\\ModelTaggedSentences.txt"));
         } catch (final FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -40,7 +40,7 @@ public class TrainingDataFileReaderImpl implements TrainingDataReader {
             while (trainingDataRow != null) {
                 lineNumber++;
                 if (!"".equals(trainingDataRow)) {
-                    if (trainingDataValidator.validate(trainingDataRow, lineNumber)) {
+                    if (modelDataValidator.validate(trainingDataRow, lineNumber)) {
                         trainingDataRowList.add(trainingDataRow);
                     }
                 }
@@ -55,7 +55,7 @@ public class TrainingDataFileReaderImpl implements TrainingDataReader {
                 e.printStackTrace();
             }
         }
-        LOGGER.info("LEAVING read method of TrainingDataFileReaderImpl with  " + trainingDataRowList.size() + " lines read.");
+        LOGGER.info("LEAVING read method of AresPosTaggerModelDataReaderImpl with  " + trainingDataRowList.size() + " lines read.");
         LOGGER.info("*********************************************************************");
         return trainingDataRowList;
     }

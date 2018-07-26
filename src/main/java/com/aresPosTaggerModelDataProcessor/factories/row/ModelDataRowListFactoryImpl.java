@@ -1,6 +1,6 @@
 package com.aresPosTaggerModelDataProcessor.factories.row;
 
-import com.aresPosTaggerModelDataProcessor.data.preprocessing.TrainingDataRow;
+import com.aresPosTaggerModelDataProcessor.data.preprocessing.ModelDataRow;
 import com.aresPosTaggerModelDataProcessor.factories.multilist.MultiListFactory;
 import com.aresPosTaggerModelDataProcessor.tokens.Tokenizer;
 
@@ -11,28 +11,28 @@ import java.util.logging.Logger;
 /**
  * Created by Oliver on 8/5/2016.
  */
-public class TrainingDataRowListFactoryImpl implements TrainingDataRowListFactory {
+public class ModelDataRowListFactoryImpl implements ModelDataRowListFactory {
 
-    private final static Logger LOGGER = Logger.getLogger(TrainingDataRowListFactoryImpl.class.getName());
+    private final static Logger LOGGER = Logger.getLogger(ModelDataRowListFactoryImpl.class.getName());
 
     private Tokenizer tokenizer;
 
     private MultiListFactory multiListFactory;
 
-    public TrainingDataRowListFactoryImpl(Tokenizer tokenizer, MultiListFactory multiListFactory) {
+    public ModelDataRowListFactoryImpl(Tokenizer tokenizer, MultiListFactory multiListFactory) {
         this.tokenizer = tokenizer;
         this.multiListFactory = multiListFactory;
     }
 
     @Override
-    public List<TrainingDataRow> create(List<String> testDataRowStringList) {
-        LOGGER.info("ENTERING create method of TrainingDataRowListFactoryImpl... ");
+    public List<ModelDataRow> create(List<String> testDataRowStringList) {
+        LOGGER.info("ENTERING create method of ModelDataRowListFactoryImpl... ");
         LOGGER.info("*********************************************************************");
 
-        List<TrainingDataRow> trainingDataRowList = new ArrayList<>();
+        List<ModelDataRow> modelDataRowList = new ArrayList<>();
 
         for (String testDataRowString : testDataRowStringList) {
-            TrainingDataRow trainingDataRow = new TrainingDataRow();
+            ModelDataRow modelDataRow = new ModelDataRow();
             String[] sentenceAndTagsTwoItemsArray = testDataRowString.split("#");
 
             String sentence = sentenceAndTagsTwoItemsArray[0];
@@ -46,40 +46,40 @@ public class TrainingDataRowListFactoryImpl implements TrainingDataRowListFactor
 
 
             if (sentenceAndTagsTwoItemsArray[0].contains(", ")) {
-                trainingDataRow.setContainsSubSentences(true);
+                modelDataRow.setContainsSubSentences(true);
                 //MULTILISTS ARE CREATED FIRST BEFORE COMMAS ARE REMOVED FROM TOKENS LIST AND TAGS LIST
                 //SUB SENTENCES MULTILIST
                 List<List<String>> subSentencesMultiList = multiListFactory.create(tokensList);
-                trainingDataRow.setTokensMultiList(subSentencesMultiList);
+                modelDataRow.setTokensMultiList(subSentencesMultiList);
 
                 //TAGS MULTILIST
                 List<List<String>> tagsMultiList = multiListFactory.create(tagsList);
-                trainingDataRow.setTagsMultiList(tagsMultiList);
+                modelDataRow.setTagsMultiList(tagsMultiList);
 
                 LOGGER.info("Sentence contains " + subSentencesMultiList.size() + " subSentences.");
 
                 //TOKENS LIST, TAGS LIST
                 tokensList = removeCommasAndDots(tokensList);
                 tagsList = removeCommasAndDots(tagsList);
-                trainingDataRow.setTokensList(tokensList);
-                trainingDataRow.setTagsList(tagsList);
+                modelDataRow.setTokensList(tokensList);
+                modelDataRow.setTagsList(tagsList);
 
-                trainingDataRowList.add(trainingDataRow);
+                modelDataRowList.add(modelDataRow);
             } else {
-                trainingDataRow.setContainsSubSentences(false);
+                modelDataRow.setContainsSubSentences(false);
                 LOGGER.info("Sentence does not contain any subSentences.");
 
                 //TOKENS LIST, TAGS LIST, ENCODED TAGS LIST
-                trainingDataRow.setTokensList(tokensList);
-                trainingDataRow.setTagsList(tagsList);
+                modelDataRow.setTokensList(tokensList);
+                modelDataRow.setTagsList(tagsList);
 
-                trainingDataRowList.add(trainingDataRow);
+                modelDataRowList.add(modelDataRow);
             }
         }
         LOGGER.info("LEAVING create method of SubPathDataListFactoryImpl... ");
         LOGGER.info("*********************************************************************");
 
-        return trainingDataRowList;
+        return modelDataRowList;
     }
 
     private List<String> removeCommasAndDots(List<String> words) {

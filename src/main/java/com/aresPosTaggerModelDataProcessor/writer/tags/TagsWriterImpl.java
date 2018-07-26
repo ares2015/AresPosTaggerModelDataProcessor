@@ -1,6 +1,6 @@
 package com.aresPosTaggerModelDataProcessor.writer.tags;
 
-import com.aresPosTaggerModelDataProcessor.data.preprocessing.TrainingDataRow;
+import com.aresPosTaggerModelDataProcessor.data.preprocessing.ModelDataRow;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
@@ -13,14 +13,14 @@ import java.util.List;
 public class TagsWriterImpl implements TagsWriter {
 
     @Override
-    public void write(List<TrainingDataRow> trainingDataRowList) {
+    public void write(List<ModelDataRow> modelDataRowList) {
         BufferedWriter bw = null;
         FileWriter fw = null;
         try {
-            fw = new FileWriter("C:\\Users\\Oliver\\Documents\\NlpTrainingData\\Tags.txt", true);
+            fw = new FileWriter("C:\\Users\\Oliver\\Documents\\NlpTrainingData\\AresPosTaggerModelData\\Tags.txt", true);
             bw = new BufferedWriter(fw);
-            for (TrainingDataRow trainingDataRow : trainingDataRowList) {
-                for (String tag : trainingDataRow.getTagsList()) {
+            for (ModelDataRow modelDataRow : modelDataRowList) {
+                for (String tag : modelDataRow.getTagsList()) {
                     bw.write(tag);
                     bw.newLine();
                 }

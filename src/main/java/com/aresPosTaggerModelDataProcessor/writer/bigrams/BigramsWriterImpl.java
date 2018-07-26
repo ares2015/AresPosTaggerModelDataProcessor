@@ -17,7 +17,7 @@ public class BigramsWriterImpl implements BigramsWriter {
         BufferedWriter bw = null;
         FileWriter fw = null;
         try {
-            fw = new FileWriter("C:\\Users\\Oliver\\Documents\\NlpTrainingData\\Bigrams.txt", true);
+            fw = new FileWriter("C:\\Users\\Oliver\\Documents\\NlpTrainingData\\AresPosTaggerModelData\\Bigrams.txt", true);
             bw = new BufferedWriter(fw);
             for (BigramData bigramData : bigramDataList) {
                 String trainingDataRow = bigramData.getTag1() + "#" + bigramData.getTag2();

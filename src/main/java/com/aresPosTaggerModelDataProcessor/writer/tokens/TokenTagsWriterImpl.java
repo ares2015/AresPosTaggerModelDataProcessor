@@ -1,6 +1,6 @@
 package com.aresPosTaggerModelDataProcessor.writer.tokens;
 
-import com.aresPosTaggerModelDataProcessor.data.preprocessing.TrainingDataRow;
+import com.aresPosTaggerModelDataProcessor.data.preprocessing.ModelDataRow;
 import com.aresPosTaggerModelDataProcessor.tags.Tags;
 
 import java.io.BufferedWriter;
@@ -13,10 +13,10 @@ import java.util.List;
  */
 public class TokenTagsWriterImpl implements TokenTagsWriter, Runnable {
 
-    private List<TrainingDataRow> trainingDataRowList;
+    private List<ModelDataRow> modelDataRowList;
 
-    public TokenTagsWriterImpl(List<TrainingDataRow> trainingDataRowList) {
-        this.trainingDataRowList = trainingDataRowList;
+    public TokenTagsWriterImpl(List<ModelDataRow> modelDataRowList) {
+        this.modelDataRowList = modelDataRowList;
     }
 
     @Override
@@ -29,13 +29,13 @@ public class TokenTagsWriterImpl implements TokenTagsWriter, Runnable {
         BufferedWriter bw = null;
         FileWriter fw = null;
         try {
-            fw = new FileWriter("C:\\Users\\Oliver\\Documents\\NlpTrainingData\\TokenTags.txt", true);
+            fw = new FileWriter("C:\\Users\\Oliver\\Documents\\NlpTrainingData\\AresPosTaggerModelData\\TokenTags.txt", true);
             bw = new BufferedWriter(fw);
             List<String> tokensList = null;
             List<String> tagsList = null;
-            for (TrainingDataRow trainingDataRow : trainingDataRowList) {
-                tokensList = trainingDataRow.getTokensList();
-                tagsList = trainingDataRow.getTagsList();
+            for (ModelDataRow modelDataRow : modelDataRowList) {
+                tokensList = modelDataRow.getTokensList();
+                tagsList = modelDataRow.getTagsList();
                 for (int i = 0; i < tokensList.size(); i++) {
                     String token = tokensList.get(i);
                     if (!Character.isUpperCase(token.charAt(0))) {

@@ -1,10 +1,10 @@
 package factories;
 
-import com.aresPosTaggerModelDataProcessor.data.preprocessing.TrainingDataRow;
+import com.aresPosTaggerModelDataProcessor.data.preprocessing.ModelDataRow;
 import com.aresPosTaggerModelDataProcessor.factories.multilist.MultiListFactory;
 import com.aresPosTaggerModelDataProcessor.factories.multilist.MultiListFactoryImpl;
-import com.aresPosTaggerModelDataProcessor.factories.row.TrainingDataRowListFactory;
-import com.aresPosTaggerModelDataProcessor.factories.row.TrainingDataRowListFactoryImpl;
+import com.aresPosTaggerModelDataProcessor.factories.row.ModelDataRowListFactory;
+import com.aresPosTaggerModelDataProcessor.factories.row.ModelDataRowListFactoryImpl;
 import com.aresPosTaggerModelDataProcessor.tokens.Tokenizer;
 import com.aresPosTaggerModelDataProcessor.tokens.TokenizerImpl;
 import org.junit.Test;
@@ -18,40 +18,40 @@ import static org.junit.Assert.assertFalse;
 /**
  * Created by Oliver on 8/5/2016.
  */
-public class TestDataRowListFactoryTraining {
+public class ModelDataRowListFactoryTraining {
 
     private Tokenizer tokenizer = new TokenizerImpl();
 
     private MultiListFactory multiListFactory = new MultiListFactoryImpl();
 
-    private TrainingDataRowListFactory trainingDataRowListFactory = new TrainingDataRowListFactoryImpl(tokenizer, multiListFactory);
+    private ModelDataRowListFactory modelDataRowListFactory = new ModelDataRowListFactoryImpl(tokenizer, multiListFactory);
 
     @Test
     public void testCreate() {
         List<String> testDataRowStringList = new ArrayList<>();
         String testDataRowString = "boys drink beer in pub#N V N PR N";
         testDataRowStringList.add(testDataRowString);
-        List<TrainingDataRow> trainingDataRowList = trainingDataRowListFactory.create(testDataRowStringList);
+        List<ModelDataRow> modelDataRowList = modelDataRowListFactory.create(testDataRowStringList);
 
-        assertEquals(1, trainingDataRowList.size());
+        assertEquals(1, modelDataRowList.size());
 
-        TrainingDataRow trainingDataRow = trainingDataRowList.get(0);
+        ModelDataRow modelDataRow = modelDataRowList.get(0);
 
-        assertFalse(trainingDataRow.containsSubSentences());
-        assertEquals(5, trainingDataRow.getTokensList().size());
-        assertEquals(5, trainingDataRow.getTagsList().size());
+        assertFalse(modelDataRow.containsSubSentences());
+        assertEquals(5, modelDataRow.getTokensList().size());
+        assertEquals(5, modelDataRow.getTagsList().size());
 
-        assertEquals("boys", trainingDataRow.getTokensList().get(0));
-        assertEquals("drink", trainingDataRow.getTokensList().get(1));
-        assertEquals("beer", trainingDataRow.getTokensList().get(2));
-        assertEquals("in", trainingDataRow.getTokensList().get(3));
-        assertEquals("pub", trainingDataRow.getTokensList().get(4));
+        assertEquals("boys", modelDataRow.getTokensList().get(0));
+        assertEquals("drink", modelDataRow.getTokensList().get(1));
+        assertEquals("beer", modelDataRow.getTokensList().get(2));
+        assertEquals("in", modelDataRow.getTokensList().get(3));
+        assertEquals("pub", modelDataRow.getTokensList().get(4));
 
-        assertEquals("N", trainingDataRow.getTagsList().get(0));
-        assertEquals("V", trainingDataRow.getTagsList().get(1));
-        assertEquals("N", trainingDataRow.getTagsList().get(2));
-        assertEquals("PR", trainingDataRow.getTagsList().get(3));
-        assertEquals("N", trainingDataRow.getTagsList().get(4));
+        assertEquals("N", modelDataRow.getTagsList().get(0));
+        assertEquals("V", modelDataRow.getTagsList().get(1));
+        assertEquals("N", modelDataRow.getTagsList().get(2));
+        assertEquals("PR", modelDataRow.getTagsList().get(3));
+        assertEquals("N", modelDataRow.getTagsList().get(4));
 
     }
 
@@ -60,15 +60,15 @@ public class TestDataRowListFactoryTraining {
         List<String> testDataRowStringList = new ArrayList<>();
         String testDataRowString = "john, harry, mike and bob drink beer in pub#N, N, N AO N V N PR N";
         testDataRowStringList.add(testDataRowString);
-        List<TrainingDataRow> trainingDataRowList = trainingDataRowListFactory.create(testDataRowStringList);
+        List<ModelDataRow> modelDataRowList = modelDataRowListFactory.create(testDataRowStringList);
 
-        assertEquals(1, trainingDataRowList.size());
-        TrainingDataRow trainingDataRow = trainingDataRowList.get(0);
+        assertEquals(1, modelDataRowList.size());
+        ModelDataRow modelDataRow = modelDataRowList.get(0);
 
-        assertEquals(9, trainingDataRow.getTokensList().size());
-        assertEquals(9, trainingDataRow.getTagsList().size());
+        assertEquals(9, modelDataRow.getTokensList().size());
+        assertEquals(9, modelDataRow.getTagsList().size());
 
-        List<List<String>> tokensMultiList = trainingDataRow.getTokensMultiList();
+        List<List<String>> tokensMultiList = modelDataRow.getTokensMultiList();
         assertEquals(3, tokensMultiList.size());
         assertEquals("john", tokensMultiList.get(0).get(0));
         assertEquals("harry", tokensMultiList.get(1).get(0));
@@ -80,7 +80,7 @@ public class TestDataRowListFactoryTraining {
         assertEquals("in", tokensMultiList.get(2).get(5));
         assertEquals("pub", tokensMultiList.get(2).get(6));
 
-        List<List<String>> tagsMultiList = trainingDataRow.getTagsMultiList();
+        List<List<String>> tagsMultiList = modelDataRow.getTagsMultiList();
         assertEquals(3, tagsMultiList.size());
         assertEquals("N", tagsMultiList.get(0).get(0));
         assertEquals("N", tagsMultiList.get(1).get(0));

@@ -1,6 +1,6 @@
 package com.aresPosTaggerModelDataProcessor.writer.tags;
 
-import com.aresPosTaggerModelDataProcessor.data.preprocessing.TrainingDataRow;
+import com.aresPosTaggerModelDataProcessor.data.preprocessing.ModelDataRow;
 
 import java.util.List;
 
@@ -9,6 +9,6 @@ import java.util.List;
  */
 public interface TagsWriter {
 
-    void write(List<TrainingDataRow> trainingDataRowList);
+    void write(List<ModelDataRow> modelDataRowList);
 
 }

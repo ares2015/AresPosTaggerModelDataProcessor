@@ -1,7 +1,7 @@
 package com.aresPosTaggerModelDataProcessor.preprocessing;
 
 import com.aresPosTaggerModelDataProcessor.cache.ConstantTagsCache;
-import com.aresPosTaggerModelDataProcessor.data.preprocessing.TrainingDataRow;
+import com.aresPosTaggerModelDataProcessor.data.preprocessing.ModelDataRow;
 import com.aresPosTaggerModelDataProcessor.tags.Tags;
 
 import java.util.ArrayList;
@@ -13,36 +13,36 @@ import java.util.List;
 public class CapitalizedTokensProcessorImpl implements CapitalizedTokensProcessor {
 
     @Override
-    public void process(TrainingDataRow trainingDataRow) {
-        boolean containsSubSentences = trainingDataRow.containsSubSentences();
+    public void process(ModelDataRow modelDataRow) {
+        boolean containsSubSentences = modelDataRow.containsSubSentences();
         if (containsSubSentences) {
-            int numberOfSubSentences = trainingDataRow.getTagsMultiList().size();
+            int numberOfSubSentences = modelDataRow.getTagsMultiList().size();
             for (int i = 0; i < numberOfSubSentences; i++) {
-                List<String> tokensList = trainingDataRow.getTokensMultiList().get(i);
-                List<String> tagsList = trainingDataRow.getTagsMultiList().get(i);
+                List<String> tokensList = modelDataRow.getTokensMultiList().get(i);
+                List<String> tagsList = modelDataRow.getTagsMultiList().get(i);
 
                 List<String> processedTokensList = new ArrayList<>();
                 List<String> processedTagsList = new ArrayList<>();
                 List<String> processedEncodedTagsList = new ArrayList<>();
                 runCapitalizationLogic(tokensList, tagsList, processedTokensList, processedTagsList,
-                        processedEncodedTagsList, trainingDataRow, containsSubSentences, i);
+                        processedEncodedTagsList, modelDataRow, containsSubSentences, i);
             }
         } else {
-            List<String> tokensList = trainingDataRow.getTokensList();
-            List<String> tagsList = trainingDataRow.getTagsList();
+            List<String> tokensList = modelDataRow.getTokensList();
+            List<String> tagsList = modelDataRow.getTagsList();
 
             List<String> processedTokensList = new ArrayList<>();
             List<String> processedTagsList = new ArrayList<>();
             List<String> processedEncodedTagsList = new ArrayList<>();
             runCapitalizationLogic(tokensList, tagsList, processedTokensList, processedTagsList,
-                    processedEncodedTagsList, trainingDataRow, containsSubSentences, -1);
+                    processedEncodedTagsList, modelDataRow, containsSubSentences, -1);
         }
 
     }
 
     private void runCapitalizationLogic(List<String> tokensList, List<String> tagsList,
                                         List<String> processedTokensList, List<String> processedTagsList, List<String> processedEncodedTagsList,
-                                        TrainingDataRow trainingDataRow, boolean containsSubSentence, int listIndex) {
+                                        ModelDataRow modelDataRow, boolean containsSubSentence, int listIndex) {
         String mergedToken = "";
 
         outer:
@@ -74,13 +74,13 @@ public class CapitalizedTokensProcessorImpl implements CapitalizedTokensProcesso
             }
         }
         if (containsSubSentence) {
-            trainingDataRow.getTokensMultiList().remove(listIndex);
-            trainingDataRow.getTokensMultiList().add(processedTokensList);
-            trainingDataRow.getTagsMultiList().remove(listIndex);
-            trainingDataRow.getTagsMultiList().add(processedTagsList);
+            modelDataRow.getTokensMultiList().remove(listIndex);
+            modelDataRow.getTokensMultiList().add(processedTokensList);
+            modelDataRow.getTagsMultiList().remove(listIndex);
+            modelDataRow.getTagsMultiList().add(processedTagsList);
         } else {
-            trainingDataRow.setTokensList(processedTokensList);
-            trainingDataRow.setTagsList(processedTagsList);
+            modelDataRow.setTokensList(processedTokensList);
+            modelDataRow.setTagsList(processedTagsList);
         }
     }
 

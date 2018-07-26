@@ -1,6 +1,6 @@
 package tokens;
 
-import com.aresPosTaggerModelDataProcessor.data.preprocessing.TrainingDataRow;
+import com.aresPosTaggerModelDataProcessor.data.preprocessing.ModelDataRow;
 import com.aresPosTaggerModelDataProcessor.tags.Tags;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -26,12 +26,12 @@ public class TokenTagDataProcessorTest {
         List<String> tokens = new ArrayList<String>();
         tokens.add("kick");
 
-        List<TrainingDataRow> trainingDataRowList = new ArrayList<>();
-        TrainingDataRow trainingDataRow = new TrainingDataRow();
-        trainingDataRow.setTagsList(tagsList);
-        trainingDataRow.setTokensList(tokens);
+        List<ModelDataRow> modelDataRowList = new ArrayList<>();
+        ModelDataRow modelDataRow = new ModelDataRow();
+        modelDataRow.setTagsList(tagsList);
+        modelDataRow.setTokensList(tokens);
 
-        trainingDataRowList.add(trainingDataRow);
+        modelDataRowList.add(modelDataRow);
 
 
     }
@@ -45,12 +45,12 @@ public class TokenTagDataProcessorTest {
         List<String> tokens = new ArrayList<String>();
         tokens.add("kick");
 
-        List<TrainingDataRow> trainingDataRowList = new ArrayList<>();
-        TrainingDataRow trainingDataRow = new TrainingDataRow();
-        trainingDataRow.setTagsList(tagsList);
-        trainingDataRow.setTokensList(tokens);
+        List<ModelDataRow> modelDataRowList = new ArrayList<>();
+        ModelDataRow modelDataRow = new ModelDataRow();
+        modelDataRow.setTagsList(tagsList);
+        modelDataRow.setTokensList(tokens);
 
-        trainingDataRowList.add(trainingDataRow);
+        modelDataRowList.add(modelDataRow);
 
     }
 }

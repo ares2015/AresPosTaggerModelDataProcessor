@@ -11,32 +11,32 @@ import static com.aresPosTaggerModelDataProcessor.cache.TagsCache.tagsCache;
 /**
  * Created by Oliver on 8/5/2016.
  */
-public class TrainingDataValidatorImpl implements TrainingDataValidator {
+public class ModelDataValidatorImpl implements ModelDataValidator {
 
-    private final static Logger LOGGER = Logger.getLogger(TrainingDataValidatorImpl.class.getName());
+    private final static Logger LOGGER = Logger.getLogger(ModelDataValidatorImpl.class.getName());
 
     private Tokenizer tokenizer;
 
     private ListComparator listComparator;
 
-    public TrainingDataValidatorImpl(Tokenizer tokenizer, ListComparator listComparator) {
+    public ModelDataValidatorImpl(Tokenizer tokenizer, ListComparator listComparator) {
         this.tokenizer = tokenizer;
         this.listComparator = listComparator;
     }
 
     @Override
-    public boolean validate(String testDataRow, int lineNumber) {
-        LOGGER.info("ENTERING validate method of TrainingDataValidatorImpl... ");
+    public boolean validate(String modelDataRow, int lineNumber) {
+        LOGGER.info("ENTERING validate method of ModelDataValidatorImpl... ");
         LOGGER.info("*********************************************************************");
 
-        LOGGER.info("Validating < " + testDataRow + " > on line " + lineNumber);
+        LOGGER.info("Validating < " + modelDataRow + " > on line " + lineNumber);
 
-        if (!(testDataRow.contains("#"))) {
-            LOGGER.log(Level.SEVERE, "EXCEPTION: Test data row < " + testDataRow + " > on line " + lineNumber + " does not contain # as separator " +
+        if (!(modelDataRow.contains("#"))) {
+            LOGGER.log(Level.SEVERE, "EXCEPTION: Test data row < " + modelDataRow + " > on line " + lineNumber + " does not contain # as separator " +
                     "between sentence and tags.");
             return false;
         }
-        final String[] sentenceAndTags = testDataRow.split("#");
+        final String[] sentenceAndTags = modelDataRow.split("#");
 
         String sentenceAsString = sentenceAndTags[0];
         String tagsAsString = sentenceAndTags[1];
@@ -59,7 +59,7 @@ public class TrainingDataValidatorImpl implements TrainingDataValidator {
             }
         }
         if (tokensList.size() != tagsList.size()) {
-            LOGGER.log(Level.SEVERE, "EXCEPTION: Test data row < " + testDataRow + " > on line " + lineNumber + " " +
+            LOGGER.log(Level.SEVERE, "EXCEPTION: Model data row < " + modelDataRow + " > on line " + lineNumber + " " +
                     " -> number of words in sentence is not equal to number of tags.");
             return false;
         }
@@ -68,13 +68,13 @@ public class TrainingDataValidatorImpl implements TrainingDataValidator {
                 tag = tokenizer.removeCommaAndDot(tag);
             }
             if (!(tagsCache.contains(tag))) {
-                LOGGER.log(Level.SEVERE, "EXCEPTION: Test data row < " + testDataRow + " > on line " + lineNumber + " " +
+                LOGGER.log(Level.SEVERE, "EXCEPTION: Model data row < " + modelDataRow + " > on line " + lineNumber + " " +
                         " -> contains an invalid tag: " + tag);
                 return false;
             }
         }
         LOGGER.info("Validation OK");
-        LOGGER.info("LEAVING validate method of TrainingDataValidatorImpl... ");
+        LOGGER.info("LEAVING validate method of ModelDataValidatorImpl... ");
         LOGGER.info("*********************************************************************");
         return true;
     }

@@ -17,7 +17,7 @@ public class SubPathsWriterImpl implements SubPathsWriter {
         BufferedWriter bw = null;
         FileWriter fw = null;
         try {
-            fw = new FileWriter("C:\\Users\\Oliver\\Documents\\NlpTrainingData\\SubPaths.txt", true);
+            fw = new FileWriter("C:\\Users\\Oliver\\Documents\\NlpTrainingData\\AresPosTaggerModelData\\SubPaths.txt", true);
             bw = new BufferedWriter(fw);
             for (SubPathData subPathData : subPathDataList) {
                 if (!subPathData.isConstantSubPath()) {

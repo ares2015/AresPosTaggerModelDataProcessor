@@ -1,6 +1,6 @@
 package syntax;
 
-import com.aresPosTaggerModelDataProcessor.data.preprocessing.TrainingDataRow;
+import com.aresPosTaggerModelDataProcessor.data.preprocessing.ModelDataRow;
 import com.aresPosTaggerModelDataProcessor.factories.bigram.BigramDataListFactory;
 import com.aresPosTaggerModelDataProcessor.factories.bigram.BigramDataListFactoryImpl;
 import com.aresPosTaggerModelDataProcessor.factories.subpath.SubPathDataListFactory;
@@ -40,11 +40,11 @@ public class SyntaxAnalyserTest {
         tagsList.add(Tags.NOUN);
         tagsList.add(Tags.NUMBER);
 
-        List<TrainingDataRow> trainingDataRowList = new ArrayList<>();
-        TrainingDataRow trainingDataRow = new TrainingDataRow();
-        trainingDataRow.setTagsList(tagsList);
+        List<ModelDataRow> modelDataRowList = new ArrayList<>();
+        ModelDataRow modelDataRow = new ModelDataRow();
+        modelDataRow.setTagsList(tagsList);
 
-        trainingDataRowList.add(trainingDataRow);
+        modelDataRowList.add(modelDataRow);
 
 
     }

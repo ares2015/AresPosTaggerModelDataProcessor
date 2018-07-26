@@ -2,11 +2,12 @@ package com.aresPosTaggerModelDataProcessor.preprocessing;
 
 import com.aresPosTaggerModelDataProcessor.data.preprocessing.ModelDataRow;
 
+import java.util.List;
+
 /**
- * Created by Oliver on 11/30/2016.
+ * Created by Oliver on 11/12/2016.
  */
-public interface CapitalizedTokensProcessor {
+public interface ModelDataPreprocessor {
 
-    void process(ModelDataRow modelDataRow);
-
+    List<ModelDataRow> preprocess();
 }

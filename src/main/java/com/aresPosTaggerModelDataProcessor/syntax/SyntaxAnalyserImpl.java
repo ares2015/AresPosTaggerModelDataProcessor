@@ -1,6 +1,6 @@
 package com.aresPosTaggerModelDataProcessor.syntax;
 
-import com.aresPosTaggerModelDataProcessor.data.preprocessing.TrainingDataRow;
+import com.aresPosTaggerModelDataProcessor.data.preprocessing.ModelDataRow;
 import com.aresPosTaggerModelDataProcessor.data.syntax.BigramData;
 import com.aresPosTaggerModelDataProcessor.data.syntax.SubPathData;
 import com.aresPosTaggerModelDataProcessor.factories.bigram.BigramDataListFactory;
@@ -23,16 +23,16 @@ public class SyntaxAnalyserImpl implements SyntaxAnalyser, Runnable {
 
     private SubPathDataListFactory subPathDataListFactory;
 
-    private List<TrainingDataRow> trainingDataRowList;
+    private List<ModelDataRow> modelDataRowList;
 
     public SyntaxAnalyserImpl(BigramsWriter bigramsWriter, SubPathsWriter subPathsWriter,
                               BigramDataListFactory bigramDataListFactory, SubPathDataListFactory subPathDataListFactory,
-                              List<TrainingDataRow> trainingDataRowList) {
+                              List<ModelDataRow> modelDataRowList) {
         this.bigramsWriter = bigramsWriter;
         this.subPathsWriter = subPathsWriter;
         this.bigramDataListFactory = bigramDataListFactory;
         this.subPathDataListFactory = subPathDataListFactory;
-        this.trainingDataRowList = trainingDataRowList;
+        this.modelDataRowList = modelDataRowList;
     }
 
     @Override
@@ -42,14 +42,14 @@ public class SyntaxAnalyserImpl implements SyntaxAnalyser, Runnable {
 
     @Override
     public void analyse() {
-        for (TrainingDataRow trainingDataRow : trainingDataRowList) {
-            if (trainingDataRow.containsSubSentences()) {
-                for (int i = 0; i <= trainingDataRow.getTagsMultiList().size() - 1; i++) {
-                    List<String> tagsList = trainingDataRow.getTagsMultiList().get(i);
+        for (ModelDataRow modelDataRow : modelDataRowList) {
+            if (modelDataRow.containsSubSentences()) {
+                for (int i = 0; i <= modelDataRow.getTagsMultiList().size() - 1; i++) {
+                    List<String> tagsList = modelDataRow.getTagsMultiList().get(i);
                     analyseSentence(tagsList);
                 }
             } else {
-                List<String> tagsList = trainingDataRow.getTagsList();
+                List<String> tagsList = modelDataRow.getTagsList();
                 analyseSentence(tagsList);
             }
         }

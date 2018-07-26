@@ -1,6 +1,6 @@
 package com.aresPosTaggerModelDataProcessor.writer.morphology;
 
-import com.aresPosTaggerModelDataProcessor.data.preprocessing.TrainingDataRow;
+import com.aresPosTaggerModelDataProcessor.data.preprocessing.ModelDataRow;
 import com.aresPosTaggerModelDataProcessor.morphology.MorphemesDetector;
 import com.aresPosTaggerModelDataProcessor.tags.Tags;
 
@@ -17,13 +17,13 @@ public class SuffixesWriterImpl implements SuffixesWriter, Runnable {
 
     private MorphemesDetector morphemesDetector;
 
-    private List<TrainingDataRow> trainingDataRowList;
+    private List<ModelDataRow> modelDataRowList;
 
     private final static Logger LOGGER = Logger.getLogger(SuffixesWriterImpl.class.getName());
 
-    public SuffixesWriterImpl(MorphemesDetector morphemesDetector, List<TrainingDataRow> trainingDataRowList) {
+    public SuffixesWriterImpl(MorphemesDetector morphemesDetector, List<ModelDataRow> modelDataRowList) {
         this.morphemesDetector = morphemesDetector;
-        this.trainingDataRowList = trainingDataRowList;
+        this.modelDataRowList = modelDataRowList;
     }
 
     @Override
@@ -36,20 +36,20 @@ public class SuffixesWriterImpl implements SuffixesWriter, Runnable {
         BufferedWriter bw = null;
         FileWriter fw = null;
         try {
-            fw = new FileWriter("C:\\Users\\Oliver\\Documents\\NlpTrainingData\\Suffixes.txt", true);
+            fw = new FileWriter("C:\\Users\\Oliver\\Documents\\NlpTrainingData\\AresPosTaggerModelData\\Suffixes.txt", true);
             bw = new BufferedWriter(fw);
-            for (TrainingDataRow trainingDataRow : trainingDataRowList) {
-                List<String> tokensList = trainingDataRow.getTokensList();
+            for (ModelDataRow modelDataRow : modelDataRowList) {
+                List<String> tokensList = modelDataRow.getTokensList();
                 for (int i = 0; i <= tokensList.size() - 1; i++) {
                     String token = tokensList.get(i);
                     String suffix = morphemesDetector.detectSuffix(token);
                     if (!"no suffix".equals(suffix)) {
-                        String tag = trainingDataRow.getTagsList().get(i);
+                        String tag = modelDataRow.getTagsList().get(i);
                         if (Tags.NOUN.equals(tag) || Tags.ADJECTIVE.equals(tag) || Tags.VERB.equals(tag) ||
                                 Tags.VERB_ED.equals(tag) || Tags.VERB_ING.equals(tag) || Tags.ADVERB.equals(tag)) {
-                            String trainingDataRowAsString = suffix + "#" + tag + "#" + token;
+                            String modelDataRowAsString = suffix + "#" + tag + "#" + token;
                             LOGGER.info("Token: " + token + " contains suffix " + suffix + " with tag " + tag);
-                            bw.write(trainingDataRowAsString);
+                            bw.write(modelDataRowAsString);
                             bw.newLine();
                         }
                     }

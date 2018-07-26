@@ -1,6 +1,6 @@
 package preprocessing;
 
-import com.aresPosTaggerModelDataProcessor.data.preprocessing.TrainingDataRow;
+import com.aresPosTaggerModelDataProcessor.data.preprocessing.ModelDataRow;
 import com.aresPosTaggerModelDataProcessor.preprocessing.CapitalizedTokensProcessor;
 import com.aresPosTaggerModelDataProcessor.preprocessing.CapitalizedTokensProcessorImpl;
 import org.junit.Test;
@@ -70,16 +70,16 @@ public class CapitalizedTokensProcessorTest {
         encodedTagsList.add("P");
         encodedTagsList.add("N");
 
-        TrainingDataRow trainingDataRow = new TrainingDataRow();
-        trainingDataRow.setTokensList(tokensList);
-        trainingDataRow.setTagsList(tagsList);
+        ModelDataRow modelDataRow = new ModelDataRow();
+        modelDataRow.setTokensList(tokensList);
+        modelDataRow.setTagsList(tagsList);
 
-        capitalizedTokensProcessor.process(trainingDataRow);
+        capitalizedTokensProcessor.process(modelDataRow);
 
-        assertEquals(10, trainingDataRow.getTokensList().size());
-        assertEquals(10, trainingDataRow.getTagsList().size());
-        assertEquals("New York City Police Department", trainingDataRow.getTokensList().get(0));
-        assertEquals("United States", trainingDataRow.getTokensList().get(7));
+        assertEquals(10, modelDataRow.getTokensList().size());
+        assertEquals(10, modelDataRow.getTagsList().size());
+        assertEquals("New York City Police Department", modelDataRow.getTokensList().get(0));
+        assertEquals("United States", modelDataRow.getTokensList().get(7));
     }
 
     @Test
@@ -117,16 +117,16 @@ public class CapitalizedTokensProcessorTest {
         encodedTagsList.add("P");
         encodedTagsList.add("#");
 
-        TrainingDataRow trainingDataRow = new TrainingDataRow();
-        trainingDataRow.setTokensList(tokensList);
-        trainingDataRow.setTagsList(tagsList);
+        ModelDataRow modelDataRow = new ModelDataRow();
+        modelDataRow.setTokensList(tokensList);
+        modelDataRow.setTagsList(tagsList);
 
-        capitalizedTokensProcessor.process(trainingDataRow);
+        capitalizedTokensProcessor.process(modelDataRow);
 
-        assertEquals(7, trainingDataRow.getTokensList().size());
-        assertEquals(7, trainingDataRow.getTagsList().size());
-        assertEquals("George Bush", trainingDataRow.getTokensList().get(0));
-        assertEquals("Vladimir Putin", trainingDataRow.getTokensList().get(2));
-        assertEquals("Bratislava", trainingDataRow.getTokensList().get(4));
+        assertEquals(7, modelDataRow.getTokensList().size());
+        assertEquals(7, modelDataRow.getTagsList().size());
+        assertEquals("George Bush", modelDataRow.getTokensList().get(0));
+        assertEquals("Vladimir Putin", modelDataRow.getTokensList().get(2));
+        assertEquals("Bratislava", modelDataRow.getTokensList().get(4));
     }
 }

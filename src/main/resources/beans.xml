@@ -11,8 +11,6 @@
 
     <bean id="subPathsWriter" class="com.aresPosTaggerModelDataProcessor.writer.subpaths.SubPathsWriterImpl"/>
 
-    <bean id="semanticsWriter" class="com.aresPosTaggerModelDataProcessor.writer.semantics.SemanticsWriterImpl"/>
-
     <bean id="tokenizer" class="com.aresPosTaggerModelDataProcessor.tokens.TokenizerImpl"/>
 
     <bean id="listComparator" class="com.aresPosTaggerModelDataProcessor.validator.ListComparatorImpl"/>
@@ -25,37 +23,37 @@
     <bean id="subPathDataListFactory"
           class="com.aresPosTaggerModelDataProcessor.factories.subpath.SubPathDataListFactoryImpl"/>
 
-    <bean id="trainingDataRowListFactory"
-          class="com.aresPosTaggerModelDataProcessor.factories.row.TrainingDataRowListFactoryImpl">
+    <bean id="modelDataRowListFactory"
+          class="com.aresPosTaggerModelDataProcessor.factories.row.ModelDataRowListFactoryImpl">
         <constructor-arg ref="tokenizer"/>
         <constructor-arg ref="multiListFactory"/>
     </bean>
 
-    <bean id="trainingDataValidator" class="com.aresPosTaggerModelDataProcessor.validator.TrainingDataValidatorImpl">
+    <bean id="modelDataValidator" class="com.aresPosTaggerModelDataProcessor.validator.ModelDataValidatorImpl">
         <constructor-arg ref="tokenizer"/>
         <constructor-arg ref="listComparator"/>
     </bean>
 
-    <bean id="trainingDataReader" class="com.aresPosTaggerModelDataProcessor.reader.TrainingDataFileReaderImpl">
-        <constructor-arg ref="trainingDataValidator"/>
+    <bean id="aresPosTaggerModelDataReader"
+          class="com.aresPosTaggerModelDataProcessor.reader.AresPosTaggerModelDataReaderImpl">
+        <constructor-arg ref="modelDataValidator"/>
     </bean>
 
     <bean id="capitalizedTokensProcessor"
           class="com.aresPosTaggerModelDataProcessor.preprocessing.CapitalizedTokensProcessorImpl"/>
 
-    <bean id="trainingDataPreprocessor"
-          class="com.aresPosTaggerModelDataProcessor.preprocessing.TrainingDataPreprocessorImpl">
-        <constructor-arg ref="trainingDataReader"/>
-        <constructor-arg ref="trainingDataRowListFactory"/>
+    <bean id="modelDataPreprocessor"
+          class="com.aresPosTaggerModelDataProcessor.preprocessing.ModelDataPreprocessorImpl">
+        <constructor-arg ref="aresPosTaggerModelDataReader"/>
+        <constructor-arg ref="modelDataRowListFactory"/>
         <constructor-arg ref="capitalizedTokensProcessor"/>
     </bean>
 
-    <bean id="nlpTrainingDataProcessor"
-          class="com.aresPosTaggerModelDataProcessor.main.NlpTrainingDataProcessor">
-        <constructor-arg ref="trainingDataPreprocessor"/>
+    <bean id="aresPosTaggerModelDataProcessor"
+          class="com.aresPosTaggerModelDataProcessor.main.AresPosTaggerModelDataProcessor">
+        <constructor-arg ref="modelDataPreprocessor"/>
         <constructor-arg ref="tagsWriter"/>
         <constructor-arg ref="bigramsWriter"/>
-        <constructor-arg ref="semanticsWriter"/>
         <constructor-arg ref="subPathsWriter"/>
         <constructor-arg ref="bigramDataListFactory"/>
         <constructor-arg ref="subPathDataListFactory"/>
